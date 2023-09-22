@@ -1,12 +1,8 @@
-name: Tests
+name: Semantic release
 on:
-  push:
-    branches:
-      - test
   pull_request:
     branches:
-      - dev
-
+      - main
 jobs:
   test:
     timeout-minutes: 60
@@ -28,3 +24,18 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30
+  release:
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Generate build
+        run: npm run build
+      - name: Run Semantic release
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
