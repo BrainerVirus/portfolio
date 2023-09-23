@@ -1,6 +1,6 @@
-const config = {
+module.exports = {
   branches: [
-    "main",
+    { name: "main", prerelease: false },
     { name: "dev", prerelease: true },
     { name: "test", prerelease: true },
   ],
