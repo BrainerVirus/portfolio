@@ -1,18 +1,31 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Icon } from "astro-icon";
 ---
 
 <Layout title="Home">
   <main>
-    <section id="hero">
+    <section id="hero" class="h-100dvh">
       <h1 id="hero-title">Software Developer</h1>
       <p id="hero-description">
-        Resolving design problems, building Web APPs, Mobile APPs modules, APIs,
+        Resolving problems, building Web APPs, Mobile APPs modules, APIs,
         integrations, and more.
       </p>
       <a href="#about-me">about me</a>
     </section>
-    <section id="about-me"></section>
+    <section id="about-me" class="h-100dvh">
+      <h1 id="about-me-title">Hi my name is Cristhofer Pincetti</h1>
+      <p id="about-me-description">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem
+        doloribus libero explicabo cum! Eum minus tempore tenetur doloremque
+        temporibus corporis.
+      </p>
+    </section>
+    <section id="skills">
+      <figure>
+        <Icon name="mdi:react" class="w-12" />
+      </figure>
+    </section>
   </main>
 
   <style></style>
