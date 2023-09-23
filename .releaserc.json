@@ -11,7 +11,7 @@
     [
       "@semantic-release/npm",
       {
-        "publish": "no"
+        "publish": false
       }
     ],
     "@semantic-release/github",
