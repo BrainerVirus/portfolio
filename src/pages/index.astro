@@ -1,32 +1,529 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { Icon } from "astro-icon";
+import Setup from "../../public/setup-black-gray-blue-purple-v3.svg";
+import "animate.css";
 ---
 
 <Layout title="Home">
-  <main>
-    <section id="hero" class="h-100dvh">
-      <h1 id="hero-title">Software Developer</h1>
-      <p id="hero-description">
-        Resolving problems, building Web APPs, Mobile APPs modules, APIs,
-        integrations, and more.
-      </p>
-      <a href="#about-me">about me</a>
-    </section>
-    <section id="about-me" class="h-100dvh">
-      <h1 id="about-me-title">Hi my name is Cristhofer Pincetti</h1>
-      <p id="about-me-description">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Autem
-        doloribus libero explicabo cum! Eum minus tempore tenetur doloremque
-        temporibus corporis.
-      </p>
-    </section>
-    <section id="skills">
-      <figure>
-        <Icon name="mdi:react" class="w-12" />
-      </figure>
-    </section>
+  <main class="relative">
+    <div class="xl:max-w-[70%] mx-auto my-0 max-w-[95%]" id="scrollArea">
+      <section
+        id="hero"
+        class="md:h-100dvh md:grid-cols-[40%_60%] relative grid min-h-screen grid-cols-1 items-center"
+      >
+        <div class="md:order-1 order-2">
+          <h1 id="hero-title" class="mb-6 max-w-[500px] text-4xl font-bold">
+            Full-Stack Software Developer
+          </h1>
+          <p id="hero-description" class="mb-[14px] max-w-[600px] leading-5">
+            Resolving problems, building APPs, modules, APIs, integrations, and
+            more.
+          </p>
+          <a
+            href="#about-me"
+            class="flex w-fit items-center gap-1 font-bold underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
+            style="--rotate-degrees: 0;"
+            onmouseenter="this.style.setProperty('--rotate-degrees', '90deg');"
+            onmouseleave="this.style.setProperty('--rotate-degrees', '0deg');"
+          >
+            About me <Icon
+              name="mdi:chevron-right"
+              class="mt-[6px] h-6 w-6"
+              style="transform: rotate(var(--rotate-degrees)); transition: transform 0.3s ease-in-out;"
+            />
+          </a>
+        </div>
+        <div class="md:order-2 order-1 w-full">
+          <figure class="w-full">
+            <img
+              src={Setup.src}
+              alt="hero logo"
+              width={Setup.width}
+              height={Setup.height}
+              class="w-full max-w-full"
+            />
+          </figure>
+        </div>
+      </section>
+
+      <section
+        id="about-me"
+        class="md:h-100dvh grid-col-1 md:grid-cols-[50%_50%] md:grid-rows-1 grid min-h-screen grid-rows-[180px_auto] items-center"
+      >
+        <div class="md:self-auto self-end">
+          <h2 id="about-me-title" class="mb-3 text-4xl font-bold">
+            <span>Hello there,</span>
+            <br />
+            <span>I'm Cristhofer Pincetti</span>
+          </h2>
+          <p class="mb-6 font-light opacity-70">Full-Stack Developer</p>
+        </div>
+        <div class="md:self-auto self-start">
+          <p id="about-me-description" class="leading-5">
+            Over one year of experienced creating seamless user experiences.
+          </p>
+          <br />
+          <p id="about-me-description" class="leading-5">
+            Skilled in innovative tech solutions and creative coding.
+          </p>
+          <br />
+          <p id="about-me-description" class="m leading-5">
+            Specializes in building end-to-end solutions and enjoys tackling
+            complex challenges.
+          </p>
+        </div>
+      </section>
+
+      <section
+        id="experience"
+        class="md:h-100dvh sm:grid-rows-[1fr_15vh] grid min-h-screen grid-rows-[1fr_15vh]"
+      >
+        <div
+          class="relative grid h-full items-center justify-items-center overflow-x-hidden text-center"
+        >
+          <div
+            id="slide-1"
+            class="md:justify-center absolute flex h-full w-full translate-x-0 flex-col items-center transition-all duration-300 ease-in-out"
+          >
+            <p class="mb-2 font-light opacity-70">
+              I'm always craving new projects.
+            </p>
+            <h2 id="experience-title" class="mb-6 text-4xl font-bold">
+              Experience
+            </h2>
+            <p id="experience-description" class="max-w-[820px]">
+              My main expertise lies in front-end and back-end development, with
+              a strong command of Node.js, JavaScript, and database design. I
+              have led the development of comprehensive web platforms,
+              implementing features like report generation, role-based
+              authentication, and mobile application APIs. Additionally, I excel
+              in design assets and UI/UX, ensuring seamless user experiences.
+              I've also optimized processes, managed document systems, and
+              contributed to system integration. My diverse skill set and
+              problem-solving abilities drive innovative tech solutions.
+            </p>
+          </div>
+          <div
+            id="slide-2"
+            class="absolute flex h-full w-full translate-x-[100vw] flex-col items-center justify-center transition-all duration-300 ease-in-out"
+          >
+            <h3 class="mb-2 text-3xl font-bold">
+              Software Engineer at Hospital San Juan de Dios
+            </h3>
+            <p class="mb-2 text-sm font-light">October 2022 - September 2023</p>
+            <p class="mb-4">Description of your project and contributions.</p>
+            <img
+              src="project_image_2.jpg"
+              alt="Project 1"
+              class="mx-auto max-w-[300px]"
+            />
+          </div>
+          <div
+            id="slide-3"
+            class="absolute flex h-full w-full translate-x-[200vw] flex-col items-center justify-center transition-all duration-300 ease-in-out"
+          >
+            <h3 class="mb-2 text-3xl font-bold">
+              Software Developer at Universidad de La Serena
+            </h3>
+            <p class="mb-2 text-sm font-light">September 2023 - Present</p>
+            <p class="mb-4">Description of your project and contributions.</p>
+            <img
+              src="project_image_1.jpg"
+              alt="Project 2"
+              class="mx-auto max-w-[300px]"
+            />
+          </div>
+        </div>
+        <div
+          class="bottom-10 flex items-center justify-center gap-3 self-baseline"
+        >
+          <span
+            id="button-slide-1"
+            class="block h-4 w-4 cursor-pointer rounded-full bg-accent transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
+          ></span>
+          <span
+            id="button-slide-2"
+            class="block h-2 w-2 cursor-pointer rounded-full bg-accent opacity-80 transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
+          ></span>
+          <span
+            id="button-slide-3"
+            class="block h-2 w-2 cursor-pointer rounded-full bg-accent opacity-80 transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
+          ></span>
+        </div>
+      </section>
+
+      <section
+        id="skills"
+        class="md:h-100dvh grid min-h-screen items-center justify-items-center text-center"
+      >
+        <div>
+          <p class="mb-2 font-light opacity-70">
+            Superpowers for software superheroes!
+          </p>
+          <h2 class="mb-6 text-4xl font-bold">Skills</h2>
+          <p class="mx-auto mb-5 max-w-2xl">
+            As a full-stack dev I am proficient many techs but I have primarly
+            use JS, TS, Node JS, and Next JS to build web appplications small
+            and medium, responsive layout, implement security features, modern
+            UI/UX. For other part with genexus i have develop medium and big
+            modules for and ERP, with integrations with thirdparties, and other
+            features.
+          </p>
+          <p class="mb-16">
+            Visit my <a
+              href="https://www.linkedin.com/in/cristhofer-pincetti-herrera/"
+              class="underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
+              >Linkedin</a
+            > for more details.
+          </p>
+          <div
+            class="flex w-full max-w-3xl flex-wrap items-center justify-center gap-5"
+          >
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="teenyicons:nextjs-solid" class="h-12 w-12" />
+              <figcaption>Next JS</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <svg
+                width="63"
+                height="79"
+                class="h-12 w-12"
+                viewBox="0 0 63 79"
+                fill="currentColor"
+                stroke="currentColor"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M19.4924 65.9282C15.6165 62.432 14.4851 55.0859 16.0999 49.7638C18.8998 53.1193 22.7793 54.1822 26.7977 54.7822C33.0013 55.7081 39.0937 55.3618 44.8565 52.5637C45.5158 52.2434 46.125 51.8174 46.8454 51.386C47.3861 52.9341 47.5268 54.497 47.338 56.0877C46.8787 59.9617 44.9251 62.9542 41.8177 65.2227C40.5752 66.13 39.2604 66.9411 37.9771 67.7967C34.0346 70.4262 32.9679 73.5095 34.4494 77.9946C34.4846 78.1038 34.5161 78.2131 34.5957 78.4797C32.5828 77.5909 31.1124 76.2965 29.9921 74.5946C28.8088 72.7984 28.2458 70.8114 28.2162 68.6615C28.2014 67.6152 28.2014 66.5597 28.0588 65.5282C27.7107 63.0135 26.5144 61.8876 24.2608 61.8227C21.9479 61.7561 20.1183 63.1672 19.6331 65.3893C19.5961 65.5597 19.5424 65.7282 19.4887 65.9263L19.4924 65.9282Z"
+                  fill="currentColor"
+                  stroke="currentColor"></path>
+                <path
+                  d="M0 51.3932C0 51.3932 10.5979 46.2433 21.2254 46.2433L29.2382 21.5069C29.5381 20.3106 30.4141 19.4977 31.4029 19.4977C32.3918 19.4977 33.2677 20.3106 33.5677 21.5069L41.5804 46.2433C54.1672 46.2433 62.8058 51.3932 62.8058 51.3932C62.8058 51.3932 44.8044 2.47586 44.7692 2.37772C44.2526 0.931458 43.3804 0 42.2045 0H20.6032C19.4273 0 18.5903 0.931458 18.0384 2.37772C17.9995 2.47401 0 51.3932 0 51.3932Z"
+                  fill="currentColor"
+                  stroke="currentColor"></path>
+              </svg>
+
+              <figcaption>Astro</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="teenyicons:nodejs-solid" class="h-12 w-12" />
+              <figcaption>Node JS</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="teenyicons:javascript-solid" class="h-12 w-12" />
+              <figcaption>JavaScript</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="teenyicons:css3-solid" class="h-12 w-12" />
+              <figcaption>CSS</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="teenyicons:html5-solid" class="h-12 w-12" />
+              <figcaption>HTML:5</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="teenyicons:tailwind-solid" class="h-12 w-12" />
+              <figcaption>Tailwind CSS</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="teenyicons:typescript-solid" class="h-12 w-12" />
+              <figcaption>TypeScript</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="cib:postgresql" class="h-12 w-12" />
+              <figcaption>PostgreSQL</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="grommet-icons:mysql" class="h-12 w-12" />
+              <figcaption>MySQL</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon
+                name="logos:prisma"
+                class="h-12 w-12 fill-primary hover:fill-secondary"
+              />
+              <figcaption>Prisma</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="simple-icons:sequelize" class="h-12 w-12" />
+              <figcaption>Sequelize</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="simple-icons:githubactions" class="h-12 w-12" />
+              <figcaption>Github Actions</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="simple-icons:mongodb" class="h-12 w-12" />
+              <figcaption>MongoDB</figcaption>
+            </figure>
+            <figure
+              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+            >
+              <Icon name="bi:git" class="h-12 w-12" />
+              <figcaption>Git</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+    </div>
+    <div class="stars -z-10" role="banner"></div>
+    <div class="twinkling -z-10" role="banner"></div>
   </main>
 
   <style></style>
 </Layout>
+
+<script is:inline>
+  // import { handleDomContentLoad } from "./index.ts";
+  // import {
+  //   initializeScrollHandling,
+  //   // initializeExperienceScrollHandling,
+  //   // handleDomContentLoad,
+  //   // initializeCombinedScrollHandling,
+  //   // initializeExperienceScrollHandling,
+  // } from "./index.ts";
+
+  const slides = {
+    1: document.getElementById("slide-1"),
+    2: document.getElementById("slide-2"),
+    3: document.getElementById("slide-3"),
+  };
+
+  const buttons = {
+    1: document.getElementById("button-slide-1"),
+    2: document.getElementById("button-slide-2"),
+    3: document.getElementById("button-slide-3"),
+  };
+
+  Object.values(buttons).forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const targetSlideId = event.currentTarget.id.split("-").pop();
+      const targetSlide = slides[targetSlideId];
+
+      if (targetSlide) {
+        Object.values(slides).forEach((slide) => {
+          if (slide === targetSlide) {
+            slide.classList.remove(
+              "translate-x-[100vw]",
+              "translate-x-[200vw]",
+            );
+            slide.classList.add("translate-x-0");
+          } else {
+            slide.classList.remove("translate-x-0");
+            if (slide.id === "slide-2") {
+              slide.classList.add("translate-x-[100vw]");
+            } else {
+              slide.classList.add("translate-x-[200vw]");
+            }
+          }
+        });
+
+        Object.values(buttons).forEach((btn) => {
+          if (btn === event.currentTarget) {
+            btn.classList.remove("h-2", "w-2", "opacity-80");
+            btn.classList.add("h-4", "w-4");
+          } else {
+            if (btn.classList.contains("h-4")) {
+              btn.classList.remove("h-4", "w-4");
+            }
+            btn.classList.add("h-2", "w-2", "opacity-80");
+          }
+        });
+      }
+    });
+  });
+
+  function initializeScrollHandling() {
+    const elements = Array.from(document.querySelectorAll("section"));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const windowWidth = window.innerWidth;
+        if (windowWidth <= 1024) {
+          enableScrolling();
+        } else {
+          handleIntersection(entry);
+        }
+      });
+    });
+
+    function handleIntersection(entry) {
+      if (entry.isIntersecting && entry.intersectionRatio === 1) {
+        enableScrolling();
+      } else {
+        disableScrolling();
+      }
+    }
+
+    function enableScrolling() {
+      document.body.style.overflowY = "auto";
+    }
+
+    function disableScrolling() {
+      if (!window.onwheel) {
+        document.body.style.overflowY = "hidden";
+      }
+    }
+
+    function handleWindowResize() {
+      const windowWidth = window.innerWidth;
+      if (windowWidth <= 1024) {
+        enableScrolling();
+        window.removeEventListener("wheel", debouncedScroll);
+      } else {
+        disableScrolling();
+        window.addEventListener("wheel", debouncedScroll);
+      }
+    }
+
+    window.addEventListener("resize", handleWindowResize);
+
+    elements.forEach((element) => {
+      observer.observe(element);
+    });
+
+    let currentIndex = 0;
+    let isScrolling = false;
+
+    function debounce(func, wait) {
+      let timeout;
+
+      return function (...args) {
+        const context = this;
+
+        const later = function () {
+          timeout = undefined;
+          func.apply(context, args);
+        };
+
+        if (timeout !== undefined) {
+          clearTimeout(timeout);
+        }
+
+        timeout = setTimeout(later, wait);
+      };
+    }
+
+    function handleScroll(event) {
+      if (isScrolling) return;
+
+      if (event.deltaY > 0) {
+        currentIndex = Math.min(currentIndex + 1, elements.length - 1);
+      } else {
+        currentIndex = Math.max(currentIndex - 1, 0);
+      }
+
+      elements[currentIndex].scrollIntoView({ behavior: "smooth" });
+
+      isScrolling = true;
+      setTimeout(() => {
+        isScrolling = false;
+      }, 200);
+    }
+
+    const debouncedScroll = debounce(handleScroll, 200);
+    window.addEventListener("wheel", debouncedScroll);
+  }
+
+  // const buttonSlideOne = document.getElementById("button-slide-1");
+  // console.log("🚀 ~ file: index.astro:316 ~ buttonSlideOne:", buttonSlideOne);
+  // const buttonSlideTwo = document.getElementById("button-slide-2");
+  // console.log("🚀 ~ file: index.astro:318 ~ buttonSlideTwo:", buttonSlideTwo);
+  // const buttonSlideThree = document.getElementById("button-slide-3");
+  // console.log(
+  //   "🚀 ~ file: index.astro:320 ~ buttonSlideThree:",
+  //   buttonSlideThree,
+  // );
+
+  // const slideOne = document.getElementById("slide-1");
+  // console.log("🚀 ~ file: index.astro:326 ~ slideOne:", slideOne);
+  // const slideTwo = document.getElementById("slide-2");
+  // console.log("🚀 ~ file: index.astro:328 ~ slideTwo:", slideTwo);
+  // const slideThree = document.getElementById("slide-3");
+  // console.log("🚀 ~ file: index.astro:330 ~ slideThree:", slideThree);
+
+  // if (
+  //   buttonSlideOne &&
+  //   buttonSlideTwo &&
+  //   buttonSlideThree &&
+  //   slideOne &&
+  //   slideTwo &&
+  //   slideThree
+  // ) {
+  //   buttonSlideOne.addEventListener("click", () => {
+  //     console.log("button 1 clicked");
+  //     // slideOne.classList.add("-translate-x-[100vw]");
+  //     // slideTwo.classList.remove("translate-x-[100vw]");
+  //     // slideThree.classList.remove("translate-x-[200vw]");
+  //     // slideThree.classList.add("translate-x-[100vw]")
+  //   });
+
+  //   buttonSlideTwo.addEventListener("click", () => {
+  //     console.log("button 2 clicked");
+  //     // slideOne.classList.remove("-translate-x-[100vw]");
+  //     // slideOne.classList.add("-translate-x-[200vw]");
+  //     // slideTwo.classList.add("-translate-x-[100vw]");
+  //     // slideThree.classList.remove("translate-x-[100vw]")
+  //   });
+
+  //   buttonSlideThree.addEventListener("click", () => {
+  //     console.log("button 3 clicked");
+  //     // slideOne.classList.remove("-translate-x-200vw]");
+  //     // slideOne.classList.add("-translate-x-300vw]");
+  //     // slideTwo.classList.remove("-translate-x-[100vw]");
+  //     // slideTwo.classList.add("-translate-x-[200vw]");
+  //     // slideThree.classList.remove("translate-x-[100vw]")
+  //   });
+  // }
+
+  // document.addEventListener("DOMContentLoaded", handleDomContentLoad);
+  // document.addEventListener("DOMContentLoaded", initializeScrollHandling);
+  // document.addEventListener(
+  //   "DOMContentLoaded",
+  //   initializeExperienceScrollHandling,
+  // );
+  // document.addEventListener(
+  //   "DOMContentLoaded",
+  //   () => initializeExperienceScrollHandling,
+  // );
+
+  // document.addEventListener(
+  //   "DOMContentLoaded",
+  //   initializeExperienceScrollHandling,
+  // );
+
+  // document.addEventListener("DOMContentLoaded", () => {
+  //   initializeScrollHandling();
+  // });
+  document.addEventListener("DOMContentLoaded", () => {
+    initializeScrollHandling();
+  });
+</script>
