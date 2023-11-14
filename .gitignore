@@ -3,6 +3,13 @@ dist/
 dist
 ./dist
 ./dist/
+
+# ssr
+./vercel
+.vercel
+.vercel/
+./.vercel
+
 # generated types
 .astro/
 
