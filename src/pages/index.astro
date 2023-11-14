@@ -7,12 +7,12 @@ import "animate.css";
 
 <Layout title="Home">
   <main class="relative">
-    <div class="xl:max-w-[70%] mx-auto my-0 max-w-[95%]" id="scrollArea">
+    <div class="mx-auto my-0 max-w-[95%] xl:max-w-[70%]" id="scrollArea">
       <section
         id="hero"
-        class="md:h-100dvh md:grid-cols-[40%_60%] relative grid min-h-screen grid-cols-1 items-center"
+        class="md:h-100dvh relative grid min-h-screen grid-cols-1 items-center md:grid-cols-[40%_60%]"
       >
-        <div class="md:order-1 order-2">
+        <div class="order-2 md:order-1">
           <h1 id="hero-title" class="mb-6 max-w-[500px] text-4xl font-bold">
             Full-Stack Software Developer
           </h1>
@@ -34,7 +34,7 @@ import "animate.css";
             />
           </a>
         </div>
-        <div class="md:order-2 order-1 w-full">
+        <div class="order-1 w-full md:order-2">
           <figure class="w-full">
             <img
               src={Setup.src}
@@ -49,9 +49,9 @@ import "animate.css";
 
       <section
         id="about-me"
-        class="md:h-100dvh grid-col-1 md:grid-cols-[50%_50%] md:grid-rows-1 grid min-h-screen grid-rows-[180px_auto] items-center"
+        class="md:h-100dvh grid-col-1 grid min-h-screen grid-rows-[180px_auto] items-center md:grid-cols-[50%_50%] md:grid-rows-1"
       >
-        <div class="md:self-auto self-end">
+        <div class="self-end md:self-auto">
           <h2 id="about-me-title" class="mb-3 text-4xl font-bold">
             <span>Hello there,</span>
             <br />
@@ -59,7 +59,7 @@ import "animate.css";
           </h2>
           <p class="mb-6 font-light opacity-70">Full-Stack Developer</p>
         </div>
-        <div class="md:self-auto self-start">
+        <div class="self-start md:self-auto">
           <p id="about-me-description" class="leading-5">
             Over one year of experienced creating seamless user experiences.
           </p>
@@ -77,14 +77,14 @@ import "animate.css";
 
       <section
         id="experience"
-        class="md:h-100dvh sm:grid-rows-[1fr_15vh] grid min-h-screen grid-rows-[1fr_15vh]"
+        class="md:h-100dvh grid min-h-screen grid-rows-[1fr_15vh] sm:grid-rows-[1fr_15vh]"
       >
         <div
           class="relative grid h-full items-center justify-items-center overflow-x-hidden text-center"
         >
           <div
             id="slide-1"
-            class="md:justify-center absolute flex h-full w-full translate-x-0 flex-col items-center transition-all duration-300 ease-in-out"
+            class="absolute flex h-full w-full translate-x-0 flex-col items-center transition-all duration-300 ease-in-out md:justify-center"
           >
             <p class="mb-2 font-light opacity-70">
               I'm always craving new projects.
@@ -181,13 +181,13 @@ import "animate.css";
             class="flex w-full max-w-3xl flex-wrap items-center justify-center gap-5"
           >
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="teenyicons:nextjs-solid" class="h-12 w-12" />
               <figcaption>Next JS</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <svg
                 width="63"
@@ -211,55 +211,55 @@ import "animate.css";
               <figcaption>Astro</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="teenyicons:nodejs-solid" class="h-12 w-12" />
               <figcaption>Node JS</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="teenyicons:javascript-solid" class="h-12 w-12" />
               <figcaption>JavaScript</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="teenyicons:css3-solid" class="h-12 w-12" />
               <figcaption>CSS</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="teenyicons:html5-solid" class="h-12 w-12" />
               <figcaption>HTML:5</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="teenyicons:tailwind-solid" class="h-12 w-12" />
               <figcaption>Tailwind CSS</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="teenyicons:typescript-solid" class="h-12 w-12" />
               <figcaption>TypeScript</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="cib:postgresql" class="h-12 w-12" />
               <figcaption>PostgreSQL</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="grommet-icons:mysql" class="h-12 w-12" />
               <figcaption>MySQL</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon
                 name="logos:prisma"
@@ -268,25 +268,25 @@ import "animate.css";
               <figcaption>Prisma</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="simple-icons:sequelize" class="h-12 w-12" />
               <figcaption>Sequelize</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="simple-icons:githubactions" class="h-12 w-12" />
               <figcaption>Github Actions</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="simple-icons:mongodb" class="h-12 w-12" />
               <figcaption>MongoDB</figcaption>
             </figure>
             <figure
-              class="md:w-auto flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary"
+              class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
             >
               <Icon name="bi:git" class="h-12 w-12" />
               <figcaption>Git</figcaption>
@@ -302,64 +302,59 @@ import "animate.css";
   <style></style>
 </Layout>
 
-<script is:inline>
-  // import { handleDomContentLoad } from "./index.ts";
-  // import {
-  //   initializeScrollHandling,
-  //   // initializeExperienceScrollHandling,
-  //   // handleDomContentLoad,
-  //   // initializeCombinedScrollHandling,
-  //   // initializeExperienceScrollHandling,
-  // } from "./index.ts";
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const slides = {
+      1: document.getElementById("slide-1"),
+      2: document.getElementById("slide-2"),
+      3: document.getElementById("slide-3"),
+    };
 
-  const slides = {
-    1: document.getElementById("slide-1"),
-    2: document.getElementById("slide-2"),
-    3: document.getElementById("slide-3"),
-  };
+    const buttons = {
+      1: document.getElementById("button-slide-1"),
+      2: document.getElementById("button-slide-2"),
+      3: document.getElementById("button-slide-3"),
+    };
 
-  const buttons = {
-    1: document.getElementById("button-slide-1"),
-    2: document.getElementById("button-slide-2"),
-    3: document.getElementById("button-slide-3"),
-  };
+    Object.values(buttons).forEach((button) => {
+      button.addEventListener("click", (event) => {
+        const targetSlideId = event.currentTarget.id.split("-").pop();
+        const targetSlide = slides[targetSlideId];
 
-  Object.values(buttons).forEach((button) => {
-    button.addEventListener("click", (event) => {
-      const targetSlideId = event.currentTarget.id.split("-").pop();
-      const targetSlide = slides[targetSlideId];
-
-      if (targetSlide) {
-        Object.values(slides).forEach((slide) => {
-          if (slide === targetSlide) {
-            slide.classList.remove(
-              "translate-x-[100vw]",
-              "translate-x-[200vw]",
-            );
-            slide.classList.add("translate-x-0");
-          } else {
-            slide.classList.remove("translate-x-0");
-            if (slide.id === "slide-2") {
-              slide.classList.add("translate-x-[100vw]");
+        if (targetSlide) {
+          Object.values(slides).forEach((slide) => {
+            if (slide === targetSlide) {
+              slide.classList.remove(
+                "translate-x-[100vw]",
+                "translate-x-[200vw]",
+              );
+              slide.classList.add("translate-x-0");
             } else {
-              slide.classList.add("translate-x-[200vw]");
+              slide.classList.remove("translate-x-0");
+              if (slide.id === "slide-2") {
+                slide.classList.add("translate-x-[100vw]");
+              } else {
+                slide.classList.add("translate-x-[200vw]");
+              }
             }
-          }
-        });
+          });
 
-        Object.values(buttons).forEach((btn) => {
-          if (btn === event.currentTarget) {
-            btn.classList.remove("h-2", "w-2", "opacity-80");
-            btn.classList.add("h-4", "w-4");
-          } else {
-            if (btn.classList.contains("h-4")) {
-              btn.classList.remove("h-4", "w-4");
+          Object.values(buttons).forEach((btn) => {
+            if (btn === event.currentTarget) {
+              btn.classList.remove("h-2", "w-2", "opacity-80");
+              btn.classList.add("h-4", "w-4");
+            } else {
+              if (btn.classList.contains("h-4")) {
+                btn.classList.remove("h-4", "w-4");
+              }
+              btn.classList.add("h-2", "w-2", "opacity-80");
             }
-            btn.classList.add("h-2", "w-2", "opacity-80");
-          }
-        });
-      }
+          });
+        }
+      });
     });
+
+    initializeScrollHandling();
   });
 
   function initializeScrollHandling() {
@@ -450,80 +445,16 @@ import "animate.css";
     }
 
     const debouncedScroll = debounce(handleScroll, 200);
-    window.addEventListener("wheel", debouncedScroll);
+
+    const windowWidth = window.innerWidth;
+    if (windowWidth <= 1024) {
+      enableScrolling();
+      window.removeEventListener("wheel", debouncedScroll);
+    } else {
+      disableScrolling();
+      window.addEventListener("wheel", debouncedScroll);
+    }
+
+    // window.addEventListener("wheel", debouncedScroll);
   }
-
-  // const buttonSlideOne = document.getElementById("button-slide-1");
-  // console.log("🚀 ~ file: index.astro:316 ~ buttonSlideOne:", buttonSlideOne);
-  // const buttonSlideTwo = document.getElementById("button-slide-2");
-  // console.log("🚀 ~ file: index.astro:318 ~ buttonSlideTwo:", buttonSlideTwo);
-  // const buttonSlideThree = document.getElementById("button-slide-3");
-  // console.log(
-  //   "🚀 ~ file: index.astro:320 ~ buttonSlideThree:",
-  //   buttonSlideThree,
-  // );
-
-  // const slideOne = document.getElementById("slide-1");
-  // console.log("🚀 ~ file: index.astro:326 ~ slideOne:", slideOne);
-  // const slideTwo = document.getElementById("slide-2");
-  // console.log("🚀 ~ file: index.astro:328 ~ slideTwo:", slideTwo);
-  // const slideThree = document.getElementById("slide-3");
-  // console.log("🚀 ~ file: index.astro:330 ~ slideThree:", slideThree);
-
-  // if (
-  //   buttonSlideOne &&
-  //   buttonSlideTwo &&
-  //   buttonSlideThree &&
-  //   slideOne &&
-  //   slideTwo &&
-  //   slideThree
-  // ) {
-  //   buttonSlideOne.addEventListener("click", () => {
-  //     console.log("button 1 clicked");
-  //     // slideOne.classList.add("-translate-x-[100vw]");
-  //     // slideTwo.classList.remove("translate-x-[100vw]");
-  //     // slideThree.classList.remove("translate-x-[200vw]");
-  //     // slideThree.classList.add("translate-x-[100vw]")
-  //   });
-
-  //   buttonSlideTwo.addEventListener("click", () => {
-  //     console.log("button 2 clicked");
-  //     // slideOne.classList.remove("-translate-x-[100vw]");
-  //     // slideOne.classList.add("-translate-x-[200vw]");
-  //     // slideTwo.classList.add("-translate-x-[100vw]");
-  //     // slideThree.classList.remove("translate-x-[100vw]")
-  //   });
-
-  //   buttonSlideThree.addEventListener("click", () => {
-  //     console.log("button 3 clicked");
-  //     // slideOne.classList.remove("-translate-x-200vw]");
-  //     // slideOne.classList.add("-translate-x-300vw]");
-  //     // slideTwo.classList.remove("-translate-x-[100vw]");
-  //     // slideTwo.classList.add("-translate-x-[200vw]");
-  //     // slideThree.classList.remove("translate-x-[100vw]")
-  //   });
-  // }
-
-  // document.addEventListener("DOMContentLoaded", handleDomContentLoad);
-  // document.addEventListener("DOMContentLoaded", initializeScrollHandling);
-  // document.addEventListener(
-  //   "DOMContentLoaded",
-  //   initializeExperienceScrollHandling,
-  // );
-  // document.addEventListener(
-  //   "DOMContentLoaded",
-  //   () => initializeExperienceScrollHandling,
-  // );
-
-  // document.addEventListener(
-  //   "DOMContentLoaded",
-  //   initializeExperienceScrollHandling,
-  // );
-
-  // document.addEventListener("DOMContentLoaded", () => {
-  //   initializeScrollHandling();
-  // });
-  document.addEventListener("DOMContentLoaded", () => {
-    initializeScrollHandling();
-  });
 </script>
