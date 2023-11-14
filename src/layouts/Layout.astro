@@ -196,25 +196,16 @@ const { title } = Astro.props;
       }
       .stars {
         background: #000 url(/stars.png) repeat top center;
-        z-index: 0;
+        /* z-index: -10; */
       }
       .twinkling {
         background: transparent url(/twinkling.png) repeat top center;
-        z-index: 1;
+        /* z-index: 1; */
         -moz-animation: move-twink-back 200s linear infinite;
         -ms-animation: move-twink-back 200s linear infinite;
         -o-animation: move-twink-back 200s linear infinite;
         -webkit-animation: move-twink-back 200s linear infinite;
         animation: move-twink-back 200s linear infinite;
-      }
-      .clouds {
-        background: transparent url(/clouds.png) repeat top center;
-        z-index: 3;
-        -moz-animation: move-clouds-back 200s linear infinite;
-        -ms-animation: move-clouds-back 200s linear infinite;
-        -o-animation: move-clouds-back 200s linear infinite;
-        -webkit-animation: move-clouds-back 200s linear infinite;
-        animation: move-clouds-back 200s linear infinite;
       }
 
       .cup {
