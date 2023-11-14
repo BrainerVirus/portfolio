@@ -2,7 +2,7 @@ import { test, expect } from "@playwright/test";
 
 test.describe("Hero section", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:4321/");
+    await page.goto("http://localhost:3000/");
   });
 
   test("should be visible", async ({ page }) => {
@@ -41,7 +41,7 @@ test.describe("Hero section", () => {
 
 test.describe("About section", () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto("http://localhost:4321/");
+    await page.goto("http://localhost:3000/");
     await page.getByRole("link", { name: "about me" }).click();
   });
 
