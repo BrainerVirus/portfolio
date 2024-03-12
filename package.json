@@ -22,6 +22,13 @@
     "tailwindcss": "3.4.1"
   },
   "devDependencies": {
+    "@iconify-json/bi": "^1.1.23",
+    "@iconify-json/cib": "^1.1.8",
+    "@iconify-json/grommet-icons": "^1.1.10",
+    "@iconify-json/logos": "^1.1.42",
+    "@iconify-json/mdi": "^1.1.64",
+    "@iconify-json/simple-icons": "^1.1.95",
+    "@iconify-json/teenyicons": "^1.1.9",
     "@playwright/test": "1.42.1",
     "@semantic-release/changelog": "6.0.3",
     "@semantic-release/git": "10.0.1",
