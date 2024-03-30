@@ -319,40 +319,34 @@ import "animate.css";
       3: document.getElementById("button-slide-3"),
     };
 
+    const updateSlidePosition = (slide: HTMLElement | null, targetSlide: HTMLElement | null) => {
+      if (slide === targetSlide) {
+        slide?.classList.remove("translate-x-[100vw]", "translate-x-[200vw]");
+        slide?.classList.add("translate-x-0");
+      } else {
+        slide?.classList.remove("translate-x-0");
+        slide?.classList.add(slide?.id === "slide-2" ? "translate-x-[100vw]" : "translate-x-[200vw]");
+      }
+    };
+
+    const updateButtonSize = (btn: HTMLElement | null, targetButton: HTMLElement | null) => {
+      if (btn === targetButton) {
+        btn?.classList.remove("h-2", "w-2", "opacity-80");
+        btn?.classList.add("h-4", "w-4");
+      } else {
+        btn?.classList.remove("h-4", "w-4");
+        btn?.classList.add("h-2", "w-2", "opacity-80");
+      }
+    };
+
     Object.values(buttons).forEach((button) => {
-      button.addEventListener("click", (event) => {
-        const targetSlideId = event.currentTarget.id.split("-").pop();
-        const targetSlide = slides[targetSlideId];
+      button?.addEventListener("click", (event: MouseEvent) => {
+        const targetSlideId = (event.currentTarget as HTMLElement)?.id.split("-").pop();
+        const targetSlide = slides[targetSlideId as keyof typeof slides];
 
         if (targetSlide) {
-          Object.values(slides).forEach((slide) => {
-            if (slide === targetSlide) {
-              slide.classList.remove(
-                "translate-x-[100vw]",
-                "translate-x-[200vw]",
-              );
-              slide.classList.add("translate-x-0");
-            } else {
-              slide.classList.remove("translate-x-0");
-              if (slide.id === "slide-2") {
-                slide.classList.add("translate-x-[100vw]");
-              } else {
-                slide.classList.add("translate-x-[200vw]");
-              }
-            }
-          });
-
-          Object.values(buttons).forEach((btn) => {
-            if (btn === event.currentTarget) {
-              btn.classList.remove("h-2", "w-2", "opacity-80");
-              btn.classList.add("h-4", "w-4");
-            } else {
-              if (btn.classList.contains("h-4")) {
-                btn.classList.remove("h-4", "w-4");
-              }
-              btn.classList.add("h-2", "w-2", "opacity-80");
-            }
-          });
+          Object.values(slides).forEach((slide) => updateSlidePosition(slide, targetSlide));
+            Object.values(buttons).forEach((btn) => updateButtonSize(btn, event.currentTarget as HTMLElement));
         }
       });
     });
@@ -362,23 +356,18 @@ import "animate.css";
 
   function initializeScrollHandling() {
     const elements = Array.from(document.querySelectorAll("section"));
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(handleIntersection);
+    let currentIndex = 0;
+    let isScrolling = false;
+
+    function handleIntersection(entries: IntersectionObserverEntry[]) {
       entries.forEach((entry) => {
-        const windowWidth = window.innerWidth;
-        if (windowWidth <= 1024) {
+        if (window.innerWidth <= 1024) {
           enableScrolling();
         } else {
-          handleIntersection(entry);
+          entry.isIntersecting && entry.intersectionRatio === 1 ? enableScrolling() : disableScrolling();
         }
       });
-    });
-
-    function handleIntersection(entry) {
-      if (entry.isIntersecting && entry.intersectionRatio === 1) {
-        enableScrolling();
-      } else {
-        disableScrolling();
-      }
     }
 
     function enableScrolling() {
@@ -386,59 +375,17 @@ import "animate.css";
     }
 
     function disableScrolling() {
-      if (!window.onwheel) {
-        document.body.style.overflowY = "hidden";
-      }
+      document.body.style.overflowY = "hidden";
     }
 
     function handleWindowResize() {
-      const windowWidth = window.innerWidth;
-      if (windowWidth <= 1024) {
-        enableScrolling();
-        window.removeEventListener("wheel", debouncedScroll);
-      } else {
-        disableScrolling();
-        window.addEventListener("wheel", debouncedScroll);
-      }
+      window.innerWidth <= 1024 ? enableScrolling() : disableScrolling();
     }
 
-    window.addEventListener("resize", handleWindowResize);
-
-    elements.forEach((element) => {
-      observer.observe(element);
-    });
-
-    let currentIndex = 0;
-    let isScrolling = false;
-
-    function debounce(func, wait) {
-      let timeout;
-
-      return function (...args) {
-        const context = this;
-
-        const later = function () {
-          timeout = undefined;
-          func.apply(context, args);
-        };
-
-        if (timeout !== undefined) {
-          clearTimeout(timeout);
-        }
-
-        timeout = setTimeout(later, wait);
-      };
-    }
-
-    function handleScroll(event) {
+    function handleScroll(event: WheelEvent) {
       if (isScrolling) return;
 
-      if (event.deltaY > 0) {
-        currentIndex = Math.min(currentIndex + 1, elements.length - 1);
-      } else {
-        currentIndex = Math.max(currentIndex - 1, 0);
-      }
-
+      currentIndex = event.deltaY > 0 ? Math.min(currentIndex + 1, elements.length - 1) : Math.max(currentIndex - 1, 0);
       elements[currentIndex].scrollIntoView({ behavior: "smooth" });
 
       isScrolling = true;
@@ -449,15 +396,27 @@ import "animate.css";
 
     const debouncedScroll = debounce(handleScroll, 200);
 
-    const windowWidth = window.innerWidth;
-    if (windowWidth <= 1024) {
-      enableScrolling();
-      window.removeEventListener("wheel", debouncedScroll);
-    } else {
-      disableScrolling();
-      window.addEventListener("wheel", debouncedScroll);
-    }
+    window.addEventListener("resize", handleWindowResize);
+    elements.forEach((element) => observer.observe(element));
+    window.addEventListener("wheel", debouncedScroll);
+  }
 
-    // window.addEventListener("wheel", debouncedScroll);
+  function debounce(func: Function, wait: number) {
+    let timeout: ReturnType<typeof setTimeout> | undefined;
+
+    return function (...args: any[]): void {
+      const context: Window = window;
+
+      const later: () => void = function (): void {
+        timeout = undefined;
+        func.apply(context, args);
+      };
+
+      if (timeout !== undefined) {
+        clearTimeout(timeout);
+      }
+
+      timeout = setTimeout(later, wait);
+    };
   }
 </script>
