@@ -10,8 +10,13 @@ export default defineConfig({
   integrations: [tailwind(), mdx(), icon()],
   prefetch: true,
   server: {
-    port: 3000
+    port: 3000,
   },
   output: "server",
-  adapter: vercel()
+  adapter: vercel({
+    webAnalytics: {
+      enabled: true,
+    },
+    maxDuration: 8,
+  }),
 });
