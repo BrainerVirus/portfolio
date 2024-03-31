@@ -34,3 +34,7 @@ pnpm-debug.log*
 ./tests-examples
 /tests-examples/
 .env.local
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
