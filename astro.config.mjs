@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     port: 3000,
   },
-  output: "server",
+  output: "hybrid",
   adapter: vercel({
     webAnalytics: {
       enabled: true,
