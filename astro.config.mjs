@@ -18,5 +18,10 @@ export default defineConfig({
       enabled: true,
     },
     maxDuration: 8,
+    imageService: true,
+    devImageService: "squoosh",
+    isr: {
+      expiration: 60 * 60 * 24,
+    },
   }),
 });
