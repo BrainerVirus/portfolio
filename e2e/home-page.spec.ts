@@ -77,34 +77,52 @@ test.describe("Experience section", () => {
     page,
   }) => {
     // Verify slide 1 content
-    await expect(page.locator("#experience-title")).toHaveText("Experience");
-    await expect(page.locator("#experience-description")).toHaveText(
-      "My main expertise lies in front-end and back-end development, with a strong command of Node.js, JavaScript, and database design. I have led the development of comprehensive web platforms, implementing features like report generation, role-based authentication, and mobile application APIs. Additionally, I excel in design assets and UI/UX, ensuring seamless user experiences. I've also optimized processes, managed document systems, and contributed to system integration. My diverse skill set and problem-solving abilities drive innovative tech solutions.",
+    await expect(page.locator("#experience-title-slide-1")).toHaveText(
+      "Hospital San Juan de Dios",
+    );
+    await expect(page.locator("#experience-description-slide-1 h3")).toHaveText(
+      "Software Engineer",
+    );
+    await expect(
+      page.locator("#experience-description-slide-1 p:nth-child(2)"),
+    ).toHaveText("October 2022 - September 2023");
+    await expect(
+      page.locator("#experience-description-slide-1 p:nth-child(4)"),
+    ).toHaveText(
+      "Led the development of a finance module, encompassing document management, report generation, and dynamic barcode implementation. Implemented APIs to streamline system integration, enhancing operational efficiency. Collaborated with internal experts to integrate with third-party providers, and automated bulk data loading to expedite processes. Played a pivotal role in the development of a complex prescription entry system for outpatient care, facilitating efficient dispensing at various levels. Introduced CI/CD practices to optimize software development and deployment.",
     );
 
     // Verify slide 2 content
     await expect(page.locator("#experience-title-slide-2")).toHaveText(
-      "Software Engineer at Hospital San Juan de Dios",
+      "Universidad de La Serena",
+    );
+    await expect(page.locator("#experience-description-slide-2 h3")).toHaveText(
+      "Software Developer",
     );
     await expect(
-      page.locator("#experience-description-slide-2 > p:nth-child(1)"),
-    ).toHaveText("October 2022 - September 2023");
+      page.locator("#experience-description-slide-2 p:nth-child(2)"),
+    ).toHaveText("September 2023 - March 2024");
     await expect(
-      page.locator("#experience-description-slide-2 > p:nth-child(2)"),
-    ).toHaveText("Description of your project and contributions.");
-    // You can add assertions for the image as well
+      page.locator("#experience-description-slide-2 p:nth-child(4)"),
+    ).toHaveText(
+      "Led the development of a comprehensive web platform at the Universidad de La Serena, focusing on water usage, report generation, water delivery management, role-based authentication, water delivery tracking, mobile app API integration, and continuous platform maintenance. Collaborated with multidisciplinary teams to enhance the platform's functionality and security, and implemented CI/CD practices to streamline the development and deployment process.",
+    );
 
     // Verify slide 3 content
     await expect(page.locator("#experience-title-slide-3")).toHaveText(
-      "Software Developer at Universidad de La Serena",
+      "Sixbell",
+    );
+    await expect(page.locator("#experience-description-slide-3 h3")).toHaveText(
+      "Software Engineer",
     );
     await expect(
-      page.locator("#experience-description-slide-3 > p:nth-child(1)"),
-    ).toHaveText("September 2023 - Present");
+      page.locator("#experience-description-slide-3 p:nth-child(2)"),
+    ).toHaveText("November 2023 - Today");
     await expect(
-      page.locator("#experience-description-slide-3 > p:nth-child(2)"),
-    ).toHaveText("Description of your project and contributions.");
-    // You can add assertions for the image as well
+      page.locator("#experience-description-slide-3 p:nth-child(4)"),
+    ).toHaveText(
+      "Currently at Sixbell, I am actively involved in exploring new technologies to address challenges and migrate legacy platforms. My work includes developing new modules across various platforms, with a focus on Angular and Java Spring Boot stacks. I have also implemented CI/CD pipelines using GitLab and Docker, enhancing the development and deployment processes. Additionally, I have contributed to business technology solutions, which, due to confidentiality, cannot be disclosed but are crucial for internal operations.",
+    );
 
     // Ensure buttons are present
     await expect(page.locator("#button-slide-1")).toBeVisible();
