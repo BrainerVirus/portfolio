@@ -1,8 +1,48 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Slider, { type Slide } from "../components/ExperienceSlider.astro";
 import { Icon } from "astro-icon/components";
 import Setup from "../../public/setup-black-gray-blue-purple-v3.svg";
 import "animate.css";
+
+const slides: Slide[] = [
+  {
+    beforeTitle: "Full-time job",
+    title: "Hospital San Juan de Dios",
+    subtitle: "Software Engineer",
+    subtitle2: "October 2022 - September 2023",
+    content: `
+    Led the development of a finance module, encompassing document management, report generation, and dynamic barcode implementation. Implemented APIs to streamline system integration, enhancing operational efficiency. Collaborated with internal experts to integrate with third-party providers, and automated bulk data loading to expedite processes. Played a pivotal role in the development of a complex prescription entry system for outpatient care, facilitating efficient dispensing at various levels. Introduced CI/CD practices to optimize software development and deployment.
+  `,
+    imageSrc: "hospital_san_juan_de_dios-logo.png",
+    imageAlt: "hospital san juan de dios logo",
+    slideNumber: 1,
+  },
+  {
+    beforeTitle: "Partial-time job (specific project)",
+    title: "Universidad de La Serena",
+    subtitle: "Software Developer",
+    subtitle2: "September 2023 - March 2024",
+    content: `
+    Led the development of a comprehensive web platform at the Universidad de La Serena, focusing on water usage, report generation, water delivery management, role-based authentication, water delivery tracking, mobile app API integration, and continuous platform maintenance. Collaborated with multidisciplinary teams to enhance the platform's functionality and security, and implemented CI/CD practices to streamline the development and deployment process.
+  `,
+    imageSrc: "uls-logo.png",
+    imageAlt: "universidad de la serena logo",
+    slideNumber: 2,
+  },
+  {
+    beforeTitle: "Full-time job",
+    title: "Sixbell",
+    subtitle: "Software Engineer",
+    subtitle2: "November 2023 - Today",
+    content: `
+    Currently at Sixbell, I am actively involved in exploring new technologies to address challenges and migrate legacy platforms. My work includes developing new modules across various platforms, with a focus on Angular and Java Spring Boot stacks. I have also implemented CI/CD pipelines using GitLab and Docker, enhancing the development and deployment processes. Additionally, I have contributed to business technology solutions, which, due to confidentiality, cannot be disclosed but are crucial for internal operations.
+  `,
+    imageSrc: "sixbell-logo.png",
+    imageAlt: "sixbell logo",
+    slideNumber: 3,
+  },
+];
 ---
 
 <Layout title="Home">
@@ -13,7 +53,7 @@ import "animate.css";
     >
       <section
         id="hero"
-        class="md:h-100svh relative grid min-h-screen grid-cols-1 items-center md:grid-cols-[40%_60%]"
+        class="relative grid min-h-svh grid-cols-1 items-center md:grid-cols-[40%_60%]"
       >
         <div class="order-2 md:order-1">
           <h1 id="hero-title" class="mb-6 max-w-[500px] text-4xl font-bold">
@@ -52,7 +92,7 @@ import "animate.css";
 
       <section
         id="about-me"
-        class="md:h-100svh grid-col-1 grid min-h-screen grid-rows-[180px_auto] items-center md:grid-cols-[50%_50%] md:grid-rows-1"
+        class="grid-col-1 grid min-h-svh grid-rows-[180px_auto] items-center md:grid-cols-[50%_50%] md:grid-rows-1"
       >
         <div class="self-end md:self-auto">
           <h2 id="about-me-title" class="mb-3 text-4xl font-bold">
@@ -78,7 +118,9 @@ import "animate.css";
         </div>
       </section>
 
-      <section
+      <Slider slides={slides} currentSlide={1} />
+
+      <!-- <section
         id="experience"
         class="relative grid min-h-svh items-center justify-items-center overflow-x-hidden text-center"
       >
@@ -187,11 +229,11 @@ import "animate.css";
             class="block h-2 w-2 cursor-pointer rounded-full bg-accent opacity-80 transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
           ></span>
         </div>
-      </section>
+      </section> -->
     </div>
     <section
       id="skills"
-      class="grid min-h-screen items-center justify-items-center pb-20 text-center md:min-h-screen"
+      class="grid min-h-svh items-center justify-items-center pb-20 text-center"
     >
       <div>
         <p class="mb-2 font-light opacity-70">
@@ -337,7 +379,7 @@ import "animate.css";
   <style></style>
 </Layout>
 
-<script>
+<!-- <script>
   document.addEventListener("DOMContentLoaded", () => {
     const slides = {
       1: document.getElementById("slide-1"),
@@ -472,4 +514,4 @@ import "animate.css";
       timeout = setTimeout(later, wait);
     };
   }
-</script>
+</script> -->
