@@ -46,194 +46,79 @@ const slides: Slide[] = [
 ---
 
 <Layout title="Home">
-  <main class="relative">
-    <div
-      class="mx-auto my-0 flex max-w-[95%] flex-col gap-40 xl:max-w-[70%]"
-      id="scrollArea"
+  <main class="relative flex flex-col gap-20 px-[10%]">
+    <section
+      id="hero"
+      class="grid min-h-svh grid-cols-1 items-center md:grid-cols-[40%_60%]"
     >
-      <section
-        id="hero"
-        class="relative grid grid-cols-1 items-center md:grid-cols-[40%_60%]"
-      >
-        <div class="order-2 md:order-1">
-          <h1 id="hero-title" class="mb-6 max-w-[500px] text-4xl font-bold">
-            Full-Stack Software Developer
-          </h1>
-          <p id="hero-description" class="mb-[14px] max-w-[600px] leading-5">
-            Resolving problems, building APPs, modules, APIs, integrations, and
-            more.
-          </p>
-          <a
-            href="#about-me"
-            class="flex w-fit items-center gap-1 font-bold underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
-            style="--rotate-degrees: 0;"
-            onmouseenter="this.style.setProperty('--rotate-degrees', '90deg');"
-            onmouseleave="this.style.setProperty('--rotate-degrees', '0deg');"
-          >
-            About me <Icon
-              name="mdi:chevron-right"
-              class="mt-[6px] h-6 w-6"
-              style="transform: rotate(var(--rotate-degrees)); transition: transform 0.3s ease-in-out;"
-            />
-          </a>
-        </div>
-        <div class="order-1 w-full md:order-2">
-          <figure class="w-full">
-            <img
-              src={Setup.src}
-              alt="hero logo"
-              width={Setup.width}
-              height={Setup.height}
-              class="w-full max-w-full"
-            />
-          </figure>
-        </div>
-      </section>
+      <div class="order-2 md:order-1">
+        <h1 id="hero-title" class="mb-6 max-w-[500px] text-4xl font-bold">
+          Full-Stack Software Developer
+        </h1>
+        <p id="hero-description" class="mb-[14px] max-w-[600px] leading-5">
+          Resolving problems, building APPs, modules, APIs, integrations, and
+          more.
+        </p>
+        <a
+          href="#about-me"
+          class="flex w-fit items-center gap-1 font-bold underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
+          style="--rotate-degrees: 0;"
+          onmouseenter="this.style.setProperty('--rotate-degrees', '90deg');"
+          onmouseleave="this.style.setProperty('--rotate-degrees', '0deg');"
+        >
+          About me <Icon
+            name="mdi:chevron-right"
+            class="mt-[6px] h-6 w-6"
+            style="transform: rotate(var(--rotate-degrees)); transition: transform 0.3s ease-in-out;"
+          />
+        </a>
+      </div>
+      <div class="order-1 w-full md:order-2">
+        <figure class="w-full">
+          <img
+            src={Setup.src}
+            alt="hero logo"
+            width={Setup.width}
+            height={Setup.height}
+            class="w-full max-w-full"
+          />
+        </figure>
+      </div>
+    </section>
 
-      <section
-        id="about-me"
-        class="grid-col-1 grid grid-rows-[180px_auto] items-center md:grid-cols-[50%_50%] md:grid-rows-1"
-      >
-        <div class="self-end md:self-auto">
-          <h2 id="about-me-title" class="mb-3 text-4xl font-bold">
-            <span>Hello there,</span>
-            <br />
-            <span>I'm Cristhofer Pincetti</span>
-          </h2>
-          <p class="mb-6 font-light opacity-70">Full-Stack Developer</p>
-        </div>
-        <div class="self-start md:self-auto">
-          <p id="about-me-description" class="leading-5">
-            Over one year of experienced creating seamless user experiences.
-          </p>
+    <section
+      id="about-me"
+      class="grid-col-1 grid min-h-svh content-start items-center md:grid-cols-[50%_50%] md:grid-rows-1"
+    >
+      <div class="self-end md:self-auto">
+        <h2 id="about-me-title" class="mb-3 text-4xl font-bold">
+          <span>Hello there,</span>
           <br />
-          <p id="about-me-description" class="leading-5">
-            Skilled in innovative tech solutions and creative coding.
-          </p>
-          <br />
-          <p id="about-me-description" class="m leading-5">
-            Specializes in building end-to-end solutions and enjoys tackling
-            complex challenges.
-          </p>
-        </div>
-      </section>
+          <span>I'm Cristhofer Pincetti</span>
+        </h2>
+        <p class="mb-6 font-light opacity-70">Full-Stack Developer</p>
+      </div>
+      <div class="self-start md:self-auto">
+        <p id="about-me-description" class="leading-5">
+          Over one year of experienced creating seamless user experiences.
+        </p>
+        <br />
+        <p id="about-me-description" class="leading-5">
+          Skilled in innovative tech solutions and creative coding.
+        </p>
+        <br />
+        <p id="about-me-description" class="m leading-5">
+          Specializes in building end-to-end solutions and enjoys tackling
+          complex challenges.
+        </p>
+      </div>
+    </section>
 
-      <Slider slides={slides} currentSlide={1} />
+    <Slider slides={slides} currentSlide={1} />
 
-      <!-- <section
-        id="experience"
-        class="relative grid min-h-svh items-center justify-items-center overflow-x-hidden text-center"
-      >
-        <section
-          id="slide-1"
-          class="absolute flex min-h-svh w-full translate-x-0 flex-col items-center transition-all duration-300 ease-in-out md:justify-center"
-        >
-          <p class="mb-2 font-light opacity-70">Full-time job</p>
-          <h2 id="experience-title-slide-1" class="mb-5 text-4xl font-bold">
-            Hospital San Juan de Dios
-          </h2>
-          <div id="experience-description-slide-1">
-            <h3 class="mb-2 text-2xl font-bold">Software Engineer</h3>
-            <p class="mb-5 text-sm font-light">October 2022 - September 2023</p>
-            <img
-              src="hospital_san_juan_de_dios-logo.png"
-              alt="hospital san juan de dios logo"
-              class="mx-auto mb-5 max-w-28"
-            />
-            <p class="mb-4 max-w-[750px] text-pretty">
-              Led the development of a finance module, encompassing document
-              management, report generation, and dynamic barcode implementation.
-              Implemented APIs to streamline system integration, enhancing
-              operational efficiency. Collaborated with internal experts to
-              integrate with third-party providers, and automated bulk data
-              loading to expedite processes. Played a pivotal role in the
-              development of a complex prescription entry system for outpatient
-              care, facilitating efficient dispensing at various levels.
-              Introduced CI/CD practices to optimize software development and
-              deployment.
-            </p>
-          </div>
-        </section>
-        <section
-          id="slide-2"
-          class="absolute flex min-h-svh w-full translate-x-[100vw] flex-col items-center justify-center transition-all duration-300 ease-in-out"
-        >
-          <p class="mb-2 font-light opacity-70">
-            Partial-time job (specific project)
-          </p>
-          <h2 id="experience-title-slide-2" class="mb-5 text-4xl font-bold">
-            Universidad de La Serena
-          </h2>
-          <div id="experience-description-slide-2">
-            <h3 class="mb-2 text-2xl font-bold">Software Developer</h3>
-            <p class="mb-5 text-sm font-light">September 2023 - March 2024</p>
-            <img
-              src="uls-logo.png"
-              alt="universidad de la serena logo"
-              class="mx-auto mb-5 max-w-28"
-            />
-            <p class="mb-4 max-w-[750px] text-pretty">
-              Led the development of a comprehensive web platform at the
-              Universidad de La Serena, focusing on water usage, report
-              generation, water delivery management, role-based authentication,
-              water delivery tracking, mobile app API integration, and
-              continuous platform maintenance. Collaborated with
-              multidisciplinary teams to enhance the platform's functionality
-              and security, and implemented CI/CD practices to streamline the
-              development and deployment process.
-            </p>
-          </div>
-        </section>
-        <section
-          id="slide-3"
-          class="absolute flex min-h-svh w-full translate-x-[200vw] flex-col items-center justify-center transition-all duration-300 ease-in-out"
-        >
-          <p class="mb-2 font-light opacity-70">Full-time job</p>
-          <h2 id="experience-title-slide-3" class="mb-5 text-4xl font-bold">
-            Sixbell
-          </h2>
-          <div id="experience-description-slide-3">
-            <h3 class="mb-2 text-2xl font-bold">Software Engineer</h3>
-            <p class="mb-5 text-sm font-light">November 2023 - Today</p>
-            <img
-              src="sixbell-logo.png"
-              alt="sixbell logo"
-              class="mx-auto mb-5 max-w-32"
-            />
-            <p class="mb-4 max-w-[750px] text-pretty">
-              Currently at Sixbell, I am actively involved in exploring new
-              technologies to address challenges and migrate legacy platforms.
-              My work includes developing new modules across various platforms,
-              with a focus on Angular and Java Spring Boot stacks. I have also
-              implemented CI/CD pipelines using GitLab and Docker, enhancing the
-              development and deployment processes. Additionally, I have
-              contributed to business technology solutions, which, due to
-              confidentiality, cannot be disclosed but are crucial for internal
-              operations.
-            </p>
-          </div>
-        </section>
-        <div
-          class="absolute bottom-10 flex items-center justify-center gap-3 self-baseline"
-        >
-          <span
-            id="button-slide-1"
-            class="block h-4 w-4 cursor-pointer rounded-full bg-accent transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
-          ></span>
-          <span
-            id="button-slide-2"
-            class="block h-2 w-2 cursor-pointer rounded-full bg-accent opacity-80 transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
-          ></span>
-          <span
-            id="button-slide-3"
-            class="block h-2 w-2 cursor-pointer rounded-full bg-accent opacity-80 transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
-          ></span>
-        </div>
-      </section> -->
-    </div>
     <section
       id="skills"
-      class="grid items-center justify-items-center pb-20 text-center"
+      class="grid min-h-svh items-center justify-items-center pb-20 text-center"
     >
       <div>
         <p class="mb-2 font-light opacity-70">
@@ -378,140 +263,3 @@ const slides: Slide[] = [
 
   <style></style>
 </Layout>
-
-<!-- <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const slides = {
-      1: document.getElementById("slide-1"),
-      2: document.getElementById("slide-2"),
-      3: document.getElementById("slide-3"),
-    };
-
-    const buttons = {
-      1: document.getElementById("button-slide-1"),
-      2: document.getElementById("button-slide-2"),
-      3: document.getElementById("button-slide-3"),
-    };
-
-    const updateSlidePosition = (
-      slide: HTMLElement | null,
-      targetSlide: HTMLElement | null,
-    ) => {
-      if (slide === targetSlide) {
-        slide?.classList.remove("translate-x-[100vw]", "translate-x-[200vw]");
-        slide?.classList.add("translate-x-0");
-      } else {
-        slide?.classList.remove("translate-x-0");
-        slide?.classList.add(
-          slide?.id === "slide-2"
-            ? "translate-x-[100vw]"
-            : "translate-x-[200vw]",
-        );
-      }
-    };
-
-    const updateButtonSize = (
-      btn: HTMLElement | null,
-      targetButton: HTMLElement | null,
-    ) => {
-      if (btn === targetButton) {
-        btn?.classList.remove("h-2", "w-2", "opacity-80");
-        btn?.classList.add("h-4", "w-4");
-      } else {
-        btn?.classList.remove("h-4", "w-4");
-        btn?.classList.add("h-2", "w-2", "opacity-80");
-      }
-    };
-
-    Object.values(buttons).forEach((button) => {
-      button?.addEventListener("click", (event: MouseEvent) => {
-        const targetSlideId = (event.currentTarget as HTMLElement)?.id
-          .split("-")
-          .pop();
-        const targetSlide = slides[targetSlideId as keyof typeof slides];
-
-        if (targetSlide) {
-          Object.values(slides).forEach((slide) =>
-            updateSlidePosition(slide, targetSlide),
-          );
-          Object.values(buttons).forEach((btn) =>
-            updateButtonSize(btn, event.currentTarget as HTMLElement),
-          );
-        }
-      });
-    });
-
-    initializeScrollHandling();
-  });
-
-  function initializeScrollHandling() {
-    const elements = Array.from(document.querySelectorAll("section"));
-    const observer = new IntersectionObserver(handleIntersection);
-    let currentIndex = 0;
-    let isScrolling = false;
-
-    function handleIntersection(entries: IntersectionObserverEntry[]) {
-      entries.forEach((entry) => {
-        if (window.innerWidth <= 1024) {
-          enableScrolling();
-        } else {
-          entry.isIntersecting && entry.intersectionRatio === 1
-            ? enableScrolling()
-            : disableScrolling();
-        }
-      });
-    }
-
-    function enableScrolling() {
-      document.body.style.overflowY = "auto";
-    }
-
-    function disableScrolling() {
-      document.body.style.overflowY = "hidden";
-    }
-
-    function handleWindowResize() {
-      window.innerWidth <= 1024 ? enableScrolling() : disableScrolling();
-    }
-
-    function handleScroll(event: WheelEvent) {
-      if (isScrolling) return;
-
-      currentIndex =
-        event.deltaY > 0
-          ? Math.min(currentIndex + 1, elements.length - 1)
-          : Math.max(currentIndex - 1, 0);
-      elements[currentIndex].scrollIntoView({ behavior: "smooth" });
-
-      isScrolling = true;
-      setTimeout(() => {
-        isScrolling = false;
-      }, 200);
-    }
-
-    const debouncedScroll = debounce(handleScroll, 200);
-
-    window.addEventListener("resize", handleWindowResize);
-    elements.forEach((element) => observer.observe(element));
-    window.addEventListener("wheel", debouncedScroll);
-  }
-
-  function debounce(func: Function, wait: number) {
-    let timeout: ReturnType<typeof setTimeout> | undefined;
-
-    return function (...args: any[]): void {
-      const context: Window = window;
-
-      const later: () => void = function (): void {
-        timeout = undefined;
-        func.apply(context, args);
-      };
-
-      if (timeout !== undefined) {
-        clearTimeout(timeout);
-      }
-
-      timeout = setTimeout(later, wait);
-    };
-  }
-</script> -->
