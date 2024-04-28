@@ -20,13 +20,13 @@ const { slides, currentSlide } = Astro.props;
 
 <section
   id="experience"
-  class="flex flex-col items-center justify-center gap-5"
+  class="flex min-h-svh flex-col items-center justify-center gap-5"
 >
   {
     slides.map((slide) => (
       <div
         class:list={[
-          "relative grid items-center justify-items-center text-center",
+          "relative grid items-center justify-items-center text-center max-md:min-h-[50svh] lg:min-h-[30svh]",
           { hidden: slide.slideNumber !== currentSlide },
         ]}
         id={`slide-${slide.slideNumber}`}
