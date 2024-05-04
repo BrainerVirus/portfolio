@@ -1,105 +1,92 @@
 ---
 type Props = {
-  slides: Slide[];
-  currentSlide: number;
-};
+	slides: Slide[]
+	currentSlide: number
+}
 
 export type Slide = {
-  beforeTitle: string;
-  title: string;
-  subtitle: string;
-  subtitle2: string;
-  content: string;
-  imageSrc: string;
-  imageAlt: string;
-  slideNumber: number;
-};
+	beforeTitle: string
+	title: string
+	subtitle: string
+	subtitle2: string
+	content: string
+	imageSrc: string
+	imageAlt: string
+	slideNumber: number
+}
 
-const { slides, currentSlide } = Astro.props;
+const { slides, currentSlide } = Astro.props
 ---
 
-<section
-  id="experience"
-  class="flex min-h-svh flex-col items-center justify-center gap-5"
->
-  {
-    slides.map((slide) => (
-      <div
-        class:list={[
-          "relative grid items-center justify-items-center text-center max-md:min-h-[50svh] lg:min-h-[30svh]",
-          { hidden: slide.slideNumber !== currentSlide },
-        ]}
-        id={`slide-${slide.slideNumber}`}
-      >
-        <div>
-          <p class="mb-2 font-light opacity-70">{slide.beforeTitle}</p>
-          <h2 class="mb-5 text-4xl font-bold">{slide.title}</h2>
-          <div>
-            <h3 class="mb-2 text-2xl font-bold">{slide.subtitle}</h3>
-            <p class="mb-5 text-sm font-light">{slide.subtitle2}</p>
-            <img
-              src={slide.imageSrc}
-              alt={slide.imageAlt}
-              class="mx-auto mb-5 max-w-28"
-            />
-            <p class="mb-4 max-w-[750px] text-pretty">{slide.content}</p>
-          </div>
-        </div>
-      </div>
-    ))
-  }
+<section id="experience" class="flex min-h-svh flex-col items-center justify-center gap-5">
+	{
+		slides.map((slide) => (
+			<div
+				class:list={[
+					"relative grid items-center justify-items-center text-center max-md:min-h-[50svh] lg:min-h-[30svh]",
+					{ hidden: slide.slideNumber !== currentSlide },
+				]}
+				id={`slide-${slide.slideNumber}`}
+			>
+				<div>
+					<p class="mb-2 font-light opacity-70">{slide.beforeTitle}</p>
+					<h2 class="mb-5 text-4xl font-bold">{slide.title}</h2>
+					<div>
+						<h3 class="mb-2 text-2xl font-bold">{slide.subtitle}</h3>
+						<p class="mb-5 text-sm font-light">{slide.subtitle2}</p>
+						<img src={slide.imageSrc} alt={slide.imageAlt} class="mx-auto mb-5 max-w-28" />
+						<p class="mb-4 max-w-[750px] text-pretty">{slide.content}</p>
+					</div>
+				</div>
+			</div>
+		))
+	}
 
-  <div
-    class="mx-auto my-0 flex items-center justify-center gap-3 self-baseline"
-  >
-    <span
-      id="button-slide-1"
-      class="block h-4 w-4 cursor-pointer rounded-full bg-accent transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
-    ></span>
-    <span
-      id="button-slide-2"
-      class="block h-2 w-2 cursor-pointer rounded-full bg-accent opacity-80 transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
-    ></span>
-    <span
-      id="button-slide-3"
-      class="block h-2 w-2 cursor-pointer rounded-full bg-accent opacity-80 transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
-    ></span>
-  </div>
+	<div class="mx-auto my-0 flex items-center justify-center gap-3 self-baseline">
+		<span
+			id="button-slide-1"
+			class="block h-4 w-4 cursor-pointer rounded-full bg-accent transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
+		></span>
+		<span
+			id="button-slide-2"
+			class="block h-2 w-2 cursor-pointer rounded-full bg-accent opacity-80 transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
+		></span>
+		<span
+			id="button-slide-3"
+			class="block h-2 w-2 cursor-pointer rounded-full bg-accent opacity-80 transition-all duration-200 ease-in-out content-[''] hover:h-4 hover:w-4"
+		></span>
+	</div>
 </section>
 
 <script>
-  let currentSlide = 1;
+	let currentSlide = 1
 
-  function updateSlide(newSlideNumber: number) {
-    currentSlide = newSlideNumber;
+	function updateSlide(newSlideNumber: number) {
+		currentSlide = newSlideNumber
 
-    document.querySelectorAll('[id^="slide-"]').forEach((slide) => {
-      slide.classList.add("hidden");
-    });
+		document.querySelectorAll('[id^="slide-"]').forEach((slide) => {
+			slide.classList.add("hidden")
+		})
 
-    let slide = document.getElementById(`slide-${newSlideNumber}`);
-    if (slide) {
-      slide.classList.remove("hidden");
-    }
+		let slide = document.getElementById(`slide-${newSlideNumber}`)
+		if (slide) {
+			slide.classList.remove("hidden")
+		}
 
-    document
-      .querySelectorAll('[id^="button-slide-"]')
-      .forEach((button, index) => {
-        button.classList.remove("h-4", "w-4");
-        button.classList.add("h-2", "w-2", "opacity-80");
+		document.querySelectorAll('[id^="button-slide-"]').forEach((button, index) => {
+			button.classList.remove("h-4", "w-4")
+			button.classList.add("h-2", "w-2", "opacity-80")
 
-        if (index + 1 === currentSlide) {
-          button.classList.remove("h-2", "w-2", "opacity-80");
-          button.classList.add("h-4", "w-4");
-        }
-      });
-  }
+			if (index + 1 === currentSlide) {
+				button.classList.remove("h-2", "w-2", "opacity-80")
+				button.classList.add("h-4", "w-4")
+			}
+		})
+	}
 
-  document
-    .querySelectorAll('[id^="button-slide-"]')
-    .forEach((button, index) => {
-      button.addEventListener("click", () => {
-        updateSlide(index + 1);
-      });
-    });
+	document.querySelectorAll('[id^="button-slide-"]').forEach((button, index) => {
+		button.addEventListener("click", () => {
+			updateSlide(index + 1)
+		})
+	})
 </script>
