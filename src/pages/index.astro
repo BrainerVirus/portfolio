@@ -1,265 +1,252 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import Slider, { type Slide } from "../components/ExperienceSlider.astro";
-import { Icon } from "astro-icon/components";
-import Setup from "../../public/setup-black-gray-blue-purple-v3.svg";
-import "animate.css";
+// eslint-disable-next-line import/order
+import Layout from "@/layouts/Layout.astro"
+import Slider, { type Slide } from "@components/ExperienceSlider.astro"
+import Setup from "@public/setup-black-gray-blue-purple-v3.svg"
+import "animate.css"
+import { Icon } from "astro-icon/components"
 
 const slides: Slide[] = [
-  {
-    beforeTitle: "Full-time job",
-    title: "Hospital San Juan de Dios",
-    subtitle: "Software Engineer",
-    subtitle2: "October 2022 - September 2023",
-    content: `
+	{
+		beforeTitle: "Full-time job",
+		title: "Hospital San Juan de Dios",
+		subtitle: "Software Engineer",
+		subtitle2: "October 2022 - September 2023",
+		content: `
     Led the development of a finance module, encompassing document management, report generation, and dynamic barcode implementation. Implemented APIs to streamline system integration, enhancing operational efficiency. Collaborated with internal experts to integrate with third-party providers, and automated bulk data loading to expedite processes. Played a pivotal role in the development of a complex prescription entry system for outpatient care, facilitating efficient dispensing at various levels. Introduced CI/CD practices to optimize software development and deployment.
   `,
-    imageSrc: "hospital_san_juan_de_dios-logo.png",
-    imageAlt: "hospital san juan de dios logo",
-    slideNumber: 1,
-  },
-  {
-    beforeTitle: "Partial-time job (specific project)",
-    title: "Universidad de La Serena",
-    subtitle: "Software Developer",
-    subtitle2: "September 2023 - March 2024",
-    content: `
+		imageSrc: "hospital_san_juan_de_dios-logo.png",
+		imageAlt: "hospital san juan de dios logo",
+		slideNumber: 1,
+	},
+	{
+		beforeTitle: "Partial-time job (specific project)",
+		title: "Universidad de La Serena",
+		subtitle: "Software Developer",
+		subtitle2: "September 2023 - March 2024",
+		content: `
     Led the development of a comprehensive web platform at the Universidad de La Serena, focusing on water usage, report generation, water delivery management, role-based authentication, water delivery tracking, mobile app API integration, and continuous platform maintenance. Collaborated with multidisciplinary teams to enhance the platform's functionality and security, and implemented CI/CD practices to streamline the development and deployment process.
   `,
-    imageSrc: "uls-logo.png",
-    imageAlt: "universidad de la serena logo",
-    slideNumber: 2,
-  },
-  {
-    beforeTitle: "Full-time job",
-    title: "Sixbell",
-    subtitle: "Software Engineer",
-    subtitle2: "November 2023 - Today",
-    content: `
+		imageSrc: "uls-logo.png",
+		imageAlt: "universidad de la serena logo",
+		slideNumber: 2,
+	},
+	{
+		beforeTitle: "Full-time job",
+		title: "Sixbell",
+		subtitle: "Software Engineer",
+		subtitle2: "November 2023 - Today",
+		content: `
     Currently at Sixbell, I am actively involved in exploring new technologies to address challenges and migrate legacy platforms. My work includes developing new modules across various platforms, with a focus on Angular and Java Spring Boot stacks. I have also implemented CI/CD pipelines using GitLab and Docker, enhancing the development and deployment processes. Additionally, I have contributed to business technology solutions, which, due to confidentiality, cannot be disclosed but are crucial for internal operations.
   `,
-    imageSrc: "sixbell-logo.png",
-    imageAlt: "sixbell logo",
-    slideNumber: 3,
-  },
-];
+		imageSrc: "sixbell-logo.png",
+		imageAlt: "sixbell logo",
+		slideNumber: 3,
+	},
+]
 ---
 
 <Layout title="Home">
-  <main class="relative flex flex-col gap-20 px-[10%]">
-    <section
-      id="hero"
-      class="grid min-h-svh grid-cols-1 items-center md:grid-cols-[40%_60%]"
-    >
-      <div class="order-2 md:order-1">
-        <h1 id="hero-title" class="mb-6 max-w-[500px] text-4xl font-bold">
-          Full-Stack Software Developer
-        </h1>
-        <p id="hero-description" class="mb-[14px] max-w-[600px] leading-5">
-          Resolving problems, building APPs, modules, APIs, integrations, and
-          more.
-        </p>
-        <a
-          href="#about-me"
-          class="flex w-fit items-center gap-1 font-bold underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
-          style="--rotate-degrees: 0;"
-          onmouseenter="this.style.setProperty('--rotate-degrees', '90deg');"
-          onmouseleave="this.style.setProperty('--rotate-degrees', '0deg');"
-        >
-          About me <Icon
-            name="mdi:chevron-right"
-            class="mt-[6px] h-6 w-6"
-            style="transform: rotate(var(--rotate-degrees)); transition: transform 0.3s ease-in-out;"
-          />
-        </a>
-      </div>
-      <div class="order-1 w-full md:order-2">
-        <figure class="w-full">
-          <img
-            src={Setup.src}
-            alt="hero logo"
-            width={Setup.width}
-            height={Setup.height}
-            class="w-full max-w-full"
-          />
-        </figure>
-      </div>
-    </section>
+	<main class="relative flex flex-col gap-20 px-[10%]">
+		<section id="hero" class="grid min-h-svh grid-cols-1 items-center md:grid-cols-[40%_60%]">
+			<div class="order-2 md:order-1">
+				<h1 id="hero-title" class="mb-6 max-w-[500px] text-4xl font-bold">
+					Full-Stack Software Developer
+				</h1>
+				<p id="hero-description" class="mb-[14px] max-w-[600px] leading-5">
+					Resolving problems, building APPs, modules, APIs, integrations, and more.
+				</p>
+				<a
+					href="#about-me"
+					class="flex w-fit items-center gap-1 font-bold underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
+					style="--rotate-degrees: 0;"
+					onmouseenter="this.style.setProperty('--rotate-degrees', '90deg');"
+					onmouseleave="this.style.setProperty('--rotate-degrees', '0deg');"
+				>
+					About me <Icon
+						name="mdi:chevron-right"
+						class="mt-[6px] h-6 w-6"
+						style="transform: rotate(var(--rotate-degrees)); transition: transform 0.3s ease-in-out;"
+					/>
+				</a>
+			</div>
+			<div class="order-1 w-full md:order-2">
+				<figure class="w-full">
+					<img
+						src={Setup.src}
+						alt="hero logo"
+						width={Setup.width}
+						height={Setup.height}
+						class="w-full max-w-full"
+					/>
+				</figure>
+			</div>
+		</section>
 
-    <section
-      id="about-me"
-      class="grid-col-1 grid min-h-svh content-start items-center md:grid-cols-[50%_50%] md:grid-rows-1"
-    >
-      <div class="self-end md:self-auto">
-        <h2 id="about-me-title" class="mb-3 text-4xl font-bold">
-          <span>Hello there,</span>
-          <br />
-          <span>I'm Cristhofer Pincetti</span>
-        </h2>
-        <p class="mb-6 font-light opacity-70">Full-Stack Developer</p>
-      </div>
-      <div class="self-start md:self-auto">
-        <p id="about-me-description" class="leading-5">
-          Over one year of experienced creating seamless user experiences.
-        </p>
-        <br />
-        <p id="about-me-description" class="leading-5">
-          Skilled in innovative tech solutions and creative coding.
-        </p>
-        <br />
-        <p id="about-me-description" class="m leading-5">
-          Specializes in building end-to-end solutions and enjoys tackling
-          complex challenges.
-        </p>
-      </div>
-    </section>
+		<section
+			id="about-me"
+			class="grid-col-1 grid min-h-svh content-start items-center md:grid-cols-[50%_50%] md:grid-rows-1"
+		>
+			<div class="self-end md:self-auto">
+				<h2 id="about-me-title" class="mb-3 text-4xl font-bold">
+					<span>Hello there,</span>
+					<br />
+					<span>I'm Cristhofer Pincetti</span>
+				</h2>
+				<p class="mb-6 font-light opacity-70">Full-Stack Developer</p>
+			</div>
+			<div class="self-start md:self-auto">
+				<p id="about-me-description" class="leading-5">
+					Over one year of experienced creating seamless user experiences.
+				</p>
+				<br />
+				<p id="about-me-description" class="leading-5">
+					Skilled in innovative tech solutions and creative coding.
+				</p>
+				<br />
+				<p id="about-me-description" class="m leading-5">
+					Specializes in building end-to-end solutions and enjoys tackling complex challenges.
+				</p>
+			</div>
+		</section>
 
-    <Slider slides={slides} currentSlide={1} />
+		<Slider slides={slides} currentSlide={1} />
 
-    <section
-      id="skills"
-      class="grid min-h-svh items-center justify-items-center pb-20 text-center"
-    >
-      <div>
-        <p class="mb-2 font-light opacity-70">
-          Superpowers for software superheroes!
-        </p>
-        <h2 id="skills-title" class="mb-6 text-4xl font-bold">Skills</h2>
-        <p id="skills-description" class="mx-auto mb-5 max-w-2xl">
-          As a full-stack dev I am proficient many techs but I have primarly use
-          JS, TS, Node JS, and Next JS to build web appplications small and
-          medium, responsive layout, implement security features, modern UI/UX.
-          For other part with genexus i have develop medium and big modules for
-          and ERP, with integrations with thirdparties, and other features.
-        </p>
-        <p id="skills-linkedin" class="mb-16">
-          Visit my <a
-            href="https://www.linkedin.com/in/cristhofer-pincetti-herrera/"
-            class="underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
-            >Linkedin</a
-          > for more details.
-        </p>
-        <div
-          id="skills-list"
-          class="flex w-full max-w-3xl flex-wrap items-center justify-center gap-5"
-        >
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="teenyicons:nextjs-solid" class="h-12 w-12" />
-            <figcaption>Next JS</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <svg
-              width="63"
-              height="79"
-              class="h-12 w-12"
-              viewBox="0 0 63 79"
-              fill="currentColor"
-              stroke="currentColor"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M19.4924 65.9282C15.6165 62.432 14.4851 55.0859 16.0999 49.7638C18.8998 53.1193 22.7793 54.1822 26.7977 54.7822C33.0013 55.7081 39.0937 55.3618 44.8565 52.5637C45.5158 52.2434 46.125 51.8174 46.8454 51.386C47.3861 52.9341 47.5268 54.497 47.338 56.0877C46.8787 59.9617 44.9251 62.9542 41.8177 65.2227C40.5752 66.13 39.2604 66.9411 37.9771 67.7967C34.0346 70.4262 32.9679 73.5095 34.4494 77.9946C34.4846 78.1038 34.5161 78.2131 34.5957 78.4797C32.5828 77.5909 31.1124 76.2965 29.9921 74.5946C28.8088 72.7984 28.2458 70.8114 28.2162 68.6615C28.2014 67.6152 28.2014 66.5597 28.0588 65.5282C27.7107 63.0135 26.5144 61.8876 24.2608 61.8227C21.9479 61.7561 20.1183 63.1672 19.6331 65.3893C19.5961 65.5597 19.5424 65.7282 19.4887 65.9263L19.4924 65.9282Z"
-                fill="currentColor"
-                stroke="currentColor"></path>
-              <path
-                d="M0 51.3932C0 51.3932 10.5979 46.2433 21.2254 46.2433L29.2382 21.5069C29.5381 20.3106 30.4141 19.4977 31.4029 19.4977C32.3918 19.4977 33.2677 20.3106 33.5677 21.5069L41.5804 46.2433C54.1672 46.2433 62.8058 51.3932 62.8058 51.3932C62.8058 51.3932 44.8044 2.47586 44.7692 2.37772C44.2526 0.931458 43.3804 0 42.2045 0H20.6032C19.4273 0 18.5903 0.931458 18.0384 2.37772C17.9995 2.47401 0 51.3932 0 51.3932Z"
-                fill="currentColor"
-                stroke="currentColor"></path>
-            </svg>
+		<section id="skills" class="grid min-h-svh items-center justify-items-center pb-20 text-center">
+			<div>
+				<p class="mb-2 font-light opacity-70">Superpowers for software superheroes!</p>
+				<h2 id="skills-title" class="mb-6 text-4xl font-bold">Skills</h2>
+				<p id="skills-description" class="mx-auto mb-5 max-w-2xl">
+					As a full-stack dev I am proficient many techs but I have primarly use JS, TS, Node JS,
+					and Next JS to build web appplications small and medium, responsive layout, implement
+					security features, modern UI/UX. For other part with genexus i have develop medium and big
+					modules for and ERP, with integrations with thirdparties, and other features.
+				</p>
+				<p id="skills-linkedin" class="mb-16">
+					Visit my <a
+						href="https://www.linkedin.com/in/cristhofer-pincetti-herrera/"
+						class="underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
+						>Linkedin</a
+					> for more details.
+				</p>
+				<div
+					id="skills-list"
+					class="flex w-full max-w-3xl flex-wrap items-center justify-center gap-5"
+				>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="teenyicons:nextjs-solid" class="h-12 w-12" />
+						<figcaption>Next JS</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<svg
+							width="63"
+							height="79"
+							class="h-12 w-12"
+							viewBox="0 0 63 79"
+							fill="currentColor"
+							stroke="currentColor"
+							xmlns="http://www.w3.org/2000/svg"
+						>
+							<path
+								d="M19.4924 65.9282C15.6165 62.432 14.4851 55.0859 16.0999 49.7638C18.8998 53.1193 22.7793 54.1822 26.7977 54.7822C33.0013 55.7081 39.0937 55.3618 44.8565 52.5637C45.5158 52.2434 46.125 51.8174 46.8454 51.386C47.3861 52.9341 47.5268 54.497 47.338 56.0877C46.8787 59.9617 44.9251 62.9542 41.8177 65.2227C40.5752 66.13 39.2604 66.9411 37.9771 67.7967C34.0346 70.4262 32.9679 73.5095 34.4494 77.9946C34.4846 78.1038 34.5161 78.2131 34.5957 78.4797C32.5828 77.5909 31.1124 76.2965 29.9921 74.5946C28.8088 72.7984 28.2458 70.8114 28.2162 68.6615C28.2014 67.6152 28.2014 66.5597 28.0588 65.5282C27.7107 63.0135 26.5144 61.8876 24.2608 61.8227C21.9479 61.7561 20.1183 63.1672 19.6331 65.3893C19.5961 65.5597 19.5424 65.7282 19.4887 65.9263L19.4924 65.9282Z"
+								fill="currentColor"
+								stroke="currentColor"></path>
+							<path
+								d="M0 51.3932C0 51.3932 10.5979 46.2433 21.2254 46.2433L29.2382 21.5069C29.5381 20.3106 30.4141 19.4977 31.4029 19.4977C32.3918 19.4977 33.2677 20.3106 33.5677 21.5069L41.5804 46.2433C54.1672 46.2433 62.8058 51.3932 62.8058 51.3932C62.8058 51.3932 44.8044 2.47586 44.7692 2.37772C44.2526 0.931458 43.3804 0 42.2045 0H20.6032C19.4273 0 18.5903 0.931458 18.0384 2.37772C17.9995 2.47401 0 51.3932 0 51.3932Z"
+								fill="currentColor"
+								stroke="currentColor"></path>
+						</svg>
 
-            <figcaption>Astro</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="teenyicons:nodejs-solid" class="h-12 w-12" />
-            <figcaption>Node JS</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="teenyicons:javascript-solid" class="h-12 w-12" />
-            <figcaption>JavaScript</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="teenyicons:css3-solid" class="h-12 w-12" />
-            <figcaption>CSS</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="teenyicons:html5-solid" class="h-12 w-12" />
-            <figcaption>HTML:5</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="teenyicons:tailwind-solid" class="h-12 w-12" />
-            <figcaption>Tailwind CSS</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="teenyicons:typescript-solid" class="h-12 w-12" />
-            <figcaption>TypeScript</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="cib:postgresql" class="h-12 w-12" />
-            <figcaption>PostgreSQL</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="grommet-icons:mysql" class="h-12 w-12" />
-            <figcaption>MySQL</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon
-              name="logos:prisma"
-              class="h-12 w-12 fill-primary hover:fill-secondary"
-            />
-            <figcaption>Prisma</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="simple-icons:sequelize" class="h-12 w-12" />
-            <figcaption>Sequelize</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="simple-icons:githubactions" class="h-12 w-12" />
-            <figcaption>Github Actions</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="simple-icons:mongodb" class="h-12 w-12" />
-            <figcaption>MongoDB</figcaption>
-          </figure>
-          <figure
-            class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
-          >
-            <Icon name="bi:git" class="h-12 w-12" />
-            <figcaption>Git</figcaption>
-          </figure>
-        </div>
-      </div>
-    </section>
-    <div class="stars -z-10" role="banner"></div>
-    <div class="twinkling -z-10" role="banner"></div>
-  </main>
+						<figcaption>Astro</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="teenyicons:nodejs-solid" class="h-12 w-12" />
+						<figcaption>Node JS</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="teenyicons:javascript-solid" class="h-12 w-12" />
+						<figcaption>JavaScript</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="teenyicons:css3-solid" class="h-12 w-12" />
+						<figcaption>CSS</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="teenyicons:html5-solid" class="h-12 w-12" />
+						<figcaption>HTML:5</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="teenyicons:tailwind-solid" class="h-12 w-12" />
+						<figcaption>Tailwind CSS</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="teenyicons:typescript-solid" class="h-12 w-12" />
+						<figcaption>TypeScript</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="cib:postgresql" class="h-12 w-12" />
+						<figcaption>PostgreSQL</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="grommet-icons:mysql" class="h-12 w-12" />
+						<figcaption>MySQL</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="logos:prisma" class="h-12 w-12 fill-primary hover:fill-secondary" />
+						<figcaption>Prisma</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="simple-icons:sequelize" class="h-12 w-12" />
+						<figcaption>Sequelize</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="simple-icons:githubactions" class="h-12 w-12" />
+						<figcaption>Github Actions</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="simple-icons:mongodb" class="h-12 w-12" />
+						<figcaption>MongoDB</figcaption>
+					</figure>
+					<figure
+						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+					>
+						<Icon name="bi:git" class="h-12 w-12" />
+						<figcaption>Git</figcaption>
+					</figure>
+				</div>
+			</div>
+		</section>
+		<div class="stars -z-10" role="banner"></div>
+		<div class="twinkling -z-10" role="banner"></div>
+	</main>
 
-  <style></style>
+	<style></style>
 </Layout>
