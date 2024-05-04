@@ -30,6 +30,7 @@
     "typescript": "5.4.5"
   },
   "devDependencies": {
+    "@antfu/eslint-config": "0.43.1",
     "@iconify-json/bi": "1.1.23",
     "@iconify-json/cib": "1.1.8",
     "@iconify-json/grommet-icons": "1.1.10",
@@ -46,7 +47,7 @@
     "cz-conventional-changelog": "3.3.0",
     "eslint": "8.57.0",
     "eslint-config-prettier": "9.1.0",
-    "eslint-plugin-astro": "1.0.3",
+    "eslint-plugin-astro": "0.34.0",
     "eslint-plugin-jsx-a11y": "6.8.0",
     "prettier": "3.2.5",
     "prettier-plugin-astro": "0.13.0",

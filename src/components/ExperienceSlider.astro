@@ -1,10 +1,10 @@
 ---
-type Props = {
+interface Props {
 	slides: Slide[]
 	currentSlide: number
 }
 
-export type Slide = {
+export interface Slide {
 	beforeTitle: string
 	title: string
 	subtitle: string
@@ -68,7 +68,7 @@ const { slides, currentSlide } = Astro.props
 			slide.classList.add("hidden")
 		})
 
-		let slide = document.getElementById(`slide-${newSlideNumber}`)
+		const slide = document.getElementById(`slide-${newSlideNumber}`)
 		if (slide) {
 			slide.classList.remove("hidden")
 		}

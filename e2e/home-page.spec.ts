@@ -1,4 +1,4 @@
-import { test, expect } from "@playwright/test"
+import { expect, test } from "@playwright/test"
 
 test.describe("Hero section", () => {
 	test.beforeEach(async ({ page }) => {
@@ -23,14 +23,14 @@ test.describe("Hero section", () => {
 	})
 
 	test("should have a navigation to go to about me section", async ({ page }) => {
-		page.getByText("about me", { exact: true }).click
+		await page.getByText("about me", { exact: true }).click()
 		await expect(page.locator("a[href='#about-me']")).toBeInViewport()
 	})
 
-	test('should navigate to the about me section when clicking on "About me" link', async ({
+	test("should navigate to the about me section when clicking on 'About me' link", async ({
 		page,
 	}) => {
-		const aboutMeLink = await page.$('a[href="#about-me"]')
+		const aboutMeLink = await page.$("a[href=\"#about-me\"]")
 		await aboutMeLink?.click()
 
 		const aboutMeTitle = await page.$eval("#about-me-title", (element) => element.textContent)
