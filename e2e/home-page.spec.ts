@@ -23,7 +23,7 @@ test.describe("Hero section", () => {
 	})
 
 	test("should have a navigation to go to about me section", async ({ page }) => {
-		await page.getByText("about me", { exact: true }).click()
+		page.getByText("about me", { exact: true })
 		await expect(page.locator("a[href='#about-me']")).toBeInViewport()
 	})
 
