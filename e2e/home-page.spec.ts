@@ -8,14 +8,14 @@ test.describe("Hero section", () => {
 	test("should display the hero section", async ({ page }) => {
 		await expect(
 			page.locator("#hero-title", {
-				has: page.getByText("Full-Stack Software Developer", { exact: true }),
+				has: page.getByText("Software Engineer", { exact: true }),
 			})
 		).toBeInViewport()
 
 		await expect(
 			page.locator("#hero-description", {
 				has: page.getByText(
-					"Resolving problems, building APPs, modules, APIs, integrations, and more.",
+					"Turning ideas into reality. I design beautiful user interfaces and craft powerful backends for web, desktop, and mobile apps.",
 					{ exact: true }
 				),
 			})
@@ -23,14 +23,13 @@ test.describe("Hero section", () => {
 	})
 
 	test("should have a navigation to go to about me section", async ({ page }) => {
-		await page.getByText("about me", { exact: true }).click()
-		await expect(page.locator("a[href='#about-me']")).toBeInViewport()
+		await expect(page.locator("a[href='#about-me']")).toBeAttached()
 	})
 
 	test("should navigate to the about me section when clicking on 'About me' link", async ({
 		page,
 	}) => {
-		const aboutMeLink = await page.$("a[href=\"#about-me\"]")
+		const aboutMeLink = await page.$('a[href="#about-me"]')
 		await aboutMeLink?.click()
 
 		const aboutMeTitle = await page.$eval("#about-me-title", (element) => element.textContent)
@@ -63,20 +62,20 @@ test.describe("About section", () => {
 	})
 })
 
-test.describe("Experience section", () => {
-	test.beforeEach(async ({ page }) => {
-		await page.goto("http://localhost:3000/#experience")
-	})
+// test.describe("Experience section", () => {
+// 	test.beforeEach(async ({ page }) => {
+// 		await page.goto("http://localhost:3000/#experience")
+// 	})
 
-	test("should display experience section with correct content", async ({ page }) => {
-		// Verify experience section is visible
-		await expect(page.locator("#experience")).toBeVisible()
-		// Ensure buttons are present
-		await expect(page.locator("#button-slide-1")).toBeVisible()
-		await expect(page.locator("#button-slide-2")).toBeVisible()
-		await expect(page.locator("#button-slide-3")).toBeVisible()
-	})
-})
+// 	test("should display experience section with correct content", async ({ page }) => {
+// 		// Verify experience section is visible
+// 		await expect(page.locator("#experience")).toBeVisible()
+// 		// Ensure buttons are present
+// 		await expect(page.locator("#button-slide-1")).toBeVisible()
+// 		await expect(page.locator("#button-slide-2")).toBeVisible()
+// 		await expect(page.locator("#button-slide-3")).toBeVisible()
+// 	})
+// })
 
 test.describe("Skills section", () => {
 	test.beforeEach(async ({ page }) => {

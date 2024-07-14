@@ -1,5 +1,6 @@
 ---
 interface Props {
+	id: string
 	slides: Slide[]
 	currentSlide: number
 }
@@ -15,27 +16,30 @@ export interface Slide {
 	slideNumber: number
 }
 
-const { slides, currentSlide } = Astro.props
+const { slides, currentSlide, id } = Astro.props
 ---
 
-<section id="experience" class="flex min-h-svh flex-col items-center justify-center gap-5">
+<section
+	id={id}
+	class="flex flex-col items-center gap-5 py-12 md:min-h-screen xl:mx-auto xl:max-w-7xl"
+>
 	{
 		slides.map((slide) => (
 			<div
 				class:list={[
-					"relative grid items-center justify-items-center text-center max-md:min-h-[50svh] lg:min-h-[30svh]",
+					"relative grid justify-items-center max-md:min-h-[50svh] lg:min-h-[30svh]",
 					{ hidden: slide.slideNumber !== currentSlide },
 				]}
 				id={`slide-${slide.slideNumber}`}
 			>
 				<div>
-					<p class="mb-2 font-light opacity-70">{slide.beforeTitle}</p>
-					<h2 class="mb-5 text-4xl font-bold">{slide.title}</h2>
-					<div>
+					<p class="mb-2 font-light leading-6 opacity-70">{slide.beforeTitle}</p>
+					<h2 class="mb-5 text-4xl font-bold leading-10">{slide.title}</h2>
+					<div class="leading-6">
 						<h3 class="mb-2 text-2xl font-bold">{slide.subtitle}</h3>
 						<p class="mb-5 text-sm font-light">{slide.subtitle2}</p>
-						<img src={slide.imageSrc} alt={slide.imageAlt} class="mx-auto mb-5 max-w-28" />
-						<p class="mb-4 max-w-[750px] text-pretty">{slide.content}</p>
+						{/* <img src={slide.imageSrc} alt={slide.imageAlt} class="mx-auto mb-5 max-w-28" /> */}
+						<p class="mb-4 max-w-[750px]">{slide.content}</p>
 					</div>
 				</div>
 			</div>
@@ -64,7 +68,7 @@ const { slides, currentSlide } = Astro.props
 	function updateSlide(newSlideNumber: number) {
 		currentSlide = newSlideNumber
 
-		document.querySelectorAll('[id^="slide-"]').forEach((slide) => {
+		document.querySelectorAll("[id^='slide-']").forEach((slide) => {
 			slide.classList.add("hidden")
 		})
 
@@ -73,7 +77,7 @@ const { slides, currentSlide } = Astro.props
 			slide.classList.remove("hidden")
 		}
 
-		document.querySelectorAll('[id^="button-slide-"]').forEach((button, index) => {
+		document.querySelectorAll("[id^='button-slide-']").forEach((button, index) => {
 			button.classList.remove("h-4", "w-4")
 			button.classList.add("h-2", "w-2", "opacity-80")
 
@@ -84,7 +88,7 @@ const { slides, currentSlide } = Astro.props
 		})
 	}
 
-	document.querySelectorAll('[id^="button-slide-"]').forEach((button, index) => {
+	document.querySelectorAll("[id^='button-slide-']").forEach((button, index) => {
 		button.addEventListener("click", () => {
 			updateSlide(index + 1)
 		})
