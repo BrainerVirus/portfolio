@@ -1,0 +1,239 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+	@font-face {
+		font-family: "Source Sans Pro";
+		font-style: normal;
+		font-weight: 400;
+		font-display: swap;
+		src: url("/fonts/SourceSansPro-Regular.ttf") format("ttf");
+	}
+
+	@font-face {
+		font-family: "Source Sans Pro";
+		font-style: normal;
+		font-weight: 600;
+		font-display: swap;
+		src: url("/fonts/SourceSansPro-SemiBold.ttf") format("ttf");
+	}
+
+	@font-face {
+		font-family: "Source Sans Pro";
+		font-style: normal;
+		font-weight: 700;
+		font-display: swap;
+		src: url("/fonts/SourceSansPro-Bold.ttf") format("ttf");
+	}
+
+	@font-face {
+		font-family: "Source Sans Pro";
+		font-style: normal;
+		font-weight: 900;
+		font-display: swap;
+		src: url("/fonts/SourceSansPro-Black.ttf") format("ttf");
+	}
+
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+		scroll-behavior: smooth;
+	}
+
+	body {
+		min-height: 100vh;
+		min-height: 100dvh;
+		background-color: #141416;
+		color: #f0f8ff;
+		font-size: 16px;
+		line-height: 24px;
+	}
+
+	p {
+		text-wrap: pretty;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		text-wrap: balance;
+	}
+
+	img,
+	video,
+	svg {
+		height: auto;
+		max-width: 100%;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+			scroll-behavior: auto !important;
+			transition: none;
+		}
+	}
+
+	@keyframes twinkle {
+		0% {
+			opacity: 1;
+		}
+		50% {
+			opacity: 0.5;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+
+	@keyframes move-twink-back {
+		from {
+			background-position: 0 0;
+		}
+		to {
+			background-position: -10000px 5000px;
+		}
+	}
+	@-webkit-keyframes move-twink-back {
+		from {
+			background-position: 0 0;
+		}
+		to {
+			background-position: -10000px 5000px;
+		}
+	}
+	@-moz-keyframes move-twink-back {
+		from {
+			background-position: 0 0;
+		}
+		to {
+			background-position: -10000px 5000px;
+		}
+	}
+	@-ms-keyframes move-twink-back {
+		from {
+			background-position: 0 0;
+		}
+		to {
+			background-position: -10000px 5000px;
+		}
+	}
+	@keyframes move-clouds-back {
+		from {
+			background-position: 0 0;
+		}
+		to {
+			background-position: 10000px 0;
+		}
+	}
+	@-webkit-keyframes move-clouds-back {
+		from {
+			background-position: 0 0;
+		}
+		to {
+			background-position: 10000px 0;
+		}
+	}
+	@-moz-keyframes move-clouds-back {
+		from {
+			background-position: 0 0;
+		}
+		to {
+			background-position: 10000px 0;
+		}
+	}
+	@-ms-keyframes move-clouds-back {
+		from {
+			background-position: 0;
+		}
+		to {
+			background-position: 10000px 0;
+		}
+	}
+}
+
+@layer utilities {
+	.font-roboto {
+		font-family: "Roboto Mono", sans-serif;
+	}
+
+	.shadow-full-sm {
+		-webkit-box-shadow: rgba(0, 0, 0, 0.11) 0px 4px 14px;
+		-moz-box-shadow: rgba(0, 0, 0, 0.11) 0px 4px 14px;
+		box-shadow: rgba(0, 0, 0, 0.11) 0px 4px 14px;
+	}
+
+	.animate-twinkle {
+		animation: twinkle 1s linear infinite;
+	}
+
+	.stars,
+	.twinkling,
+	.clouds {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		width: 100%;
+		height: 100%;
+		display: block;
+	}
+	.stars {
+		background: #000 url(/stars.png) repeat top center;
+		/* z-index: -10; */
+	}
+	.twinkling {
+		background: transparent url(/twinkling.png) repeat top center;
+		/* z-index: 1; */
+		-moz-animation: move-twink-back 200s linear infinite;
+		-ms-animation: move-twink-back 200s linear infinite;
+		-o-animation: move-twink-back 200s linear infinite;
+		-webkit-animation: move-twink-back 200s linear infinite;
+		animation: move-twink-back 200s linear infinite;
+	}
+
+	.cup {
+		width: 150px;
+		height: 200px;
+		position: relative;
+		background: #964b00; /* Brown color for the cup */
+		border-radius: 100px;
+		overflow: hidden;
+	}
+
+	.smoke {
+		width: 100px;
+		height: 100px;
+		position: absolute;
+		background: rgba(200, 200, 200, 0.5); /* Semi-transparent white color for smoke */
+		border-radius: 50px;
+		animation: smoke 2s infinite;
+		left: 50%;
+		top: -50px;
+		transform: translateX(-50%);
+	}
+
+	@keyframes smoke {
+		0% {
+			transform: translateY(0) rotate(0deg);
+		}
+		100% {
+			transform: translateY(-20px) rotate(20deg);
+		}
+	}
+}

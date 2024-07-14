@@ -1,14 +1,8 @@
 # build output
 dist/
-dist
-./dist
-./dist/
 
-# ssr
-./vercel
-.vercel
+# generated vercel output
 .vercel/
-./.vercel
 
 # generated types
 .astro/
@@ -25,6 +19,11 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+
+# packages
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
 
 # macOS-specific files
 .DS_Store
