@@ -4,7 +4,7 @@
   "explorer.fileNesting.patterns": {
     "package.json": "pnpm-lock.yaml, package-lock.json, yarn.lock",
     ".prettierrc.mjs": ".prettierignore",
-    "README.md": "CONTRIBUTING.md"
+    "README.md": "CONTRIBUTING.md, CHANGELOG.md"
   },
   "editor.linkedEditing": true,
   "editor.codeActionsOnSave": {
