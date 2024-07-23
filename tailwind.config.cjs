@@ -4,9 +4,9 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				"source-sans-pro": ["Source Sans Pro", "Arial", "Helvetica", "sans-serif"],
-				"heading": ["Source Sans Pro", "Arial", "Helvetica", "sans-serif"],
-				"body": ["Source Sans Pro", "Arial", "Helvetica", "sans-serif"],
+				"source-sans-pro": ["Source Sans", "Arial", "Helvetica", "sans-serif"],
+				"heading": ["Source Sans", "Arial", "Helvetica", "sans-serif"],
+				"body": ["Source Sans", "Arial", "Helvetica", "sans-serif"],
 			},
 			colors: {
 				text: {

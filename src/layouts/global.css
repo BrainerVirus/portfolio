@@ -4,35 +4,14 @@
 
 @layer base {
 	@font-face {
-		font-family: "Source Sans Pro";
+		font-family: "Source Sans";
 		font-style: normal;
-		font-weight: 400;
-		font-display: swap;
-		src: url("/fonts/SourceSansPro-Regular.ttf") format("ttf");
+		src: url("/fonts/SourceSans3-VariableFont_wght.ttf") format("truetype-variations");
 	}
-
 	@font-face {
-		font-family: "Source Sans Pro";
-		font-style: normal;
-		font-weight: 600;
-		font-display: swap;
-		src: url("/fonts/SourceSansPro-SemiBold.ttf") format("ttf");
-	}
-
-	@font-face {
-		font-family: "Source Sans Pro";
-		font-style: normal;
-		font-weight: 700;
-		font-display: swap;
-		src: url("/fonts/SourceSansPro-Bold.ttf") format("ttf");
-	}
-
-	@font-face {
-		font-family: "Source Sans Pro";
-		font-style: normal;
-		font-weight: 900;
-		font-display: swap;
-		src: url("/fonts/SourceSansPro-Black.ttf") format("ttf");
+		font-family: "Source Sans";
+		font-style: italic;
+		src: url("/fonts/SourceSans3-Italic-VariableFont_wght.ttf") format("truetype-variations");
 	}
 
 	* {
