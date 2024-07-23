@@ -100,7 +100,7 @@ test.describe("Skills section", () => {
 			"Astro",
 			"Node JS",
 			"JavaScript",
-			"CSS",
+			"CSS3",
 			"HTML:5",
 			"Tailwind CSS",
 			"TypeScript",
