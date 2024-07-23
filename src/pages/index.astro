@@ -1,60 +1,61 @@
 ---
 // eslint-disable-next-line import/order
 import Layout from "@/layouts/Layout.astro"
-import Slider, { type Slide } from "@components/ExperienceSlider.astro"
+import Typography from "@components/typography.astro"
 import Setup from "@public/images/assets/desktop-pc-setup.svg"
-import "animate.css"
 import { Icon } from "astro-icon/components"
 
-const slides: Slide[] = [
-	{
-		beforeTitle: "",
-		title: "Experience and Previous Projects",
-		subtitle: "",
-		subtitle2: "",
-		content:
-			"I have built various different projects to fit different aspects of the client's business. If you want to see more examples of my work than the ones showcased in this site, please contact me!",
-		imageSrc: "hospital_san_juan_de_dios-logo.png",
-		imageAlt: "hospital san juan de dios logo",
-		slideNumber: 1,
-	},
-	{
-		beforeTitle: "Full-time job",
-		title: "Hospital San Juan de Dios",
-		subtitle: "Software Engineer",
-		subtitle2: "October 2022 - September 2023",
-		content: `
-    Led the development of a finance module, encompassing document management, report generation, and dynamic barcode implementation. Implemented APIs to streamline system integration, enhancing operational efficiency. Collaborated with internal experts to integrate with third-party providers, and automated bulk data loading to expedite processes. Played a pivotal role in the development of a complex prescription entry system for outpatient care, facilitating efficient dispensing at various levels. Introduced CI/CD practices to optimize software development and deployment.
-  `,
-		imageSrc: "hospital_san_juan_de_dios-logo.png",
-		imageAlt: "hospital san juan de dios logo",
-		slideNumber: 2,
-	},
-	{
-		beforeTitle: "Partial-time job (specific project)",
-		title: "Universidad de La Serena",
-		subtitle: "Software Developer",
-		subtitle2: "September 2023 - March 2024",
-		content: `
-    Led the development of a comprehensive web platform at the Universidad de La Serena, focusing on water usage, report generation, water delivery management, role-based authentication, water delivery tracking, mobile app API integration, and continuous platform maintenance. Collaborated with multidisciplinary teams to enhance the platform's functionality and security, and implemented CI/CD practices to streamline the development and deployment process.
-  `,
-		imageSrc: "uls-logo.png",
-		imageAlt: "universidad de la serena logo",
-		slideNumber: 3,
-	},
-	{
-		beforeTitle: "Full-time job",
-		title: "Sixbell",
-		subtitle: "Software Engineer",
-		subtitle2: "November 2023 - Today",
-		content: `
-    Currently at Sixbell, I am actively involved in exploring new technologies to address challenges and migrate legacy platforms. My work includes developing new modules across various platforms, with a focus on Angular and Java Spring Boot stacks. I have also implemented CI/CD pipelines using GitLab and Docker, enhancing the development and deployment processes. Additionally, I have contributed to business technology solutions, which, due to confidentiality, cannot be disclosed but are crucial for internal operations.
-  `,
-		imageSrc: "sixbell-logo.png",
-		imageAlt: "sixbell logo",
-		slideNumber: 4,
-	},
-]
+// import "animate.css"
+
+// const slides: Slide[] = [
+// 	{
+// 		beforeTitle: "",
+// 		title: "Experience and Previous Projects",
+// 		subtitle: "",
+// 		subtitle2: "",
+// 		content:
+// 			"I have built various different projects to fit different aspects of the client's business. If you want to see more examples of my work than the ones showcased in this site, please contact me!",
+// 		imageSrc: "hospital_san_juan_de_dios-logo.png",
+// 		imageAlt: "hospital san juan de dios logo",
+// 		slideNumber: 1,
+// 	},
+// 	{
+// 		beforeTitle: "Full-time job",
+// 		title: "Hospital San Juan de Dios",
+// 		subtitle: "Software Engineer",
+// 		subtitle2: "October 2022 - September 2023",
+// 		content: `
+//     Led the development of a finance module, encompassing document management, report generation, and dynamic barcode implementation. Implemented APIs to streamline system integration, enhancing operational efficiency. Collaborated with internal experts to integrate with third-party providers, and automated bulk data loading to expedite processes. Played a pivotal role in the development of a complex prescription entry system for outpatient care, facilitating efficient dispensing at various levels. Introduced CI/CD practices to optimize software development and deployment.
+//   `,
+// 		imageSrc: "hospital_san_juan_de_dios-logo.png",
+// 		imageAlt: "hospital san juan de dios logo",
+// 		slideNumber: 2,
+// 	},
+// 	{
+// 		beforeTitle: "Partial-time job (specific project)",
+// 		title: "Universidad de La Serena",
+// 		subtitle: "Software Developer",
+// 		subtitle2: "September 2023 - March 2024",
+// 		content: `
+//     Led the development of a comprehensive web platform at the Universidad de La Serena, focusing on water usage, report generation, water delivery management, role-based authentication, water delivery tracking, mobile app API integration, and continuous platform maintenance. Collaborated with multidisciplinary teams to enhance the platform's functionality and security, and implemented CI/CD practices to streamline the development and deployment process.
+//   `,
+// 		imageSrc: "uls-logo.png",
+// 		imageAlt: "universidad de la serena logo",
+// 		slideNumber: 3,
+// 	},
+// 	{
+// 		beforeTitle: "Full-time job",
+// 		title: "Sixbell",
+// 		subtitle: "Software Engineer",
+// 		subtitle2: "November 2023 - Today",
+// 		content: `
+//     Currently at Sixbell, I am actively involved in exploring new technologies to address challenges and migrate legacy platforms. My work includes developing new modules across various platforms, with a focus on Angular and Java Spring Boot stacks. I have also implemented CI/CD pipelines using GitLab and Docker, enhancing the development and deployment processes. Additionally, I have contributed to business technology solutions, which, due to confidentiality, cannot be disclosed but are crucial for internal operations.
+//   `,
+// 		imageSrc: "sixbell-logo.png",
+// 		imageAlt: "sixbell logo",
+// 		slideNumber: 4,
+// 	},
+// ]
 ---
 
 <Layout title="Home">
@@ -75,24 +76,36 @@ const slides: Slide[] = [
 				</figure>
 			</div>
 			<div>
-				<h1
-					id="hero-title"
-					class="mb-9 text-4xl font-bold md:max-w-[1000px] md:text-6xl md:font-extrabold"
+				<Typography
+					as="h1"
+					id={"hero-title"}
+					variants={{ variant: "h1-xl", color: "black", fontWeight: "bolder" }}
+					class:list={"mb-9 md:max-w-[1000px]"}
 				>
 					Software Engineer
-				</h1>
-				<p id="hero-description" class="mb-4 max-w-[600px] text-lg leading-6">
+				</Typography>
+				<Typography
+					as="p"
+					id={"hero-description"}
+					variants={{ variant: "body-lg", color: "black", fontWeight: "normal" }}
+					class:list={"mb-4 max-w-[600px] leading-6"}
+				>
 					Turning ideas into reality. I design beautiful user interfaces and craft powerful backends
 					for web, desktop, and mobile apps.
-				</p>
+				</Typography>
 				<a
 					href="#about-me"
-					class="flex w-fit items-center gap-1 text-lg font-bold underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
+					class="flex w-fit items-center gap-1 underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
 					style="--rotate-degrees: 0;"
 					onmouseenter="this.style.setProperty('--rotate-degrees', '90deg');"
 					onmouseleave="this.style.setProperty('--rotate-degrees', '0deg');"
 				>
-					About me <Icon
+					<Typography
+						as="span"
+						variants={{ variant: "body-lg", color: "inherit", fontWeight: "bold" }}
+						class:list={"leading-6"}>About me</Typography
+					>
+					<Icon
 						name="mdi:chevron-right"
 						class="mt-[6px] h-6 w-6"
 						style="transform: rotate(var(--rotate-degrees)); transition: transform 0.3s ease-in-out;"
@@ -106,26 +119,47 @@ const slides: Slide[] = [
 			class="grid py-28 md:min-h-screen md:grid-cols-2 md:grid-rows-1 md:items-center xl:mx-auto xl:max-w-7xl"
 		>
 			<div class="mb-9 mt-5 flex flex-col gap-4">
-				<h2
-					id="about-me-title"
-					class="text-4xl font-bold md:max-w-[1000px] md:text-6xl md:font-extrabold"
+				<Typography
+					as="h2"
+					id={"about-me-title"}
+					variants={{ variant: "h1-xl", color: "black", fontWeight: "bolder" }}
+					class:list={"md:max-w-[1000px]"}
 				>
 					<span>Hello there,</span>
 					<br />
 					<span>I'm Cristhofer Pincetti</span>
-				</h2>
-				<p class="text-base font-light leading-6 opacity-70">
+				</Typography>
+				<Typography
+					as="p"
+					id={"about-me-placeholder"}
+					variants={{ variant: "body", color: "black", fontWeight: "light" }}
+					class:list={"leading-6 opacity-70"}
+				>
 					Software Engineer / Tech enthusiast / Problem solving enjoyer
-				</p>
+				</Typography>
 			</div>
-			<div class="flex flex-col gap-4 text-lg leading-6">
-				<p id="about-me-description">
+			<div class="flex flex-col gap-4" id="about-me-description">
+				<Typography
+					as="p"
+					variants={{ variant: "body-lg", color: "black", fontWeight: "normal" }}
+					class:list={"leading-6"}
+				>
 					Over two year of experienced creating seamless user experiences.
-				</p>
-				<p id="about-me-description">Skilled in innovative tech solutions and creative coding.</p>
-				<p id="about-me-description">
+				</Typography>
+				<Typography
+					as="p"
+					variants={{ variant: "body-lg", color: "black", fontWeight: "normal" }}
+					class:list={"leading-6"}
+				>
+					Skilled in innovative tech solutions and creative coding.
+				</Typography>
+				<Typography
+					as="p"
+					variants={{ variant: "body-lg", color: "black", fontWeight: "normal" }}
+					class:list={"leading-6"}
+				>
 					Specializes in building end-to-end solutions and enjoys tackling complex challenges.
-				</p>
+				</Typography>
 			</div>
 		</section>
 
@@ -135,7 +169,13 @@ const slides: Slide[] = [
 			id="skills"
 			class="py-12 md:flex md:min-h-screen md:flex-col md:items-center md:justify-center xl:mx-auto xl:max-w-7xl"
 		>
-			<p class="font-light leading-6 opacity-70">Superpowers for software superheroes!</p>
+			<Typography
+				as="p"
+				variants={{ variant: "body-lg", color: "black", fontWeight: "light" }}
+				class:list={"leading-6 opacity-70"}
+			>
+				Superpowers for software superheroes!
+			</Typography>
 			<h2
 				id="skills-title"
 				class="my-3 mb-6 text-4xl font-bold md:max-w-[1000px] md:text-6xl md:font-extrabold"
@@ -144,7 +184,12 @@ const slides: Slide[] = [
 			</h2>
 			<div class="flex flex-col gap-12 md:max-w-4xl md:items-center">
 				<div class="flex flex-col gap-4 text-lg leading-6 md:text-center">
-					<p id="skills-description">
+					<Typography
+						as="p"
+						id="skills-description"
+						variants={{ variant: "body-lg", color: "black", fontWeight: "normal" }}
+						class:list={"leading-6"}
+					>
 						As a Software Engineer, I possess proficiency in a wide range of technologies, with a
 						primary focus on web development. I have experience leveraging JavaScript, HTML, and CSS
 						to build user-friendly websites. Additionally, for interactive web applications, I am
@@ -153,14 +198,26 @@ const slides: Slide[] = [
 						Express.js framework. Furthermore, I have experience creating multiplatform applications
 						using Electron.js, React Native, and Android Studio, targeting desktop (Windows, Linux,
 						macOS) and mobile (iOS, Android) environments.
-					</p>
-					<p id="skills-linkedin" class="md:self-center">
-						Visit my <a
+					</Typography>
+					<Typography
+						as="p"
+						id="skills-description"
+						variants={{ variant: "body-lg", color: "black", fontWeight: "normal" }}
+						class:list={"leading-6"}
+					>
+						Visit my
+						<a
 							href="https://www.linkedin.com/in/cristhofer-pincetti-herrera/"
 							class="underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
-							>Linkedin</a
-						> for more details.
-					</p>
+						>
+							<Typography
+								as="span"
+								id="skills-description"
+								variants={{ variant: "body-lg", color: "inherit", fontWeight: "normal" }}
+								class:list={"leading-6"}>Linkedin</Typography
+							>
+						</a> for more details.
+					</Typography>
 				</div>
 				<div
 					id="skills-list"
@@ -170,109 +227,180 @@ const slides: Slide[] = [
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="teenyicons:nextjs-solid" class="h-12 w-12" />
-						<figcaption>Next JS</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>Next JS</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
-						<svg
-							width="63"
-							height="79"
-							class="h-12 w-12"
-							viewBox="0 0 63 79"
-							fill="currentColor"
-							stroke="currentColor"
-							xmlns="http://www.w3.org/2000/svg"
-						>
-							<path
-								d="M19.4924 65.9282C15.6165 62.432 14.4851 55.0859 16.0999 49.7638C18.8998 53.1193 22.7793 54.1822 26.7977 54.7822C33.0013 55.7081 39.0937 55.3618 44.8565 52.5637C45.5158 52.2434 46.125 51.8174 46.8454 51.386C47.3861 52.9341 47.5268 54.497 47.338 56.0877C46.8787 59.9617 44.9251 62.9542 41.8177 65.2227C40.5752 66.13 39.2604 66.9411 37.9771 67.7967C34.0346 70.4262 32.9679 73.5095 34.4494 77.9946C34.4846 78.1038 34.5161 78.2131 34.5957 78.4797C32.5828 77.5909 31.1124 76.2965 29.9921 74.5946C28.8088 72.7984 28.2458 70.8114 28.2162 68.6615C28.2014 67.6152 28.2014 66.5597 28.0588 65.5282C27.7107 63.0135 26.5144 61.8876 24.2608 61.8227C21.9479 61.7561 20.1183 63.1672 19.6331 65.3893C19.5961 65.5597 19.5424 65.7282 19.4887 65.9263L19.4924 65.9282Z"
-								fill="currentColor"
-								stroke="currentColor"></path>
-							<path
-								d="M0 51.3932C0 51.3932 10.5979 46.2433 21.2254 46.2433L29.2382 21.5069C29.5381 20.3106 30.4141 19.4977 31.4029 19.4977C32.3918 19.4977 33.2677 20.3106 33.5677 21.5069L41.5804 46.2433C54.1672 46.2433 62.8058 51.3932 62.8058 51.3932C62.8058 51.3932 44.8044 2.47586 44.7692 2.37772C44.2526 0.931458 43.3804 0 42.2045 0H20.6032C19.4273 0 18.5903 0.931458 18.0384 2.37772C17.9995 2.47401 0 51.3932 0 51.3932Z"
-								fill="currentColor"
-								stroke="currentColor"></path>
-						</svg>
-
-						<figcaption>Astro</figcaption>
+						<Icon name="simple-icons:astro" class="h-12 w-12" />
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>Astro</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="teenyicons:nodejs-solid" class="h-12 w-12" />
-						<figcaption>Node JS</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>Node JS</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="teenyicons:javascript-solid" class="h-12 w-12" />
-						<figcaption>JavaScript</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>JavaScript</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="teenyicons:css3-solid" class="h-12 w-12" />
-						<figcaption>CSS</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>CSS3</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="teenyicons:html5-solid" class="h-12 w-12" />
-						<figcaption>HTML:5</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>HTML:5</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="teenyicons:tailwind-solid" class="h-12 w-12" />
-						<figcaption>Tailwind CSS</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>Tailwind CSS</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="teenyicons:typescript-solid" class="h-12 w-12" />
-						<figcaption>TypeScript</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>TypeScript</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="cib:postgresql" class="h-12 w-12" />
-						<figcaption>PostgreSQL</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>PostgreSQL</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="grommet-icons:mysql" class="h-12 w-12" />
-						<figcaption>MySQL</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>MySQL</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
-						<Icon name="logos:prisma" class="h-12 w-12 fill-primary hover:fill-secondary" />
-						<figcaption>Prisma</figcaption>
+						<Icon name="simple-icons:prisma" class="h-12 w-12" />
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>Prisma</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="simple-icons:sequelize" class="h-12 w-12" />
-						<figcaption>Sequelize</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>Sequelize</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="simple-icons:githubactions" class="h-12 w-12" />
-						<figcaption>Github Actions</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>Github Actions</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="simple-icons:mongodb" class="h-12 w-12" />
-						<figcaption>MongoDB</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}
+								>MongoDB</Typography
+							>
+						</figcaption>
 					</figure>
 					<figure
 						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
 					>
 						<Icon name="bi:git" class="h-12 w-12" />
-						<figcaption>Git</figcaption>
+						<figcaption>
+							<Typography
+								as="span"
+								variants={{ variant: "body", color: "black", fontWeight: "normal" }}>Git</Typography
+							>
+						</figcaption>
 					</figure>
 				</div>
 			</div>

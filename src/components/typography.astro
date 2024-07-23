@@ -1,0 +1,65 @@
+---
+// eslint-disable-next-line import/order
+import { cn } from "@/utils/cn"
+import type { HTMLTag, Polymorphic } from "astro/types"
+import { cva, type VariantProps } from "class-variance-authority"
+
+type Props<Tag extends HTMLTag> = Polymorphic<{
+	as: Tag
+	variants: TypographyVariantProps
+}>
+
+const { as: Tag, class: className, variants, ...props } = Astro.props
+
+const typography = cva([], {
+	variants: {
+		variant: {
+			"h1-xl": ["text-4xl", "text-balance", "font-heading", "md:text-6xl"],
+			"h1": ["text-3xl", "text-balance", "font-heading"],
+			"h2": ["text-2xl", "text-balance", "font-heading"],
+			"h3": ["text-xl", "text-balance", "font-heading"],
+			"body-xs": ["text-xs", "text-pretty", "font-body"],
+			"body-sm": ["text-sm", "text-pretty", "font-body"],
+			"body": ["text-base", "text-pretty", "font-body"],
+			"body-lg": ["text-lg", "text-pretty", "font-body", "leading-6"],
+		},
+		color: {
+			white: "text-neutral-content",
+			black: "text-neutral",
+			primary: "text-primary",
+			inherit: "text-inherit",
+		},
+		fontWeight: {
+			bold: "font-bold",
+			semibold: "font-semibold",
+			bolder: "font-bold md:font-extrabold",
+			normal: "font-normal",
+			light: "font-light",
+			inherit: ["font-inherit", "font-body"],
+		},
+	},
+	compoundVariants: [],
+	defaultVariants: {
+		variant: "body",
+		color: "black",
+		fontWeight: "normal",
+	},
+})
+
+type TypographyVariantProps = VariantProps<typeof typography>
+---
+
+<Tag
+	class:list={cn(
+		typography({
+			variant: variants.variant,
+			color: variants.color,
+			fontWeight: variants.fontWeight,
+			class: className,
+		})
+	)}
+	{...props}
+	tabindex="0"
+>
+	<slot />
+</Tag>

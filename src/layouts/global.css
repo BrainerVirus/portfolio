@@ -167,10 +167,6 @@
 }
 
 @layer utilities {
-	.font-roboto {
-		font-family: "Roboto Mono", sans-serif;
-	}
-
 	.shadow-full-sm {
 		-webkit-box-shadow: rgba(0, 0, 0, 0.11) 0px 4px 14px;
 		-moz-box-shadow: rgba(0, 0, 0, 0.11) 0px 4px 14px;
