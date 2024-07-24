@@ -4,11 +4,13 @@
   "explorer.fileNesting.patterns": {
     "package.json": "pnpm-lock.yaml, package-lock.json, yarn.lock",
     ".prettierrc.mjs": ".prettierignore",
-    "README.md": "CONTRIBUTING.md"
+    "README.md": "CONTRIBUTING.md, CHANGELOG.md",
+    ".eslintrc.json": ".eslintignore"
   },
   "editor.linkedEditing": true,
   "editor.codeActionsOnSave": {
-    "source.organizeImports": "explicit"
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
   },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true,
@@ -30,6 +32,10 @@
   },
   "prettier.documentSelectors": ["**/*.astro"],
   "tailwindCSS.classAttributes": ["class", "className", "ngClass", "class:list"],
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ],
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }

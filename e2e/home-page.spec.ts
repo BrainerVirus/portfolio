@@ -97,20 +97,24 @@ test.describe("Skills section", () => {
 	test("should display specific skills", async ({ page }) => {
 		const skills = [
 			"Next JS",
+			"Angular",
 			"Astro",
+			"Electron",
+			"React",
+			"React Native",
 			"Node JS",
-			"JavaScript",
-			"CSS",
-			"HTML:5",
 			"Tailwind CSS",
 			"TypeScript",
+			"HTML:5",
+			"JavaScript",
+			"CSS3",
 			"PostgreSQL",
 			"MySQL",
+			"MongoDB",
 			"Prisma",
 			"Sequelize",
-			"Github Actions",
-			"MongoDB",
-			"Git",
+			"Github",
+			"Gitlab",
 		]
 
 		for (const skill of skills) {

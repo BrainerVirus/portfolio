@@ -4,33 +4,29 @@ module.exports = {
 	theme: {
 		extend: {
 			fontFamily: {
-				"source-sans-pro": ["Source Sans Pro", "Arial", "Helvetica", "sans-serif"],
+				"source-sans-pro": ["Source Sans", "Arial", "Helvetica", "sans-serif"],
+				"heading": ["Source Sans", "Arial", "Helvetica", "sans-serif"],
+				"body": ["Source Sans", "Arial", "Helvetica", "sans-serif"],
 			},
-		},
-		colors: {
-			text: {
-				primary: "#f0f8ff",
-				foreground: "",
-			},
-			background: "#141416",
-			foreground: "",
-			primary: {
-				DEFAULT: "#f0f8ff",
-				foreground: "#141416",
-			},
-			secondary: {
-				DEFAULT: "hsl(57.2, 95.1%, 48.2%)",
-				foreground: "",
-			},
-			muted: {
-				DEFAULT: "",
-				foreground: "",
-			},
-			accent: {
-				DEFAULT: "hsl(279, 71%, 45%)",
-				foreground: "",
+			colors: {
+				"primary": "#f0f8ff",
+				"neutral": "#414756",
+				"neutral-content": "#FFFFFF",
+				"background": "#141416",
+				"secondary": {
+					DEFAULT: "hsl(57.2, 95.1%, 48.2%)",
+					foreground: "",
+				},
+				"muted": {
+					DEFAULT: "",
+					foreground: "",
+				},
+				"accent": {
+					DEFAULT: "hsl(279, 71%, 45%)",
+					foreground: "",
+				},
 			},
 		},
 	},
-	plugins: [],
+	plugins: [require("@tailwindcss/typography")],
 }
