@@ -1,8 +1,10 @@
 {
   "branches": [
     "main",
-    { "name": "dev", "prerelease": true },
-    { "name": "test", "prerelease": true }
+    { "name": "develop", "prerelease": true },
+    { "name": "feature/*", "prerelease": true },
+    { "name": "bugfix/*", "prerelease": true },
+    { "name": "hotfix/*", "prerelease": true }
   ],
   "plugins": [
     "@semantic-release/commit-analyzer",
@@ -12,12 +14,7 @@
     [
       "@semantic-release/git",
       {
-        "assets": [
-          "CHANGELOG.md",
-          "package.json",
-          "package-lock.json",
-          "dist/**/*"
-        ],
+        "assets": ["CHANGELOG.md", "package.json", "package-lock.json", "dist/**/*"],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
