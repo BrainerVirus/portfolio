@@ -95,21 +95,14 @@ import { Icon } from "astro-icon/components"
 				</Typography>
 				<a
 					href="#about-me"
-					class="flex w-fit items-center gap-1 text-neutral-content underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
-					style="--rotate-degrees: 0;"
-					onmouseenter="this.style.setProperty('--rotate-degrees', '90deg');"
-					onmouseleave="this.style.setProperty('--rotate-degrees', '0deg');"
+					class="flex w-fit rotate-0 items-center gap-1 text-neutral-content underline decoration-accent decoration-2 underline-offset-[5px] transition duration-300 ease-in-out hover:text-accent [&>svg]:rotate-0 [&>svg]:transition [&>svg]:duration-300 [&>svg]:hover:rotate-90"
 				>
 					<Typography
 						as="span"
 						variants={{ variant: "body-lg", color: "inherit", fontWeight: "bold" }}
 						class:list={"leading-6"}>About me</Typography
 					>
-					<Icon
-						name="mdi:chevron-right"
-						class="mt-[6px] h-6 w-6"
-						style="transform: rotate(var(--rotate-degrees)); transition: transform 0.3s ease-in-out;"
-					/>
+					<Icon name="mdi:chevron-right" class="mt-[6px] h-6 w-6" />
 				</a>
 			</div>
 		</section>
@@ -176,12 +169,14 @@ import { Icon } from "astro-icon/components"
 			>
 				Superpowers for software superheroes!
 			</Typography>
-			<h2
-				id="skills-title"
-				class="my-3 mb-6 text-4xl font-bold md:max-w-[1000px] md:text-6xl md:font-extrabold"
+			<Typography
+				as="h2"
+				id={"skills-title"}
+				variants={{ variant: "h1-xl", color: "white", fontWeight: "bolder" }}
+				class:list={"md:max-w-[1000px]"}
 			>
 				Skills & Technologies
-			</h2>
+			</Typography>
 			<div class="flex flex-col gap-12 md:max-w-4xl md:items-center">
 				<div class="flex flex-col gap-4 text-lg leading-6 md:text-center">
 					<Typography
@@ -220,10 +215,10 @@ import { Icon } from "astro-icon/components"
 				</div>
 				<div
 					id="skills-list"
-					class="flex w-full max-w-[50rem] flex-wrap items-center justify-center gap-5"
+					class="grid w-full max-w-[50rem] grid-cols-3 gap-5 md:flex md:flex-wrap md:items-center md:justify-center"
 				>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="teenyicons:nextjs-solid" class="h-12 w-12" />
 						<figcaption>
@@ -235,7 +230,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="simple-icons:angular" class="h-12 w-12" />
 						<figcaption>
@@ -247,7 +242,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="simple-icons:astro" class="h-12 w-12" />
 						<figcaption>
@@ -259,7 +254,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="simple-icons:electron" class="h-12 w-12" />
 						<figcaption>
@@ -271,7 +266,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="simple-icons:react" class="h-12 w-12" />
 						<figcaption>
@@ -283,7 +278,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="simple-icons:react" class="h-12 w-12" />
 						<figcaption>
@@ -295,7 +290,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="teenyicons:nodejs-solid" class="h-12 w-12" />
 						<figcaption>
@@ -307,7 +302,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="teenyicons:tailwind-solid" class="h-12 w-12" />
 						<figcaption>
@@ -319,7 +314,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="teenyicons:typescript-solid" class="h-12 w-12" />
 						<figcaption>
@@ -331,7 +326,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="teenyicons:html5-solid" class="h-12 w-12" />
 						<figcaption>
@@ -343,7 +338,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="teenyicons:javascript-solid" class="h-12 w-12" />
 						<figcaption>
@@ -355,7 +350,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="teenyicons:css3-solid" class="h-12 w-12" />
 						<figcaption>
@@ -367,7 +362,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="cib:postgresql" class="h-12 w-12" />
 						<figcaption>
@@ -379,7 +374,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="grommet-icons:mysql" class="h-12 w-12" />
 						<figcaption>
@@ -391,7 +386,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="simple-icons:mongodb" class="h-12 w-12" />
 						<figcaption>
@@ -403,7 +398,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="simple-icons:prisma" class="h-12 w-12" />
 						<figcaption>
@@ -415,7 +410,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="simple-icons:sequelize" class="h-12 w-12" />
 						<figcaption>
@@ -427,7 +422,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="simple-icons:github" class="h-12 w-12" />
 						<figcaption>
@@ -439,7 +434,7 @@ import { Icon } from "astro-icon/components"
 						</figcaption>
 					</figure>
 					<figure
-						class="flex min-h-[100px] w-[29%] flex-col items-center justify-start text-center transition-colors duration-300 ease-in-out hover:text-secondary md:w-auto"
+						class="flex flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent"
 					>
 						<Icon name="simple-icons:gitlab" class="h-12 w-12" />
 						<figcaption>
