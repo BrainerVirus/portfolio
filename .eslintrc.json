@@ -36,7 +36,6 @@
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "off",
     "unused-imports/no-unused-imports": "warn",
-    "sort-imports": "off",
     "object-curly-newline": [
       "warn",
       {
@@ -64,8 +63,7 @@
         "astro/prefer-class-list-directive": "warn",
         "astro/semi": ["warn", "never"],
         "astro/jsx-a11y/anchor-is-valid": "warn",
-        "@stylistic/ts/indent": "off",
-        "sort-imports": "off"
+        "@stylistic/ts/indent": "off"
       }
     },
     {
