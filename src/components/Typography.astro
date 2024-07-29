@@ -1,8 +1,7 @@
 ---
-// eslint-disable-next-line import/order
 import { cn } from "@/utils/cn"
 import type { HTMLTag, Polymorphic } from "astro/types"
-import { cva, type VariantProps } from "class-variance-authority"
+import { type VariantProps, cva } from "class-variance-authority"
 
 type Props<Tag extends HTMLTag> = Polymorphic<{
 	as: Tag

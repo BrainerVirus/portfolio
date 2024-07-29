@@ -29,7 +29,7 @@ test.describe("Hero section", () => {
 	test("should navigate to the about me section when clicking on 'About me' link", async ({
 		page,
 	}) => {
-		const aboutMeLink = await page.$('a[href="#about-me"]')
+		const aboutMeLink = await page.$("a[href=\"#about-me\"]")
 		await aboutMeLink?.click()
 
 		const aboutMeTitle = await page.$eval("#about-me-title", (element) => element.textContent)
