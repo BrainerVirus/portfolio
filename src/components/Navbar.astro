@@ -1,0 +1,72 @@
+---
+import { cn } from "@/utils/cn"
+import Logo from "@public/images/logos/logo-coffe-white-no-bg.svg"
+import type { HTMLTag, Polymorphic } from "astro/types"
+import { type VariantProps, cva } from "class-variance-authority"
+import Typography from "./Typography.astro"
+
+type Props<Tag extends HTMLTag> = Polymorphic<{
+	as: Tag
+	variants?: NavbarVariantProps
+}>
+
+const { class: className, variants, ...props } = Astro.props
+
+const navbar = cva(["navbar", "w-full"], {
+	variants: {
+		variant: {
+			"primary": "bg-primary",
+			"secondary": "bg-secondary",
+			"base-100": "bg-base-100",
+			"base-200": "bg-base-200",
+			"base-300": "bg-base-300",
+			"translucent": "bg-translucent",
+		},
+	},
+	compoundVariants: [],
+	defaultVariants: {
+		variant: "translucent",
+	},
+})
+
+export type NavbarVariantProps = VariantProps<typeof navbar>
+---
+
+<div
+	class:list={cn(
+		navbar({
+			variant: variants.variant,
+			class: className,
+		})
+	)}
+	{...props}
+>
+	<div class="navbar-start">
+		<a
+			href="/"
+			class="text-neutral-content transition-colors duration-150 ease-in-out hover:text-accent"
+		>
+			<figure class="w-full">
+				<img
+					src={Logo.src}
+					alt="Nav logo"
+					width={Logo.width}
+					height={Logo.height}
+					class="max-w- w-full xl:max-w-48"
+				/>
+			</figure>
+		</a>
+	</div>
+	<div class="navbar-center">
+		<!-- TODO: Add menu links -->
+	</div>
+	<div class="navbar-end">
+		<button
+			class="btn btn-outline btn-secondary h-11 min-h-11 border-2 px-6 xl:h-12 xl:min-h-12 xl:px-8"
+		>
+			<Typography as="h1" variants={{ variant: "body", color: "inherit", fontWeight: "semibold" }}>
+				Contact
+			</Typography>
+		</button>
+	</div>
+</div>

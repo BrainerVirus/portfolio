@@ -45,7 +45,7 @@ export default {
 					// Daisy UI theme variables
 					"primary": "#8b21c4",
 					"primary-content": "#FFFFFF",
-					"secondary": "#f0f0f0",
+					"secondary": "#ffffff",
 					"secondary-content": "#414756",
 					"accent": "#ff9900",
 					"accent-content": "#FFFFFF",

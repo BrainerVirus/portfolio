@@ -1,4 +1,5 @@
 ---
+import Navbar from "@components/Navbar.astro"
 import "./global.css"
 
 interface Props {
@@ -14,7 +15,6 @@ const { title } = Astro.props
 		<meta charset="UTF-8" />
 		<meta name="description" content="Cristhofer Pincetti porfolio" />
 		<meta name="viewport" content="width=device-width" />
-		<!-- <link rel="icon" type="image/svg+xml" href="/favicon.ico" /> -->
 		<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 		<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -22,12 +22,21 @@ const { title } = Astro.props
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 	</head>
-	<!-- <header class="relative">
-    <nav class="sticky flex items-center justify-end">
-      <a href="/">Contact</a>
-    </nav>
-  </header> -->
 	<body>
-		<slot />
+		<header class="fixed z-10 w-full">
+			<Navbar
+				variants={{ variant: "translucent" }}
+				class="px-5 xl:mx-auto xl:my-8 xl:max-w-[90%] xl:px-0"
+			/>
+			<div class="block xl:hidden">
+				<div class="stars -z-10" role="banner"></div>
+				<div class="twinkling -z-10" role="banner"></div>
+			</div>
+		</header>
+		<main class="relative">
+			<slot />
+			<div class="stars -z-10" role="banner"></div>
+			<div class="twinkling -z-10" role="banner"></div>
+		</main>
 	</body>
 </html>
