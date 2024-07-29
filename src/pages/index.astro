@@ -1,65 +1,12 @@
 ---
-// eslint-disable-next-line import/order
+import Typography from "@/components/Typography.astro"
 import Layout from "@/layouts/Layout.astro"
-import Typography from "@components/typography.astro"
 import Setup from "@public/images/assets/desktop-pc-setup.svg"
 import { Icon } from "astro-icon/components"
-
-// import "animate.css"
-
-// const slides: Slide[] = [
-// 	{
-// 		beforeTitle: "",
-// 		title: "Experience and Previous Projects",
-// 		subtitle: "",
-// 		subtitle2: "",
-// 		content:
-// 			"I have built various different projects to fit different aspects of the client's business. If you want to see more examples of my work than the ones showcased in this site, please contact me!",
-// 		imageSrc: "hospital_san_juan_de_dios-logo.png",
-// 		imageAlt: "hospital san juan de dios logo",
-// 		slideNumber: 1,
-// 	},
-// 	{
-// 		beforeTitle: "Full-time job",
-// 		title: "Hospital San Juan de Dios",
-// 		subtitle: "Software Engineer",
-// 		subtitle2: "October 2022 - September 2023",
-// 		content: `
-//     Led the development of a finance module, encompassing document management, report generation, and dynamic barcode implementation. Implemented APIs to streamline system integration, enhancing operational efficiency. Collaborated with internal experts to integrate with third-party providers, and automated bulk data loading to expedite processes. Played a pivotal role in the development of a complex prescription entry system for outpatient care, facilitating efficient dispensing at various levels. Introduced CI/CD practices to optimize software development and deployment.
-//   `,
-// 		imageSrc: "hospital_san_juan_de_dios-logo.png",
-// 		imageAlt: "hospital san juan de dios logo",
-// 		slideNumber: 2,
-// 	},
-// 	{
-// 		beforeTitle: "Partial-time job (specific project)",
-// 		title: "Universidad de La Serena",
-// 		subtitle: "Software Developer",
-// 		subtitle2: "September 2023 - March 2024",
-// 		content: `
-//     Led the development of a comprehensive web platform at the Universidad de La Serena, focusing on water usage, report generation, water delivery management, role-based authentication, water delivery tracking, mobile app API integration, and continuous platform maintenance. Collaborated with multidisciplinary teams to enhance the platform's functionality and security, and implemented CI/CD practices to streamline the development and deployment process.
-//   `,
-// 		imageSrc: "uls-logo.png",
-// 		imageAlt: "universidad de la serena logo",
-// 		slideNumber: 3,
-// 	},
-// 	{
-// 		beforeTitle: "Full-time job",
-// 		title: "Sixbell",
-// 		subtitle: "Software Engineer",
-// 		subtitle2: "November 2023 - Today",
-// 		content: `
-//     Currently at Sixbell, I am actively involved in exploring new technologies to address challenges and migrate legacy platforms. My work includes developing new modules across various platforms, with a focus on Angular and Java Spring Boot stacks. I have also implemented CI/CD pipelines using GitLab and Docker, enhancing the development and deployment processes. Additionally, I have contributed to business technology solutions, which, due to confidentiality, cannot be disclosed but are crucial for internal operations.
-//   `,
-// 		imageSrc: "sixbell-logo.png",
-// 		imageAlt: "sixbell logo",
-// 		slideNumber: 4,
-// 	},
-// ]
 ---
 
 <Layout title="Home">
-	<main class="relative flex flex-col gap-20 px-5 font-source-sans-pro">
+	<div class="flex flex-col gap-20 px-5 font-source-sans-pro">
 		<section
 			id="hero"
 			class="grid grid-rows-[min-content_auto] gap-8 py-12 md:min-h-screen md:grid-cols-2 md:grid-rows-1 md:items-center xl:mx-auto xl:max-w-7xl"
@@ -448,9 +395,5 @@ import { Icon } from "astro-icon/components"
 				</div>
 			</div>
 		</section>
-		<div class="stars -z-10" role="banner"></div>
-		<div class="twinkling -z-10" role="banner"></div>
-	</main>
-
-	<style></style>
+	</div>
 </Layout>
