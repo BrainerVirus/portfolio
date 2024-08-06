@@ -71,6 +71,6 @@ jobs:
       - name: Install dependencies
         run: npm install -g pnpm && pnpm install
       - name: Run Semantic release
-        run: pnpm exe semantic-release
+        run: pnpm exec semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
