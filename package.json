@@ -61,7 +61,8 @@
     "prettier-plugin-astro-organize-imports": "0.4.9",
     "prettier-plugin-tailwindcss": "0.6.5",
     "semantic-release": "24.0.0",
-    "tailwind-merge": "2.4.0"
+    "tailwind-merge": "2.4.0",
+    "tailwindcss-animated": "^1.1.2"
   },
   "config": {
     "commitizen": {
