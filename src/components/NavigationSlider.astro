@@ -1,0 +1,208 @@
+---
+import Typography from "./Typography.astro"
+
+const sections = [
+	{ name: "Hero", id: "hero", active: true },
+	{ name: "About me", id: "about-me", active: false },
+	{ name: "Skills", id: "skills", active: false },
+]
+---
+
+<ul
+	class="relative flex flex-col before:absolute before:right-0 before:top-0 before:h-full before:w-[1px] before:rounded-3xl before:bg-neutral-content before:opacity-40 before:content-['']"
+>
+	{
+		sections.map((section, index) => (
+			<li class:list={["navigationSliderItem h-14 w-12"]}>
+				<Typography
+					as="a"
+					href={`#${section.id}`}
+					variants={{ variant: "body", color: "white", fontWeight: "light" }}
+					class="flex h-full w-full items-center pl-2"
+				>
+					0{index}
+				</Typography>
+			</li>
+		))
+	}
+	<li
+		class:list={[
+			"marker",
+			"absolute right-0 h-0 w-1 rounded-3xl bg-neutral-content content-['']",
+			"ease transform transition duration-300",
+		]}
+	>
+	</li>
+</ul>
+
+<script>
+	import { $, $$ } from "@/utils/dom-selector"
+
+	const DISPLAY = {
+		markerClass: ".marker",
+		navigationSliderItemClass: ".navigationSliderItem",
+	} as const
+
+	const marker = $(DISPLAY.markerClass)!
+	const items = $$(DISPLAY.navigationSliderItemClass)
+	const links = $$(`${DISPLAY.navigationSliderItemClass} a`)
+
+	let yDown: null | undefined | number = null
+	let xDown: null | undefined | number = null
+
+	function indicatorPosition(e: HTMLElement, link?: HTMLElement) {
+		const markerTop = e.offsetTop
+		const markerHeight = e.offsetHeight
+		marker.style.transform = `translateY(${markerTop}px)`
+		marker.style.height = `${markerHeight}px`
+
+		if (link) {
+			setActiveItem(link)
+		}
+	}
+
+	function setActiveItem(e: HTMLElement) {
+		items.forEach((item) => {
+			item.classList.remove("active")
+		})
+		e.classList.add("active")
+	}
+
+	function getActiveItem() {
+		return Array.from(items).find((item) => item.classList.contains("active"))
+	}
+
+	function getActiveItemIndex() {
+		return Array.from(items).findIndex((item) => item.classList.contains("active"))
+	}
+
+	function handleWheel(e: WheelEvent) {
+		if (e.deltaY > 0) {
+			scrollToSection("down")
+		} else {
+			scrollToSection("up")
+		}
+	}
+
+	function scrollToSection(direction: "up" | "down") {
+		const currentIndex = getActiveItemIndex()
+		let nextIndex = currentIndex
+
+		if (currentIndex === 0 && direction === "up") {
+			return
+		}
+
+		if (currentIndex === items.length - 1 && direction === "down") {
+			return
+		}
+
+		if (direction === "up") {
+			nextIndex = currentIndex - 1
+		} else {
+			nextIndex = currentIndex + 1
+		}
+
+		setActiveItem(items[nextIndex])
+		indicatorPosition(items[nextIndex])
+
+		links[nextIndex].click()
+	}
+
+	function getTouches(e: TouchEvent) {
+		return e.touches
+	}
+
+	function handleTouchStart(e: TouchEvent) {
+		const firstTouch = getTouches(e)[0]
+		xDown = firstTouch.clientX
+		yDown = firstTouch.clientY
+	}
+
+	function handleTouchMove(evt: TouchEvent) {
+		if (!xDown || !yDown) {
+			return
+		}
+
+		const xUp = evt.touches[0].clientX
+		const yUp = evt.touches[0].clientY
+
+		const xDiff = xDown - xUp
+		const yDiff = yDown - yUp
+
+		if (Math.abs(xDiff) > Math.abs(yDiff)) {
+			/* most significant */
+			if (xDiff > 0) {
+				/* right swipe */
+			} else {
+				/* left swipe */
+			}
+		} else {
+			if (yDiff > 0) {
+				/* down swipe */
+				scrollToSection("down")
+			} else {
+				/* up swipe */
+				scrollToSection("up")
+			}
+		}
+		/* reset values */
+		xDown = null
+		yDown = null
+	}
+
+	function handleResize() {
+		if (window.innerWidth <= 1024) {
+			window.removeEventListener("touchstart", handleTouchStart, false)
+			window.removeEventListener("touchmove", handleTouchMove, false)
+		} else {
+			window.addEventListener("touchstart", handleTouchStart, false)
+			window.addEventListener("touchmove", handleTouchMove, false)
+		}
+	}
+
+	document.addEventListener(
+		"astro:page-load",
+		() => {
+			const firstItem = items[0]
+			indicatorPosition(firstItem, firstItem)
+
+			items.forEach((link) => {
+				link.addEventListener("click", (e: Event) => {
+					indicatorPosition(e.target as HTMLElement, link)
+				})
+
+				link.addEventListener("mouseenter", (e: Event) => {
+					indicatorPosition(e.target as HTMLElement)
+				})
+
+				link.addEventListener("mouseleave", () => {
+					const activeItem = getActiveItem()
+
+					if (activeItem) {
+						indicatorPosition(activeItem)
+					}
+				})
+			})
+		},
+		{ once: true }
+	)
+
+	window.addEventListener("wheel", handleWheel)
+
+	window.addEventListener("touchstart", handleTouchStart, false)
+
+	window.addEventListener("touchmove", handleTouchMove, false)
+
+	window.addEventListener("resize", handleResize)
+
+	// check if the user is on a mobile device
+	if (window.innerWidth <= 1024) {
+		window.removeEventListener("touchstart", handleTouchStart, false)
+		window.removeEventListener("touchmove", handleTouchMove, false)
+		window.removeEventListener("wheel", handleWheel)
+	} else {
+		window.addEventListener("touchstart", handleTouchStart, false)
+		window.addEventListener("touchmove", handleTouchMove, false)
+		window.addEventListener("wheel", handleWheel)
+	}
+</script>
