@@ -1,4 +1,5 @@
 ---
+import NavigationSlider from "@/components/NavigationSlider.astro"
 import Typography from "@/components/Typography.astro"
 import Layout from "@/layouts/Layout.astro"
 import Setup from "@public/images/assets/desktop-pc-setup.svg"
@@ -6,10 +7,10 @@ import { Icon } from "astro-icon/components"
 ---
 
 <Layout title="Home">
-	<div class="flex flex-col gap-20 px-5 font-source-sans-pro">
+	<div class="over flex flex-col gap-20 px-5 font-source-sans-pro lg:max-h-dvh lg:overflow-hidden">
 		<section
 			id="hero"
-			class="grid grid-rows-[min-content_auto] gap-8 py-12 md:min-h-screen md:grid-cols-2 md:grid-rows-1 md:items-center xl:mx-auto xl:max-w-7xl"
+			class="grid animate-fade-down grid-rows-[min-content_auto] gap-8 py-12 animate-delay-100 animate-duration-300 md:min-h-screen md:grid-cols-2 md:grid-rows-1 md:items-center lg:pr-28 xl:mx-auto xl:max-w-7xl"
 		>
 			<div class="mx-auto mb-8 mt-8 w-full md:order-2">
 				<figure class="w-full">
@@ -56,7 +57,7 @@ import { Icon } from "astro-icon/components"
 
 		<section
 			id="about-me"
-			class="grid py-28 md:min-h-screen md:grid-cols-2 md:grid-rows-1 md:items-center xl:mx-auto xl:max-w-7xl"
+			class="grid py-28 md:min-h-screen md:grid-cols-2 md:grid-rows-1 md:items-center lg:pr-28 xl:mx-auto xl:max-w-7xl"
 		>
 			<div class="mb-9 mt-5 flex flex-col gap-4">
 				<Typography
@@ -395,5 +396,8 @@ import { Icon } from "astro-icon/components"
 				</div>
 			</div>
 		</section>
+	</div>
+	<div class="invisible fixed right-12 top-1/2 lg:visible">
+		<NavigationSlider />
 	</div>
 </Layout>

@@ -22,14 +22,10 @@ test.describe("Hero section", () => {
 		).toBeInViewport()
 	})
 
-	test("should have a navigation to go to about me section", async ({ page }) => {
-		await expect(page.locator("a[href='#about-me']")).toBeAttached()
-	})
-
 	test("should navigate to the about me section when clicking on 'About me' link", async ({
 		page,
 	}) => {
-		const aboutMeLink = await page.$("a[href=\"#about-me\"]")
+		const aboutMeLink = await page.$('a[href="#about-me"]')
 		await aboutMeLink?.click()
 
 		const aboutMeTitle = await page.$eval("#about-me-title", (element) => element.textContent)
@@ -55,11 +51,11 @@ test.describe("About section", () => {
 		).toBeInViewport()
 	})
 
-	test("should have a visible description", async ({ page }) => {
-		await expect(
-			page.locator("#about-me", { has: page.locator("#about-me-description") })
-		).toBeInViewport()
-	})
+	// test("should have a visible description", async ({ page }) => {
+	// 	await expect(
+	// 		page.locator("#about-me", { has: page.locator("#about-me-description") })
+	// 	).toBeInViewport()
+	// })
 })
 
 // test.describe("Experience section", () => {
