@@ -41,21 +41,17 @@ test.describe("About section", () => {
 		await page.getByRole("link", { name: "about me" }).click()
 	})
 
-	test("should be visible", async ({ page }) => {
-		await expect(page.locator("#about-me")).toBeInViewport()
-	})
-
 	test("should have a visible heading", async ({ page }) => {
 		await expect(
 			page.locator("#about-me", { has: page.locator("#about-me-title") })
 		).toBeInViewport()
 	})
 
-	// test("should have a visible description", async ({ page }) => {
-	// 	await expect(
-	// 		page.locator("#about-me", { has: page.locator("#about-me-description") })
-	// 	).toBeInViewport()
-	// })
+	test("should have a visible description", async ({ page }) => {
+		await expect(
+			page.locator("#about-me", { has: page.locator("#about-me-description") })
+		).toBeInViewport()
+	})
 })
 
 // test.describe("Experience section", () => {
