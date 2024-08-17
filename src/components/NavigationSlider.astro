@@ -2,9 +2,9 @@
 import Typography from "./Typography.astro"
 
 const sections = [
-	{ name: "Hero", id: "hero", active: true },
-	{ name: "About me", id: "about-me", active: false },
-	{ name: "Skills", id: "skills", active: false },
+	{ name: "Hero", id: "hero" },
+	{ name: "About me", id: "about-me" },
+	{ name: "Skills", id: "skills" },
 ]
 ---
 
@@ -13,7 +13,7 @@ const sections = [
 >
 	{
 		sections.map((section, index) => (
-			<li class:list={["navigationSliderItem h-14 w-12"]}>
+			<li id={section.id} class:list={["navigationSliderItem h-14 w-12"]}>
 				<Typography
 					as="a"
 					href={`#${section.id}`}
@@ -42,6 +42,20 @@ const sections = [
 		markerClass: ".marker",
 		navigationSliderItemClass: ".navigationSliderItem",
 	} as const
+
+	let urlHash = window.location.hash
+
+	window.addEventListener("popstate", () => {
+		urlHash = window.location.hash
+
+		const item = getItemByHash()
+		const activeItem = getActiveItem()
+
+		if (item === activeItem) return
+
+		indicatorPosition(item)
+		setActiveItem(item)
+	})
 
 	const marker = $(DISPLAY.markerClass)!
 	const items = $$(DISPLAY.navigationSliderItemClass)
@@ -74,6 +88,19 @@ const sections = [
 
 	function getActiveItemIndex() {
 		return Array.from(items).findIndex((item) => item.classList.contains("active"))
+	}
+
+	function getItemByHash() {
+		const hash = urlHash.replace("#", "")
+		const item = Array.from(items).find((item) => {
+			return item.id === hash
+		})
+
+		if (item) {
+			return item
+		}
+
+		return items[0]
 	}
 
 	function handleWheel(e: WheelEvent) {
@@ -154,9 +181,11 @@ const sections = [
 		if (window.innerWidth <= 1024) {
 			window.removeEventListener("touchstart", handleTouchStart, false)
 			window.removeEventListener("touchmove", handleTouchMove, false)
+			window.removeEventListener("wheel", handleWheel)
 		} else {
 			window.addEventListener("touchstart", handleTouchStart, false)
 			window.addEventListener("touchmove", handleTouchMove, false)
+			window.addEventListener("wheel", handleWheel)
 		}
 	}
 
