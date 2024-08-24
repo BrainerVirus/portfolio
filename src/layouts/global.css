@@ -109,38 +109,6 @@
 			background-position: -10000px 5000px;
 		}
 	}
-	@keyframes move-clouds-back {
-		from {
-			background-position: 0 0;
-		}
-		to {
-			background-position: 10000px 0;
-		}
-	}
-	@-webkit-keyframes move-clouds-back {
-		from {
-			background-position: 0 0;
-		}
-		to {
-			background-position: 10000px 0;
-		}
-	}
-	@-moz-keyframes move-clouds-back {
-		from {
-			background-position: 0 0;
-		}
-		to {
-			background-position: 10000px 0;
-		}
-	}
-	@-ms-keyframes move-clouds-back {
-		from {
-			background-position: 0;
-		}
-		to {
-			background-position: 10000px 0;
-		}
-	}
 }
 
 @layer components {
@@ -153,16 +121,16 @@
 		@apply absolute bottom-0 left-0 right-0 top-0 block h-full w-full;
 	}
 	.stars {
-		background: #000 url(/images/assets/stars.png) repeat top center;
+		background: #000 url(/images/assets/stars.webp) repeat top center;
 		/* z-index: -10; */
 	}
 	.twinkling {
-		background: transparent url(/images/assets/twinkling.png) repeat top center;
+		background: transparent url(/images/assets/twinkling.webp) repeat top center;
 		/* z-index: 1; */
-		-moz-animation: move-twink-back 200s linear infinite;
-		-ms-animation: move-twink-back 200s linear infinite;
-		-o-animation: move-twink-back 200s linear infinite;
-		-webkit-animation: move-twink-back 200s linear infinite;
-		animation: move-twink-back 200s linear infinite;
+		-moz-animation: move-twink-back 500s linear infinite;
+		-ms-animation: move-twink-back 500s linear infinite;
+		-o-animation: move-twink-back 500s linear infinite;
+		-webkit-animation: move-twink-back 500s linear infinite;
+		animation: move-twink-back 500s linear infinite;
 	}
 }
