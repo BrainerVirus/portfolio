@@ -3,8 +3,6 @@ import tailwind from "@astrojs/tailwind"
 import icon from "astro-icon"
 import { defineConfig } from "astro/config"
 
-import vercel from "@astrojs/vercel/serverless"
-
 // https://astro.build/config
 export default defineConfig({
 	integrations: [
@@ -18,16 +16,5 @@ export default defineConfig({
 	server: {
 		port: 3000,
 	},
-	output: "hybrid",
-	adapter: vercel({
-		webAnalytics: {
-			enabled: true,
-		},
-		maxDuration: 8,
-		imageService: true,
-		devImageService: "squoosh",
-		isr: {
-			expiration: 60 * 60 * 24,
-		},
-	}),
+	output: "static",
 })
