@@ -9,7 +9,7 @@
       {
         "assets": [
           {
-            "path": ".vercel/output",
+            "path": ".dist/",
             "label": "Distribution"
           }
         ]
@@ -18,7 +18,7 @@
     [
       "@semantic-release/git",
       {
-        "assets": ["CHANGELOG.md", "package.json", "package-lock.json", ".vercel/output"],
+        "assets": ["CHANGELOG.md", "package.json", "package-lock.json", ".dist/"],
         "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
       }
     ]
