@@ -1,3 +1,53 @@
+# [2.0.0](https://github.com/BrainerVirus/portfolio/compare/v1.0.0...v2.0.0) (2024-08-24)
+
+
+* Feature/refactor home page ([#19](https://github.com/BrainerVirus/portfolio/issues/19)) ([ce5f83b](https://github.com/BrainerVirus/portfolio/commit/ce5f83b6aadc3c65941fa3b4ce05f5846b0f7dab))
+
+
+### Bug Fixes
+
+* **index page:** fix scrolling in mobile devices ([654d3a4](https://github.com/BrainerVirus/portfolio/commit/654d3a44b64d747bc8fb850757bfb5d9f4a1a541))
+* **layout:** fix z-index order problem ([8c72600](https://github.com/BrainerVirus/portfolio/commit/8c72600c996b1cd500d9429c8b588293f55ace7d))
+
+
+### Features
+
+* add experience section ([dc473e5](https://github.com/BrainerVirus/portfolio/commit/dc473e5c20be76cd6f7e2ee41c9224351835f255))
+* add vercel analytics ([13d109c](https://github.com/BrainerVirus/portfolio/commit/13d109c9f22432a8129d05ef32609ea7f5034729))
+* add vercel insights ([8c3a081](https://github.com/BrainerVirus/portfolio/commit/8c3a081be41f990ddafaccf453df5d08393562c3))
+* **assets:** optimize assets ([8c70af7](https://github.com/BrainerVirus/portfolio/commit/8c70af7fbb342c2c5da2e78c9e99c4ef6c9feb87))
+* **home:** implement sections, wheel scrolling, animations for wheel scrolling, and sliders ([e32f57f](https://github.com/BrainerVirus/portfolio/commit/e32f57f8f3f3a82fc5fa863eced2be11248be282))
+* **index.astro:** add navigation slider component ([582a650](https://github.com/BrainerVirus/portfolio/commit/582a6500763450504be4b7750c19068079e2fbf2))
+* **navigationslider:** add logic to detect url hash changes and set it base on user interaction ([6b3ce92](https://github.com/BrainerVirus/portfolio/commit/6b3ce9286407fd6765959f7dbc0d65bf0aa86d3a))
+* **packge.json:** Update dependencies ([591cc70](https://github.com/BrainerVirus/portfolio/commit/591cc70132a6fabfe38ca5d26c32d0c82a57fd6e))
+* **ssr:** add vercel ssr integration ([03309f0](https://github.com/BrainerVirus/portfolio/commit/03309f068050c00131ddc08b7600da0f0358a998))
+* **tailwind:** add tailwind animations ([4995f99](https://github.com/BrainerVirus/portfolio/commit/4995f99d04fd56a7f3a48bfb289ff67defcd38b3))
+* **utils:** add dom selector util ([9775ea4](https://github.com/BrainerVirus/portfolio/commit/9775ea474567726240ceda8113077afc6561bd2c))
+
+
+### Reverts
+
+* debuggin astro vercel adpater ([f7408a2](https://github.com/BrainerVirus/portfolio/commit/f7408a2df9fe030dfbb726bad94afe052ec6811b))
+
+
+### BREAKING CHANGES
+
+* usege of typography component
+
+* refactor(typography): remove leading class from body-lg variant
+
+* build(package.json): update astro dependencies
+
+* refactor: change font from source san pro to source san 3
+
+* style: update color palette
+
+* test: fix home page tests
+
+* fix(typography): remove tabindex attribute
+
+* refactor(index.astro): remove some skills from the list, and add others
+
 # 1.0.0 (2023-09-23)
 
 
