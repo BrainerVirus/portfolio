@@ -52,6 +52,7 @@ jobs:
 
   release:
     runs-on: ubuntu-latest
+    environment: production
     needs: [build]
     timeout-minutes: 20
     permissions:
@@ -73,4 +74,4 @@ jobs:
       - name: Run Semantic release
         run: pnpm exec semantic-release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
