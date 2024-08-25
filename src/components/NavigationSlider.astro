@@ -40,10 +40,12 @@ const sections = [
 
 	const DISPLAY = {
 		markerClass: ".marker",
+		navigationSectionClass: ".navigationSection",
 		navigationSliderItemClass: ".navigationSliderItem",
 	}
 
 	const marker = $(DISPLAY.markerClass)!
+	const sections = $$(DISPLAY.navigationSectionClass)
 	const items = $$(DISPLAY.navigationSliderItemClass)
 	const links = $$(`${DISPLAY.navigationSliderItemClass} a`)
 
@@ -93,6 +95,19 @@ const sections = [
 		}
 
 		return items[0]
+	}
+
+	function getSectionByHash() {
+		const hash = urlHash.replace("#", "")
+		const section = Array.from(sections).find((section) => {
+			return section.id === hash
+		})
+
+		if (section) {
+			return section
+		}
+
+		return sections[0]
 	}
 
 	function getTouches(e: TouchEvent) {
@@ -208,8 +223,11 @@ const sections = [
 	document.addEventListener(
 		"astro:page-load",
 		() => {
-			const firstItem = items[0]
-			indicatorPosition(firstItem, firstItem)
+			const item: HTMLElement = getItemByHash()
+			const section: HTMLElement = getSectionByHash()
+
+			section.scrollIntoView()
+			indicatorPosition(item, item)
 
 			items.forEach((link) => {
 				link.addEventListener("click", (e: Event) => {
