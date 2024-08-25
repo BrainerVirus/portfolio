@@ -50,6 +50,9 @@ const sections = [
 	let yDown: null | undefined | number = null
 	let xDown: null | undefined | number = null
 
+	let isScrolling: boolean = false
+	const scrollDelay = 700
+
 	let urlHash = window.location.hash
 
 	// helpers
@@ -123,11 +126,19 @@ const sections = [
 	}
 
 	function handleWheel(e: WheelEvent) {
+		if (isScrolling) return
+
+		isScrolling = true
+
 		if (e.deltaY > 0) {
 			handleScrollToSection("down")
 		} else {
 			handleScrollToSection("up")
 		}
+
+		setTimeout(() => {
+			isScrolling = false
+		}, scrollDelay)
 	}
 
 	function handleTouchStart(e: TouchEvent) {
