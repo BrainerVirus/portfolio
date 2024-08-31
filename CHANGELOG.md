@@ -1,3 +1,12 @@
+# [2.1.0](https://github.com/BrainerVirus/portfolio/compare/v2.0.0...v2.1.0) (2024-08-31)
+
+
+### Features
+
+* add alert component to the main layout to inform the web is a work in progress ([5a65414](https://github.com/BrainerVirus/portfolio/commit/5a654149654078a66dc1e031dd402272b7ca5512))
+* **navigationslider:** add logic to persist section scrolling between page realods ([5eb51eb](https://github.com/BrainerVirus/portfolio/commit/5eb51ebddc483d4c9c7915634aa676b4360daab4))
+* **navigationslider:** add threshold to wheel navigation ([650f5a9](https://github.com/BrainerVirus/portfolio/commit/650f5a9f8776a1fbbf5a10f8b6db26126a9cb19f))
+
 # [2.0.0](https://github.com/BrainerVirus/portfolio/compare/v1.0.0...v2.0.0) (2024-08-24)
 
 
