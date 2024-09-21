@@ -12,7 +12,7 @@ import { Icon } from "astro-icon/components"
 			id="hero"
 			class="navigationSection grid grid-rows-[min-content_auto] gap-8 pb-12 pt-20 md:min-h-screen md:grid-cols-2 md:grid-rows-1 md:items-center lg:pr-28 xl:mx-auto xl:max-w-7xl xl:pr-24 2xl:pr-0"
 		>
-			<div>
+			<div class="order-2 xl:order-1">
 				<Typography
 					as="h1"
 					id={"hero-title"}
@@ -42,7 +42,7 @@ import { Icon } from "astro-icon/components"
 					<Icon name="mdi:chevron-right" class="mt-[6px] h-6 w-6" />
 				</a>
 			</div>
-			<div class="mx-auto mb-8 mt-8 w-full">
+			<div class="order-1 mx-auto mb-8 mt-8 w-full xl:order-2">
 				<figure class="w-full">
 					<img
 						src={Setup.src}
@@ -400,6 +400,14 @@ import { Icon } from "astro-icon/components"
 	<div class="invisible fixed right-12 top-1/2 lg:visible">
 		<NavigationSlider />
 	</div>
+
+	<figure
+		class="skill fixed bottom-16 left-12 hidden flex-col items-center justify-start text-center text-neutral-content transition-colors duration-300 ease-in-out hover:text-accent xl:flex"
+	>
+		<a href="https://github.com/BrainerVirus/" target="_blank">
+			<Icon name="fa6-brands:github-alt" class="h-10 w-10" />
+		</a>
+	</figure>
 </Layout>
 
 <script>
