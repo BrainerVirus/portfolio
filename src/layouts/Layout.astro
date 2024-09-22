@@ -1,7 +1,7 @@
 ---
 import Alert from "@components/Alert.astro"
 import Navbar from "@components/Navbar.astro"
-import { ViewTransitions } from "astro:transitions"
+import { ClientRouter } from "astro:transitions"
 import "./global.css"
 
 interface Props {
@@ -29,23 +29,18 @@ const { title } = Astro.props
 		<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<ViewTransitions />
+		<ClientRouter />
 	</head>
 	<body>
 		<header class="fixed z-10 w-full">
-			<Navbar
-				variants={{ variant: "translucent" }}
-				class="px-5 xl:mx-auto xl:my-8 xl:max-w-[90%] xl:px-0"
-			/>
+			<Navbar variants={{ variant: "translucent" }} class="px-5 xl:my-8 xl:px-12" />
 			<div class="block xl:hidden">
-				<div class="stars -z-10" role="banner"></div>
-				<div class="twinkling -z-10" role="banner"></div>
+				<div class="stars before:twinkling -z-10" role="banner"></div>
 			</div>
 		</header>
-		<main class="relative">
+		<main class="relative w-full">
 			<slot />
-			<div class="stars -z-10" role="banner"></div>
-			<div class="twinkling -z-10" role="banner"></div>
+			<div class="stars before:twinkling -z-10" role="banner"></div>
 		</main>
 		<footer class="fixed bottom-0 z-10 w-full lg:absolute">
 			<Alert />
