@@ -1,3 +1,10 @@
+# [2.2.0](https://github.com/BrainerVirus/portfolio/compare/v2.1.0...v2.2.0) (2024-09-22)
+
+
+### Features
+
+* **github:** add github link and fix first section order base on device screen ([57497dc](https://github.com/BrainerVirus/portfolio/commit/57497dc555386537222064487c7fdb0488d22954))
+
 # [2.1.0](https://github.com/BrainerVirus/portfolio/compare/v2.0.0...v2.1.0) (2024-08-31)
 
 
