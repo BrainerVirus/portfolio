@@ -9,10 +9,12 @@ interface Props {
 }
 
 const { title } = Astro.props
+
+const { currentLocale } = Astro
 ---
 
 <!doctype html>
-<html lang="en" data-theme="twinkling_stars">
+<html lang={currentLocale} data-theme="twinkling_stars">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Cristhofer Pincetti porfolio" />
@@ -35,12 +37,12 @@ const { title } = Astro.props
 		<header class="fixed z-10 w-full">
 			<Navbar variants={{ variant: "translucent" }} class="px-5 xl:my-8 xl:px-12" />
 			<div class="block xl:hidden">
-				<div class="stars before:twinkling -z-10" role="banner"></div>
+				<div class="stars before:twinkling -z-10"></div>
 			</div>
 		</header>
 		<main class="relative w-full">
 			<slot />
-			<div class="stars before:twinkling -z-10" role="banner"></div>
+			<div class="stars before:twinkling -z-10"></div>
 		</main>
 		<footer class="fixed bottom-0 z-10 w-full lg:absolute">
 			<Alert />
