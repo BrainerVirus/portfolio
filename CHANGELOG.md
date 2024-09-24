@@ -1,3 +1,10 @@
+# [2.3.0](https://github.com/BrainerVirus/portfolio/compare/v2.2.0...v2.3.0) (2024-09-24)
+
+
+### Features
+
+* add english and spanish automatic translation ([e5490f0](https://github.com/BrainerVirus/portfolio/commit/e5490f0aac6d4b8523b3c2b0b73d5ca8cfc29daf))
+
 # [2.2.0](https://github.com/BrainerVirus/portfolio/compare/v2.1.0...v2.2.0) (2024-09-22)
 
 
