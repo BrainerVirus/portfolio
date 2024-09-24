@@ -1,10 +1,23 @@
 import mdx from "@astrojs/mdx"
 import tailwind from "@astrojs/tailwind"
 import icon from "astro-icon"
-import { defineConfig } from "astro/config"
+import { defineConfig, passthroughImageService } from "astro/config"
+
+import vercel from "@astrojs/vercel/serverless"
 
 // https://astro.build/config
 export default defineConfig({
+	image: {
+		service: passthroughImageService(),
+	},
+	i18n: {
+		defaultLocale: "en",
+		locales: ["es", "en"],
+		routing: {
+			prefixDefaultLocale: true,
+			redirectToDefaultLocale: false,
+		},
+	},
 	integrations: [
 		tailwind({
 			applyBaseStyles: false,
@@ -16,5 +29,6 @@ export default defineConfig({
 	server: {
 		port: 3000,
 	},
-	output: "static",
+	output: "server",
+	adapter: vercel(),
 })
