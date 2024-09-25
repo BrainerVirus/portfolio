@@ -1,5 +1,6 @@
 ---
 import { cn } from "@/utils/cn"
+import { getLangFromUrl, useTranslations } from "@i18n/utils"
 import Logo from "@public/images/logos/logo-coffe-white-no-bg.webp"
 import type { HTMLTag, Polymorphic } from "astro/types"
 import { type VariantProps, cva } from "class-variance-authority"
@@ -30,6 +31,9 @@ const navbar = cva(["navbar", "w-full"], {
 })
 
 export type NavbarVariantProps = VariantProps<typeof navbar>
+
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
 ---
 
 <div
@@ -65,7 +69,7 @@ export type NavbarVariantProps = VariantProps<typeof navbar>
 			class="btn btn-outline btn-secondary h-11 min-h-11 border-2 px-6 xl:h-12 xl:min-h-12 xl:px-8"
 		>
 			<Typography as="h1" variants={{ variant: "body", color: "inherit", fontWeight: "semibold" }}>
-				Contact
+				{t("nav.contact")}
 			</Typography>
 		</button>
 	</div>
