@@ -1,3 +1,12 @@
+# [2.4.0](https://github.com/BrainerVirus/portfolio/compare/v2.3.0...v2.4.0) (2024-09-25)
+
+
+### Features
+
+* **i18n:** add es/en texts and logic to translate ui text ([f48d8f0](https://github.com/BrainerVirus/portfolio/commit/f48d8f068b633f41baf5fc9349405b99453d6c12))
+* **index.astro:** add default language redirect ([747eed7](https://github.com/BrainerVirus/portfolio/commit/747eed7ebef4233b8746dc89c12e42d5131a08a6))
+* **navbar.astro:** implement ui translation ([50d9d9e](https://github.com/BrainerVirus/portfolio/commit/50d9d9e00c4aca9c397457c95e4effdd82a37352))
+
 # [2.3.0](https://github.com/BrainerVirus/portfolio/compare/v2.2.0...v2.3.0) (2024-09-24)
 
 
