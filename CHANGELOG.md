@@ -1,3 +1,35 @@
+# [2.4.0](https://github.com/BrainerVirus/portfolio/compare/v2.3.0...v2.4.0) (2024-09-25)
+
+
+### Features
+
+* **i18n:** add es/en texts and logic to translate ui text ([f48d8f0](https://github.com/BrainerVirus/portfolio/commit/f48d8f068b633f41baf5fc9349405b99453d6c12))
+* **index.astro:** add default language redirect ([747eed7](https://github.com/BrainerVirus/portfolio/commit/747eed7ebef4233b8746dc89c12e42d5131a08a6))
+* **navbar.astro:** implement ui translation ([50d9d9e](https://github.com/BrainerVirus/portfolio/commit/50d9d9e00c4aca9c397457c95e4effdd82a37352))
+
+# [2.3.0](https://github.com/BrainerVirus/portfolio/compare/v2.2.0...v2.3.0) (2024-09-24)
+
+
+### Features
+
+* add english and spanish automatic translation ([e5490f0](https://github.com/BrainerVirus/portfolio/commit/e5490f0aac6d4b8523b3c2b0b73d5ca8cfc29daf))
+
+# [2.2.0](https://github.com/BrainerVirus/portfolio/compare/v2.1.0...v2.2.0) (2024-09-22)
+
+
+### Features
+
+* **github:** add github link and fix first section order base on device screen ([57497dc](https://github.com/BrainerVirus/portfolio/commit/57497dc555386537222064487c7fdb0488d22954))
+
+# [2.1.0](https://github.com/BrainerVirus/portfolio/compare/v2.0.0...v2.1.0) (2024-08-31)
+
+
+### Features
+
+* add alert component to the main layout to inform the web is a work in progress ([5a65414](https://github.com/BrainerVirus/portfolio/commit/5a654149654078a66dc1e031dd402272b7ca5512))
+* **navigationslider:** add logic to persist section scrolling between page realods ([5eb51eb](https://github.com/BrainerVirus/portfolio/commit/5eb51ebddc483d4c9c7915634aa676b4360daab4))
+* **navigationslider:** add threshold to wheel navigation ([650f5a9](https://github.com/BrainerVirus/portfolio/commit/650f5a9f8776a1fbbf5a10f8b6db26126a9cb19f))
+
 # [2.0.0](https://github.com/BrainerVirus/portfolio/compare/v1.0.0...v2.0.0) (2024-08-24)
 
 
