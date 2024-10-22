@@ -1,5 +1,9 @@
 ---
 import Typography from "@components/Typography.astro"
+import { getLangFromUrl, useTranslations } from "@i18n/utils"
+
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
 ---
 
 <div
@@ -21,7 +25,7 @@ import Typography from "@components/Typography.astro"
 			></path>
 		</svg>
 		<Typography as="p" variants={{ variant: "body-sm", color: "inherit" }}>
-			WIP stay tuned for the exciting final result!.
+			{t("altert.wip")}
 		</Typography>
 	</div>
 </div>
