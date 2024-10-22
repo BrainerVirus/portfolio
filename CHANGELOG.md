@@ -1,3 +1,10 @@
+# [2.5.0](https://github.com/BrainerVirus/portfolio/compare/v2.4.0...v2.5.0) (2024-10-22)
+
+
+### Features
+
+* **alert.astro:** add translation for ui alert work in progress ([d8e1764](https://github.com/BrainerVirus/portfolio/commit/d8e17647e2063ff4c21802260ee6567ad9b58e04))
+
 # [2.4.0](https://github.com/BrainerVirus/portfolio/compare/v2.3.0...v2.4.0) (2024-09-25)
 
 
