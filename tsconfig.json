@@ -8,6 +8,7 @@
       "@/*": ["./src/*"],
       "@public/*": ["./public/*"],
       "@components/*": ["./src/components/*"],
+      "@consts/*": ["./src/consts/*"],
       "@i18n/*": ["./src/i18n/*"]
     }
   }
