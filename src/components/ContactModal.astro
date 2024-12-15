@@ -1,0 +1,56 @@
+---
+import Typography from "@components/Typography.astro"
+import { actions } from "astro:actions"
+const { modalId } = Astro.props
+---
+
+<!-- Open the modal using ID.showModal() method --><!-- <button class="btn" onclick={modalId.showModal()}>open modal</button> -->
+<dialog id={modalId} class="modal">
+	<div class="modal-box">
+		<Typography as="h3" variants={{ variant: "h3", color: "inherit", fontWeight: "semibold" }}
+			>Write me a message!</Typography
+		>
+		<div class="modal-action">
+			<form method="dialog">
+				<!-- if there is a button in form, it will close the modal -->
+				<button class="btn btn-circle btn-ghost btn-sm absolute right-2 top-2">✕</button>
+			</form>
+			<form class="form-control !m-0 w-full gap-6" action={actions.send} method="POST">
+				<label class="form-control items-start gap-1" for="email">
+					<span class="label-text">E-mail</span>
+					<input
+						class="input input-bordered input-primary w-full"
+						type="email"
+						id="email"
+						name="email"
+						placeholder="Email"
+						required
+					/>
+				</label>
+
+				<label class="form-control items-start gap-1" for="subject">
+					<span class="label-text">Subject</span>
+					<input
+						class="input input-bordered input-primary w-full"
+						type="text"
+						id="subject"
+						name="subject"
+						placeholder="Subject"
+						required
+					/>
+				</label>
+
+				<label class="form-control items-start gap-1" for="message">
+					<span class="label-text">Message</span>
+					<textarea
+						class="textarea textarea-bordered textarea-primary w-full"
+						id="message"
+						name="message"
+						placeholder="message"></textarea>
+				</label>
+
+				<button class="btn btn-primary btn-md mt-1" type="submit">Send email</button>
+			</form>
+		</div>
+	</div>
+</dialog>
