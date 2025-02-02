@@ -1,59 +1,85 @@
 ---
 import { cn } from "@/utils/cn"
 import type { HTMLTag, Polymorphic } from "astro/types"
-import { type VariantProps, cva } from "class-variance-authority"
+import { cva } from "class-variance-authority"
 
 type Props<Tag extends HTMLTag> = Polymorphic<{
 	as: Tag
-	variants: TypographyVariantProps
+	variant?: TypographyVariantProps
+	color?: TypographyColorProps
+	fontWeight?: TypographyWeightProps
 }>
 
-const { as: Tag, class: className, variants, ...props } = Astro.props
+const { as: Tag, class: className, variant, color, fontWeight, ...props } = Astro.props
 
 const typography = cva([], {
 	variants: {
 		variant: {
-			"h1-xl": ["text-4xl", "text-balance", "font-heading", "md:text-6xl"],
-			"h1": ["text-3xl", "text-balance", "font-heading"],
-			"h2": ["text-2xl", "text-balance", "font-heading"],
-			"h3": ["text-xl", "text-balance", "font-heading"],
-			"body-xs": ["text-xs", "text-pretty", "font-body"],
-			"body-sm": ["text-sm", "text-pretty", "font-body"],
-			"body": ["text-base", "text-pretty", "font-body"],
-			"body-lg": ["text-lg", "text-pretty", "font-body"],
+			"h1": ["text-[3.815rem]", "text-balance", "font-heading", "leading-tight"],
+			"h2": ["text-[3.052rem]", "text-balance", "font-heading", "leading-tight"],
+			"h3": ["text-[2.441rem]", "text-balance", "font-heading", "leading-tight"],
+			"h4": ["text-[1.953rem]", "text-balance", "font-heading", "leading-tight"],
+			"h5": ["text-[1.563rem]", "text-balance", "font-heading", "leading-tight"],
+			"h6": ["text-xl", "text-balance", "font-heading", "leading-tight"],
+			"body": ["text-base", "text-pretty", "font-body", "leading-normal"],
+			"body-sm": ["text-[0.8rem]", "text-pretty", "font-body", "leading-normal"],
+			"body-xs": ["text-[0.64rem]", "text-pretty", "font-body", "leading-normal"],
 		},
 		color: {
-			white: "text-neutral-content",
-			black: "text-neutral",
-			primary: "text-primary",
+			base: "text-base-content",
+			white: "text-white",
+			black: "text-black",
 			inherit: "text-inherit",
 		},
 		fontWeight: {
+			bolder: "font-extrabold",
 			bold: "font-bold",
 			semibold: "font-semibold",
-			bolder: "font-bold md:font-extrabold",
 			normal: "font-normal",
 			light: "font-light",
+			extraLight: "font-extralight",
+			thin: "font-thin",
 			inherit: ["font-inherit", "font-body"],
 		},
 	},
 	compoundVariants: [],
 	defaultVariants: {
 		variant: "body",
-		color: "black",
+		color: "inherit",
 		fontWeight: "normal",
 	},
 })
 
-type TypographyVariantProps = VariantProps<typeof typography>
+type TypographyVariantProps =
+	| "h1"
+	| "h2"
+	| "h3"
+	| "h4"
+	| "h5"
+	| "h6"
+	| "body"
+	| "body-sm"
+	| "body-xs"
+	| null
+	| undefined
+type TypographyColorProps = "white" | "black" | "primary" | "inherit" | null | undefined
+type TypographyWeightProps =
+	| "bold"
+	| "semibold"
+	| "bolder"
+	| "normal"
+	| "light"
+	| "inherit"
+	| null
+	| undefined
 ---
 
 <Tag
 	class:list={cn(
 		typography({
-			variant: variants.variant,
-			color: variants.color,
-			fontWeight: variants.fontWeight,
+			variant: variant,
+			color: color,
+			fontWeight: fontWeight,
 			class: className,
 		})
 	)}
