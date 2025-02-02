@@ -33,9 +33,9 @@ const { slides, currentSlide, id } = Astro.props
 				id={`slide-${slide.slideNumber}`}
 			>
 				<div>
-					<p class="mb-2 font-light leading-6 opacity-70">{slide.beforeTitle}</p>
-					<h2 class="mb-5 text-4xl font-bold leading-10">{slide.title}</h2>
-					<div class="leading-6">
+					<p class="mb-2 font-light opacity-70">{slide.beforeTitle}</p>
+					<h2 class="mb-5 text-4xl font-bold">{slide.title}</h2>
+					<div>
 						<h3 class="mb-2 text-2xl font-bold">{slide.subtitle}</h3>
 						<p class="mb-5 text-sm font-light">{slide.subtitle2}</p>
 						{/* <img src={slide.imageSrc} alt={slide.imageAlt} class="mx-auto mb-5 max-w-28" /> */}
