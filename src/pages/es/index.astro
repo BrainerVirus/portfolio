@@ -16,7 +16,9 @@ import { Icon } from "astro-icon/components"
 				<Typography
 					as="h1"
 					id={"hero-title"}
-					variants={{ variant: "h1-xl", color: "white", fontWeight: "bolder" }}
+					variant="h1"
+					color="white"
+					fontWeight="bolder"
 					class:list={"mb-9 md:max-w-[1000px]"}
 				>
 					Ingeniero de Software
@@ -24,8 +26,10 @@ import { Icon } from "astro-icon/components"
 				<Typography
 					as="p"
 					id={"hero-description"}
-					variants={{ variant: "body-lg", color: "white", fontWeight: "normal" }}
-					class:list={"mb-4 max-w-[600px] leading-6"}
+					variant="body"
+					color="white"
+					fontWeight="normal"
+					class:list={"mb-4 max-w-[600px]"}
 				>
 					Convirtiendo ideas en realidad. Diseño interfaces de usuario hermosas y creo potentes
 					backends para aplicaciones web, de escritorio y móviles.
@@ -34,10 +38,8 @@ import { Icon } from "astro-icon/components"
 					href="#about-me"
 					class="flex w-fit rotate-0 items-center gap-1 text-neutral-content underline decoration-accent decoration-2 underline-offset-[5px] transition duration-300 ease-in-out hover:text-accent [&>svg]:rotate-0 [&>svg]:transition [&>svg]:duration-300 [&>svg]:hover:rotate-90"
 				>
-					<Typography
-						as="span"
-						variants={{ variant: "body-lg", color: "inherit", fontWeight: "bold" }}
-						class:list={"leading-6"}>Sobre mí</Typography
+					<Typography as="span" variant="body" color="inherit" fontWeight="bold"
+						>Sobre mí</Typography
 					>
 					<Icon name="mdi:chevron-right" class="mt-[6px] h-6 w-6" />
 				</a>
@@ -63,7 +65,9 @@ import { Icon } from "astro-icon/components"
 				<Typography
 					as="h2"
 					id={"about-me-title"}
-					variants={{ variant: "h1-xl", color: "white", fontWeight: "bolder" }}
+					variant="h2"
+					color="white"
+					fontWeight="bolder"
 					class:list={"md:max-w-[1000px]"}
 				>
 					<span>Hola,</span>
@@ -73,32 +77,22 @@ import { Icon } from "astro-icon/components"
 				<Typography
 					as="p"
 					id={"about-me-placeholder"}
-					variants={{ variant: "body", color: "white", fontWeight: "light" }}
-					class:list={"leading-6 opacity-70"}
+					variant="body"
+					color="white"
+					fontWeight="light"
+					class:list={"opacity-70"}
 				>
 					Ingeniero de Software / Entusiasta de la tecnología / Disfruto resolviendo problemas
 				</Typography>
 			</div>
 			<div class="flex flex-col gap-4" id="about-me-description">
-				<Typography
-					as="p"
-					variants={{ variant: "body-lg", color: "white", fontWeight: "normal" }}
-					class:list={"leading-6"}
-				>
+				<Typography as="p" variant="body" color="white" fontWeight="normal">
 					Más de dos años de experiencia creando experiencias de usuario fluidas.
 				</Typography>
-				<Typography
-					as="p"
-					variants={{ variant: "body-lg", color: "white", fontWeight: "normal" }}
-					class:list={"leading-6"}
-				>
+				<Typography as="p" variant="body" color="white" fontWeight="normal">
 					Hábil en soluciones tecnológicas innovadoras y codificación creativa.
 				</Typography>
-				<Typography
-					as="p"
-					variants={{ variant: "body-lg", color: "white", fontWeight: "normal" }}
-					class:list={"leading-6"}
-				>
+				<Typography as="p" variant="body" color="white" fontWeight="normal" class:list={""}>
 					Especializado en construir soluciones de extremo a extremo y disfruto abordar desafíos
 					complejos.
 				</Typography>
@@ -111,28 +105,27 @@ import { Icon } from "astro-icon/components"
 			id="skills"
 			class="navigationSection py-12 md:flex md:min-h-screen md:flex-col md:items-center md:justify-center xl:mx-auto xl:max-w-7xl"
 		>
-			<Typography
-				as="p"
-				variants={{ variant: "body-lg", color: "white", fontWeight: "light" }}
-				class:list={"leading-6 opacity-70"}
-			>
+			<Typography as="p" variant="body" color="white" fontWeight="light" class:list={"opacity-70"}>
 				¡Superpoderes para superhéroes del software!
 			</Typography>
 			<Typography
 				as="h2"
 				id={"skills-title"}
-				variants={{ variant: "h1-xl", color: "white", fontWeight: "bolder" }}
+				variant="h2"
+				color="white"
+				fontWeight="bolder"
 				class:list={"md:max-w-[1000px]"}
 			>
 				Habilidades y Tecnologías
 			</Typography>
 			<div class="flex flex-col gap-12 md:max-w-4xl md:items-center">
-				<div class="flex flex-col gap-4 text-lg leading-6 md:text-center">
+				<div class="flex flex-col gap-4 text-lg md:text-center">
 					<Typography
 						as="p"
 						id="skills-description"
-						variants={{ variant: "body-lg", color: "white", fontWeight: "normal" }}
-						class:list={"leading-6"}
+						variant="body"
+						color="white"
+						fontWeight="normal"
 					>
 						Como Ingeniero de Software, poseo competencia en una amplia gama de tecnologías, con un
 						enfoque principal en el desarrollo web. Tengo experiencia aprovechando JavaScript, HTML
@@ -143,21 +136,14 @@ import { Icon } from "astro-icon/components"
 						multiplataforma utilizando Electron.js, React Native y Android Studio, dirigidas a
 						entornos de escritorio (Windows, Linux, macOS) y móviles (iOS, Android).
 					</Typography>
-					<Typography
-						as="p"
-						id="skills-linkedin"
-						variants={{ variant: "body-lg", color: "white", fontWeight: "normal" }}
-						class:list={"leading-6"}
-					>
+					<Typography as="p" id="skills-linkedin" variant="body" color="white" fontWeight="normal">
 						Visita mi
 						<a
 							href="https://www.linkedin.com/in/cristhofer-pincetti-herrera/"
 							class="text-neutral-content underline decoration-accent decoration-2 underline-offset-[5px] transition-colors duration-300 ease-in-out hover:text-accent"
 						>
-							<Typography
-								as="span"
-								variants={{ variant: "body-lg", color: "inherit", fontWeight: "normal" }}
-								class:list={"leading-6"}>Linkedin</Typography
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
+								>Linkedin</Typography
 							>
 						</a> para más detalles.
 					</Typography>
@@ -171,9 +157,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:nextdotjs" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>Next JS</Typography
 							>
 						</figcaption>
@@ -183,9 +167,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:angular" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>Angular</Typography
 							>
 						</figcaption>
@@ -195,9 +177,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:astro" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>Astro</Typography
 							>
 						</figcaption>
@@ -207,9 +187,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:electron" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>Electron</Typography
 							>
 						</figcaption>
@@ -219,9 +197,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:react" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>React</Typography
 							>
 						</figcaption>
@@ -231,9 +207,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:react" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>React Native</Typography
 							>
 						</figcaption>
@@ -243,9 +217,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="teenyicons:nodejs-solid" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>Node JS</Typography
 							>
 						</figcaption>
@@ -255,9 +227,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:tailwindcss" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>Tailwind CSS</Typography
 							>
 						</figcaption>
@@ -267,9 +237,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="teenyicons:typescript-solid" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>TypeScript</Typography
 							>
 						</figcaption>
@@ -279,9 +247,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="teenyicons:javascript-solid" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>JavaScript</Typography
 							>
 						</figcaption>
@@ -291,9 +257,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:html5" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>HTML:5</Typography
 							>
 						</figcaption>
@@ -303,9 +267,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:css3" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>CSS3</Typography
 							>
 						</figcaption>
@@ -315,9 +277,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="cib:postgresql" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>PostgreSQL</Typography
 							>
 						</figcaption>
@@ -327,9 +287,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="grommet-icons:mysql" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>MySQL</Typography
 							>
 						</figcaption>
@@ -339,9 +297,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:mongodb" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>MongoDB</Typography
 							>
 						</figcaption>
@@ -351,9 +307,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:prisma" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>Prisma</Typography
 							>
 						</figcaption>
@@ -363,9 +317,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:sequelize" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>Sequelize</Typography
 							>
 						</figcaption>
@@ -375,9 +327,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:github" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>Github</Typography
 							>
 						</figcaption>
@@ -387,9 +337,7 @@ import { Icon } from "astro-icon/components"
 					>
 						<Icon name="simple-icons:gitlab" class="h-12 w-12" />
 						<figcaption>
-							<Typography
-								as="span"
-								variants={{ variant: "body", color: "inherit", fontWeight: "normal" }}
+							<Typography as="span" variant="body" color="inherit" fontWeight="normal"
 								>Gitlab</Typography
 							>
 						</figcaption>
