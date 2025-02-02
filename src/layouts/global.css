@@ -30,20 +30,6 @@
 		min-height: 100vh;
 		min-height: 100dvh;
 		font-size: 16px;
-		line-height: 24px;
-	}
-
-	p {
-		text-wrap: pretty;
-	}
-
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		text-wrap: balance;
 	}
 
 	img,
@@ -118,7 +104,14 @@
 
 	.stars,
 	.twinkling {
-		@apply absolute bottom-0 left-0 right-0 top-0 block h-full w-full;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		top: 0;
+		display: block;
+		height: 100%;
+		width: 100%;
 	}
 	.stars {
 		background: #000 url(/images/assets/stars.webp) repeat top center;
