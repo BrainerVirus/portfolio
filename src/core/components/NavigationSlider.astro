@@ -9,7 +9,7 @@ const sections = [
 ---
 
 <ul
-	class="relative flex flex-col before:absolute before:right-0 before:top-0 before:h-full before:w-[1px] before:rounded-3xl before:bg-neutral-content before:opacity-40 before:content-['']"
+	class="before:bg-neutral-content relative flex flex-col before:absolute before:top-0 before:right-0 before:h-full before:w-[1px] before:rounded-3xl before:opacity-40 before:content-['']"
 >
 	{
 		sections.map((section, index) => (
@@ -28,7 +28,7 @@ const sections = [
 	<li
 		class:list={[
 			"marker",
-			"absolute right-0 h-0 w-1 rounded-3xl bg-neutral-content content-['']",
+			"bg-neutral-content absolute right-0 h-0 w-1 rounded-3xl content-['']",
 			"transform transition duration-700 ease-in-out",
 		]}
 	>
@@ -36,7 +36,7 @@ const sections = [
 </ul>
 
 <script>
-	import { $, $$ } from "@/utils/dom-selector"
+	import { $, $$ } from "@core/utils/dom-selector"
 
 	const DISPLAY = {
 		markerClass: ".marker",
