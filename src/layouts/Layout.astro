@@ -1,8 +1,8 @@
 ---
 import Alert from "@components/Alert.astro"
 import Navbar from "@components/Navbar.astro"
+import "@styles/global.css"
 import { ClientRouter } from "astro:transitions"
-import "./global.css"
 
 interface Props {
 	title: string
@@ -14,7 +14,7 @@ const { currentLocale } = Astro
 ---
 
 <!doctype html>
-<html lang={currentLocale} data-theme="twinkling_stars">
+<html lang={currentLocale}>
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Cristhofer Pincetti porfolio" />
@@ -33,7 +33,7 @@ const { currentLocale } = Astro
 		<title>{title}</title>
 		<ClientRouter />
 	</head>
-	<body>
+	<body class="selection:bg-primary/20">
 		<header class="fixed z-10 w-full">
 			<Navbar variants={{ variant: "translucent" }} class="px-5 xl:my-8 xl:px-12" />
 			<div class="block xl:hidden">
