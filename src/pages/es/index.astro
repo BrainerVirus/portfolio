@@ -1,7 +1,7 @@
 ---
-import NavigationSlider from "@/components/NavigationSlider.astro"
-import Typography from "@/components/Typography.astro"
-import Layout from "@/layouts/Layout.astro"
+import NavigationSlider from "@core/components/NavigationSlider.astro"
+import Typography from "@core/components/Typography.astro"
+import Layout from "@core/layouts/Layout.astro"
 import Setup from "@public/images/assets/desktop-pc-setup.webp"
 import { Icon } from "astro-icon/components"
 ---
@@ -359,7 +359,7 @@ import { Icon } from "astro-icon/components"
 </Layout>
 
 <script>
-	import { $$ } from "@/utils/dom-selector"
+	import { $$ } from "@core/utils/dom-selector"
 
 	const sections = $$(".navigationSection")
 	const skills = $$("#skills-list > .skill")
