@@ -1,6 +1,6 @@
 ---
-import Typography from "@components/Typography.astro"
-import { getLangFromUrl, useTranslations } from "@i18n/utils"
+import Typography from "@core/components/Typography.astro"
+import { getLangFromUrl, useTranslations } from "@core/i18n/utils"
 
 const lang = getLangFromUrl(Astro.url)
 const t = useTranslations(lang)
@@ -8,7 +8,7 @@ const t = useTranslations(lang)
 
 <div
 	role="alert"
-	class="alert alert-warning grid min-h-8 items-center justify-items-center rounded-none border-transparent bg-primary bg-opacity-40 px-4 py-2 text-base-content"
+	class="alert alert-warning bg-primary/40 text-base-content grid min-h-8 items-center justify-items-center rounded-none border-transparent px-4 py-2"
 >
 	<div class="col-span-2 flex items-center justify-center gap-4">
 		<svg
