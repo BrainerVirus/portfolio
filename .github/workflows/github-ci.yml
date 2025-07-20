@@ -50,6 +50,10 @@ jobs:
       - name: Install Playwright Browsers
         run: pnpm exec playwright install --with-deps
       - name: Run Playwright tests
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_EMAIL: ${{ secrets.RESEND_EMAIL }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
         run: pnpm exec playwright test
       - uses: actions/upload-artifact@v4
         if: always()
