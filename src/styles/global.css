@@ -75,12 +75,12 @@
 
 	html {
 		&:has(
-				.modal-open,
-				.modal[open],
-				.modal:target,
-				.modal-toggle:checked,
-				.drawer:not(.drawer-open) > .drawer-toggle:checked
-			) {
+			.modal-open,
+			.modal[open],
+			.modal:target,
+			.modal-toggle:checked,
+			.drawer:not(.drawer-open) > .drawer-toggle:checked
+		) {
 			overflow: hidden !important;
 		}
 	}
