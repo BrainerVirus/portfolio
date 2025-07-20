@@ -1,9 +1,9 @@
 import pluginJs from "@eslint/js"
 import typescriptEslintParser from "@typescript-eslint/parser"
 import astroEslintParser from "astro-eslint-parser"
+import eslintConfigPrettier from "eslint-config-prettier"
 import eslintPluginAstro from "eslint-plugin-astro"
 import jsxA11y from "eslint-plugin-jsx-a11y"
-import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended"
 import globals from "globals"
 import tseslint from "typescript-eslint"
 
@@ -88,5 +88,5 @@ export default [
 		files: ["**/*.astro/*.js", "*.astro/*.js"],
 		parser: typescriptEslintParser,
 	},
-	eslintPluginPrettierRecommended,
+	eslintConfigPrettier,
 ]
