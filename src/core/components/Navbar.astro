@@ -1,10 +1,10 @@
 ---
-import { getLangFromUrl, useTranslations } from "@core/i18n/utils"
+import { ContactModal } from "@/core/components/ContactModal"
+import { getLangFromUrl, getTranslations } from "@core/i18n/utils"
 import { cn } from "@core/utils/cn"
 import Logo from "@public/images/logos/logo-coffe-white-no-bg.webp"
 import type { HTMLTag, Polymorphic } from "astro/types"
 import { type VariantProps, cva } from "class-variance-authority"
-import ContactModal from "./ContactModal.astro"
 import Typography from "./Typography.astro"
 
 type Props<Tag extends HTMLTag> = Polymorphic<{
@@ -34,9 +34,24 @@ const navbar = cva(["navbar", "w-full"], {
 export type NavbarVariantProps = VariantProps<typeof navbar>
 
 const lang = getLangFromUrl(Astro.url)
-const t = useTranslations(lang)
+const nav = getTranslations(lang, "nav")
+const contactModal = getTranslations(lang, "contactModal")
 
-const modalId = "contactForm"
+const contactTranslations = {
+	trigger: nav.contact,
+	title: contactModal.title,
+	description: contactModal.description,
+	name: contactModal.name,
+	namePlaceholder: contactModal.namePlaceholder,
+	email: contactModal.email,
+	emailPlaceholder: contactModal.emailPlaceholder,
+	subject: contactModal.subject,
+	subjectPlaceholder: contactModal.subjectPlaceholder,
+	message: contactModal.message,
+	messagePlaceholder: contactModal.messagePlaceholder,
+	cancel: contactModal.cancel,
+	submit: contactModal.submit,
+}
 ---
 
 <div
@@ -65,14 +80,14 @@ const modalId = "contactForm"
 		<!-- TODO: Add menu links -->
 	</div>
 	<div class="navbar-end">
-		<button
+		<!-- <button
 			class="btn btn-outline btn-primary h-11 min-h-11 border-2 px-6 xl:h-12 xl:min-h-12 xl:px-8"
 			onclick={`${modalId}.showModal()`}
 		>
 			<Typography as="span" variant="body" color="inherit" fontWeight="semibold">
 				{t("nav.contact")}
 			</Typography>
-		</button>
+		</button> -->
+		<ContactModal translations={contactTranslations} client:load />
 	</div>
 </div>
-<ContactModal modalId={modalId} />
