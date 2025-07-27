@@ -1,5 +1,41 @@
 import { defaultLang, translations, type Language, type TranslationNamespace } from "./translations"
 
+// Enhanced nested path type that shows ALL possible paths in intellisense
+type DeepPaths<T, Prefix extends string = ""> = {
+	[K in keyof T]: K extends string
+		? T[K] extends Record<string, unknown>
+			? Prefix extends ""
+				? K | DeepPaths<T[K], K>
+				: `${Prefix}.${K}` | DeepPaths<T[K], `${Prefix}.${K}`>
+			: Prefix extends ""
+				? K
+				: `${Prefix}.${K}`
+		: never
+}[keyof T]
+
+// Generate ALL possible translation paths across ALL namespaces
+type AllTranslationPaths = {
+	[K in TranslationNamespace]: K | DeepPaths<(typeof translations)[typeof defaultLang][K], K>
+}[TranslationNamespace]
+
+// Helper type to get value at any nested path
+type GetDeepValue<T, P extends string> = P extends `${infer K}.${infer Rest}`
+	? K extends keyof T
+		? GetDeepValue<T[K], Rest>
+		: never
+	: P extends keyof T
+		? T[P]
+		: never
+
+// Type for getting value from any translation path
+type GetTranslationFromPath<P extends string> = P extends `${infer Namespace}.${infer Rest}`
+	? Namespace extends TranslationNamespace
+		? GetDeepValue<(typeof translations)[typeof defaultLang][Namespace], Rest>
+		: never
+	: P extends TranslationNamespace
+		? (typeof translations)[typeof defaultLang][P]
+		: never
+
 /**
  * Get language from dynamic route params (Astro.params.locale)
  */
@@ -36,46 +72,67 @@ export function useTranslation<T extends TranslationNamespace>(
 }
 
 /**
- * Get specific namespace translations - even more direct!
+ * Enhanced getTranslations with COMPLETE nested path intellisense!
  *
- * const home = getTranslations(lang, 'home')
- * home.hero.title    // Perfect autocomplete
- * home.about.name    // Perfect autocomplete
+ * Now when you type the second parameter, you'll see ALL possible paths:
+ * - "home"
+ * - "home.hero"
+ * - "home.hero.title"
+ * - "home.hero.description"
+ * - "home.hero.cta"
+ * - "home.about"
+ * - "home.about.greeting"
+ * - "home.about.name"
+ * - "home.about.role"
+ * - "home.about.description"
+ * - "home.about.description.experience"
+ * - "home.about.description.innovation"
+ * - "home.skills"
+ * - "home.skills.title"
+ * - "home.technologies"
+ * - "home.technologies.nextjs"
+ * - "nav"
+ * - "nav.contact"
+ * - "contactModal"
+ * - "contactModal.title"
+ * - etc...
+ *
+ * Usage:
+ * const home = getTranslations(lang, "home")                    // Full namespace
+ * const hero = getTranslations(lang, "home.hero")              // Hero section
+ * const title = getTranslations(lang, "home.hero.title")       // Direct string
+ * const exp = getTranslations(lang, "home.about.description.experience") // Deep nested
  */
-export function getTranslations<T extends TranslationNamespace>(
+
+// Overload 1: Get entire namespace or any nested path with COMPLETE intellisense
+export function getTranslations<P extends AllTranslationPaths>(
 	lang: Language,
-	namespace: T
-): (typeof translations)[typeof defaultLang][T] {
-	return useTranslation(lang, namespace)
-}
+	path: P
+): GetTranslationFromPath<P>
 
-/**
- * Legacy dot notation support (if you still want it)
- */
-export function useTranslations(lang: Language) {
-	return function t(key: string): string {
-		const keys = key.split(".")
-		const [namespace, ...path] = keys
+// Implementation
+export function getTranslations(lang: Language, path: string): unknown {
+	if (path.includes(".")) {
+		// Handle nested path like 'home.hero' or 'home.hero.title'
+		const keys = path.split(".")
+		const [namespace, ...nestedKeys] = keys
 
-		if (namespace in translations[lang]) {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			let value: any = translations[lang][namespace as TranslationNamespace]
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		let value: any = translations[lang]?.[namespace as TranslationNamespace]
 
-			for (const k of path) {
-				value = value?.[k]
-			}
-
-			if (value === undefined) {
-				// eslint-disable-next-line @typescript-eslint/no-explicit-any
-				value = translations[defaultLang][namespace as TranslationNamespace] as any
-				for (const k of path) {
-					value = value?.[k]
-				}
-			}
-
-			return value || key
+		// If not found in current language, fallback to default
+		if (!value) {
+			value = translations[defaultLang][namespace as TranslationNamespace]
 		}
 
-		return key
+		// Navigate through nested keys
+		for (const key of nestedKeys) {
+			value = value?.[key]
+		}
+
+		return value
+	} else {
+		// Handle simple namespace like 'home'
+		return useTranslation(lang, path as TranslationNamespace)
 	}
 }
