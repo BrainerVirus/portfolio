@@ -10,25 +10,24 @@ export type ContactPayload = {
 	subject?: string
 }
 
-const {
-	RESEND_API_KEY: resendApiKey,
-	RESEND_EMAIL: resendEmail,
-	EMAIL_TO: emailTo,
-} = import.meta.env
+function getEmailConfig() {
+	const resendApiKey = import.meta.env.RESEND_API_KEY
+	const resendEmail = import.meta.env.RESEND_EMAIL
+	const emailTo = import.meta.env.EMAIL_TO
 
-const resend = new Resend(resendApiKey)
-
-function ensureEmailConfig() {
 	if (!resendApiKey || !resendEmail || !emailTo) {
 		throw new ActionError({
 			code: "INTERNAL_SERVER_ERROR",
 			message: "Email service is not configured",
 		})
 	}
+
+	return { resendApiKey, resendEmail, emailTo }
 }
 
 export async function sendContactEmail({ name, email, message, subject }: ContactPayload) {
-	ensureEmailConfig()
+	const { resendApiKey, resendEmail, emailTo } = getEmailConfig()
+	const resend = new Resend(resendApiKey)
 
 	const { data, error } = await resend.emails.send({
 		from: `Portfolio <${resendEmail}>`,
