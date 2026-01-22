@@ -6,12 +6,8 @@ import SkillsSection from "@/components/sections/SkillsSection.astro"
 import { getLangFromParams, useTranslation } from "@/i18n/utils"
 import Layout from "@/layouts/Layout.astro"
 
-// Ensure static prerender of localized index even in server output mode
-export const prerender = true
-
-export async function getStaticPaths() {
-	return [{ params: { locale: "en" } }, { params: { locale: "es" } }]
-}
+// Render this page on the server so middleware and headers are available
+export const prerender = false
 
 const lang = getLangFromParams(Astro.params.locale)
 const meta = useTranslation(lang, "meta")
