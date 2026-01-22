@@ -1,4 +1,5 @@
 import { Resend } from "resend"
+import { defineAction } from "astro:actions"
 
 export type ContactPayload = {
 	name: string
@@ -37,4 +38,15 @@ export async function sendContactEmail({ name, email, message, subject }: Contac
 	}
 
 	return data
+}
+
+// Astro Actions entrypoint expected by the build (virtual:astro:actions/entrypoint)
+export const server = {
+	contact: defineAction({
+		accept: "form",
+		handler: async (input) => {
+			await sendContactEmail(input)
+			return { ok: true }
+		},
+	}),
 }
