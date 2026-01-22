@@ -84,7 +84,7 @@ export const contact = {
 		frequency: "Frecuencia",
 		frequencyPlaceholder: "Identificador: email@nebula.com",
 		transmission: "Transmisión",
-		transmissionPlaceholder: "Carga útil: Escribe tu mensaje aquí...",
+		transmissionPlaceholder: "Carga de datos: Escribe tu mensaje aquí...",
 		submit: "Enviar Ráfaga de Datos",
 	},
 } as const
