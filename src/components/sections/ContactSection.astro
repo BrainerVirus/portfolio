@@ -39,8 +39,8 @@ const t = getTranslations(lang)
 							name="name"
 							placeholder={t("contact.form.senderIdPlaceholder")}
 							type="text"
-							required
 						/>
+						<div id="name-error" class="hidden text-xs text-red-400"></div>
 					</div>
 					<div class="space-y-1.5">
 						<label
@@ -55,8 +55,8 @@ const t = getTranslations(lang)
 							name="email"
 							placeholder={t("contact.form.frequencyPlaceholder")}
 							type="email"
-							required
 						/>
+						<div id="email-error" class="hidden text-xs text-red-400"></div>
 					</div>
 					<div class="space-y-1.5">
 						<label
@@ -70,8 +70,8 @@ const t = getTranslations(lang)
 							id="message"
 							name="message"
 							placeholder={t("contact.form.transmissionPlaceholder")}
-							rows="4"
-							required></textarea>
+							rows="4"></textarea>
+						<div id="message-error" class="hidden text-xs text-red-400"></div>
 					</div>
 					<button
 						class="group bg-primary relative flex w-full items-center justify-center gap-3 overflow-hidden rounded-lg px-8 py-4 text-sm font-bold tracking-widest uppercase transition-[box-shadow,opacity] duration-150 hover:shadow-[0_0_25px_rgba(131,59,145,0.6)] disabled:cursor-not-allowed disabled:opacity-50"
@@ -143,70 +143,12 @@ const t = getTranslations(lang)
 </section>
 
 <script>
-	const form = document.getElementById("contact-form") as HTMLFormElement
-	const submitBtn = document.getElementById("submit-btn") as HTMLButtonElement
-	const btnText = document.getElementById("btn-text") as HTMLSpanElement
-	const btnIcon = document.getElementById("btn-icon") as HTMLSpanElement
-	const formMessage = document.getElementById("form-message") as HTMLDivElement
+	import { initializeContactForm } from "@/lib/contact-form"
 
-	form?.addEventListener("submit", async (e) => {
-		e.preventDefault()
+	// Get the locale from the HTML element's lang attribute
+	const htmlElement = document.documentElement
+	const locale = (htmlElement.getAttribute("lang") || "en") as "en" | "es"
 
-		// Disable button and show loading
-		submitBtn.disabled = true
-		btnText.textContent = "Transmitting..."
-		btnIcon.textContent = "hourglass_empty"
-
-		const formData = new FormData(form)
-		const data = {
-			name: formData.get("name"),
-			email: formData.get("email"),
-			message: formData.get("message"),
-		}
-
-		try {
-			const response = await fetch("/api/contact", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(data),
-			})
-
-			const result = await response.json()
-
-			if (response.ok) {
-				// Success
-				formMessage.textContent = "Transmission successful! Message received."
-				formMessage.className = "text-center text-sm text-green-400"
-				formMessage.classList.remove("hidden")
-				form.reset()
-				btnText.textContent = "Transmitted!"
-				btnIcon.textContent = "check_circle"
-
-				// Reset button after 3 seconds
-				setTimeout(() => {
-					btnText.textContent = "Send Data Burst"
-					btnIcon.textContent = "send"
-					submitBtn.disabled = false
-					formMessage.classList.add("hidden")
-				}, 3000)
-			} else {
-				// Error
-				formMessage.textContent = result.error || "Transmission failed. Please try again."
-				formMessage.className = "text-center text-sm text-red-400"
-				formMessage.classList.remove("hidden")
-				btnText.textContent = "Send Data Burst"
-				btnIcon.textContent = "send"
-				submitBtn.disabled = false
-			}
-		} catch {
-			formMessage.textContent = "Connection lost. Please try again."
-			formMessage.className = "text-center text-sm text-red-400"
-			formMessage.classList.remove("hidden")
-			btnText.textContent = "Send Data Burst"
-			btnIcon.textContent = "send"
-			submitBtn.disabled = false
-		}
-	})
+	// Initialize the form when the page loads
+	initializeContactForm(locale)
 </script>
