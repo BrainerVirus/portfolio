@@ -1,33 +1,40 @@
-import { ActionError, defineAction } from "astro:actions"
-import { z } from "astro:schema"
 import { Resend } from "resend"
 
-const resend = new Resend(import.meta.env.RESEND_API_KEY)
+export type ContactPayload = {
+	name: string
+	email: string
+	message: string
+	subject?: string
+}
 
-export const server = {
-	sendEmail: defineAction({
-		accept: "form",
-		input: z.object({
-			name: z.string(),
-			email: z.string().email(),
-			message: z.string(),
-		}),
-		handler: async ({ email, message, name }) => {
-			const { data, error } = await resend.emails.send({
-				from: `Portfolio < ${import.meta.env.RESEND_EMAIL} >`,
-				to: [import.meta.env.EMAIL_TO],
-				subject: "Contact Form Submission",
-				html: `<p>From: ${name} (${email})</p><p>Message: ${message}</p>`,
-			})
+const {
+	RESEND_API_KEY: resendApiKey,
+	RESEND_EMAIL: resendEmail,
+	EMAIL_TO: emailTo,
+} = import.meta.env
 
-			if (error) {
-				throw new ActionError({
-					code: "BAD_REQUEST",
-					message: error.message,
-				})
-			}
+const resend = new Resend(resendApiKey)
 
-			return data
-		},
-	}),
+function ensureEmailConfig() {
+	if (!resendApiKey || !resendEmail || !emailTo) {
+		throw new Error("Email service is not configured")
+	}
+}
+
+export async function sendContactEmail({ name, email, message, subject }: ContactPayload) {
+	ensureEmailConfig()
+
+	const { data, error } = await resend.emails.send({
+		from: `Portfolio <${resendEmail}>`,
+		to: [emailTo],
+		subject: subject ? `${subject} — ${name}` : "Contact Form Submission",
+		html: `<p><strong>From:</strong> ${name} (${email})</p>${subject ? `<p><strong>Subject:</strong> ${subject}</p>` : ""}<p>${message}</p>`,
+		replyTo: email,
+	})
+
+	if (error) {
+		throw new Error(error.message)
+	}
+
+	return data
 }
