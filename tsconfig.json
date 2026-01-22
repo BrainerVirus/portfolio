@@ -4,6 +4,7 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "baseUrl": ".",
+    "module": "ESNext",
     "paths": {
       "@core/*": ["src/core/*"],
       "@lib/*": ["src/lib/*"],
@@ -11,7 +12,6 @@
       "@styles/*": ["src/styles/*"],
       "@/*": ["./src/*"]
     },
-    "jsx": "react-jsx",
-    "jsxImportSource": "react"
+
   }
 }

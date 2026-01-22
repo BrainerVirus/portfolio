@@ -6,8 +6,6 @@ import vercel from "@astrojs/vercel"
 
 import tailwindcss from "@tailwindcss/vite"
 
-import react from "@astrojs/react";
-
 // https://astro.build/config
 export default defineConfig({
     image: {
@@ -23,7 +21,7 @@ export default defineConfig({
         },
     },
 
-    integrations: [mdx(), icon(), react()],
+    integrations: [mdx(), icon()],
 
     prefetch: true,
 

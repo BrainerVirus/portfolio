@@ -17,6 +17,9 @@
     "*.svg": "html",
     "*.css": "tailwindcss"
   },
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
   "eslint.validate": ["javascript", "javascriptreact", "astro", "typescript", "typescriptreact"],
   "javascript.format.insertSpaceBeforeFunctionParenthesis": false,
   "typescript.format.insertSpaceBeforeFunctionParenthesis": false,
@@ -31,11 +34,7 @@
     }
   },
   "prettier.documentSelectors": ["**/*.astro"],
-  "tailwindCSS.classAttributes": ["class", "className", "ngClass", "class:list"],
-  "tailwindCSS.experimental.classRegex": [
-    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
-    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
-  ],
+  "tailwindCSS.classFunctions": ["tw", "clsx", "tw\\.[a-z-]+", "cva", "cx"],
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
