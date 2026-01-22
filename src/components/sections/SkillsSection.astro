@@ -1,0 +1,184 @@
+---
+import { getLangFromUrl, getTranslations } from "@/i18n/utils"
+
+const lang = getLangFromUrl(Astro.url)
+const t = getTranslations(lang)
+
+interface Skill {
+	name: string
+	mastery: number
+	icon: string
+}
+
+// Inner ring - Core skills (largest icons)
+const coreSkills: Skill[] = [
+	{
+		name: "React",
+		mastery: 95,
+		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+	},
+	{
+		name: "TypeScript",
+		mastery: 90,
+		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+	},
+	{
+		name: "Node.js",
+		mastery: 85,
+		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+	},
+]
+
+// Middle ring - Secondary skills
+const secondarySkills: Skill[] = [
+	{
+		name: "Python",
+		mastery: 80,
+		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+	},
+	{
+		name: "PostgreSQL",
+		mastery: 85,
+		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+	},
+	{
+		name: "Docker",
+		mastery: 75,
+		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+	},
+	{
+		name: "AWS",
+		mastery: 70,
+		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
+	},
+]
+
+// Outer ring - Additional skills
+const additionalSkills: Skill[] = [
+	{
+		name: "Figma",
+		mastery: 65,
+		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
+	},
+	{
+		name: "Git",
+		mastery: 95,
+		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+	},
+	{
+		name: "Tailwind",
+		mastery: 90,
+		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
+	},
+]
+---
+
+<section class="relative mx-auto max-w-7xl overflow-hidden px-6 py-24" id="skills">
+	<div class="relative z-10 mb-10 flex flex-col items-center text-center">
+		<div
+			class="animate-float border-primary/30 bg-primary/10 mb-4 inline-flex items-center justify-center rounded-full border p-3"
+			style="animation-delay: 1s"
+		>
+			<span class="material-symbols-outlined text-primary">token</span>
+		</div>
+		<h2
+			class="bg-linear-to-r from-white to-gray-400 bg-clip-text pb-2 text-4xl font-bold text-transparent md:text-5xl"
+		>
+			{t("skills.title")}
+		</h2>
+		<p class="mt-2 max-w-lg text-gray-400">
+			{t("skills.subtitle")}
+		</p>
+	</div>
+	<div class="orbit-container relative flex h-150 w-full items-center justify-center md:h-175">
+		<!-- Background glow -->
+		<div class="bg-primary/5 pointer-events-none absolute h-200 w-200 rounded-full blur-3xl"></div>
+
+		<!-- Center - Caffeine Core -->
+		<div
+			class="glass-card animate-pulse-glow border-primary/30 relative z-20 flex h-24 w-24 items-center justify-center rounded-full shadow-[0_0_40px_rgba(131,59,145,0.4)]"
+		>
+			<span class="material-symbols-outlined text-4xl text-white">local_cafe</span>
+			<div
+				class="text-primary absolute -bottom-8 text-xs font-bold tracking-widest uppercase opacity-80"
+			>
+				{t("skills.core")}
+			</div>
+		</div>
+
+		<!-- Inner orbit ring - Core skills -->
+		<div class="orbit-ring animate-orbit h-70 w-70">
+			{
+				coreSkills.map((skill, i) => {
+					const angle = (i * 360) / coreSkills.length
+					return (
+						<div
+							class="orbit-icon-wrapper group absolute top-0 left-1/2 -mt-6 -ml-6 cursor-pointer"
+							style={`transform: rotate(${angle}deg) translateY(-140px) rotate(-${angle}deg)`}
+						>
+							<div class="glass-card hover:border-primary hover:bg-primary/20 flex h-12 w-12 items-center justify-center rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-[border-color,background-color,box-shadow] duration-300 group-hover:shadow-[0_0_20px_#833b91]">
+								<img alt={skill.name} class="h-6 w-6" src={skill.icon} />
+							</div>
+							<div class="tooltip-wrapper pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 scale-90 opacity-0 transition-[opacity,transform] duration-300">
+								<div class="skill-tooltip rounded-md px-3 py-1.5 text-xs font-bold whitespace-nowrap text-white shadow-lg">
+									{skill.name}: {t("skills.mastery")} {skill.mastery}%
+									<div class="border-t-primary-glow absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" />
+								</div>
+							</div>
+						</div>
+					)
+				})
+			}
+		</div>
+
+		<!-- Middle orbit ring - Secondary skills -->
+		<div class="orbit-ring animate-orbit-reverse h-110 w-110 opacity-60">
+			{
+				secondarySkills.map((skill, i) => {
+					const angle = 45 + (i * 360) / secondarySkills.length
+					return (
+						<div
+							class="orbit-icon-wrapper group absolute top-0 left-1/2 -mt-5 -ml-5 cursor-pointer"
+							style={`transform: rotate(${angle}deg) translateY(-220px) rotate(-${angle}deg)`}
+						>
+							<div class="glass-card hover:border-primary hover:bg-primary/20 flex h-10 w-10 items-center justify-center rounded-full transition-[border-color,background-color,box-shadow] duration-300 group-hover:shadow-[0_0_20px_#833b91]">
+								<img alt={skill.name} class="h-5 w-5" src={skill.icon} />
+							</div>
+							<div class="tooltip-wrapper pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 scale-90 opacity-0 transition-[opacity,transform] duration-300">
+								<div class="skill-tooltip rounded-md px-3 py-1.5 text-xs font-bold whitespace-nowrap text-white shadow-lg">
+									{skill.name}: {t("skills.mastery")} {skill.mastery}%
+									<div class="border-t-primary-glow absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" />
+								</div>
+							</div>
+						</div>
+					)
+				})
+			}
+		</div>
+
+		<!-- Outer orbit ring - Additional skills (hidden on mobile) -->
+		<div class="orbit-ring animate-orbit hidden h-145 w-145 opacity-40 md:block">
+			{
+				additionalSkills.map((skill, i) => {
+					const angle = 30 + (i * 360) / additionalSkills.length
+					return (
+						<div
+							class="orbit-icon-wrapper group absolute top-0 left-1/2 -mt-4 -ml-4 cursor-pointer"
+							style={`transform: rotate(${angle}deg) translateY(-290px) rotate(-${angle}deg)`}
+						>
+							<div class="glass-card hover:border-primary hover:bg-primary/20 flex h-8 w-8 items-center justify-center rounded-full transition-[border-color,background-color,box-shadow] duration-300 group-hover:shadow-[0_0_20px_#833b91]">
+								<img alt={skill.name} class="h-4 w-4" src={skill.icon} />
+							</div>
+							<div class="tooltip-wrapper pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 scale-90 opacity-0 transition-[opacity,transform] duration-300">
+								<div class="skill-tooltip rounded-md px-3 py-1.5 text-xs font-bold whitespace-nowrap text-white shadow-lg">
+									{skill.name}: {t("skills.mastery")} {skill.mastery}%
+									<div class="border-t-primary-glow absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" />
+								</div>
+							</div>
+						</div>
+					)
+				})
+			}
+		</div>
+	</div>
+</section>
