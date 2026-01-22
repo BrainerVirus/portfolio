@@ -87,6 +87,24 @@ export const contact = {
 		transmissionPlaceholder: "Carga de datos: Escribe tu mensaje aquí...",
 		submit: "Enviar Ráfaga de Datos",
 	},
+	error: {
+		nameRequired: "Se requiere ID del remitente",
+		nameMinLength: "El ID del remitente debe tener al menos 2 caracteres",
+		nameMaxLength: "El ID del remitente no debe exceder 100 caracteres",
+		emailRequired: "Se requiere frecuencia",
+		emailInvalid: "Formato de frecuencia inválido",
+		messageRequired: "Se requiere carga de transmisión",
+		messageMinLength: "La transmisión debe tener al menos 10 caracteres",
+		messageMaxLength: "La transmisión no debe exceder 5000 caracteres",
+	},
+	messages: {
+		success: "¡Transmisión exitosa! Mensaje recibido.",
+		transmitted: "¡Transmitido!",
+		failed: "Transmisión fallida. Por favor, intenta de nuevo.",
+		connectionLost: "Conexión perdida. Por favor, intenta de nuevo.",
+		transmitting: "Transmitiendo...",
+		sendDataBurst: "Enviar Ráfaga de Datos",
+	},
 } as const
 
 export const footer = {

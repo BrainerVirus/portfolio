@@ -85,6 +85,24 @@ export const contact = {
 		transmissionPlaceholder: "Payload: Type your message here...",
 		submit: "Send Data Burst",
 	},
+	error: {
+		nameRequired: "Sender ID is required",
+		nameMinLength: "Sender ID must be at least 2 characters",
+		nameMaxLength: "Sender ID must not exceed 100 characters",
+		emailRequired: "Frequency is required",
+		emailInvalid: "Invalid frequency format",
+		messageRequired: "Transmission payload required",
+		messageMinLength: "Transmission must be at least 10 characters",
+		messageMaxLength: "Transmission must not exceed 5000 characters",
+	},
+	messages: {
+		success: "Transmission successful! Message received.",
+		transmitted: "Transmitted!",
+		failed: "Transmission failed. Please try again.",
+		connectionLost: "Connection lost. Please try again.",
+		transmitting: "Transmitting...",
+		sendDataBurst: "Send Data Burst",
+	},
 } as const
 
 export const footer = {
