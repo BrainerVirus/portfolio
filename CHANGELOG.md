@@ -26,6 +26,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Extended i18n translations with complete skill names and descriptions
   - Added contact form validation error messages in both languages
 
+- **Documentation**
+  - Added comprehensive AGENTS.md file for agentic coding guidance
+  - Documented all build, lint, and test commands with single test examples
+  - Added detailed code style guidelines for imports, formatting, types, and naming
+  - Included testing patterns for Vitest and Playwright
+  - Added GitHub Flow release process documentation to README.md
+  - Added GitHub issue and pull request templates for better project organization
+
+- **GitHub Flow**
+  - Updated package.json to version 3.0.0
+  - Removed automatic semantic-release integration
+  - Created bug_report.md, feature_request.md, and documentation.md issue templates
+  - Added comprehensive pull_request_template.md with checklist and testing guidance
+
 ### Changed
 
 - **CI/CD Pipeline Changes**
@@ -43,6 +57,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Package Configuration**
   - Updated package.json test scripts for better testing workflow
   - Added Vitest and related dependencies
+  - Removed semantic-release and related packages from dependencies
+
+- **README**
+  - Added Testing section with Unit (Vitest) and E2E (Playwright) instructions
+  - Added Versioning section explaining semantic versioning
+  - Added Release Process section with GitHub Flow documentation
+  - Updated Scripts section with all available commands
 
 ### Fixed
 
@@ -54,12 +75,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Made mobile responsiveness tests adaptive to viewport
   - Fixed unused variable warnings in test suite
 
+- **Actions**
+  - Fixed environment variable access deferred to runtime in server actions
+
 ### Removed
 
 - **CI/CD**
   - Removed semantic-release from CI pipeline
   - Removed automatic changelog generation from CI (now manual)
   - Removed automatic version bumping from CI
+  - Removed .releaserc.json configuration file
+  - Removed components.json configuration file
+  - Removed unused semantic-release packages from dependencies
 
 ## [2.5.0] - 2024-11-XX
 
