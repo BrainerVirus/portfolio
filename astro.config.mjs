@@ -8,31 +8,54 @@ import tailwindcss from "@tailwindcss/vite"
 
 // https://astro.build/config
 export default defineConfig({
-    image: {
-        service: passthroughImageService(),
-    },
+	image: {
+		service: passthroughImageService(),
+	},
 
-    i18n: {
-        defaultLocale: "en",
-        locales: ["es", "en"],
-        routing: {
-            prefixDefaultLocale: true,
-            redirectToDefaultLocale: false,
-        },
-    },
+	i18n: {
+		defaultLocale: "en",
+		locales: ["es", "en"],
+		routing: {
+			prefixDefaultLocale: true,
+			redirectToDefaultLocale: false,
+		},
+	},
 
-    integrations: [mdx(), icon()],
+	integrations: [
+		mdx(),
+		icon({
+			include: {
+				devicon: [
+					"typescript",
+					"angular",
+					"nextjs",
+					"react",
+					"nodejs",
+					"figma",
+					"prisma",
+					"javascript",
+					"docker",
+					"github",
+					"socketio",
+					"python",
+					"tailwindcss",
+					"electron",
+				],
+				mdi: ["nature-people", "head-lightbulb", "brain", "chat", "dumbbell"],
+			},
+		}),
+	],
 
-    prefetch: true,
+	prefetch: true,
 
-    server: {
-        port: 3000,
-    },
+	server: {
+		port: 3000,
+	},
 
-    output: "server",
-    adapter: vercel(),
+	output: "server",
+	adapter: vercel(),
 
-    vite: {
-        plugins: [tailwindcss()],
-    },
+	vite: {
+		plugins: [tailwindcss()],
+	},
 })
