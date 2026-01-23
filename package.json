@@ -16,7 +16,9 @@
     "format": "prettier --write 'src/**/*.{astro,ts,js,tsx,jsx,css}'",
     "format:check": "prettier --check 'src/**/*.{astro,ts,js,tsx,jsx,css}'",
     "semantic-release": "semantic-release",
-    "test": "pnpm exec playwright test",
+    "test:unit": "vitest",
+    "test:e2e": "pnpm exec playwright test",
+    "test": "pnpm test:unit && pnpm test:e2e",
     "prepare": "husky"
   },
   "dependencies": {
