@@ -1,0 +1,104 @@
+---
+import { getLangFromUrl, getTranslations } from "@/i18n/utils"
+import LanguageSwitch from "./LanguageSwitch.astro"
+
+const lang = getLangFromUrl(Astro.url)
+const t = getTranslations(lang)
+---
+
+<header class="glass-card fixed top-0 left-0 z-50 w-full">
+	<div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+		<div class="flex items-center gap-4">
+			<div class="relative flex h-10 w-10 items-center justify-center">
+				<div class="logo-ring absolute inset-0 animate-pulse rounded-full"></div>
+				<div class="cup-glow relative flex items-center justify-center">
+					<span
+						class="material-symbols-outlined scale-x-[-1] text-xl"
+						style="color: #0f0514; -webkit-text-stroke: 1.5px oklch(49.6% 0.272 303.89)"
+						>local_cafe</span
+					>
+				</div>
+			</div>
+			<div class="hidden flex-col items-start leading-none sm:flex">
+				<h1
+					class="font-display bg-linear-to-r from-white to-gray-400 bg-clip-text text-xl font-bold tracking-widest text-transparent uppercase"
+				>
+					Cristhofer Pincetti
+				</h1>
+				<span class="text-primary/80 mt-1 font-mono text-[10px] tracking-[0.3em] uppercase"
+					>Software Engineer</span
+				>
+			</div>
+		</div>
+		<nav class="hidden items-center gap-8 md:flex">
+			<a class="text-sm font-medium text-gray-300 hover:text-white" href="#about">
+				{t("nav.about")}
+			</a>
+			<a class="text-sm font-medium text-gray-300 hover:text-white" href="#experience">
+				{t("nav.experience")}
+			</a>
+			<a class="text-sm font-medium text-gray-300 hover:text-white" href="#skills">
+				{t("nav.skills")}
+			</a>
+			<a class="text-sm font-medium text-white" href="#contact">
+				{t("nav.contact")}
+			</a>
+			<LanguageSwitch />
+		</nav>
+		<div class="flex items-center gap-4 md:hidden">
+			<LanguageSwitch />
+			<button id="mobile-menu-btn" class="text-white" aria-label="Open menu">
+				<span class="material-symbols-outlined">menu</span>
+			</button>
+		</div>
+	</div>
+	<!-- Mobile menu -->
+	<div
+		id="mobile-menu"
+		class="bg-background-dark/95 hidden border-t border-white/10 backdrop-blur-lg md:hidden"
+	>
+		<nav class="flex flex-col gap-4 px-6 py-4">
+			<a class="text-sm font-medium text-gray-300 transition-colors hover:text-white" href="#about">
+				{t("nav.about")}
+			</a>
+			<a
+				class="text-sm font-medium text-gray-300 transition-colors hover:text-white"
+				href="#experience"
+			>
+				{t("nav.experience")}
+			</a>
+			<a
+				class="text-sm font-medium text-gray-300 transition-colors hover:text-white"
+				href="#skills"
+			>
+				{t("nav.skills")}
+			</a>
+			<a class="text-sm font-medium text-white" href="#contact">
+				{t("nav.contact")}
+			</a>
+		</nav>
+	</div>
+</header>
+
+<script>
+	const menuBtn = document.getElementById("mobile-menu-btn")
+	const mobileMenu = document.getElementById("mobile-menu")
+	const menuIcon = menuBtn?.querySelector(".material-symbols-outlined")
+
+	menuBtn?.addEventListener("click", () => {
+		const isOpen = mobileMenu?.classList.toggle("hidden") === false
+		if (menuIcon) {
+			menuIcon.textContent = isOpen ? "close" : "menu"
+		}
+	})
+
+	// Close menu when clicking on a link
+	mobileMenu?.querySelectorAll("a").forEach((link) => {
+		link.addEventListener("click", () => {
+			mobileMenu?.classList.add("hidden")
+			if (menuIcon) {
+				menuIcon.textContent = "menu"
+			}
+		})
+	})
+</script>

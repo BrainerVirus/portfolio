@@ -1,0 +1,21 @@
+---
+import AboutSection from "@/components/sections/AboutSection.astro"
+import ContactSection from "@/components/sections/ContactSection.astro"
+import ExperienceSection from "@/components/sections/ExperienceSection.astro"
+import SkillsSection from "@/components/sections/SkillsSection.astro"
+import { getLangFromParams, useTranslation } from "@/i18n/utils"
+import Layout from "@/layouts/Layout.astro"
+
+// Render this page on the server so middleware and headers are available
+export const prerender = false
+
+const lang = getLangFromParams(Astro.params.locale)
+const meta = useTranslation(lang, "meta")
+---
+
+<Layout title={meta.home.title}>
+	<AboutSection />
+	<ExperienceSection />
+	<SkillsSection />
+	<ContactSection />
+</Layout>

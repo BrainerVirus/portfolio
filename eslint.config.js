@@ -62,6 +62,7 @@ export default [
 			"coverage/**",
 			"docs",
 			".vercel/",
+			".astro/",
 			"src/env.d.ts",
 			"tailwind.config.js",
 		],

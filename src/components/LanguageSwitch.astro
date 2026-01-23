@@ -1,0 +1,53 @@
+---
+import { getLangFromUrl, type Language } from "@/i18n/utils"
+
+const lang = getLangFromUrl(Astro.url)
+const otherLang: Language = lang === "en" ? "es" : "en"
+
+// Get current path and construct the other language URL
+const pathname = Astro.url.pathname
+const segments = pathname.split("/").filter(Boolean)
+
+// Remove locale prefix if present
+if (segments[0] === "en" || segments[0] === "es") {
+	segments.shift()
+}
+
+// Build new path with other language
+const newPath = `/${otherLang}${segments.length ? "/" + segments.join("/") : "/"}`
+---
+
+<button
+	id="lang-switch"
+	class="flex cursor-pointer items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-gray-300"
+	aria-label={lang === "en" ? "Switch to Spanish" : "Cambiar a Inglés"}
+	data-target-lang={otherLang}
+	data-target-path={newPath}
+>
+	<span class="material-symbols-outlined text-sm">language</span>
+	<span class="uppercase">{otherLang}</span>
+</button>
+
+<script>
+	function initLanguageSwitch() {
+		const buttons = document.querySelectorAll("#lang-switch")
+		buttons.forEach((btn) => {
+			btn.addEventListener("click", () => {
+				const targetLang = btn.getAttribute("data-target-lang")
+				const targetPath = btn.getAttribute("data-target-path")
+
+				// Set cookie to persist language preference (1 year expiry)
+				document.cookie = `lang=${targetLang}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`
+
+				// Navigate to the new language path
+				window.location.href = targetPath || "/"
+			})
+		})
+	}
+
+	// Initialize on page load
+	initLanguageSwitch()
+
+	// Re-initialize after Astro view transitions
+	document.addEventListener("astro:after-swap", initLanguageSwitch)
+</script>
