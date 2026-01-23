@@ -6,12 +6,12 @@ test.describe("Header Navigation", () => {
 	})
 
 	test("should display the header with logo and navigation links", async ({ page }) => {
-		await expect(page.locator("header")).toBeVisible()
+		await expect(page.locator("header.glass-card")).toBeVisible()
 
 		// Check logo elements exist
-		await expect(page.locator("header .logo-ring")).toBeVisible()
-		await expect(page.locator("header h1")).toBeVisible()
-		await expect(page.locator("header .text-primary\\/80").first()).toBeVisible()
+		await expect(page.locator("header.glass-card .logo-ring")).toBeVisible()
+		await expect(page.locator("header.glass-card h1")).toBeVisible()
+		await expect(page.locator("header.glass-card .text-primary\\/80").first()).toBeVisible()
 
 		// Check navigation links exist (desktop)
 		await expect(page.getByRole("link", { name: /pilot's log/i })).toBeVisible()
