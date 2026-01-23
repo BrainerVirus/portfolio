@@ -69,6 +69,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **E2E Tests**
   - Fixed strict mode violations with multiple element matches
+  - Updated header selector to use more specific class selector (header.glass-card) to avoid Astro dev tool conflicts
   - Updated language switch selector to use filter().first()
   - Replaced text-based selectors with element-specific selectors
   - Fixed footer tests to use h2 selector instead of text matching
@@ -77,6 +78,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - **Actions**
   - Fixed environment variable access deferred to runtime in server actions
+
+- **Dependencies**
+  - Added vitest, @vitest/ui, and happy-dom for unit testing setup
 
 ### Removed
 
