@@ -4,11 +4,14 @@
   "exclude": ["dist"],
   "compilerOptions": {
     "baseUrl": ".",
+    "module": "ESNext",
     "paths": {
-      "@/*": ["./src/*"],
-      "@public/*": ["./public/*"],
-      "@components/*": ["./src/components/*"],
-      "@i18n/*": ["./src/i18n/*"]
-    }
+      "@core/*": ["src/core/*"],
+      "@lib/*": ["src/lib/*"],
+      "@public/*": ["public/*"],
+      "@styles/*": ["src/styles/*"],
+      "@/*": ["./src/*"]
+    },
+
   }
 }
