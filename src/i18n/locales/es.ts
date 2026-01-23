@@ -73,6 +73,30 @@ export const skills = {
 	subtitle: "Sistemas centrales y tecnologías satélite orbitando la fuente de combustible central.",
 	core: "Núcleo de Cafeína",
 	mastery: "Dominio",
+	core_skills: {
+		typescript: "TypeScript",
+		angular: "Angular",
+		nextjs: "Next.js / React",
+		tailwindcss: "Tailwind CSS",
+	},
+	secondary_skills: {
+		figma: "Figma (Experto UX)",
+		nodejs: "Node.js / Express",
+		prisma: "Prisma / SQL",
+		zustand: "Zustand / Signals",
+		reactnative: "React Native / Expo",
+		agile: "Scrum / Agile",
+	},
+	additional_skills: {
+		docker: "Docker / Linux",
+		github: "GitHub / GitLab",
+		design_thinking: "Pensamiento de Diseño",
+		problem_solving: "Resolución de Problemas",
+		empathy: "Empatía / Comunicación",
+		tenacity: "Tenacidad",
+		socketio: "Socket.io / Electron",
+		python: "Python",
+	},
 } as const
 
 export const contact = {

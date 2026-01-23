@@ -1,11 +1,14 @@
 ---
 import { getLangFromUrl, getTranslations } from "@/i18n/utils"
+import { Icon } from "astro-icon/components"
 
 const lang = getLangFromUrl(Astro.url)
 const t = getTranslations(lang)
 
+type SkillTranslationKey = string
+
 interface Skill {
-	name: string
+	translationKey: SkillTranslationKey
 	mastery: number
 	icon: string
 }
@@ -13,62 +16,102 @@ interface Skill {
 // Inner ring - Core skills (largest icons)
 const coreSkills: Skill[] = [
 	{
-		name: "React",
+		translationKey: "skills.core_skills.typescript",
 		mastery: 95,
-		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
+		icon: "devicon:typescript",
 	},
 	{
-		name: "TypeScript",
+		translationKey: "skills.core_skills.angular",
 		mastery: 90,
-		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
+		icon: "devicon:angular",
 	},
 	{
-		name: "Node.js",
-		mastery: 85,
-		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
+		translationKey: "skills.core_skills.nextjs",
+		mastery: 90,
+		icon: "devicon:nextjs",
+	},
+	{
+		translationKey: "skills.core_skills.tailwindcss",
+		mastery: 95,
+		icon: "devicon:tailwindcss",
 	},
 ]
 
 // Middle ring - Secondary skills
 const secondarySkills: Skill[] = [
 	{
-		name: "Python",
-		mastery: 80,
-		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+		translationKey: "skills.secondary_skills.figma",
+		mastery: 95,
+		icon: "devicon:figma",
 	},
 	{
-		name: "PostgreSQL",
+		translationKey: "skills.secondary_skills.nodejs",
 		mastery: 85,
-		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
+		icon: "devicon:nodejs",
 	},
 	{
-		name: "Docker",
-		mastery: 75,
-		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",
+		translationKey: "skills.secondary_skills.prisma",
+		mastery: 90,
+		icon: "devicon:prisma",
 	},
 	{
-		name: "AWS",
-		mastery: 70,
-		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
+		translationKey: "skills.secondary_skills.zustand",
+		mastery: 85,
+		icon: "devicon:javascript",
+	},
+	{
+		translationKey: "skills.secondary_skills.reactnative",
+		mastery: 80,
+		icon: "devicon:react",
+	},
+	{
+		translationKey: "skills.secondary_skills.agile",
+		mastery: 95,
+		icon: "mdi:nature-people",
 	},
 ]
 
 // Outer ring - Additional skills
 const additionalSkills: Skill[] = [
 	{
-		name: "Figma",
-		mastery: 65,
-		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg",
+		translationKey: "skills.additional_skills.docker",
+		mastery: 85,
+		icon: "devicon:docker",
 	},
 	{
-		name: "Git",
+		translationKey: "skills.additional_skills.github",
 		mastery: 95,
-		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
+		icon: "devicon:github",
 	},
 	{
-		name: "Tailwind",
+		translationKey: "skills.additional_skills.design_thinking",
+		mastery: 95,
+		icon: "mdi:head-lightbulb",
+	},
+	{
+		translationKey: "skills.additional_skills.problem_solving",
+		mastery: 95,
+		icon: "mdi:brain",
+	},
+	{
+		translationKey: "skills.additional_skills.empathy",
 		mastery: 90,
-		icon: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg",
+		icon: "mdi:chat",
+	},
+	{
+		translationKey: "skills.additional_skills.tenacity",
+		mastery: 95,
+		icon: "mdi:dumbbell",
+	},
+	{
+		translationKey: "skills.additional_skills.socketio",
+		mastery: 85,
+		icon: "devicon:socketio",
+	},
+	{
+		translationKey: "skills.additional_skills.python",
+		mastery: 35,
+		icon: "devicon:python",
 	},
 ]
 ---
@@ -111,17 +154,19 @@ const additionalSkills: Skill[] = [
 			{
 				coreSkills.map((skill, i) => {
 					const angle = (i * 360) / coreSkills.length
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					const skillName = t(skill.translationKey as any)
 					return (
 						<div
 							class="orbit-icon-wrapper group absolute top-0 left-1/2 -mt-6 -ml-6 cursor-pointer"
 							style={`transform: rotate(${angle}deg) translateY(-140px) rotate(-${angle}deg)`}
 						>
 							<div class="glass-card hover:border-primary hover:bg-primary/20 flex h-12 w-12 items-center justify-center rounded-full shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-[border-color,background-color,box-shadow] duration-300 group-hover:shadow-[0_0_20px_#833b91]">
-								<img alt={skill.name} class="h-6 w-6" src={skill.icon} />
+								<Icon name={skill.icon} class="h-6 w-6" aria-label={skillName} />
 							</div>
 							<div class="tooltip-wrapper pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 scale-90 opacity-0 transition-[opacity,transform] duration-300">
 								<div class="skill-tooltip rounded-md px-3 py-1.5 text-xs font-bold whitespace-nowrap text-white shadow-lg">
-									{skill.name}: {t("skills.mastery")} {skill.mastery}%
+									{skillName}: {t("skills.mastery")} {skill.mastery}%
 									<div class="border-t-primary-glow absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" />
 								</div>
 							</div>
@@ -136,17 +181,19 @@ const additionalSkills: Skill[] = [
 			{
 				secondarySkills.map((skill, i) => {
 					const angle = 45 + (i * 360) / secondarySkills.length
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					const skillName = t(skill.translationKey as any)
 					return (
 						<div
 							class="orbit-icon-wrapper group absolute top-0 left-1/2 -mt-5 -ml-5 cursor-pointer"
 							style={`transform: rotate(${angle}deg) translateY(-220px) rotate(-${angle}deg)`}
 						>
 							<div class="glass-card hover:border-primary hover:bg-primary/20 flex h-10 w-10 items-center justify-center rounded-full transition-[border-color,background-color,box-shadow] duration-300 group-hover:shadow-[0_0_20px_#833b91]">
-								<img alt={skill.name} class="h-5 w-5" src={skill.icon} />
+								<Icon name={skill.icon} class="h-5 w-5" aria-label={skillName} />
 							</div>
 							<div class="tooltip-wrapper pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 scale-90 opacity-0 transition-[opacity,transform] duration-300">
 								<div class="skill-tooltip rounded-md px-3 py-1.5 text-xs font-bold whitespace-nowrap text-white shadow-lg">
-									{skill.name}: {t("skills.mastery")} {skill.mastery}%
+									{skillName}: {t("skills.mastery")} {skill.mastery}%
 									<div class="border-t-primary-glow absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" />
 								</div>
 							</div>
@@ -161,17 +208,19 @@ const additionalSkills: Skill[] = [
 			{
 				additionalSkills.map((skill, i) => {
 					const angle = 30 + (i * 360) / additionalSkills.length
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					const skillName = t(skill.translationKey as any)
 					return (
 						<div
 							class="orbit-icon-wrapper group absolute top-0 left-1/2 -mt-4 -ml-4 cursor-pointer"
 							style={`transform: rotate(${angle}deg) translateY(-290px) rotate(-${angle}deg)`}
 						>
 							<div class="glass-card hover:border-primary hover:bg-primary/20 flex h-8 w-8 items-center justify-center rounded-full transition-[border-color,background-color,box-shadow] duration-300 group-hover:shadow-[0_0_20px_#833b91]">
-								<img alt={skill.name} class="h-4 w-4" src={skill.icon} />
+								<Icon name={skill.icon} class="h-4 w-4" aria-label={skillName} />
 							</div>
 							<div class="tooltip-wrapper pointer-events-none absolute bottom-full left-1/2 mb-3 -translate-x-1/2 scale-90 opacity-0 transition-[opacity,transform] duration-300">
 								<div class="skill-tooltip rounded-md px-3 py-1.5 text-xs font-bold whitespace-nowrap text-white shadow-lg">
-									{skill.name}: {t("skills.mastery")} {skill.mastery}%
+									{skillName}: {t("skills.mastery")} {skill.mastery}%
 									<div class="border-t-primary-glow absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent" />
 								</div>
 							</div>

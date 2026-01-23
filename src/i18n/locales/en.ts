@@ -71,6 +71,30 @@ export const skills = {
 	subtitle: "Core systems and satellite technologies orbiting the central fuel source.",
 	core: "Caffeine Core",
 	mastery: "Mastery",
+	core_skills: {
+		typescript: "TypeScript",
+		angular: "Angular",
+		nextjs: "Next.js / React",
+		tailwindcss: "Tailwind CSS",
+	},
+	secondary_skills: {
+		figma: "Figma (UX Expert)",
+		nodejs: "Node.js / Express",
+		prisma: "Prisma / SQL",
+		zustand: "Zustand / Signals",
+		reactnative: "React Native / Expo",
+		agile: "Scrum / Agile",
+	},
+	additional_skills: {
+		docker: "Docker / Linux",
+		github: "GitHub / GitLab",
+		design_thinking: "Design Thinking",
+		problem_solving: "Problem Solving",
+		empathy: "Empathy / Communication",
+		tenacity: "Tenacity",
+		socketio: "Socket.io / Electron",
+		python: "Python",
+	},
 } as const
 
 export const contact = {
