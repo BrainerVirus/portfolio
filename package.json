@@ -27,7 +27,7 @@
     "@astrojs/vercel": "9.0.4",
     "@midudev/tailwind-animations": "1.0.1",
     "@tailwindcss/vite": "4.1.18",
-    "astro": "5.16.12",
+    "astro": "6.1.6",
     "astro-icon": "1.1.5",
     "resend": "6.7.0",
     "tailwindcss": "4.1.18",
