@@ -30,6 +30,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Initialized shadcn/ui (Nova preset, Neutral base color, CSS variables)
   - Installed base components (button, card, input, textarea, label, sonner)
 
+- **GSAP Animations (Iteration 2)**
+  - Added GSAP scroll-triggered animations to all sections
+  - About: staggered terminal line reveal, elastic portal entrance
+  - Experience: cards slide in from alternating directions
+  - Skills: orbit rings elastic scale-in, caffeine core pop-in
+  - Hover micro-interactions on orbit icons, terminal, nav links, footer links
+  - Shared animation utilities (`src/lib/animations.ts`)
+
+- **Shadcn Contact Form**
+  - Replaced vanilla JS form with shadcn React component (Input, Textarea, Label, Button)
+  - Sonner toast notifications for success/error feedback
+  - Removed old `initializeContactForm` vanilla logic
+
+- **Easter Eggs**
+  - Konami code (↑↑↓↓←→←→BA): rainbow background + icon spin
+  - Coffee cup click counter (5 clicks): caffeine overload animation + cup shake
+  - Hidden terminal secret: click cursor 3 times to reveal easter egg message
+
 ### Removed
 
 - Removed dead dependencies: @midudev/tailwind-animations, tw-animate-css (re-added as shadcn dep)
