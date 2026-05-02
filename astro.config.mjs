@@ -1,6 +1,6 @@
 import mdx from "@astrojs/mdx"
 import icon from "astro-icon"
-import { defineConfig, passthroughImageService } from "astro/config"
+import { defineConfig, fontProviders, passthroughImageService } from "astro/config"
 
 import vercel from "@astrojs/vercel"
 
@@ -51,6 +51,24 @@ export default defineConfig({
 	server: {
 		port: 3000,
 	},
+
+	fonts: [{
+		provider: fontProviders.fontshare(),
+		name: "Satoshi",
+		cssVariable: "--font-satoshi",
+		weights: [300, 400, 500, 700],
+		styles: ["normal"],
+		subsets: ["latin"],
+		fallbacks: ["system-ui", "sans-serif"],
+	}, {
+		provider: fontProviders.fontsource(),
+		name: "JetBrains Mono",
+		cssVariable: "--font-mono",
+		weights: [400, 500],
+		styles: ["normal", "italic"],
+		subsets: ["latin"],
+		fallbacks: ["ui-monospace", "monospace"],
+	}],
 
 	output: "server",
 	adapter: vercel(),

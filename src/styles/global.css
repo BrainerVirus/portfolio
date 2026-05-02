@@ -1,90 +1,5 @@
 @import "tailwindcss";
 
-/* Local fonts - downloaded from Google Fonts */
-@font-face {
-	font-family: "Space Grotesk";
-	src: url("/fonts/space-grotesk-300.woff2") format("woff2");
-	font-weight: 300;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Space Grotesk";
-	src: url("/fonts/space-grotesk-400.woff2") format("woff2");
-	font-weight: 400;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Space Grotesk";
-	src: url("/fonts/space-grotesk-500.woff2") format("woff2");
-	font-weight: 500;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Space Grotesk";
-	src: url("/fonts/space-grotesk-600.woff2") format("woff2");
-	font-weight: 600;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Space Grotesk";
-	src: url("/fonts/space-grotesk-700.woff2") format("woff2");
-	font-weight: 700;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Noto Sans";
-	src: url("/fonts/noto-sans-400.woff2") format("woff2");
-	font-weight: 400;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Noto Sans";
-	src: url("/fonts/noto-sans-500.woff2") format("woff2");
-	font-weight: 500;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Noto Sans";
-	src: url("/fonts/noto-sans-600.woff2") format("woff2");
-	font-weight: 600;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Noto Sans";
-	src: url("/fonts/noto-sans-700.woff2") format("woff2");
-	font-weight: 700;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Fira Code";
-	src: url("/fonts/fira-code-300.woff2") format("woff2");
-	font-weight: 300;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Fira Code";
-	src: url("/fonts/fira-code-400.woff2") format("woff2");
-	font-weight: 400;
-	font-display: swap;
-}
-
-@font-face {
-	font-family: "Fira Code";
-	src: url("/fonts/fira-code-500.woff2") format("woff2");
-	font-weight: 500;
-	font-display: swap;
-}
-
 /* Material Symbols Outlined - local font */
 @font-face {
 	font-family: "Material Symbols Outlined";
@@ -94,6 +9,13 @@
 	font-display: swap;
 }
 
+@theme inline {
+	/* Fonts */
+	--font-display: var(--font-satoshi);
+	--font-body: var(--font-satoshi);
+	--font-mono: var(--font-mono);
+}
+
 @theme {
 	/* Colors */
 	--color-primary: #833b91;
@@ -101,11 +23,6 @@
 	--color-background-dark: #0f0514;
 	--color-glass-border: rgba(255, 255, 255, 0.1);
 	--color-glass-surface: rgba(35, 30, 36, 0.6);
-
-	/* Fonts */
-	--font-display: "Space Grotesk", sans-serif;
-	--font-body: "Noto Sans", sans-serif;
-	--font-mono: "Fira Code", monospace;
 
 	/* Animations */
 	--animate-float: float 6s ease-in-out infinite;
