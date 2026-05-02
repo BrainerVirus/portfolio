@@ -91,7 +91,33 @@ const t = getTranslations(lang)
 </footer>
 
 <script>
+	import gsap from "gsap"
+
 	document.getElementById("back-to-top")?.addEventListener("click", () => {
 		window.scrollTo({ top: 0, behavior: "smooth" })
+	})
+
+	// Constellation link glow pulse
+	function initConstellationGlow() {
+		const constLinks = document.querySelectorAll(".constellation-link")
+		constLinks.forEach((link) => {
+			link.addEventListener("mouseenter", () => {
+				gsap.to(link, {
+					textShadow: "0 0 20px oklch(49.6% 0.272 303.89 / 1)",
+					duration: 0.3,
+				})
+			})
+			link.addEventListener("mouseleave", () => {
+				gsap.to(link, {
+					textShadow: "0 0 8px oklch(49.6% 0.272 303.89 / 0.8)",
+					duration: 0.3,
+				})
+			})
+		})
+	}
+
+	initConstellationGlow()
+	document.addEventListener("astro:after-swap", () => {
+		setTimeout(initConstellationGlow, 100)
 	})
 </script>

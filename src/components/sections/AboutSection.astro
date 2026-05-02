@@ -112,3 +112,97 @@ const t = getTranslations(lang)
 		</div>
 	</div>
 </section>
+
+<script>
+	import gsap from "gsap"
+	import { ScrollTrigger } from "gsap/ScrollTrigger"
+
+	gsap.registerPlugin(ScrollTrigger)
+
+	function initAboutAnimations() {
+		// Staggered terminal line reveal
+		const terminalSection = document.querySelector("#about .terminal-window")
+		if (terminalSection) {
+			const lines = terminalSection.querySelectorAll(".space-y-4 > p, .mt-4")
+			gsap.fromTo(
+				lines,
+				{ opacity: 0, x: -20 },
+				{
+					opacity: 1,
+					x: 0,
+					duration: 0.5,
+					stagger: 0.2,
+					delay: 1,
+					ease: "power2.out",
+					scrollTrigger: {
+						trigger: terminalSection,
+						start: "top 80%",
+						toggleActions: "play none none none",
+					},
+				}
+			)
+		}
+
+		// Portal lens elastic entrance
+		const portal = document.querySelector("#about .portal-lens")
+		if (portal) {
+			gsap.fromTo(
+				portal,
+				{ opacity: 0, scale: 0.7, rotate: -15 },
+				{
+					opacity: 1,
+					scale: 1,
+					rotate: 0,
+					duration: 1.5,
+					ease: "elastic.out(1, 0.5)",
+					scrollTrigger: {
+						trigger: portal.closest(".group"),
+						start: "top 75%",
+						toggleActions: "play none none none",
+					},
+				}
+			)
+		}
+
+		// Section heading fade-in
+		const heading = document.querySelector("#about .mb-16")
+		if (heading) {
+			gsap.fromTo(
+				heading.children,
+				{ opacity: 0, y: 30 },
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.6,
+					stagger: 0.15,
+					ease: "power2.out",
+					scrollTrigger: {
+						trigger: heading,
+						start: "top 85%",
+						toggleActions: "play none none none",
+					},
+				}
+			)
+		}
+
+		// Terminal hover glow
+		const terminal = document.querySelector("#about .terminal-window")
+		if (terminal) {
+			const hoverGlow = gsap.to(terminal, {
+				boxShadow: "0 0 30px rgba(131, 59, 145, 0.3), 0 10px 40px -10px rgba(0, 0, 0, 0.5)",
+				borderColor: "rgba(131, 59, 145, 0.5)",
+				duration: 0.4,
+				ease: "power2.out",
+				paused: true,
+			})
+
+			terminal.addEventListener("mouseenter", () => hoverGlow.play())
+			terminal.addEventListener("mouseleave", () => hoverGlow.reverse())
+		}
+	}
+
+	initAboutAnimations()
+	document.addEventListener("astro:after-swap", () => {
+		setTimeout(initAboutAnimations, 100)
+	})
+</script>

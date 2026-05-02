@@ -3,6 +3,7 @@ import { Font } from "astro:assets"
 import { ClientRouter } from "astro:transitions"
 import Footer from "@/components/Footer.astro"
 import Header from "@/components/Header.astro"
+import Toaster from "@/components/ui/sonner"
 import "@styles/global.css"
 
 interface Props {
@@ -34,5 +35,21 @@ const { currentLocale } = Astro
 			<slot />
 		</main>
 		<Footer />
+		<Toaster client:load />
+		<script>
+			import { initKonamiCode, initCoffeeCupEasterEgg, initTerminalSecret } from "@/lib/easter-eggs"
+
+			// Initialize on page load
+			initKonamiCode()
+			initCoffeeCupEasterEgg()
+			initTerminalSecret()
+
+			// Re-initialize after view transitions
+			document.addEventListener("astro:after-swap", () => {
+				initKonamiCode()
+				initCoffeeCupEasterEgg()
+				initTerminalSecret()
+			})
+		</script>
 	</body>
 </html>
