@@ -3,6 +3,7 @@ import { Font } from "astro:assets"
 import { ClientRouter } from "astro:transitions"
 import Footer from "@/components/Footer.astro"
 import Header from "@/components/Header.astro"
+import Toaster from "@/components/ui/sonner"
 import "@styles/global.css"
 
 interface Props {
@@ -34,5 +35,6 @@ const { currentLocale } = Astro
 			<slot />
 		</main>
 		<Footer />
+		<Toaster client:load />
 	</body>
 </html>
