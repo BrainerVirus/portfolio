@@ -59,4 +59,4 @@ pnpm commit           # Commitizen interactive commit
 - **Astro 5.16** with `@astrojs/vercel` adapter (SSR on Vercel)
 - **Tailwind CSS v4** (loaded via `@tailwindcss/vite` plugin, not PostCSS config)
 - **Icons**: `astro-icon` with `@iconify-json/*` icon sets (devicon, mdi, etc.)
-- **Node**: 20.x, **Package manager**: pnpm
+- **Node**: 22.x, **Package manager**: pnpm
