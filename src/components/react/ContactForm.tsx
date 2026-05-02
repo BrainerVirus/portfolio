@@ -97,6 +97,7 @@ export default function ContactForm({ locale, translations }: ContactFormProps) 
 				</Label>
 				<Input
 					id="name"
+					name="name"
 					value={name}
 					onChange={(e) => {
 						setName(e.target.value)
@@ -121,6 +122,7 @@ export default function ContactForm({ locale, translations }: ContactFormProps) 
 				</Label>
 				<Input
 					id="email"
+					name="email"
 					type="email"
 					value={email}
 					onChange={(e) => {
@@ -149,6 +151,7 @@ export default function ContactForm({ locale, translations }: ContactFormProps) 
 				</Label>
 				<Textarea
 					id="message"
+					name="message"
 					value={message}
 					onChange={(e) => {
 						setMessage(e.target.value)
