@@ -231,3 +231,78 @@ const additionalSkills: Skill[] = [
 		</div>
 	</div>
 </section>
+
+<script>
+	import gsap from "gsap"
+	import { ScrollTrigger } from "gsap/ScrollTrigger"
+	gsap.registerPlugin(ScrollTrigger)
+
+	function initSkillsAnimations() {
+		// Animate orbit rings appearing
+		const rings = document.querySelectorAll("#skills .orbit-ring")
+		rings.forEach((ring, i) => {
+			gsap.fromTo(
+				ring,
+				{ opacity: 0, scale: 0.3 },
+				{
+					opacity: 1,
+					scale: 1,
+					duration: 1,
+					delay: i * 0.3,
+					ease: "elastic.out(1, 0.6)",
+					scrollTrigger: {
+						trigger: ring.closest(".orbit-container"),
+						start: "top 80%",
+						toggleActions: "play none none none",
+					},
+				}
+			)
+		})
+
+		// Center caffeine core pop-in
+		const core = document.querySelector("#skills .glass-card.animate-pulse-glow")
+		if (core) {
+			gsap.fromTo(
+				core,
+				{ opacity: 0, scale: 0 },
+				{
+					opacity: 1,
+					scale: 1,
+					duration: 0.8,
+					ease: "back.out(2)",
+					scrollTrigger: {
+						trigger: core,
+						start: "top 85%",
+						toggleActions: "play none none none",
+					},
+				}
+			)
+		}
+
+		// Section heading fade-in
+		const heading = document.querySelector("#skills .mb-10")
+		if (heading) {
+			gsap.fromTo(
+				heading.children,
+				{ opacity: 0, y: 30 },
+				{
+					opacity: 1,
+					y: 0,
+					duration: 0.6,
+					stagger: 0.15,
+					ease: "power2.out",
+					scrollTrigger: {
+						trigger: heading,
+						start: "top 85%",
+						toggleActions: "play none none none",
+					},
+				}
+			)
+		}
+	}
+
+	initSkillsAnimations()
+	document.addEventListener("astro:after-swap", () => {
+		setTimeout(initSkillsAnimations, 100)
+	})
+</script>
