@@ -5,6 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.0.0] - 2026-05-02
+
+### Changed
+
+- **Tooling Overhaul**
+  - Replaced ESLint + Prettier with oxc (oxlint v1.62 + oxfmt v0.47)
+  - Removed husky, lint-staged, and all ESLint/Prettier plugins (18 packages removed)
+  - Lint now runs in <1s. Format in <50ms.
+
+- **Astro 6 Fonts**
+  - Migrated from Google Fonts to Astro 6 built-in font optimization
+  - Satoshi (display/body) + JetBrains Mono (code) via fontshare + fontsource providers
+  - Zero third-party font requests. Auto-optimized fallback metrics for CLS-free loading
+  - Removed ~200 lines of @font-face declarations and all old .woff2 font files
+
+- **View Transitions**
+  - Added ClientRouter (`astro:transitions`) for smooth language switching
+  - Slide animation between /en/ and /es/ via `transition:animate="slide"`
+  - Replaced full page reload language switch
+
+- **UI Foundation**
+  - Added React 19 + @astrojs/react integration
+  - Initialized shadcn/ui (Nova preset, Neutral base color, CSS variables)
+  - Installed base components (button, card, input, textarea, label, sonner)
+
+### Removed
+
+- Removed dead dependencies: @midudev/tailwind-animations, tw-animate-css (re-added as shadcn dep)
+- Removed Space Grotesk, Noto Sans, Fira Code font files
+- Removed Google Fonts external requests
+
 ## [3.1.0] - 2025-05-01
 
 ### Changed

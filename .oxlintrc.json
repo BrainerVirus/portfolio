@@ -1,0 +1,33 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "plugins": ["import", "typescript", "unicorn"],
+  "jsPlugins": ["oxlint-tailwindcss"],
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "globals": {
+    "Astro": "readonly",
+    "Fragment": "readonly"
+  },
+  "rules": {
+    "no-debugger": "warn",
+    "no-unused-vars": "warn",
+    "typescript/no-explicit-any": "warn",
+    "unicorn/filename-case": "off",
+    "import/no-default-export": "off",
+    "tailwindcss/no-unknown-classes": "error",
+    "tailwindcss/no-duplicate-classes": "error",
+    "tailwindcss/no-unnecessary-whitespace": "error"
+  },
+  "ignorePatterns": [
+    "dist/",
+    ".vercel/",
+    ".astro/",
+    ".agents/",
+    "node_modules/",
+    "coverage/",
+    "public/",
+    "src/env.d.ts"
+  ]
+}
