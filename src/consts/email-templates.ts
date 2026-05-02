@@ -1,4 +1,4 @@
-import Logo from "@public/images/logos/logo-coffe-white-no-bg.webp";
+import Logo from "@public/images/logos/logo-coffe-white-no-bg.webp"
 
 export const welcomeEmail = (name: string) => {
 	return `
@@ -108,5 +108,5 @@ export const welcomeEmail = (name: string) => {
   </body>
 </html>
 
-`;
-};
+`
+}
