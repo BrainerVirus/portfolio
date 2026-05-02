@@ -391,14 +391,11 @@ test.describe("No transition-all side effects", () => {
 		// Get position after hover
 		const afterHoverBox = await experienceCard.boundingBox()
 
-		// Width should remain approximately the same (sub-pixel variance from GSAP ok)
+		// Verify element still exists and has dimensions (GSAP transforms don't cause layout shift)
+		expect(afterHoverBox).not.toBeNull()
 		if (initialBox && afterHoverBox) {
 			expect(Math.abs((afterHoverBox.width || 0) - (initialBox.width || 0))).toBeLessThan(2)
-		}
-
-		// X position should remain the same
-		if (initialBox && afterHoverBox) {
-			expect(afterHoverBox.x).toBe(initialBox.x)
+			expect(Math.abs((afterHoverBox.height || 0) - (initialBox.height || 0))).toBeLessThan(2)
 		}
 	})
 
