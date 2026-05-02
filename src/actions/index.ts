@@ -51,9 +51,9 @@ export async function sendContactEmail({ name, email, message, subject }: Contac
 export const server = {
 	contact: defineAction({
 		input: z.object({
-			name: z.string().min(1, "Name is required"),
-			email: z.string().email("Valid email is required"),
-			message: z.string().min(1, "Message is required"),
+			name: z.string().min(1, { error: "Name is required" }),
+			email: z.email({ error: "Valid email is required" }),
+			message: z.string().min(1, { error: "Message is required" }),
 			locale: z.enum(["en", "es"]).optional(),
 			subject: z.string().optional(),
 		}),
