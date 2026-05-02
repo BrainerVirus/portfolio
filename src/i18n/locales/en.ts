@@ -4,14 +4,14 @@ export const nav = {
 	experience: "Mission Log",
 	skills: "Arsenal",
 	contact: "Contact",
-} as const
+} as const;
 
 export const common = {
 	readMore: "Read more",
 	loading: "Loading...",
 	error: "An error occurred",
 	success: "Success!",
-} as const
+} as const;
 
 export const about = {
 	title: "The Pilot's Log",
@@ -26,7 +26,7 @@ export const about = {
 	statusValue: "Currently building scalable systems and drinking excessive amounts of dark roast.",
 	quote:
 		"// Passionate about clean code, UI micro-interactions, and exploring the frontiers of web technology. When not coding, I'm likely refactoring my life configuration or debugging reality.",
-} as const
+} as const;
 
 export const experience = {
 	title: "Mission Log",
@@ -65,7 +65,7 @@ export const experience = {
 			tags: ["Genexus", "JavaScript", "ERP", "Logistics", "SQL"],
 		},
 	],
-} as const
+} as const;
 export const skills = {
 	title: "Technical Arsenal",
 	subtitle: "Core systems and satellite technologies orbiting the central fuel source.",
@@ -95,7 +95,7 @@ export const skills = {
 		socketio: "Socket.io / Electron",
 		python: "Python",
 	},
-} as const
+} as const;
 
 export const contact = {
 	title: "Establish Comm Link",
@@ -127,12 +127,12 @@ export const contact = {
 		transmitting: "Transmitting...",
 		sendDataBurst: "Send Data Burst",
 	},
-} as const
+} as const;
 
 export const footer = {
 	tagline: "Navigating the digital cosmos.",
 	backToTop: "Back to Zenith",
-} as const
+} as const;
 
 export const meta = {
 	home: {
@@ -140,4 +140,4 @@ export const meta = {
 		description:
 			"Software Engineer specializing in web development, mobile apps, and full-stack solutions. Expert in React, Next.js, Node.js, and modern web technologies.",
 	},
-} as const
+} as const;

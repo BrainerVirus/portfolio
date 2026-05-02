@@ -1,0 +1,10 @@
+{
+  "printWidth": 100,
+  "semicolons": false,
+  "quotes": "double",
+  "indent": "tabs",
+  "tabWidth": 2,
+  "trailingCommas": "es5",
+  "arrowParens": "always",
+  "endOfLine": "lf"
+}

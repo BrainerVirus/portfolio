@@ -4,14 +4,14 @@ export const nav = {
 	experience: "Misiones",
 	skills: "Arsenal",
 	contact: "Contacto",
-} as const
+} as const;
 
 export const common = {
 	readMore: "Leer más",
 	loading: "Cargando...",
 	error: "Ocurrió un error",
 	success: "¡Éxito!",
-} as const
+} as const;
 
 export const about = {
 	title: "Bitácora del Piloto",
@@ -27,7 +27,7 @@ export const about = {
 		"Actualmente construyendo sistemas escalables y bebiendo cantidades excesivas de café.",
 	quote:
 		"// Apasionado por el código limpio, las micro-interacciones de UI y explorar las fronteras de la tecnología web. Cuando no estoy programando, probablemente estoy refactorizando mi configuración de vida o debuggeando la realidad.",
-} as const
+} as const;
 
 export const experience = {
 	title: "Registro de Misiones",
@@ -66,7 +66,7 @@ export const experience = {
 			tags: ["Genexus", "JavaScript", "ERP", "Logística", "SQL"],
 		},
 	],
-} as const
+} as const;
 
 export const skills = {
 	title: "Arsenal Técnico",
@@ -97,7 +97,7 @@ export const skills = {
 		socketio: "Socket.io / Electron",
 		python: "Python",
 	},
-} as const
+} as const;
 
 export const contact = {
 	title: "Establecer Enlace Comm",
@@ -129,12 +129,12 @@ export const contact = {
 		transmitting: "Transmitiendo...",
 		sendDataBurst: "Enviar Ráfaga de Datos",
 	},
-} as const
+} as const;
 
 export const footer = {
 	tagline: "Navegando el cosmos digital.",
 	backToTop: "Volver al Cénit",
-} as const
+} as const;
 
 export const meta = {
 	home: {
@@ -142,4 +142,4 @@ export const meta = {
 		description:
 			"Ingeniero de Software especializado en desarrollo web, aplicaciones móviles y soluciones full-stack. Experto en React, Next.js, Node.js y tecnologías web modernas.",
 	},
-} as const
+} as const;
