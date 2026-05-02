@@ -184,6 +184,21 @@ const t = getTranslations(lang)
 				}
 			)
 		}
+
+		// Terminal hover glow
+		const terminal = document.querySelector("#about .terminal-window")
+		if (terminal) {
+			const hoverGlow = gsap.to(terminal, {
+				boxShadow: "0 0 30px rgba(131, 59, 145, 0.3), 0 10px 40px -10px rgba(0, 0, 0, 0.5)",
+				borderColor: "rgba(131, 59, 145, 0.5)",
+				duration: 0.4,
+				ease: "power2.out",
+				paused: true,
+			})
+
+			terminal.addEventListener("mouseenter", () => hoverGlow.play())
+			terminal.addEventListener("mouseleave", () => hoverGlow.reverse())
+		}
 	}
 
 	initAboutAnimations()
