@@ -63,8 +63,8 @@ export default [
 			"docs",
 			".vercel/",
 			".astro/",
+			".agents/",
 			"src/env.d.ts",
-			"tailwind.config.js",
 		],
 	},
 	{
