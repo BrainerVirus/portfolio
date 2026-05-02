@@ -36,5 +36,20 @@ const { currentLocale } = Astro
 		</main>
 		<Footer />
 		<Toaster client:load />
+		<script>
+			import { initKonamiCode, initCoffeeCupEasterEgg, initTerminalSecret } from "@/lib/easter-eggs"
+
+			// Initialize on page load
+			initKonamiCode()
+			initCoffeeCupEasterEgg()
+			initTerminalSecret()
+
+			// Re-initialize after view transitions
+			document.addEventListener("astro:after-swap", () => {
+				initKonamiCode()
+				initCoffeeCupEasterEgg()
+				initTerminalSecret()
+			})
+		</script>
 	</body>
 </html>
