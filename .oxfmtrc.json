@@ -1,6 +1,6 @@
 {
   "printWidth": 100,
-  "semicolons": false,
+  "semi": false,
   "quotes": "double",
   "indent": "tabs",
   "tabWidth": 2,
