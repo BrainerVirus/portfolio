@@ -16,7 +16,7 @@
     "typescript/no-explicit-any": "warn",
     "unicorn/filename-case": "off",
     "import/no-default-export": "off",
-    "tailwindcss/no-unknown-classes": "error",
+    "tailwindcss/no-unknown-classes": ["error", { "allowlist": ["material-symbols-outlined"] }],
     "tailwindcss/no-duplicate-classes": "error",
     "tailwindcss/no-unnecessary-whitespace": "error"
   },

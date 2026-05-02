@@ -81,6 +81,8 @@ const t = getTranslations(lang)
 </header>
 
 <script>
+	import gsap from "gsap"
+
 	const menuBtn = document.getElementById("mobile-menu-btn")
 	const mobileMenu = document.getElementById("mobile-menu")
 	const menuIcon = menuBtn?.querySelector(".material-symbols-outlined")
@@ -100,5 +102,49 @@ const t = getTranslations(lang)
 				menuIcon.textContent = "menu"
 			}
 		})
+	})
+
+	// Nav link hover underline animation
+	function initNavHoverUnderline() {
+		const navLinks = document.querySelectorAll("header nav a")
+		navLinks.forEach((link) => {
+			const el = link as HTMLElement
+			const underline = document.createElement("span")
+			Object.assign(underline.style, {
+				position: "absolute",
+				bottom: "0",
+				left: "0",
+				height: "2px",
+				width: "0%",
+				background: "oklch(49.6% 0.272 303.89)",
+				borderRadius: "2px",
+			})
+			el.style.position = "relative"
+			el.appendChild(underline)
+
+			let animation: gsap.core.Tween | null = null
+
+			el.addEventListener("mouseenter", () => {
+				animation = gsap.to(underline, {
+					width: "100%",
+					duration: 0.3,
+					ease: "power2.out",
+				})
+			})
+
+			el.addEventListener("mouseleave", () => {
+				if (animation) animation.kill()
+				gsap.to(underline, {
+					width: "0%",
+					duration: 0.2,
+					ease: "power2.in",
+				})
+			})
+		})
+	}
+
+	initNavHoverUnderline()
+	document.addEventListener("astro:after-swap", () => {
+		setTimeout(initNavHoverUnderline, 100)
 	})
 </script>

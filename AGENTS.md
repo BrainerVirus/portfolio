@@ -37,6 +37,8 @@ pnpm commit           # Commitizen interactive commit
 - **Astro 6 Fonts**: uses Astro's built-in font optimization (`astro:assets` Font component). Satoshi (display/body) via fontshare provider, JetBrains Mono (code) via fontsource. Fonts served from `_astro/fonts/` — zero external requests.
 - **View Transitions**: ClientRouter (`astro:transitions`) enabled. Language switching uses `transition:animate="slide"` on `<html>`. All same-origin navigations trigger view transitions automatically.
 - **React + shadcn/ui**: React 19 with `@astrojs/react` integration. shadcn/ui components in `src/components/ui/` (nova preset, neutral base, CSS variables). Wrap React components with `client:load` or `client:visible` directives in `.astro` files.
+- **GSAP animations**: scroll-triggered section enter animations via GSAP + ScrollTrigger (`src/lib/animations.ts`). Hover micro-interactions on orbit icons, terminal, nav links. Re-initialize on `astro:after-swap` after view transitions.
+- **Easter eggs**: Konami code, coffee cup click counter, hidden terminal (see `src/lib/easter-eggs.ts`). All re-initialize after view transitions.
 - **Import aliases** (defined in tsconfig.json and vitest.config.ts): `@/` → `src/`, `@lib/` → `src/lib/`, `@styles/` → `src/styles/`, `@public/` → `public/`. `@core/` exists in tsconfig but no `src/core/` directory exists — do not use it.
 - **`cn()` utility** (`src/lib/utils.ts`): combines `clsx` + `tailwind-merge`. Always use this for conditional Tailwind classes.
 
