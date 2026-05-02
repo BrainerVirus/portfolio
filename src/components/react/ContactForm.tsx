@@ -90,7 +90,7 @@ export default function ContactForm({ locale, translations }: ContactFormProps) 
 	}
 
 	return (
-		<form onSubmit={handleSubmit} className="space-y-6" noValidate>
+		<form id="contact-form" onSubmit={handleSubmit} className="space-y-6" noValidate>
 			<div className="space-y-1.5">
 				<Label htmlFor="name" className="text-primary font-mono text-xs tracking-widest uppercase">
 					{translations.senderId}
