@@ -34,6 +34,9 @@ pnpm commit           # Commitizen interactive commit
   - `getTranslations(lang)` → returns `(path) => string` — use in Astro frontmatter with `t("nav.about")`
   - `useTranslation(lang, namespace)` → returns the namespace object — use for destructured access
   - `getTranslation(lang, path)` → single direct lookup with full type safety
+- **Astro 6 Fonts**: uses Astro's built-in font optimization (`astro:assets` Font component). Satoshi (display/body) via fontshare provider, JetBrains Mono (code) via fontsource. Fonts served from `_astro/fonts/` — zero external requests.
+- **View Transitions**: ClientRouter (`astro:transitions`) enabled. Language switching uses `transition:animate="slide"` on `<html>`. All same-origin navigations trigger view transitions automatically.
+- **React + shadcn/ui**: React 19 with `@astrojs/react` integration. shadcn/ui components in `src/components/ui/` (nova preset, neutral base, CSS variables). Wrap React components with `client:load` or `client:visible` directives in `.astro` files.
 - **Import aliases** (defined in tsconfig.json and vitest.config.ts): `@/` → `src/`, `@lib/` → `src/lib/`, `@styles/` → `src/styles/`, `@public/` → `public/`. `@core/` exists in tsconfig but no `src/core/` directory exists — do not use it.
 - **`cn()` utility** (`src/lib/utils.ts`): combines `clsx` + `tailwind-merge`. Always use this for conditional Tailwind classes.
 
@@ -58,6 +61,8 @@ pnpm commit           # Commitizen interactive commit
 
 - **Astro 6.2** with `@astrojs/vercel` adapter (SSR on Vercel)
 - **Tailwind CSS v4** (loaded via `@tailwindcss/vite` plugin, not PostCSS config)
+- **React 19 + shadcn/ui** (nova preset, neutral base, CSS variables)
 - **Linting/formatting**: oxlint + oxfmt (replaced ESLint + Prettier). See `.oxlintrc.json` and `.oxfmtrc.json`.
 - **Icons**: `astro-icon` with `@iconify-json/*` icon sets (devicon, mdi, etc.)
+- **Fonts**: Satoshi + JetBrains Mono via Astro 6 Font optimization
 - **Node**: 22.x, **Package manager**: pnpm
