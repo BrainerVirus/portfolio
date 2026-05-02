@@ -20,7 +20,7 @@ const LANGUAGE_VARIANTS: Record<string, Language> = {
 	"en-ie": "en",
 	"en-za": "en",
 	"en-in": "en",
-	"en": "en",
+	en: "en",
 
 	// Spanish variants
 	"es-mx": "es",
@@ -41,7 +41,7 @@ const LANGUAGE_VARIANTS: Record<string, Language> = {
 	"es-hn": "es",
 	"es-ni": "es",
 	"es-pa": "es",
-	"es": "es",
+	es: "es",
 }
 
 /**

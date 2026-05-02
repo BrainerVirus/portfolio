@@ -9,10 +9,10 @@ pnpm dev              # Start dev server on http://localhost:3000
 pnpm build            # Build for production
 pnpm preview          # Preview production build locally
 pnpm check            # astro check + tsc --noEmit (typecheck)
-pnpm lint             # ESLint on all files
-pnpm lint:fix         # ESLint auto-fix
-pnpm format           # Prettier on src/**/*.{astro,ts,js,tsx,jsx,css} only
-pnpm format:check     # Prettier check (same glob)
+pnpm lint             # oxlint on all files
+pnpm lint:fix         # oxlint auto-fix
+pnpm format           # oxfmt on src/
+pnpm format:check     # oxfmt check on src/
 pnpm test:unit        # Vitest unit tests
 pnpm test:unit src/i18n/utils.test.ts  # Run single test file
 pnpm test:e2e         # Playwright E2E tests (auto-starts dev server)
@@ -34,6 +34,9 @@ pnpm commit           # Commitizen interactive commit
   - `getTranslations(lang)` → returns `(path) => string` — use in Astro frontmatter with `t("nav.about")`
   - `useTranslation(lang, namespace)` → returns the namespace object — use for destructured access
   - `getTranslation(lang, path)` → single direct lookup with full type safety
+- **Astro 6 Fonts**: uses Astro's built-in font optimization (`astro:assets` Font component). Satoshi (display/body) via fontshare provider, JetBrains Mono (code) via fontsource. Fonts served from `_astro/fonts/` — zero external requests.
+- **View Transitions**: ClientRouter (`astro:transitions`) enabled. Language switching uses `transition:animate="slide"` on `<html>`. All same-origin navigations trigger view transitions automatically.
+- **React + shadcn/ui**: React 19 with `@astrojs/react` integration. shadcn/ui components in `src/components/ui/` (nova preset, neutral base, CSS variables). Wrap React components with `client:load` or `client:visible` directives in `.astro` files.
 - **Import aliases** (defined in tsconfig.json and vitest.config.ts): `@/` → `src/`, `@lib/` → `src/lib/`, `@styles/` → `src/styles/`, `@public/` → `public/`. `@core/` exists in tsconfig but no `src/core/` directory exists — do not use it.
 - **`cn()` utility** (`src/lib/utils.ts`): combines `clsx` + `tailwind-merge`. Always use this for conditional Tailwind classes.
 
@@ -44,7 +47,7 @@ pnpm commit           # Commitizen interactive commit
 - **Trailing commas**: ES5 style (objects/arrays only, not function params).
 - **Arrow parens**: always include them `(x) => x`.
 - **Print width**: 100 chars.
-- **Imports order**: Astro/framework → third-party → local → types. Prettier plugin handles this automatically.
+- **Imports order**: Astro/framework → third-party → local → types. Import sorting is not enforced by oxfmt — sort manually.
 - **Naming**: Components PascalCase, functions camelCase, CSS classes/HTML IDs kebab-case.
 
 ## Testing
@@ -52,11 +55,14 @@ pnpm commit           # Commitizen interactive commit
 - **Unit tests**: `src/**/*.test.ts` or `src/**/*.spec.ts`. Vitest with `globals: true`, `happy-dom` environment.
 - **E2E tests**: `e2e/*.spec.ts`. Playwright runs on chromium, firefox, webkit. Dev server auto-starts on port 3000. Install browsers once: `pnpm exec playwright install --with-deps`.
 - **CI pipeline** (`.github/workflows/github-ci.yml`): sequential `lint → format:check → test → build`. Build can be skipped with `[skip ci]` in commit message.
-- **Pre-commit hook**: Husky runs `lint-staged`, which auto-fixes staged `src/**/*.{astro,ts,js,tsx,jsx,css}` via ESLint + Prettier.
+- **Pre-commit hook**: None (removed husky + lint-staged). Run `pnpm lint && pnpm format:check` before committing.
 
 ## Key Dependencies
 
-- **Astro 5.16** with `@astrojs/vercel` adapter (SSR on Vercel)
+- **Astro 6.2** with `@astrojs/vercel` adapter (SSR on Vercel)
 - **Tailwind CSS v4** (loaded via `@tailwindcss/vite` plugin, not PostCSS config)
+- **React 19 + shadcn/ui** (nova preset, neutral base, CSS variables)
+- **Linting/formatting**: oxlint + oxfmt (replaced ESLint + Prettier). See `.oxlintrc.json` and `.oxfmtrc.json`.
 - **Icons**: `astro-icon` with `@iconify-json/*` icon sets (devicon, mdi, etc.)
+- **Fonts**: Satoshi + JetBrains Mono via Astro 6 Font optimization
 - **Node**: 22.x, **Package manager**: pnpm

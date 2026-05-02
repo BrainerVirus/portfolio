@@ -1,18 +1,34 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"],
+  "include": [
+    ".astro/types.d.ts",
+    "**/*"
+  ],
+  "exclude": [
+    "dist"
+  ],
   "compilerOptions": {
     "baseUrl": ".",
     "module": "ESNext",
     "ignoreDeprecations": "6.0",
     "paths": {
-      "@core/*": ["src/core/*"],
-      "@lib/*": ["src/lib/*"],
-      "@public/*": ["public/*"],
-      "@styles/*": ["src/styles/*"],
-      "@/*": ["./src/*"]
+      "@core/*": [
+        "src/core/*"
+      ],
+      "@lib/*": [
+        "src/lib/*"
+      ],
+      "@public/*": [
+        "public/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ],
+      "@/*": [
+        "./src/*"
+      ]
     },
-
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   }
 }
