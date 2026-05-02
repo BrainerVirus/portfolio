@@ -5,7 +5,37 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [3.0.0] - 2025-01-23
+## [3.1.0] - 2025-05-01
+
+### Changed
+
+- **Dependency Updates**
+  - Upgraded Astro from 5.16 to 6.2 (SSR with Vite 7, Zod 4, Shiki 4)
+  - Upgraded @astrojs/mdx from 4.3 to 5.0, @astrojs/vercel from 9.0 to 10.0
+  - Upgraded Tailwind CSS from 4.1 to 4.2, @tailwindcss/vite from 4.1 to 4.2
+  - Upgraded TypeScript from 5.9 to 6.0, ESLint from 9.39 to 10.2
+  - Upgraded Vitest from 4.0 to 4.1, Playwright from 1.57 to 1.59
+  - Upgraded prettier from 3.8.0 to 3.8.3, resend from 6.7 to 6.12
+  - All other dev dependencies bumped to latest compatible versions
+
+- **Zod 4 Migration**
+  - Migrated `z.string().email()` to `z.email()` in contact form validation
+  - Updated `z.string().min()` error messages from string to `{ error }` object syntax
+
+- **TypeScript 6 Compatibility**
+  - Added `ignoreDeprecations: "6.0"` for `baseUrl` option in tsconfig.json
+
+- **ESLint Configuration**
+  - Ignored `.agents/` directory (third-party skill files) in ESLint config
+
+- **Documentation**
+  - Rewrote AGENTS.md: condensed from 194 to 62 lines while adding critical architecture notes
+  - Documented SSR mode, i18n routing, middleware behavior, env vars, and import aliases
+
+### Fixed
+
+- Removed stale `@core/` alias reference from AGENTS.md (no `src/core/` directory exists)
+- Fixed ESLint errors caused by unignored `.agents/` skill files
 
 ### Added
 
