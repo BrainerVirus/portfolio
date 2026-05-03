@@ -73,7 +73,7 @@ const t = getTranslations(lang)
 			>
 				{t("nav.skills")}
 			</a>
-			<a class="text-sm font-medium text-white" href="#contact">
+			<a class="text-sm font-medium text-gray-300 transition-colors hover:text-white" href="#contact">
 				{t("nav.contact")}
 			</a>
 		</nav>
@@ -121,7 +121,7 @@ const t = getTranslations(lang)
 			underline.id = "nav-underline"
 			underline.className = "absolute bottom-0 left-0 h-0.5 rounded-full bg-primary"
 			underline.style.transition = "none"
-			const nav = document.querySelector("header nav")
+			const nav = document.querySelector("header nav") as HTMLElement | null
 			if (nav) {
 				nav.style.position = "relative"
 				nav.appendChild(underline)
