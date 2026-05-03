@@ -40,7 +40,7 @@ const t = getTranslations(lang)
 			<a class="text-sm font-medium text-gray-300 hover:text-white" href="#skills">
 				{t("nav.skills")}
 			</a>
-			<a class="text-sm font-medium text-white" href="#contact">
+			<a class="text-sm font-medium text-gray-300 transition-colors hover:text-white" href="#contact">
 				{t("nav.contact")}
 			</a>
 			<LanguageSwitch />
@@ -82,7 +82,10 @@ const t = getTranslations(lang)
 
 <script>
 	import gsap from "gsap"
+	import { ScrollTrigger } from "gsap/ScrollTrigger"
+	gsap.registerPlugin(ScrollTrigger)
 
+	// Mobile menu toggle
 	const menuBtn = document.getElementById("mobile-menu-btn")
 	const mobileMenu = document.getElementById("mobile-menu")
 	const menuIcon = menuBtn?.querySelector(".material-symbols-outlined")
@@ -94,7 +97,6 @@ const t = getTranslations(lang)
 		}
 	})
 
-	// Close menu when clicking on a link
 	mobileMenu?.querySelectorAll("a").forEach((link) => {
 		link.addEventListener("click", () => {
 			mobileMenu?.classList.add("hidden")
@@ -104,47 +106,95 @@ const t = getTranslations(lang)
 		})
 	})
 
-	// Nav link hover underline animation
-	function initNavHoverUnderline() {
+	// Scroll-spy with elastic morphing underline
+	function initNavScrollSpy() {
 		const navLinks = document.querySelectorAll("header nav a")
+		const sections = ["about", "experience", "skills", "contact"]
+			.map((id) => document.getElementById(id))
+			.filter(Boolean)
+
+		if (!navLinks.length || !sections.length) return
+
+		let underline = document.querySelector("#nav-underline") as HTMLElement | null
+		if (!underline) {
+			underline = document.createElement("div")
+			underline.id = "nav-underline"
+			underline.className = "absolute bottom-0 left-0 h-0.5 rounded-full bg-primary"
+			underline.style.transition = "none"
+			const nav = document.querySelector("header nav")
+			if (nav) {
+				nav.style.position = "relative"
+				nav.appendChild(underline)
+			}
+		}
+
+		const linkToSection: Record<string, string> = {}
 		navLinks.forEach((link) => {
-			const el = link as HTMLElement
-			const underline = document.createElement("span")
-			Object.assign(underline.style, {
-				position: "absolute",
-				bottom: "0",
-				left: "0",
-				height: "2px",
-				width: "0%",
-				background: "oklch(49.6% 0.272 303.89)",
-				borderRadius: "2px",
+			const href = link.getAttribute("href") || ""
+			const id = href.replace("/", "").replace("#", "")
+			if (id) {
+				linkToSection[id] = id
+				;(link as HTMLElement).dataset.section = id
+			}
+		})
+
+		function updateActiveLink(activeId: string) {
+			navLinks.forEach((link) => {
+				const sectionId = (link as HTMLElement).dataset.section
+				if (sectionId === activeId) {
+					link.classList.add("text-white")
+					link.classList.remove("text-gray-300")
+					const rect = link.getBoundingClientRect()
+					const navRect = link.closest("nav")?.getBoundingClientRect()
+					if (navRect && underline) {
+						gsap.to(underline, {
+							left: rect.left - navRect.left,
+							width: rect.width,
+							duration: 0.5,
+							ease: "elastic.out(1, 0.6)",
+						})
+					}
+				} else {
+					link.classList.add("text-gray-300")
+					link.classList.remove("text-white")
+				}
 			})
-			el.style.position = "relative"
-			el.appendChild(underline)
+		}
 
-			let animation: gsap.core.Tween | null = null
-
-			el.addEventListener("mouseenter", () => {
-				animation = gsap.to(underline, {
-					width: "100%",
-					duration: 0.3,
-					ease: "power2.out",
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						const id = entry.target.id
+						updateActiveLink(id)
+					}
 				})
-			})
+			},
+			{
+				rootMargin: "-20% 0px -60% 0px",
+				threshold: 0,
+			}
+		)
 
-			el.addEventListener("mouseleave", () => {
-				if (animation) animation.kill()
-				gsap.to(underline, {
-					width: "0%",
-					duration: 0.2,
-					ease: "power2.in",
-				})
+		sections.forEach((section) => {
+			if (section) observer.observe(section)
+		})
+
+		const hash = window.location.hash.replace("#", "")
+		if (hash && linkToSection[hash]) {
+			updateActiveLink(hash)
+		}
+
+		navLinks.forEach((link) => {
+			link.addEventListener("click", () => {
+				const sectionId = (link as HTMLElement).dataset.section
+				if (sectionId) {
+					updateActiveLink(sectionId)
+				}
 			})
 		})
 	}
 
-	initNavHoverUnderline()
-	document.addEventListener("astro:after-swap", () => {
-		setTimeout(initNavHoverUnderline, 100)
-	})
+	initNavScrollSpy()
+	document.addEventListener("astro:after-swap", initNavScrollSpy)
 </script>

@@ -67,6 +67,14 @@ export default defineConfig({
 		styles: ["normal", "italic"],
 		subsets: ["latin"],
 		fallbacks: ["ui-monospace", "monospace"],
+	}, {
+		provider: fontProviders.googleicons(),
+		name: "Material Symbols Outlined",
+		cssVariable: "--font-material-symbols",
+		weights: ["100 700"],
+		styles: ["normal"],
+		subsets: ["latin"],
+		fallbacks: [],
 	}],
 
 	output: "server",

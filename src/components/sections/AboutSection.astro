@@ -41,7 +41,7 @@ const t = getTranslations(lang)
 						<span class="text-blue-400">~</span>
 						<span class="text-primary-glow">cat</span> bio.txt
 					</div>
-					<div class="space-y-4">
+					<div class="space-y-4" id="terminal-content">
 						<p>
 							&gt; <span class="font-semibold text-white">{t("about.identity")}:</span>
 							{t("about.name")}
@@ -65,7 +65,7 @@ const t = getTranslations(lang)
 					<div class="mt-4">
 						<span class="text-green-400">➜</span>
 						<span class="text-blue-400">~</span>
-						<span class="animate-blink ml-1 inline-block h-5 w-2 bg-gray-400 align-middle"></span>
+						<span id="terminal-cursor" class="animate-blink ml-1 inline-block h-5 w-2 bg-gray-400 align-middle"></span>
 					</div>
 				</div>
 			</div>
@@ -120,28 +120,8 @@ const t = getTranslations(lang)
 	gsap.registerPlugin(ScrollTrigger)
 
 	function initAboutAnimations() {
-		// Staggered terminal line reveal
-		const terminalSection = document.querySelector("#about .terminal-window")
-		if (terminalSection) {
-			const lines = terminalSection.querySelectorAll(".space-y-4 > p, .mt-4")
-			gsap.fromTo(
-				lines,
-				{ opacity: 0, x: -20 },
-				{
-					opacity: 1,
-					x: 0,
-					duration: 0.5,
-					stagger: 0.2,
-					delay: 1,
-					ease: "power2.out",
-					scrollTrigger: {
-						trigger: terminalSection,
-						start: "top 80%",
-						toggleActions: "play none none none",
-					},
-				}
-			)
-		}
+		const terminalContent = document.querySelector("#terminal-content")
+		const cursor = document.querySelector("#terminal-cursor")
 
 		// Portal lens elastic entrance
 		const portal = document.querySelector("#about .portal-lens")
@@ -199,6 +179,59 @@ const t = getTranslations(lang)
 			terminal.addEventListener("mouseenter", () => hoverGlow.play())
 			terminal.addEventListener("mouseleave", () => hoverGlow.reverse())
 		}
+
+		// Character-by-character typewriter effect
+		if (!terminalContent || !cursor) return
+
+		gsap.set(cursor, { opacity: 0 })
+
+		const lines = terminalContent.querySelectorAll("p")
+		gsap.set(lines, { opacity: 0 })
+
+		let started = false
+
+		function typeNextLine(currentLineIndex: number) {
+			if (currentLineIndex >= lines.length) {
+				// All lines typed — show cursor at final position
+				gsap.to(cursor, { opacity: 1, duration: 0.3 })
+				return
+			}
+
+			const line = lines[currentLineIndex]
+			gsap.set(line, { opacity: 1 })
+
+			const originalHTML = line.innerHTML
+			const text = line.textContent || ""
+			line.textContent = ""
+
+			let charIndex = 0
+			const interval = setInterval(() => {
+				charIndex++
+				gsap.set(cursor, { opacity: 1 })
+
+				if (charIndex > text.length) {
+					clearInterval(interval)
+					line.innerHTML = originalHTML
+					currentLineIndex++
+					setTimeout(() => typeNextLine(currentLineIndex), 200)
+					return
+				}
+				line.textContent = text.substring(0, charIndex)
+			}, 30)
+		}
+
+		const terminalWindow = document.querySelector("#about .terminal-window")
+
+		ScrollTrigger.create({
+			trigger: terminalWindow,
+			start: "top 75%",
+			once: true,
+			onEnter: () => {
+				if (started) return
+				started = true
+				setTimeout(() => typeNextLine(0), 600)
+			},
+		})
 	}
 
 	initAboutAnimations()
