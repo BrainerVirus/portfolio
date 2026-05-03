@@ -123,96 +123,89 @@ const t = getTranslations(lang)
 	let scrollObserver: IntersectionObserver | null = null
 
 	function initNavScrollSpy() {
-		// Disconnect previous observer
 		if (scrollObserver) {
 			scrollObserver.disconnect()
 			scrollObserver = null
 		}
 
+		const nav = document.querySelector("header nav") as HTMLElement | null
 		const navLinks = document.querySelectorAll("header nav a")
 		const sections = ["about", "experience", "skills", "contact"]
 			.map((id) => document.getElementById(id))
 			.filter(Boolean)
 
-		if (!navLinks.length || !sections.length) return
+		if (!navLinks.length || !sections.length || !nav) return
 
+		// Create underline element if not exists
 		let underline = document.querySelector("#nav-underline") as HTMLElement | null
 		if (!underline) {
 			underline = document.createElement("div")
 			underline.id = "nav-underline"
-			underline.className = "absolute bottom-0 left-0 h-0.5 rounded-full bg-primary"
+			underline.className = "absolute bottom-0 h-0.5 rounded-full bg-primary"
 			underline.style.transition = "none"
-			const nav = document.querySelector("header nav") as HTMLElement | null
-			if (nav) {
-				nav.style.position = "relative"
-				nav.appendChild(underline)
-			}
+			underline.style.pointerEvents = "none"
+			nav.style.position = "relative"
+			nav.appendChild(underline)
 		}
 
-		const linkToSection: Record<string, string> = {}
+		// Remove old active states
 		navLinks.forEach((link) => {
-			const href = link.getAttribute("href") || ""
-			const id = href.replace("/", "").replace("#", "")
-			if (id) {
-				linkToSection[id] = id
-				;(link as HTMLElement).dataset.section = id
-			}
+			link.classList.add("text-gray-300")
+			link.classList.remove("text-white")
 		})
 
-		function updateActiveLink(activeId: string) {
-			navLinks.forEach((link) => {
-				const sectionId = (link as HTMLElement).dataset.section
-				if (sectionId === activeId) {
-					link.classList.add("text-white")
-					link.classList.remove("text-gray-300")
-					const rect = link.getBoundingClientRect()
-					const navRect = link.closest("nav")?.getBoundingClientRect()
-					if (navRect && underline) {
-						gsap.to(underline, {
-							left: rect.left - navRect.left,
-							width: rect.width,
-							duration: 0.5,
-							ease: "elastic.out(1, 0.6)",
-						})
-					}
-				} else {
-					link.classList.add("text-gray-300")
-					link.classList.remove("text-white")
-				}
+		function moveToLink(link: Element) {
+			const linkRect = link.getBoundingClientRect()
+			const navRect = nav!.getBoundingClientRect()
+			const left = linkRect.left - navRect.left
+			const width = linkRect.width
+
+			gsap.to(underline, {
+				left,
+				width,
+				duration: 0.7,
+				ease: "elastic.out(1, 0.65)",
+				overwrite: "auto",
 			})
+
+			// Highlight active link
+			navLinks.forEach((l) => {
+				l.classList.add("text-gray-300")
+				l.classList.remove("text-white")
+			})
+			link.classList.add("text-white")
+			link.classList.remove("text-gray-300")
 		}
 
 		scrollObserver = new IntersectionObserver(
 			(entries) => {
-				entries.forEach((entry) => {
-					if (entry.isIntersecting) {
-						const id = entry.target.id
-						updateActiveLink(id)
-					}
-				})
+				// Find the entry with highest intersection ratio
+				const visible = entries
+					.filter((e) => e.isIntersecting)
+					.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
+
+				if (visible) {
+					const link = document.querySelector(`header nav a[href="#${visible.target.id}"]`)
+					if (link) moveToLink(link)
+				}
 			},
-			{
-				rootMargin: "-20% 0px -60% 0px",
-				threshold: 0,
-			}
+			{ rootMargin: "-30% 0px -70% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
 		)
 
 		sections.forEach((section) => {
 			if (section) scrollObserver!.observe(section)
 		})
 
+		// Set initial active based on hash
 		const hash = window.location.hash.replace("#", "")
-		if (hash && linkToSection[hash]) {
-			updateActiveLink(hash)
+		if (hash) {
+			const link = document.querySelector(`header nav a[href="#${hash}"]`)
+			if (link) moveToLink(link)
 		}
 
+		// Click handlers
 		navLinks.forEach((link) => {
-			link.addEventListener("click", () => {
-				const sectionId = (link as HTMLElement).dataset.section
-				if (sectionId) {
-					updateActiveLink(sectionId)
-				}
-			})
+			link.addEventListener("click", () => moveToLink(link))
 		})
 	}
 
