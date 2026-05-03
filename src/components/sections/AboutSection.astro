@@ -121,12 +121,6 @@ const t = getTranslations(lang)
 	gsap.registerPlugin(ScrollTrigger)
 
 	function initAboutAnimations() {
-		// Kill existing ScrollTriggers to prevent accumulation
-		ScrollTrigger.killAll()
-
-		const terminalContent = document.querySelector("#terminal-content")
-		const cursor = document.querySelector("#terminal-cursor")
-
 		// Portal lens elastic entrance
 		const portal = document.querySelector("#about .portal-lens")
 		if (portal) {
@@ -169,56 +163,63 @@ const t = getTranslations(lang)
 			terminal.addEventListener("mouseleave", () => hoverGlow.reverse())
 		}
 
-		// Character-by-character typewriter effect
+		// Typewriter effect
+		initTypewriter()
+	}
+
+	function initTypewriter() {
+		const terminalContent = document.querySelector("#terminal-content")
+		const cursor = document.querySelector("#terminal-cursor") as HTMLElement | null
 		if (!terminalContent || !cursor) return
 
+		const lines = Array.from(terminalContent.querySelectorAll("p")) as HTMLElement[]
+		gsap.set(lines, { opacity: 0 })
 		gsap.set(cursor, { opacity: 0 })
 
-		const lines = terminalContent.querySelectorAll("p")
-		gsap.set(lines, { opacity: 0 })
-
-		let started = false
-
-		function typeNextLine(currentLineIndex: number) {
-			if (currentLineIndex >= lines.length) {
-				// All lines typed — show cursor at final position
-				gsap.to(cursor, { opacity: 1, duration: 0.3 })
-				return
-			}
-
-			const line = lines[currentLineIndex]
-			gsap.set(line, { opacity: 1 })
-
-			const originalHTML = line.innerHTML
-			const text = line.textContent || ""
-			line.textContent = ""
-
-			let charIndex = 0
-			const interval = setInterval(() => {
-				charIndex++
-				gsap.set(cursor, { opacity: 1 })
-
-				if (charIndex > text.length) {
-					clearInterval(interval)
-					line.innerHTML = originalHTML
-					currentLineIndex++
-					setTimeout(() => typeNextLine(currentLineIndex), 200)
-					return
+		let typed = false
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (entries[0]?.isIntersecting && !typed) {
+					typed = true
+					observer.disconnect()
+					setTimeout(() => typeLines(lines, cursor, 0), 500)
 				}
-				line.textContent = text.substring(0, charIndex)
-			}, 30)
+			},
+			{ rootMargin: "0px 0px -10% 0px", threshold: 0.15 }
+		)
+		const terminalWindow = document.querySelector("#about .terminal-window")
+		if (terminalWindow) observer.observe(terminalWindow)
+	}
+
+	function typeLines(lines: HTMLElement[], cursor: HTMLElement, index: number) {
+		if (index >= lines.length) {
+			gsap.to(cursor, { autoAlpha: 1, duration: 0.3 })
+			return
 		}
 
-		const terminalWindow = document.querySelector("#about .terminal-window")
+		const line = lines[index]
+		const originalHTML = line.innerHTML
+		const fullText = line.textContent || ""
+		line.textContent = ""
+		gsap.set(line, { opacity: 1 })
+		gsap.set(cursor, { opacity: 1 })
 
-		ScrollTrigger.create({
-			trigger: terminalWindow,
-			start: "top 75%",
-			once: true,
-			onEnter: () => {
-				if (started) return
-				started = true
-				setTimeout(() => typeNextLine(0), 600)
+		// GSAP-native tween: animate a counter from 0 to text length
+		// onUpdate fires every frame at 60fps — smooth, no setTimeout jank
+		const counter = { value: 0 }
+		gsap.to(counter, {
+			value: fullText.length,
+			duration: fullText.length * 0.03,
+			ease: "none",
+			onUpdate: () => {
+				const pos = Math.floor(counter.value)
+				line.textContent = fullText.substring(0, pos)
+				cursor.style.opacity = pos % 3 < 2 ? "1" : "0"
+			},
+			onComplete: () => {
+				line.innerHTML = originalHTML
+				cursor.style.opacity = "1"
+				setTimeout(() => typeLines(lines, cursor, index + 1), 250)
 			},
 		})
 	}
