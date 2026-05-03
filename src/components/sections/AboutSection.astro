@@ -121,7 +121,6 @@ const t = getTranslations(lang)
 	gsap.registerPlugin(ScrollTrigger)
 
 	function initAboutAnimations() {
-		// Portal lens elastic entrance
 		const portal = document.querySelector("#about .portal-lens")
 		if (portal) {
 			gsap.fromTo(
@@ -142,13 +141,9 @@ const t = getTranslations(lang)
 			)
 		}
 
-		// Section heading fade-in
 		const heading = document.querySelector("#about .mb-16")
-		if (heading) {
-			staggerFadeIn(heading, "> *", 0.15)
-		}
+		if (heading) staggerFadeIn(heading, "> *", 0.15)
 
-		// Terminal hover glow
 		const terminal = document.querySelector("#about .terminal-window")
 		if (terminal) {
 			const hoverGlow = gsap.to(terminal, {
@@ -158,70 +153,73 @@ const t = getTranslations(lang)
 				ease: "power2.out",
 				paused: true,
 			})
-
 			terminal.addEventListener("mouseenter", () => hoverGlow.play())
 			terminal.addEventListener("mouseleave", () => hoverGlow.reverse())
 		}
 
-		// Typewriter effect
 		initTypewriter()
 	}
 
 	function initTypewriter() {
-		const terminalContent = document.querySelector("#terminal-content")
+		const content = document.querySelector("#terminal-content")
 		const cursor = document.querySelector("#terminal-cursor") as HTMLElement | null
-		if (!terminalContent || !cursor) return
+		if (!content || !cursor) return
 
-		const lines = Array.from(terminalContent.querySelectorAll("p")) as HTMLElement[]
-		gsap.set(lines, { opacity: 0 })
-		gsap.set(cursor, { opacity: 0 })
+		const lines = content.querySelectorAll("p")
+		if (!lines.length) return
 
-		let typed = false
-		const observer = new IntersectionObserver(
-			(entries) => {
-				if (entries[0]?.isIntersecting && !typed) {
-					typed = true
-					observer.disconnect()
-					setTimeout(() => typeLines(lines, cursor, 0), 500)
-				}
-			},
-			{ rootMargin: "0px 0px -10% 0px", threshold: 0.15 }
-		)
-		const terminalWindow = document.querySelector("#about .terminal-window")
-		if (terminalWindow) observer.observe(terminalWindow)
-	}
+		// Save original HTML for each line
+		const originals: string[] = []
+		const texts: string[] = []
+		lines.forEach((line) => {
+			originals.push(line.innerHTML)
+			texts.push(line.textContent || "")
+			line.innerHTML = ""
+			;(line as HTMLElement).style.opacity = "1"
+		})
+		cursor.style.opacity = "0"
 
-	function typeLines(lines: HTMLElement[], cursor: HTMLElement, index: number) {
-		if (index >= lines.length) {
-			gsap.to(cursor, { autoAlpha: 1, duration: 0.3 })
-			return
-		}
+		let started = false
 
-		const line = lines[index]
-		const originalHTML = line.innerHTML
-		const fullText = line.textContent || ""
-		line.textContent = ""
-		gsap.set(line, { opacity: 1 })
-		gsap.set(cursor, { opacity: 1 })
-
-		// GSAP-native tween: animate a counter from 0 to text length
-		// onUpdate fires every frame at 60fps — smooth, no setTimeout jank
-		const counter = { value: 0 }
-		gsap.to(counter, {
-			value: fullText.length,
-			duration: fullText.length * 0.03,
-			ease: "none",
-			onUpdate: () => {
-				const pos = Math.floor(counter.value)
-				line.textContent = fullText.substring(0, pos)
-				cursor.style.opacity = pos % 3 < 2 ? "1" : "0"
-			},
-			onComplete: () => {
-				line.innerHTML = originalHTML
+		ScrollTrigger.create({
+			trigger: content.closest(".terminal-window"),
+			start: "top 80%",
+			once: true,
+			onEnter: () => {
+				if (started) return
+				started = true
 				cursor.style.opacity = "1"
-				setTimeout(() => typeLines(lines, cursor, index + 1), 250)
+				typeLine(0)
 			},
 		})
+
+		function typeLine(i: number) {
+			if (i >= texts.length) {
+				cursor.style.opacity = "1"
+				return
+			}
+
+			const el = lines[i] as HTMLElement
+			const fullText = texts[i]
+			const originalHTML = originals[i]
+			const obj = { val: 0 }
+
+			gsap.to(obj, {
+				val: fullText.length,
+				duration: fullText.length * 0.03,
+				ease: "none",
+				onUpdate: () => {
+					const n = Math.floor(obj.val)
+					el.textContent = fullText.substring(0, n)
+					cursor.style.opacity = n % 3 < 2 ? "1" : "0"
+				},
+				onComplete: () => {
+					el.innerHTML = originalHTML
+					cursor.style.opacity = "1"
+					setTimeout(() => typeLine(i + 1), 300)
+				},
+			})
+		}
 	}
 
 	initAboutAnimations()
