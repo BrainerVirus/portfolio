@@ -94,15 +94,15 @@ const t = getTranslations(lang)
 		if (!menuBtn || !mobileMenu || !menuIcon) return
 
 		const toggleMenu = () => {
-			const isOpen = mobileMenu.classList.contains("hidden")
-			if (isOpen) {
-				mobileMenu.classList.add("hidden")
-				menuBtn.setAttribute("aria-expanded", "false")
-				menuIcon.textContent = "menu"
-			} else {
+			const isHidden = mobileMenu.classList.contains("hidden")
+			if (isHidden) {
 				mobileMenu.classList.remove("hidden")
 				menuBtn.setAttribute("aria-expanded", "true")
 				menuIcon.textContent = "close"
+			} else {
+				mobileMenu.classList.add("hidden")
+				menuBtn.setAttribute("aria-expanded", "false")
+				menuIcon.textContent = "menu"
 			}
 		}
 
