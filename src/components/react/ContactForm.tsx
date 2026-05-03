@@ -94,7 +94,7 @@ export default function ContactForm({ locale, translations }: ContactFormProps) 
 		<Card className="glass-card border-white/10 hover:border-primary/40 transition-colors duration-500">
 			<CardHeader className="pb-2">
 				<CardTitle className="text-primary font-mono text-sm tracking-widest uppercase">
-					{translations.senderId}
+					{locale === "en" ? "Establish Connection" : "Establecer Conexión"}
 				</CardTitle>
 			</CardHeader>
 			<CardContent>
