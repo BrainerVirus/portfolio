@@ -40,6 +40,7 @@ const tooltip = lang === "en" ? "Español" : "English"
 
 <script>
 	import gsap from "gsap"
+	import { navigate } from "astro:transitions/client"
 
 	function initLangSwitch() {
 		const btn = document.querySelector("#lang-switch")
@@ -57,7 +58,7 @@ const tooltip = lang === "en" ? "Español" : "English"
 				duration: 0.6,
 				ease: "elastic.out(1, 0.5)",
 				onComplete: () => {
-					window.location.href = targetPath || "/"
+					navigate(targetPath || "/")
 				},
 			})
 		})
