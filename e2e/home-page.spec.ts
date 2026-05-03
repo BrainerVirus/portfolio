@@ -164,8 +164,8 @@ test.describe("Language switching", () => {
 	test("should switch to Spanish when clicking language toggle", async ({ page }) => {
 		await page.goto("http://localhost:3000/en/")
 
-		// Find and click the language switch button (first one for ES)
-		const langSwitch = page.locator("button#lang-switch").filter({ hasText: "ES" }).first()
+		// The button shows the CURRENT language (EN), click it to switch
+		const langSwitch = page.locator("button#lang-switch").first()
 		await expect(langSwitch).toBeVisible()
 		await langSwitch.click()
 
