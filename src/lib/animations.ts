@@ -4,6 +4,14 @@ import { ScrollTrigger } from "gsap/ScrollTrigger"
 gsap.registerPlugin(ScrollTrigger)
 
 /**
+ * Kill all ScrollTrigger instances to prevent accumulation on re-init.
+ * Call this before re-initializing animations after view transitions.
+ */
+export function cleanupScrollTriggers() {
+	ScrollTrigger.killAll()
+}
+
+/**
  * Fade-in up animation for section content
  */
 export function fadeInUp(element: gsap.DOMTarget, delay = 0) {

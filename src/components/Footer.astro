@@ -93,9 +93,13 @@ const t = getTranslations(lang)
 <script>
 	import gsap from "gsap"
 
-	document.getElementById("back-to-top")?.addEventListener("click", () => {
-		window.scrollTo({ top: 0, behavior: "smooth" })
-	})
+	function initBackToTop() {
+		const btn = document.getElementById("back-to-top")
+		if (!btn) return
+		btn.addEventListener("click", () => {
+			window.scrollTo({ top: 0, behavior: "smooth" })
+		})
+	}
 
 	// Constellation link glow pulse
 	function initConstellationGlow() {
@@ -116,8 +120,10 @@ const t = getTranslations(lang)
 		})
 	}
 
+	initBackToTop()
 	initConstellationGlow()
 	document.addEventListener("astro:after-swap", () => {
+		initBackToTop()
 		setTimeout(initConstellationGlow, 100)
 	})
 </script>

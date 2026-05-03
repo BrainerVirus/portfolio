@@ -239,6 +239,9 @@ const additionalSkills: Skill[] = [
 	gsap.registerPlugin(ScrollTrigger)
 
 	function initSkillsAnimations() {
+		// Kill existing ScrollTriggers to prevent accumulation
+		ScrollTrigger.killAll()
+
 		// Animate orbit rings appearing
 		const rings = document.querySelectorAll("#skills .orbit-ring")
 		rings.forEach((ring, i) => {

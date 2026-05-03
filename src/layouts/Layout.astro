@@ -38,7 +38,13 @@ const { currentLocale } = Astro
 		<Footer />
 		<Toaster client:load />
 		<script>
-			import { initKonamiCode, initCoffeeCupEasterEgg, initTerminalSecret } from "@/lib/easter-eggs"
+			import {
+				initKonamiCode,
+				initCoffeeCupEasterEgg,
+				initTerminalSecret,
+				cleanupEasterEggs,
+			} from "@/lib/easter-eggs"
+			import { cleanupScrollTriggers } from "@/lib/animations"
 
 			// Initialize on page load
 			initKonamiCode()
@@ -47,6 +53,9 @@ const { currentLocale } = Astro
 
 			// Re-initialize after view transitions
 			document.addEventListener("astro:after-swap", () => {
+				cleanupEasterEggs()
+				cleanupScrollTriggers()
+				// THEN re-initialize
 				initKonamiCode()
 				initCoffeeCupEasterEgg()
 				initTerminalSecret()

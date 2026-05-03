@@ -114,6 +114,9 @@ const translations = {
 	gsap.registerPlugin(ScrollTrigger)
 
 	function initContactAnimations() {
+		// Kill existing ScrollTriggers to prevent accumulation
+		ScrollTrigger.killAll()
+
 		// Section heading fade-in
 		const heading = document.querySelector("#contact .mb-20")
 		if (heading) {

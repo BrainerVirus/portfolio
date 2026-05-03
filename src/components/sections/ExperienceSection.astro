@@ -109,7 +109,21 @@ const experiences: Experience[] = exp.jobs.map((job, index) => ({
 	import { staggerFadeIn } from "@/lib/animations"
 	gsap.registerPlugin(ScrollTrigger)
 
+	// Track global listeners across re-inits
+	let expTouchOutsideHandler: ((e: TouchEvent) => void) | null = null
+	let expScrollHandler: (() => void) | null = null
+
 	function initExperienceCards() {
+		// Clean up previous global listeners
+		if (expTouchOutsideHandler) {
+			document.removeEventListener("touchstart", expTouchOutsideHandler)
+			expTouchOutsideHandler = null
+		}
+		if (expScrollHandler) {
+			window.removeEventListener("scroll", expScrollHandler)
+			expScrollHandler = null
+		}
+
 		const cards = document.querySelectorAll(".experience-card")
 		let activeCard: Element | null = null
 
@@ -137,34 +151,35 @@ const experiences: Experience[] = exp.jobs.map((job, index) => ({
 		})
 
 		// Remove active state when tapping outside cards or scrolling
-		document.addEventListener("touchstart", (e) => {
+		expTouchOutsideHandler = (e: TouchEvent) => {
 			const target = e.target as Element
 			if (activeCard && !target.closest(".experience-card")) {
 				activeCard.classList.remove("touch-active")
 				activeCard = null
 			}
-		})
+		}
+		document.addEventListener("touchstart", expTouchOutsideHandler)
 
-		// Remove active state on scroll
+		// Remove active state on scroll (debounced)
 		let scrollTimeout: ReturnType<typeof setTimeout>
-		window.addEventListener(
-			"scroll",
-			() => {
-				if (activeCard) {
-					clearTimeout(scrollTimeout)
-					scrollTimeout = setTimeout(() => {
-						if (activeCard) {
-							activeCard.classList.remove("touch-active")
-							activeCard = null
-						}
-					}, 100)
-				}
-			},
-			{ passive: true }
-		)
+		expScrollHandler = () => {
+			if (activeCard) {
+				clearTimeout(scrollTimeout)
+				scrollTimeout = setTimeout(() => {
+					if (activeCard) {
+						activeCard.classList.remove("touch-active")
+						activeCard = null
+					}
+				}, 100)
+			}
+		}
+		window.addEventListener("scroll", expScrollHandler, { passive: true })
 	}
 
 	function initExperienceAnimations() {
+		// Kill existing ScrollTriggers to prevent accumulation
+		ScrollTrigger.killAll()
+
 		const cards = document.querySelectorAll("#experience .experience-card")
 		const periods = document.querySelectorAll("#experience .font-display")
 

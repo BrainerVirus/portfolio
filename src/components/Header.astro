@@ -86,28 +86,49 @@ const t = getTranslations(lang)
 	gsap.registerPlugin(ScrollTrigger)
 
 	// Mobile menu toggle
-	const menuBtn = document.getElementById("mobile-menu-btn")
-	const mobileMenu = document.getElementById("mobile-menu")
-	const menuIcon = menuBtn?.querySelector(".material-symbols-outlined")
+	function initMobileMenu() {
+		const menuBtn = document.getElementById("mobile-menu-btn")
+		const mobileMenu = document.getElementById("mobile-menu")
+		const menuIcon = menuBtn?.querySelector(".material-symbols-outlined")
 
-	menuBtn?.addEventListener("click", () => {
-		const isOpen = mobileMenu?.classList.toggle("hidden") === false
-		if (menuIcon) {
-			menuIcon.textContent = isOpen ? "close" : "menu"
-		}
-	})
+		if (!menuBtn || !mobileMenu || !menuIcon) return
 
-	mobileMenu?.querySelectorAll("a").forEach((link) => {
-		link.addEventListener("click", () => {
-			mobileMenu?.classList.add("hidden")
-			if (menuIcon) {
+		const toggleMenu = () => {
+			const isOpen = mobileMenu.classList.contains("hidden")
+			if (isOpen) {
+				mobileMenu.classList.add("hidden")
+				menuBtn.setAttribute("aria-expanded", "false")
 				menuIcon.textContent = "menu"
+			} else {
+				mobileMenu.classList.remove("hidden")
+				menuBtn.setAttribute("aria-expanded", "true")
+				menuIcon.textContent = "close"
 			}
+		}
+
+		menuBtn.addEventListener("click", toggleMenu)
+
+		// Close menu when clicking nav links
+		const mobileLinks = mobileMenu.querySelectorAll("a")
+		mobileLinks.forEach((link) => {
+			link.addEventListener("click", () => {
+				mobileMenu.classList.add("hidden")
+				menuBtn.setAttribute("aria-expanded", "false")
+				menuIcon.textContent = "menu"
+			})
 		})
-	})
+	}
 
 	// Scroll-spy with elastic morphing underline
+	let scrollObserver: IntersectionObserver | null = null
+
 	function initNavScrollSpy() {
+		// Disconnect previous observer
+		if (scrollObserver) {
+			scrollObserver.disconnect()
+			scrollObserver = null
+		}
+
 		const navLinks = document.querySelectorAll("header nav a")
 		const sections = ["about", "experience", "skills", "contact"]
 			.map((id) => document.getElementById(id))
@@ -161,7 +182,7 @@ const t = getTranslations(lang)
 			})
 		}
 
-		const observer = new IntersectionObserver(
+		scrollObserver = new IntersectionObserver(
 			(entries) => {
 				entries.forEach((entry) => {
 					if (entry.isIntersecting) {
@@ -177,7 +198,7 @@ const t = getTranslations(lang)
 		)
 
 		sections.forEach((section) => {
-			if (section) observer.observe(section)
+			if (section) scrollObserver!.observe(section)
 		})
 
 		const hash = window.location.hash.replace("#", "")
@@ -195,6 +216,10 @@ const t = getTranslations(lang)
 		})
 	}
 
+	initMobileMenu()
 	initNavScrollSpy()
-	document.addEventListener("astro:after-swap", initNavScrollSpy)
+	document.addEventListener("astro:after-swap", () => {
+		initMobileMenu()
+		initNavScrollSpy()
+	})
 </script>

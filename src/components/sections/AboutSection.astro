@@ -121,6 +121,9 @@ const t = getTranslations(lang)
 	gsap.registerPlugin(ScrollTrigger)
 
 	function initAboutAnimations() {
+		// Kill existing ScrollTriggers to prevent accumulation
+		ScrollTrigger.killAll()
+
 		const terminalContent = document.querySelector("#terminal-content")
 		const cursor = document.querySelector("#terminal-cursor")
 
