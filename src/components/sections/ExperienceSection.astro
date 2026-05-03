@@ -106,6 +106,7 @@ const experiences: Experience[] = exp.jobs.map((job, index) => ({
 <script>
 	import gsap from "gsap"
 	import { ScrollTrigger } from "gsap/ScrollTrigger"
+	import { staggerFadeIn } from "@/lib/animations"
 	gsap.registerPlugin(ScrollTrigger)
 
 	function initExperienceCards() {
@@ -211,22 +212,7 @@ const experiences: Experience[] = exp.jobs.map((job, index) => ({
 		// Section heading fade-in
 		const heading = document.querySelector("#experience .mb-16")
 		if (heading) {
-			gsap.fromTo(
-				heading.children,
-				{ opacity: 0, y: 30 },
-				{
-					opacity: 1,
-					y: 0,
-					duration: 0.6,
-					stagger: 0.15,
-					ease: "power2.out",
-					scrollTrigger: {
-						trigger: heading,
-						start: "top 85%",
-						toggleActions: "play none none none",
-					},
-				}
-			)
+			staggerFadeIn(heading, "> *", 0.15)
 		}
 	}
 

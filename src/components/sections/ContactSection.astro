@@ -106,3 +106,64 @@ const translations = {
 	</div>
 </section>
 
+<script>
+	import gsap from "gsap"
+	import { ScrollTrigger } from "gsap/ScrollTrigger"
+	import { staggerFadeIn } from "@/lib/animations"
+
+	gsap.registerPlugin(ScrollTrigger)
+
+	function initContactAnimations() {
+		// Section heading fade-in
+		const heading = document.querySelector("#contact .mb-20")
+		if (heading) {
+			staggerFadeIn(heading, "> *", 0.15)
+		}
+
+		// Form card slide-in from left
+		const formCard = document.querySelector("#contact-form")
+		if (formCard) {
+			gsap.fromTo(
+				formCard,
+				{ opacity: 0, x: -40 },
+				{
+					opacity: 1,
+					x: 0,
+					duration: 0.8,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: "#contact-form",
+						start: "top 80%",
+						toggleActions: "play none none none",
+					},
+				}
+			)
+		}
+
+		// Visual elements stagger in
+		const visualEls = document.querySelectorAll(
+			"#contact .comm-beam, #contact .holo-glow, #contact .orbit-ring, #contact .rounded-t-\\[40px\\]"
+		)
+		gsap.fromTo(
+			visualEls,
+			{ opacity: 0, y: 20 },
+			{
+				opacity: 1,
+				y: 0,
+				duration: 0.6,
+				stagger: 0.1,
+				ease: "power2.out",
+				scrollTrigger: {
+					trigger: "#contact .grid",
+					start: "top 80%",
+					toggleActions: "play none none none",
+				},
+			}
+		)
+	}
+
+	initContactAnimations()
+	document.addEventListener("astro:after-swap", () => {
+		setTimeout(initContactAnimations, 100)
+	})
+</script>

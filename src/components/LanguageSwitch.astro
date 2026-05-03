@@ -4,50 +4,65 @@ import { getLangFromUrl, type Language } from "@/i18n/utils"
 const lang = getLangFromUrl(Astro.url)
 const otherLang: Language = lang === "en" ? "es" : "en"
 
-// Get current path and construct the other language URL
 const pathname = Astro.url.pathname
 const segments = pathname.split("/").filter(Boolean)
-
-// Remove locale prefix if present
 if (segments[0] === "en" || segments[0] === "es") {
 	segments.shift()
 }
+const targetPath = `/${otherLang}${segments.length ? "/" + segments.join("/") : "/"}`
 
-// Build new path with other language
-const newPath = `/${otherLang}${segments.length ? "/" + segments.join("/") : "/"}`
+const tooltip = lang === "en" ? "Español" : "English"
 ---
 
 <button
 	id="lang-switch"
-	class="flex cursor-pointer items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-gray-300"
-	aria-label={lang === "en" ? "Switch to Spanish" : "Cambiar a Inglés"}
+	class="group relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-white/5 transition-colors hover:bg-white/10 hover:border-white/20"
 	data-target-lang={otherLang}
-	data-target-path={newPath}
+	data-target-path={targetPath}
+	aria-label={tooltip}
 >
-	<span class="material-symbols-outlined text-sm">language</span>
-	<span class="uppercase">{otherLang}</span>
+	<span
+		id="lang-icon"
+		class="material-symbols-outlined inline-block text-gray-300 text-xl transition-colors group-hover:text-white"
+	>
+		language
+	</span>
+	<!-- Language indicator dot -->
+	<span
+		class={`absolute -right-0.5 -bottom-0.5 h-2 w-2 rounded-full border border-white/10 ${lang === "en" ? "bg-blue-400" : "bg-amber-400"}`}
+	>
+	</span>
+	<!-- Tooltip -->
+	<span class="pointer-events-none absolute -top-8 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-md bg-white/10 px-2 py-1 text-xs text-gray-300 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+		{tooltip}
+	</span>
 </button>
 
 <script>
-	function initLanguageSwitch() {
-		const buttons = document.querySelectorAll("#lang-switch")
-		buttons.forEach((btn) => {
-			btn.addEventListener("click", () => {
-				const targetLang = btn.getAttribute("data-target-lang")
-				const targetPath = btn.getAttribute("data-target-path")
+	import gsap from "gsap"
 
-				// Set cookie to persist language preference (1 year expiry)
-				document.cookie = `lang=${targetLang}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`
+	function initLangSwitch() {
+		const btn = document.querySelector("#lang-switch")
+		const icon = document.querySelector("#lang-icon")
+		if (!btn || !icon) return
 
-				// Navigate to the new language path
-				window.location.href = targetPath || "/"
+		btn.addEventListener("click", () => {
+			const targetPath = btn.getAttribute("data-target-path")
+			const targetLang = btn.getAttribute("data-target-lang")
+
+			document.cookie = `lang=${targetLang}; path=/; max-age=31536000; SameSite=Lax`
+
+			gsap.to(icon, {
+				rotation: 360,
+				duration: 0.6,
+				ease: "elastic.out(1, 0.5)",
+				onComplete: () => {
+					window.location.href = targetPath || "/"
+				},
 			})
 		})
 	}
 
-	// Initialize on page load
-	initLanguageSwitch()
-
-	// Re-initialize after Astro view transitions
-	document.addEventListener("astro:after-swap", initLanguageSwitch)
+	initLangSwitch()
+	document.addEventListener("astro:after-swap", initLangSwitch)
 </script>
