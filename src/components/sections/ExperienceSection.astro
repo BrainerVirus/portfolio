@@ -59,7 +59,7 @@ const exp = useTranslation(lang, "experience")
 							data-index={index}
 						>
 							<div class="experience-glow pointer-events-none absolute inset-0 rounded-xl" style="opacity: 0; background: radial-gradient(circle 180px at var(--gx, 50%) var(--gy, 50%), rgba(58,122,77,0.12), transparent 70%); transition: opacity 0.3s ease;"></div>
-							<div class="grid grid-cols-1 gap-6 border-l-2 border-transparent py-4 pl-6 md:grid-cols-2 md:gap-16 md:pl-8">
+							<div class="grid grid-cols-1 gap-6 border-l-2 border-transparent p-6 md:grid-cols-2 md:gap-16 md:p-8">
 								<div>
 									<h3 class="text-2xl font-medium text-[#f0e6d2]">{job.company}</h3>
 									<div class="mt-1 text-lg text-[#a89a84]">{job.title}</div>
@@ -312,10 +312,9 @@ const exp = useTranslation(lang, "experience")
 			const clone = grid.cloneNode(true) as HTMLElement
 			// Force single-column layout in modal
 			clone.classList.add("!grid-cols-1")
-			clone.classList.remove("md:grid-cols-2", "md:gap-16", "md:pl-8")
-			// Remove inner card padding (modal front already has p-8)
-			clone.classList.remove("py-4", "pl-6")
-			clone.classList.add("!py-0", "!pl-0")
+			clone.classList.remove("md:grid-cols-2", "md:gap-16")
+			clone.classList.remove("p-6", "md:p-8")
+			clone.classList.add("!p-0")
 			modalFront.innerHTML = ""
 			modalFront.appendChild(clone)
 		}
