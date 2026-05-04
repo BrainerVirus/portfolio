@@ -140,6 +140,7 @@ const exp = useTranslation(lang, "experience")
 	let ctx: gsap.Context | null = null
 	let currentSplit: SplitText | null = null
 	let tiltCleanups: (() => void)[] = []
+	let drawSVGDone = false
 
 	function initPerCardTilt(card: HTMLElement): () => void {
 		card.style.transformStyle = "preserve-3d"
@@ -218,23 +219,27 @@ const exp = useTranslation(lang, "experience")
 		}, "#experience")
 		}
 
-		// Standalone drawSVG — outside context, never flickers on re-init
-		const shapes = section.querySelectorAll<HTMLElement>(
-			".experience-shape circle, .experience-shape line"
-		)
-		gsap.set(shapes, { drawSVG: "0%" })
-		gsap.to(shapes, {
-			drawSVG: "100%",
-			duration: 1.5,
-			stagger: 0.04,
-			ease: "power2.inOut",
-			scrollTrigger: {
-				trigger: section,
-				start: "top 80%",
-				end: "bottom 30%",
-				scrub: true,
-			},
-		})
+		// Standalone drawSVG — created once, never duplicated on swap
+		if (!drawSVGDone) {
+			drawSVGDone = true
+			const shapes = section.querySelectorAll<HTMLElement>(
+				".experience-shape circle, .experience-shape line"
+			)
+			gsap.fromTo(shapes,
+				{ drawSVG: "0%" },
+				{
+					drawSVG: "100%",
+					duration: 1.5,
+					ease: "power2.inOut",
+					scrollTrigger: {
+						trigger: section,
+						start: "top 70%",
+						end: "bottom 30%",
+						scrub: true,
+					},
+				}
+			)
+		}
 
 		const entries = section.querySelectorAll<HTMLElement>(".experience-entry")
 		entries.forEach((card) => {
