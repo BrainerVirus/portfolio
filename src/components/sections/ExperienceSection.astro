@@ -191,7 +191,7 @@ const exp = useTranslation(lang, "experience")
 			})
 		}, "#experience")
 
-		tiltCleanup = initCardTilt(section, { maxTilt: 20, perspective: 1200 })
+		tiltCleanup = initCardTilt(section, { maxTilt: 25, cardSelector: ".experience-entry" })
 
 		// Click-to-flip easter egg
 		const entries = section.querySelectorAll<HTMLElement>(".experience-entry")

@@ -225,87 +225,61 @@ export function animateNavUnderline(
 }
 
 /**
- * 3D card tilt effect — cards follow cursor with rotationX/Y.
- * Uses gsap.quickSetter for 60fps mousemove performance (no micro-tweens).
- * Returns a cleanup function that removes event listeners and resets styles.
+ * 3D card tilt effect — cards follow cursor with rotation on both axes.
+ * Uses gsap.quickSetter piped to all cards, driven by gsap.ticker (60fps).
+ * Mouse position smoothed with inertia for organic feel.
  *
- * Reference: https://freefrontend.com/code/immersive-3d-tilt-card-modal-2026-02-13/
+ * Reference: https://codepen.io/ryan_labar/pen/xxRBYYM
  */
 export function initCardTilt(
 	container: Element,
 	options: {
 		maxTilt?: number
-		perspective?: number
 		cardSelector?: string
-		flareSelector?: string
+		speed?: number
 	} = {}
 ): () => void {
 	if (!container) return () => {}
 
-	const { maxTilt = 25, perspective = 1200, cardSelector = ".experience-entry" } = options
+	const { maxTilt = 30, cardSelector = ".experience-entry", speed = 0.1 } = options
 	const cards = container.querySelectorAll(cardSelector) as NodeListOf<HTMLElement>
 	if (cards.length === 0) return () => {}
 
-	// Per-card state: quickSetters for tilt + stored cleanup data
-	const state = new Map<
-		HTMLElement,
-		{ xSet: Function; ySet: Function; bounds: DOMRect }
-	>()
-
-	const onResize = () => {
-		cards.forEach((card) => {
-			const s = state.get(card)
-			if (s) s.bounds = card.getBoundingClientRect()
-		})
-	}
-
+	// Enable 3D rendering on all cards
 	cards.forEach((card) => {
 		card.style.transformStyle = "preserve-3d"
-		card.parentElement!.style.perspective = `${perspective}px`
-		state.set(card, {
-			xSet: gsap.quickSetter(card, "rotationX", "deg"),
-			ySet: gsap.quickSetter(card, "rotationY", "deg"),
-			bounds: card.getBoundingClientRect(),
-		})
 	})
 
-	window.addEventListener("resize", onResize)
+	// One quickSetter piped to all cards — more efficient than per-card setters
+	const xSet = gsap.utils.pipe(gsap.quickSetter(cards, "rotationY", "deg") as any)
+	const ySet = gsap.utils.pipe(gsap.quickSetter(cards, "rotationX", "deg") as any)
+
+	// Mouse tracking with smoothed inertia
+	const wW = window.innerWidth
+	const wH = window.innerHeight
+	const mouse = { x: wW / 2, y: wH / 2 }
+	const pos = { x: mouse.x, y: mouse.y }
 
 	const onMouseMove = (e: MouseEvent) => {
-		cards.forEach((card) => {
-			const s = state.get(card)
-			if (!s) return
-			const rect = s.bounds
-			const x = (e.clientX - rect.left) / rect.width
-			const y = (e.clientY - rect.top) / rect.height
-			s.xSet((y - 0.5) * -maxTilt)
-			s.ySet((x - 0.5) * maxTilt)
-		})
+		mouse.x = e.clientX
+		mouse.y = e.clientY
 	}
 
-	const onMouseLeave = () => {
-		cards.forEach((card) => {
-			const s = state.get(card)
-			if (!s) return
-			s.xSet(0)
-			s.ySet(0)
-		})
+	const tilt = () => {
+		const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio())
+		pos.x += (mouse.x - pos.x) * dt
+		pos.y += (mouse.y - pos.y) * dt
+		xSet((gsap.utils.normalize(0, wW, pos.x) - 0.5) * maxTilt)
+		ySet((gsap.utils.normalize(0, wH, pos.y) - 0.5) * -maxTilt)
 	}
 
-	container.addEventListener("mousemove", onMouseMove as EventListener, { passive: true })
-	container.addEventListener("mouseleave", onMouseLeave as EventListener)
+	window.addEventListener("mousemove", onMouseMove)
+	gsap.ticker.add(tilt)
 
 	return () => {
-		container.removeEventListener("mousemove", onMouseMove as EventListener)
-		container.removeEventListener("mouseleave", onMouseLeave as EventListener)
-		window.removeEventListener("resize", onResize)
-		cards.forEach((card) => {
-			const s = state.get(card)
-			if (s) {
-				s.xSet(0)
-				s.ySet(0)
-			}
-		})
-		state.clear()
+		window.removeEventListener("mousemove", onMouseMove)
+		gsap.ticker.remove(tilt)
+		// Reset cards to neutral
+		gsap.set(cards, { rotationX: 0, rotationY: 0 })
 	}
 }
