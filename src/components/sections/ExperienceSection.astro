@@ -191,56 +191,58 @@ const exp = useTranslation(lang, "experience")
 		if (currentSplit) { currentSplit.revert(); currentSplit = null }
 		tiltCleanups.forEach((c) => c())
 		tiltCleanups = []
-		if (ctx) { ctx.revert() }
 
-		const section = document.querySelector("#experience")!
+		const section = document.querySelector("#experience")
 		if (!section) return
 
-		ctx = gsap.context(() => {
-			const heading = section.querySelector<HTMLElement>(".section-heading")
-			if (heading) {
-				currentSplit = new SplitText(heading, {
-					type: "lines",
-					linesClass: "split-line overflow-hidden",
-				})
-				gsap.from(currentSplit.lines, {
-					yPercent: 100, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out",
-					scrollTrigger: { trigger: heading, start: "top 85%" },
-				})
-			}
+		// Only create fresh context on first load (not on swap — avoids SVG flicker)
+		if (!ctx) {
+			ctx = gsap.context(() => {
+				const heading = section.querySelector<HTMLElement>(".section-heading")
+				if (heading) {
+					currentSplit = new SplitText(heading, {
+						type: "lines",
+						linesClass: "split-line overflow-hidden",
+					})
+					gsap.from(currentSplit.lines, {
+						yPercent: 100, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out",
+						scrollTrigger: { trigger: heading, start: "top 85%", once: true },
+					})
+				}
 
-			const subtitle = section.querySelector<HTMLElement>(".experience-subtitle")
-			if (subtitle) {
-				gsap.from(subtitle, {
-					opacity: 0, y: 20, duration: 0.7, ease: "power3.out",
-					scrollTrigger: { trigger: subtitle, start: "top 90%" },
-				})
-			}
+				const subtitle = section.querySelector<HTMLElement>(".experience-subtitle")
+				if (subtitle) {
+					gsap.from(subtitle, {
+						opacity: 0, y: 20, duration: 0.7, ease: "power3.out",
+						scrollTrigger: { trigger: subtitle, start: "top 90%", once: true },
+					})
+				}
 
-			const cards = gsap.utils.toArray<HTMLElement>(".experience-entry")
-			cards.forEach((card, i) => {
-				gsap.from(card, {
-					y: 60, opacity: 0, duration: 0.7, delay: i * 0.1, ease: "power3.out",
-					scrollTrigger: { trigger: card, start: "top 88%" },
+				const cards = gsap.utils.toArray<HTMLElement>(".experience-entry")
+				cards.forEach((card, i) => {
+					gsap.from(card, {
+						y: 60, opacity: 0, duration: 0.7, delay: i * 0.1, ease: "power3.out",
+						scrollTrigger: { trigger: card, start: "top 88%", once: true },
+					})
 				})
-			})
 
-			const shapes = section.querySelectorAll<HTMLElement>(
-				".experience-shape circle, .experience-shape line"
-			)
-			gsap.to(shapes, {
-				drawSVG: "100%",
-				duration: 1.5,
-				stagger: 0.04,
-				ease: "power2.inOut",
-				scrollTrigger: {
-					trigger: section,
-					start: "top 80%",
-					end: "bottom 20%",
-					scrub: true,
-				},
-			})
-		}, "#experience")
+				const shapes = section.querySelectorAll<HTMLElement>(
+					".experience-shape circle, .experience-shape line"
+				)
+				gsap.to(shapes, {
+					drawSVG: "100%",
+					duration: 1.5,
+					stagger: 0.04,
+					ease: "power2.inOut",
+					scrollTrigger: {
+						trigger: section,
+						start: "top 80%",
+						end: "bottom 20%",
+						scrub: true,
+					},
+				})
+			}, "#experience")
+		}
 
 		const entries = section.querySelectorAll<HTMLElement>(".experience-entry")
 		entries.forEach((card) => {
