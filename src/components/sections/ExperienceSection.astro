@@ -53,40 +53,38 @@ const exp = useTranslation(lang, "experience")
 		<div class="experience-entries relative z-10 space-y-8">
 			{
 				exp.jobs.map((job, index) => (
-					<div class="experience-card-wrapper" style="perspective: 1200px;">
-						<div
-							class="experience-entry group relative cursor-pointer"
-							data-index={index}
-						>
-							<div class="experience-front" style="backface-visibility: hidden;">
-								<div class="grid grid-cols-1 gap-6 border-l-2 border-transparent py-4 pl-6 md:grid-cols-2 md:gap-16 md:pl-8">
-									<div>
-										<h3 class="text-2xl font-medium text-[#f0e6d2]">{job.company}</h3>
-										<div class="mt-1 text-lg text-[#a89a84]">{job.title}</div>
+					<div
+						class="experience-entry group relative cursor-pointer"
+						data-index={index}
+					>
+						<div class="experience-front" style="backface-visibility: hidden;">
+							<div class="grid grid-cols-1 gap-6 border-l-2 border-transparent py-4 pl-6 md:grid-cols-2 md:gap-16 md:pl-8">
+								<div>
+									<h3 class="text-2xl font-medium text-[#f0e6d2]">{job.company}</h3>
+									<div class="mt-1 text-lg text-[#a89a84]">{job.title}</div>
+								</div>
+								<div>
+									<div class="font-mono text-xs tracking-widest text-[#6b6055]">
+										{job.period}
 									</div>
-									<div>
-										<div class="font-mono text-xs tracking-widest text-[#6b6055]">
-											{job.period}
-										</div>
-										<p class="mt-3 text-base leading-relaxed text-[#a89a84]">
-											{job.description}
-										</p>
-										<div class="mt-4 flex flex-wrap gap-2">
-											{job.tags.map((tag) => (
-												<span class="border border-[#a89a84]/20 px-2 py-1 font-mono text-[10px] tracking-wider text-[#6b6055] uppercase">
-													{tag}
-												</span>
-											))}
-										</div>
+									<p class="mt-3 text-base leading-relaxed text-[#a89a84]">
+										{job.description}
+									</p>
+									<div class="mt-4 flex flex-wrap gap-2">
+										{job.tags.map((tag) => (
+											<span class="border border-[#a89a84]/20 px-2 py-1 font-mono text-[10px] tracking-wider text-[#6b6055] uppercase">
+												{tag}
+											</span>
+										))}
 									</div>
 								</div>
 							</div>
-							<div
-								class="experience-back absolute inset-0 flex items-center justify-center rounded-xl border border-[#3a7a4d]/30 bg-[#0a0e0a] p-8"
-								style="backface-visibility: hidden; transform: rotateY(180deg);"
-							>
-								<span class="experience-back-text text-center font-mono text-sm text-[#3a7a4d]"></span>
-							</div>
+						</div>
+						<div
+							class="experience-back absolute inset-0 flex items-center justify-center rounded-xl border border-[#3a7a4d]/30 bg-[#0a0e0a] p-8"
+							style="backface-visibility: hidden; transform: rotateY(180deg);"
+						>
+							<span class="experience-back-text text-center font-mono text-sm text-[#3a7a4d]"></span>
 						</div>
 					</div>
 				))
@@ -133,18 +131,57 @@ const exp = useTranslation(lang, "experience")
 	import { ScrollTrigger } from "gsap/ScrollTrigger"
 	import { SplitText } from "gsap/SplitText"
 	import { DrawSVGPlugin } from "gsap/DrawSVGPlugin"
-	import { initCardTilt } from "@/lib/animations"
 
 	gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin)
 
 	let ctx: gsap.Context | null = null
 	let currentSplit: SplitText | null = null
-	let tiltCleanup: (() => void) | null = null
 	let activeFlip: HTMLElement | null = null
+	let tiltCleanups: (() => void)[] = []
+
+	const easterEggs = [
+		"🐛 This bug was a feature all along.",
+		"☕ Powered by coffee and spite since 2019.",
+		"🦾 I once fixed a prod incident from my phone at a wedding.",
+		"👾 It's not a bug — it's an undocumented surprise.",
+		"😺 My cat has contributed more LoC than most juniors.",
+		"💾 Real devs test in production. (Please don't.)",
+	]
+
+	function initPerCardTilt(card: HTMLElement): () => void {
+		card.style.transformStyle = "preserve-3d"
+
+		const xSet = gsap.quickSetter(card, "rotationX", "deg")
+		const ySet = gsap.quickSetter(card, "rotationY", "deg")
+
+		const onEnter = () => {}
+		const onMove = (e: MouseEvent) => {
+			const rect = card.getBoundingClientRect()
+			const x = (e.clientX - rect.left) / rect.width - 0.5
+			const y = (e.clientY - rect.top) / rect.height - 0.5
+			ySet(x * 20)
+			xSet(y * -20)
+		}
+		const onLeave = () => {
+			ySet(0)
+			xSet(0)
+		}
+
+		card.addEventListener("mousemove", onMove)
+		card.addEventListener("mouseleave", onLeave)
+
+		return () => {
+			card.removeEventListener("mousemove", onMove)
+			card.removeEventListener("mouseleave", onLeave)
+			xSet(0)
+			ySet(0)
+		}
+	}
 
 	function initExperienceAnimations() {
 		if (currentSplit) { currentSplit.revert(); currentSplit = null }
-		if (tiltCleanup) { tiltCleanup(); tiltCleanup = null }
+		tiltCleanups.forEach((c) => c())
+		tiltCleanups = []
 		if (ctx) { ctx.revert() }
 
 		const section = document.querySelector("#experience")!
@@ -176,11 +213,14 @@ const exp = useTranslation(lang, "experience")
 				})
 			})
 
-			const shapes = section.querySelectorAll<HTMLElement>(".experience-shape circle, .experience-shape line")
+			// SVG background draw — scrubbed to scroll
+			const shapes = section.querySelectorAll<HTMLElement>(
+				".experience-shape circle, .experience-shape line"
+			)
 			gsap.to(shapes, {
 				drawSVG: "100%",
-				duration: 1,
-				stagger: 0.06,
+				duration: 1.5,
+				stagger: 0.04,
 				ease: "power2.inOut",
 				scrollTrigger: {
 					trigger: section,
@@ -191,22 +231,18 @@ const exp = useTranslation(lang, "experience")
 			})
 		}, "#experience")
 
-		tiltCleanup = initCardTilt(section, { maxTilt: 25, cardSelector: ".experience-entry" })
-
-		// Click-to-flip easter egg
+		// Per-card 3D tilt (INDEPENDENT — each card tilts on its own hover)
 		const entries = section.querySelectorAll<HTMLElement>(".experience-entry")
-		const backTexts = [
-			"🐛 This bug was a feature all along.",
-			"☕ Powered by coffee and spite since 2019.",
-			"🦾 I once fixed a prod incident from my phone at a wedding.",
-			"👾 It's not a bug — it's an undocumented surprise.",
-			"😺 My cat has contributed more LoC than most juniors.",
-			"💾 Real devs test in production. (Please don't.)",
-		]
-		entries.forEach((card: HTMLElement, i: number) => {
-			const backText = card.querySelector(".experience-back-text")
-			if (backText) backText.textContent = backTexts[i % backTexts.length]
+		entries.forEach((card) => {
+			// Tilt
+			tiltCleanups.push(initPerCardTilt(card))
 
+			// Easter egg text
+			const i = parseInt(card.dataset.index || "0", 10)
+			const backText = card.querySelector(".experience-back-text")
+			if (backText) backText.textContent = easterEggs[i % easterEggs.length]
+
+			// Click-to-flip
 			card.addEventListener("click", () => {
 				if (activeFlip === card) {
 					gsap.to(card, { rotationY: 0, duration: 0.6, ease: "power2.inOut" })
