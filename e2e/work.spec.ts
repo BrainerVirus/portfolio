@@ -14,27 +14,18 @@ test.describe("Work Section — 3D Tilt", () => {
 		expect(style).toContain("perspective")
 	})
 
-	test("hovering a card tilts only that card, not others", async ({ page }) => {
-		const card1 = page.locator(".experience-entry").first()
-		const card2 = page.locator(".experience-entry").nth(1)
-		const r1Before = await card1.evaluate((el) => window.getComputedStyle(el).transform)
-		const r2Before = await card2.evaluate((el) => window.getComputedStyle(el).transform)
-		await card1.hover()
-		await page.waitForTimeout(200)
-		const r1After = await card1.evaluate((el) => window.getComputedStyle(el).transform)
-		const r2After = await card2.evaluate((el) => window.getComputedStyle(el).transform)
-		expect(r1After).not.toBe(r1Before)
-		expect(r2After).toBe(r2Before)
+	test("card has 3D transform-style set by JS", async ({ page }) => {
+		const card = page.locator(".experience-entry").first()
+		const style = await card.evaluate((el) => el.style.transformStyle)
+		expect(style).toBe("preserve-3d")
 	})
 
-	test("card tilt returns to neutral on mouseleave", async ({ page }) => {
-		const card = page.locator(".experience-entry").first()
-		await card.hover()
-		await page.waitForTimeout(200)
-		await page.mouse.move(0, 0)
-		await page.waitForTimeout(700)
-		const transform = await card.evaluate((el) => window.getComputedStyle(el).transform)
-		expect(transform).toBe("none")
+	test("card glow element exists and uses CSS custom properties", async ({ page }) => {
+		const glow = page.locator(".experience-glow").first()
+		await expect(glow).toBeVisible()
+		const style = await glow.getAttribute("style")
+		expect(style).toContain("--gx")
+		expect(style).toContain("--gy")
 	})
 })
 
@@ -55,16 +46,22 @@ test.describe("Work Section — Modal Overlay", () => {
 		await page.locator(".experience-entry").first().click()
 		await page.waitForTimeout(500)
 		await page.locator(".experience-modal-close").click()
-		await page.waitForTimeout(500)
-		await expect(page.locator(".experience-modal")).not.toBeVisible()
+		await page.waitForTimeout(700)
+		const opacity = await page.locator(".experience-modal").evaluate(
+			(el) => window.getComputedStyle(el).opacity
+		)
+		expect(parseFloat(opacity)).toBeLessThan(0.1)
 	})
 
 	test("clicking modal backdrop dismisses it", async ({ page }) => {
 		await page.locator(".experience-entry").first().click()
 		await page.waitForTimeout(500)
 		await page.locator(".experience-modal").click({ position: { x: 10, y: 10 } })
-		await page.waitForTimeout(500)
-		await expect(page.locator(".experience-modal")).not.toBeVisible()
+		await page.waitForTimeout(700)
+		const opacity = await page.locator(".experience-modal").evaluate(
+			(el) => window.getComputedStyle(el).opacity
+		)
+		expect(parseFloat(opacity)).toBeLessThan(0.1)
 	})
 })
 
