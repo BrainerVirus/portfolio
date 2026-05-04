@@ -90,11 +90,14 @@ const exp = useTranslation(lang, "experience")
 
 <div class="experience-modal pointer-events-none fixed inset-0 z-50 flex items-center justify-center opacity-0" style="background: rgba(10,14,10,0.92); transition: opacity 0.4s ease;">
 	<div class="experience-modal-card relative cursor-default" style="width: 460px; height: 540px; perspective: 3000px; transform-style: preserve-3d;">
-		<div class="experience-modal-front absolute inset-0 rounded-2xl p-8 flex flex-col justify-center" style="background: rgba(20,26,20,0.95); border: 1px solid rgba(58,122,77,0.3); backface-visibility: hidden;">
-			<div class="experience-modal-content"></div>
-		</div>
-		<div class="experience-modal-back absolute inset-0 rounded-2xl p-10 flex items-center justify-center" style="background: #0a0e0a; border: 1px solid rgba(58,122,77,0.5); backface-visibility: hidden; transform: rotateY(180deg);">
-			<span class="text-center font-mono text-lg text-[#3a7a4d]"></span>
+		<div class="experience-modal-inner absolute inset-0" style="transform-style: preserve-3d;">
+			<div class="experience-modal-glow pointer-events-none absolute inset-0 rounded-2xl z-10" style="opacity: 0; background: radial-gradient(circle 200px at var(--mgx, 50%) var(--mgy, 50%), rgba(58,122,77,0.10), transparent 70%); transition: opacity 0.3s ease;"></div>
+			<div class="experience-modal-front absolute inset-0 rounded-2xl p-8 flex flex-col justify-center" style="background: rgba(20,26,20,0.95); border: 1px solid rgba(58,122,77,0.3); backface-visibility: hidden;">
+				<div class="experience-modal-content"></div>
+			</div>
+			<div class="experience-modal-back absolute inset-0 rounded-2xl p-10 flex items-center justify-center" style="background: #0a0e0a; border: 1px solid rgba(58,122,77,0.5); backface-visibility: hidden; transform: rotateY(180deg);">
+				<span class="text-center font-mono text-lg text-[#3a7a4d]"></span>
+			</div>
 		</div>
 	</div>
 	<button class="experience-modal-close absolute top-6 right-6 text-[#a89a84] text-3xl hover:text-[#f0e6d2] transition-colors cursor-pointer">&times;</button>
@@ -123,6 +126,10 @@ const exp = useTranslation(lang, "experience")
 	}
 
 	.experience-subtitle { opacity: 0 }
+
+	.experience-modal-content .grid {
+		border-left-color: transparent !important;
+	}
 
 	.experience-shape circle,
 	.experience-shape line {
@@ -255,6 +262,7 @@ const exp = useTranslation(lang, "experience")
 
 	const modal = document.querySelector(".experience-modal") as HTMLElement
 	const modalCard = modal.querySelector(".experience-modal-card") as HTMLElement
+	const modalInner = modal.querySelector(".experience-modal-inner") as HTMLElement
 	const modalFront = modal.querySelector(".experience-modal-content") as HTMLElement
 	const modalBack = modal.querySelector(".experience-modal-back span") as HTMLElement
 	const modalClose = modal.querySelector(".experience-modal-close") as HTMLElement
@@ -262,17 +270,35 @@ const exp = useTranslation(lang, "experience")
 	let modalFlipped = false
 
 	function initModalTilt(): () => void {
-		const xTo = gsap.quickTo(modalCard, "rotationX", { duration: 0.5, ease: "power2.out" })
-		const yTo = gsap.quickTo(modalCard, "rotationY", { duration: 0.5, ease: "power2.out" })
+		// Tilt the INNER wrapper (keeps rotationY free for flip on outer card)
+		const xTo = gsap.quickTo(modalInner, "rotationX", { duration: 0.5, ease: "power2.out" })
+		const yTo = gsap.quickTo(modalInner, "rotationY", { duration: 0.5, ease: "power2.out" })
+		const glow = modal.querySelector<HTMLElement>(".experience-modal-glow")
+
 		const onMove = (e: MouseEvent) => {
-			const rx = (e.clientX / window.innerWidth - 0.5) * 2
-			const ry = (e.clientY / window.innerHeight - 0.5) * 2
+			const rect = modalCard.getBoundingClientRect()
+			const rx = (e.clientX - rect.left) / rect.width - 0.5
+			const ry = (e.clientY - rect.top) / rect.height - 0.5
 			yTo(rx * 15)
 			xTo(ry * -15)
+			if (glow) {
+				glow.style.setProperty("--mgx", `${e.clientX - rect.left}px`)
+				glow.style.setProperty("--mgy", `${e.clientY - rect.top}px`)
+				glow.style.opacity = "1"
+			}
 		}
-		window.addEventListener("mousemove", onMove)
+		const onLeave = () => {
+			xTo(0)
+			yTo(0)
+			if (glow) glow.style.opacity = "0"
+		}
+
+		modalCard.addEventListener("mousemove", onMove)
+		modalCard.addEventListener("mouseleave", onLeave)
+
 		return () => {
-			window.removeEventListener("mousemove", onMove)
+			modalCard.removeEventListener("mousemove", onMove)
+			modalCard.removeEventListener("mouseleave", onLeave)
 			xTo(0)
 			yTo(0)
 		}
@@ -281,12 +307,24 @@ const exp = useTranslation(lang, "experience")
 
 	function openModal(card: HTMLElement) {
 		const i = parseInt(card.dataset.index || "0", 10)
-		modalFront.innerHTML = card.querySelector(".grid")?.outerHTML || ""
+		const grid = card.querySelector(".grid")
+		if (grid) {
+			const clone = grid.cloneNode(true) as HTMLElement
+			// Force single-column layout in modal
+			clone.classList.add("!grid-cols-1")
+			clone.classList.remove("md:grid-cols-2", "md:gap-16", "md:pl-8")
+			// Remove inner card padding (modal front already has p-8)
+			clone.classList.remove("py-4", "pl-6")
+			clone.classList.add("!py-0", "!pl-0")
+			modalFront.innerHTML = ""
+			modalFront.appendChild(clone)
+		}
 		modalBack.textContent = easterEggs[i % easterEggs.length]
 		modal.style.pointerEvents = "auto"
 		modal.style.opacity = "1"
 		modalFlipped = false
 		gsap.set(modalCard, { rotationY: 0 })
+		gsap.set(modalInner, { rotationX: 0, rotationY: 0 })
 		modalTiltCleanup = initModalTilt()
 	}
 
