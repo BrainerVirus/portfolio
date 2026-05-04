@@ -18,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Work Section 3D tilt** — rewritten `initCardTilt` using `gsap.quickSetter` (60fps mousemove tracking) with `preserve-3d` and per-card bounds caching.
+- **Work Section click-to-flip easter egg** — cards flip on click to reveal hidden messages. Only one card flipped at a time. Click again to unflip.
+- **Work Section SVG background draw** — both left and right decorative SVGs now animate with `drawSVG` scrubbed to scroll position.
 - **Unit tests** — `src/lib/animations.test.ts`: 18 tests for all animation utility functions.
 
 ### Removed

@@ -226,55 +226,69 @@ export function animateNavUnderline(
 
 /**
  * 3D card tilt effect — cards follow cursor with rotationX/Y.
- * Returns a cleanup function that removes event listeners.
+ * Uses gsap.quickSetter for 60fps mousemove performance (no micro-tweens).
+ * Returns a cleanup function that removes event listeners and resets styles.
+ *
+ * Reference: https://freefrontend.com/code/immersive-3d-tilt-card-modal-2026-02-13/
  */
 export function initCardTilt(
 	container: Element,
-	options: { maxTilt?: number; perspective?: number; cardSelector?: string } = {}
+	options: {
+		maxTilt?: number
+		perspective?: number
+		cardSelector?: string
+		flareSelector?: string
+	} = {}
 ): () => void {
 	if (!container) return () => {}
 
-	const { maxTilt = 15, perspective = 800, cardSelector = ".experience-entry" } = options
+	const { maxTilt = 25, perspective = 1200, cardSelector = ".experience-entry" } = options
 	const cards = container.querySelectorAll(cardSelector) as NodeListOf<HTMLElement>
 	if (cards.length === 0) return () => {}
 
-	const quickTilts = new Map<HTMLElement, { x: (v: number) => void; y: (v: number) => void }>()
+	// Per-card state: quickSetters for tilt + stored cleanup data
+	const state = new Map<
+		HTMLElement,
+		{ xSet: Function; ySet: Function; bounds: DOMRect }
+	>()
+
+	const onResize = () => {
+		cards.forEach((card) => {
+			const s = state.get(card)
+			if (s) s.bounds = card.getBoundingClientRect()
+		})
+	}
 
 	cards.forEach((card) => {
 		card.style.transformStyle = "preserve-3d"
-		card.style.perspective = `${perspective}px`
-		quickTilts.set(card, {
-			x: gsap.quickTo(card, "rotationX", { duration: 0.5, ease: "power2.out" }),
-			y: gsap.quickTo(card, "rotationY", { duration: 0.5, ease: "power2.out" }),
+		card.parentElement!.style.perspective = `${perspective}px`
+		state.set(card, {
+			xSet: gsap.quickSetter(card, "rotationX", "deg"),
+			ySet: gsap.quickSetter(card, "rotationY", "deg"),
+			bounds: card.getBoundingClientRect(),
 		})
 	})
 
-	const onMouseMove = (e: MouseEvent) => {
-		const rect = container.getBoundingClientRect()
-		const x = e.clientX - rect.left
-		const y = e.clientY - rect.top
+	window.addEventListener("resize", onResize)
 
+	const onMouseMove = (e: MouseEvent) => {
 		cards.forEach((card) => {
-			const cardRect = card.getBoundingClientRect()
-			const cardCenterX = cardRect.left + cardRect.width / 2 - rect.left
-			const cardCenterY = cardRect.top + cardRect.height / 2 - rect.top
-			const offsetX = (x - cardCenterX) / (rect.width / 2)
-			const offsetY = (y - cardCenterY) / (rect.height / 2)
-			const tilt = quickTilts.get(card)
-			if (tilt) {
-				tilt.y(maxTilt * offsetX)
-				tilt.x(-maxTilt * offsetY)
-			}
+			const s = state.get(card)
+			if (!s) return
+			const rect = s.bounds
+			const x = (e.clientX - rect.left) / rect.width
+			const y = (e.clientY - rect.top) / rect.height
+			s.xSet((y - 0.5) * -maxTilt)
+			s.ySet((x - 0.5) * maxTilt)
 		})
 	}
 
 	const onMouseLeave = () => {
 		cards.forEach((card) => {
-			const tilt = quickTilts.get(card)
-			if (tilt) {
-				tilt.y(0)
-				tilt.x(0)
-			}
+			const s = state.get(card)
+			if (!s) return
+			s.xSet(0)
+			s.ySet(0)
 		})
 	}
 
@@ -284,6 +298,14 @@ export function initCardTilt(
 	return () => {
 		container.removeEventListener("mousemove", onMouseMove as EventListener)
 		container.removeEventListener("mouseleave", onMouseLeave as EventListener)
-		quickTilts.clear()
+		window.removeEventListener("resize", onResize)
+		cards.forEach((card) => {
+			const s = state.get(card)
+			if (s) {
+				s.xSet(0)
+				s.ySet(0)
+			}
+		})
+		state.clear()
 	}
 }

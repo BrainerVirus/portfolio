@@ -10,46 +10,36 @@ const exp = useTranslation(lang, "experience")
 	id="experience"
 >
 	<div class="w-full py-24">
-		{/* Background geometric shapes */}
 		<div class="experience-bg pointer-events-none absolute inset-0 overflow-hidden">
 			<svg
-				class="experience-shape absolute -left-32 top-20 h-[500px] w-[500px] opacity-[0.04]"
+				class="experience-shape experience-shape--left absolute -left-32 top-20 h-[500px] w-[500px] opacity-[0.04]"
 				viewBox="0 0 500 500"
 				fill="none"
 			>
 				<circle cx="250" cy="250" r="248" stroke="#f0e6d2" stroke-width="1"></circle>
+				<circle cx="250" cy="250" r="180" stroke="#f0e6d2" stroke-width="0.4" stroke-dasharray="6 4"></circle>
 			</svg>
 			<svg
-				class="experience-shape absolute -right-40 top-[40%] h-[600px] w-[600px] opacity-[0.03]"
+				class="experience-shape experience-shape--right absolute -right-40 top-[40%] h-[600px] w-[600px] opacity-[0.03]"
 				viewBox="0 0 600 600"
 				fill="none"
 			>
 				<circle cx="300" cy="300" r="298" stroke="#f0e6d2" stroke-width="1"></circle>
 				<circle cx="300" cy="300" r="200" stroke="#f0e6d2" stroke-width="0.5"></circle>
+				<circle cx="300" cy="300" r="120" stroke="#f0e6d2" stroke-width="0.3" stroke-dasharray="8 8"></circle>
 			</svg>
 			<svg
-				class="experience-shape absolute -left-20 bottom-32 h-[400px] w-[400px] opacity-[0.03]"
+				class="experience-shape experience-shape--bottom absolute -left-20 bottom-32 h-[400px] w-[400px] opacity-[0.03]"
 				viewBox="0 0 400 400"
 				fill="none"
 			>
-				<line
-					x1="0"
-					y1="200"
-					x2="400"
-					y2="200"
-					stroke="#f0e6d2"
-					stroke-width="0.5"></line>
-				<line
-					x1="200"
-					y1="0"
-					x2="200"
-					y2="400"
-					stroke="#f0e6d2"
-					stroke-width="0.5"></line>
+				<line x1="0" y1="200" x2="400" y2="200" stroke="#f0e6d2" stroke-width="0.5"></line>
+				<line x1="200" y1="0" x2="200" y2="400" stroke="#f0e6d2" stroke-width="0.5"></line>
+				<circle cx="200" cy="200" r="180" stroke="#f0e6d2" stroke-width="0.3"></circle>
 			</svg>
 		</div>
 
-		<div class="relative z-10 mb-20">
+		<div class="relative z-10 mb-16">
 			<h2
 				class="section-heading text-4xl font-medium tracking-tight text-[#f0e6d2] md:text-5xl"
 			>
@@ -60,30 +50,42 @@ const exp = useTranslation(lang, "experience")
 			</p>
 		</div>
 
-		<div class="experience-entries relative z-10 space-y-12">
+		<div class="experience-entries relative z-10 space-y-8">
 			{
 				exp.jobs.map((job, index) => (
-					<div
-						class="experience-entry group grid grid-cols-1 gap-6 border-l-2 border-transparent py-4 pl-6 md:grid-cols-2 md:gap-16 md:pl-8"
-						data-index={index}
-					>
-						<div>
-							<h3 class="text-2xl font-medium text-[#f0e6d2]">{job.company}</h3>
-							<div class="mt-1 text-lg text-[#a89a84]">{job.title}</div>
-						</div>
-						<div>
-							<div class="font-mono text-xs tracking-widest text-[#6b6055]">
-								{job.period}
+					<div class="experience-card-wrapper" style="perspective: 1200px;">
+						<div
+							class="experience-entry group relative cursor-pointer"
+							data-index={index}
+						>
+							<div class="experience-front" style="backface-visibility: hidden;">
+								<div class="grid grid-cols-1 gap-6 border-l-2 border-transparent py-4 pl-6 md:grid-cols-2 md:gap-16 md:pl-8">
+									<div>
+										<h3 class="text-2xl font-medium text-[#f0e6d2]">{job.company}</h3>
+										<div class="mt-1 text-lg text-[#a89a84]">{job.title}</div>
+									</div>
+									<div>
+										<div class="font-mono text-xs tracking-widest text-[#6b6055]">
+											{job.period}
+										</div>
+										<p class="mt-3 text-base leading-relaxed text-[#a89a84]">
+											{job.description}
+										</p>
+										<div class="mt-4 flex flex-wrap gap-2">
+											{job.tags.map((tag) => (
+												<span class="border border-[#a89a84]/20 px-2 py-1 font-mono text-[10px] tracking-wider text-[#6b6055] uppercase">
+													{tag}
+												</span>
+											))}
+										</div>
+									</div>
+								</div>
 							</div>
-							<p class="mt-3 text-base leading-relaxed text-[#a89a84]">
-								{job.description}
-							</p>
-							<div class="mt-4 flex flex-wrap gap-2">
-								{job.tags.map((tag) => (
-									<span class="border border-[#a89a84]/20 px-2 py-1 font-mono text-[10px] tracking-wider text-[#6b6055] uppercase">
-										{tag}
-									</span>
-								))}
+							<div
+								class="experience-back absolute inset-0 flex items-center justify-center rounded-xl border border-[#3a7a4d]/30 bg-[#0a0e0a] p-8"
+								style="backface-visibility: hidden; transform: rotateY(180deg);"
+							>
+								<span class="experience-back-text text-center font-mono text-sm text-[#3a7a4d]"></span>
 							</div>
 						</div>
 					</div>
@@ -96,111 +98,133 @@ const exp = useTranslation(lang, "experience")
 <style>
 	.experience-entry {
 		will-change: transform;
-		padding: 1.5rem;
+		padding: 0;
 		border-radius: 0.75rem;
-		background: rgba(20, 26, 20, 0.3);
+		background: rgba(20, 26, 20, 0.4);
+		backdrop-filter: blur(8px);
+		border: 1px solid rgba(240, 230, 210, 0.06);
+		transition: box-shadow 0.3s ease;
+		transform-style: preserve-3d;
+	}
+
+	.experience-entry:hover {
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+	}
+
+	.experience-entry.is-flipped {
+		box-shadow: 0 10px 60px rgba(58, 122, 77, 0.25);
+	}
+
+	.experience-back {
+		backface-visibility: hidden;
 	}
 
 	.experience-subtitle { opacity: 0 }
+
+	.experience-shape circle,
+	.experience-shape line {
+		stroke-dasharray: 1;
+		stroke-dashoffset: 1;
+	}
 </style>
 
 <script>
 	import gsap from "gsap"
 	import { ScrollTrigger } from "gsap/ScrollTrigger"
 	import { SplitText } from "gsap/SplitText"
+	import { DrawSVGPlugin } from "gsap/DrawSVGPlugin"
 	import { initCardTilt } from "@/lib/animations"
 
-	gsap.registerPlugin(ScrollTrigger, SplitText)
+	gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin)
 
 	let ctx: gsap.Context | null = null
 	let currentSplit: SplitText | null = null
 	let tiltCleanup: (() => void) | null = null
+	let activeFlip: HTMLElement | null = null
 
 	function initExperienceAnimations() {
-		if (currentSplit) {
-			currentSplit.revert()
-			currentSplit = null
-		}
-		if (tiltCleanup) {
-			tiltCleanup()
-			tiltCleanup = null
-		}
-		if (ctx) {
-			ctx.revert()
-		}
+		if (currentSplit) { currentSplit.revert(); currentSplit = null }
+		if (tiltCleanup) { tiltCleanup(); tiltCleanup = null }
+		if (ctx) { ctx.revert() }
+
+		const section = document.querySelector("#experience")!
+		if (!section) return
 
 		ctx = gsap.context(() => {
-			const heading = document.querySelector("#experience .section-heading")
+			const heading = section.querySelector<HTMLElement>(".section-heading")
 			if (heading) {
-				currentSplit = new SplitText(heading, {
-					type: "lines",
-					linesClass: "split-line overflow-hidden",
-				})
+				currentSplit = new SplitText(heading, { type: "lines", linesClass: "split-line overflow-hidden" })
 				gsap.from(currentSplit.lines, {
-					yPercent: 100,
-					opacity: 0,
-					duration: 0.8,
-					stagger: 0.1,
-					ease: "power3.out",
-					scrollTrigger: {
-						trigger: heading,
-						start: "top 85%",
-					},
+					yPercent: 100, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out",
+					scrollTrigger: { trigger: heading, start: "top 85%" },
 				})
 			}
 
-			const subtitle = document.querySelector("#experience .experience-subtitle")
+			const subtitle = section.querySelector<HTMLElement>(".experience-subtitle")
 			if (subtitle) {
 				gsap.from(subtitle, {
-					opacity: 0,
-					y: 20,
-					duration: 0.7,
-					delay: 0.2,
-					ease: "power3.out",
-					scrollTrigger: {
-						trigger: heading || subtitle,
-						start: "top 85%",
-					},
+					opacity: 0, y: 20, duration: 0.7, ease: "power3.out",
+					scrollTrigger: { trigger: subtitle, start: "top 90%" },
 				})
 			}
 
 			const cards = gsap.utils.toArray<HTMLElement>(".experience-entry")
 			cards.forEach((card, i) => {
 				gsap.from(card, {
-					y: 60,
-					opacity: 0,
-					duration: 0.7,
-					delay: i * 0.1,
-					ease: "power3.out",
-					scrollTrigger: {
-						trigger: card,
-						start: "top 88%",
-					},
+					y: 60, opacity: 0, duration: 0.7, delay: i * 0.1, ease: "power3.out",
+					scrollTrigger: { trigger: card, start: "top 88%" },
 				})
 			})
 
-			const bg = document.querySelector(".experience-bg")
-			if (bg) {
-				gsap.from(bg, {
-					opacity: 0,
-					duration: 1,
-					scrollTrigger: {
-						trigger: "#experience",
-						start: "top 80%",
-					},
-				})
-			}
+			const shapes = section.querySelectorAll<HTMLElement>(".experience-shape circle, .experience-shape line")
+			gsap.to(shapes, {
+				drawSVG: "100%",
+				duration: 1,
+				stagger: 0.06,
+				ease: "power2.inOut",
+				scrollTrigger: {
+					trigger: section,
+					start: "top 80%",
+					end: "bottom 20%",
+					scrub: true,
+				},
+			})
 		}, "#experience")
 
-		// 3D tilt effect
-		const section = document.querySelector("#experience")
-		if (section) {
-			tiltCleanup = initCardTilt(section, { maxTilt: 12, perspective: 1000 })
-		}
+		tiltCleanup = initCardTilt(section, { maxTilt: 20, perspective: 1200 })
+
+		// Click-to-flip easter egg
+		const entries = section.querySelectorAll<HTMLElement>(".experience-entry")
+		const backTexts = [
+			"🐛 This bug was a feature all along.",
+			"☕ Powered by coffee and spite since 2019.",
+			"🦾 I once fixed a prod incident from my phone at a wedding.",
+			"👾 It's not a bug — it's an undocumented surprise.",
+			"😺 My cat has contributed more LoC than most juniors.",
+			"💾 Real devs test in production. (Please don't.)",
+		]
+		entries.forEach((card: HTMLElement, i: number) => {
+			const backText = card.querySelector(".experience-back-text")
+			if (backText) backText.textContent = backTexts[i % backTexts.length]
+
+			card.addEventListener("click", () => {
+				if (activeFlip === card) {
+					gsap.to(card, { rotationY: 0, duration: 0.6, ease: "power2.inOut" })
+					card.classList.remove("is-flipped")
+					activeFlip = null
+				} else {
+					if (activeFlip) {
+						gsap.to(activeFlip, { rotationY: 0, duration: 0.4, ease: "power2.in" })
+						activeFlip.classList.remove("is-flipped")
+					}
+					gsap.to(card, { rotationY: 180, duration: 0.6, ease: "power2.inOut" })
+					card.classList.add("is-flipped")
+					activeFlip = card
+				}
+			})
+		})
 	}
 
 	initExperienceAnimations()
-	document.addEventListener("astro:after-swap", () => {
-		initExperienceAnimations()
-	})
+	document.addEventListener("astro:after-swap", () => { initExperienceAnimations() })
 </script>
