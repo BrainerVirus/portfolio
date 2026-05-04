@@ -12,7 +12,7 @@ const exp = useTranslation(lang, "experience")
 	<div class="w-full py-24">
 		<div class="experience-bg pointer-events-none absolute inset-0 overflow-hidden">
 			<svg
-				class="experience-shape experience-shape--left absolute -left-32 top-20 h-[500px] w-[500px] opacity-[0.04]"
+				class="experience-shape absolute -left-32 top-20 h-[500px] w-[500px] opacity-[0.04]"
 				viewBox="0 0 500 500"
 				fill="none"
 			>
@@ -20,7 +20,7 @@ const exp = useTranslation(lang, "experience")
 				<circle cx="250" cy="250" r="180" stroke="#f0e6d2" stroke-width="0.4" stroke-dasharray="6 4"></circle>
 			</svg>
 			<svg
-				class="experience-shape experience-shape--right absolute -right-40 top-[40%] h-[600px] w-[600px] opacity-[0.03]"
+				class="experience-shape absolute -right-40 top-[40%] h-[600px] w-[600px] opacity-[0.03]"
 				viewBox="0 0 600 600"
 				fill="none"
 			>
@@ -29,7 +29,7 @@ const exp = useTranslation(lang, "experience")
 				<circle cx="300" cy="300" r="120" stroke="#f0e6d2" stroke-width="0.3" stroke-dasharray="8 8"></circle>
 			</svg>
 			<svg
-				class="experience-shape experience-shape--bottom absolute -left-20 bottom-32 h-[400px] w-[400px] opacity-[0.03]"
+				class="experience-shape absolute -left-20 bottom-32 h-[400px] w-[400px] opacity-[0.03]"
 				viewBox="0 0 400 400"
 				fill="none"
 			>
@@ -53,11 +53,12 @@ const exp = useTranslation(lang, "experience")
 		<div class="experience-entries relative z-10 space-y-8">
 			{
 				exp.jobs.map((job, index) => (
-					<div
-						class="experience-entry group relative cursor-pointer"
-						data-index={index}
-					>
-						<div class="experience-front" style="backface-visibility: hidden;">
+					<div class="experience-card-wrapper" style="perspective: 1200px; overflow: visible;">
+						<div
+							class="experience-entry group relative cursor-pointer"
+							data-index={index}
+						>
+							<div class="experience-glow pointer-events-none absolute inset-0 rounded-xl" style="opacity: 0; background: radial-gradient(circle 180px at var(--gx, 50%) var(--gy, 50%), rgba(58,122,77,0.12), transparent 70%); transition: opacity 0.3s ease;"></div>
 							<div class="grid grid-cols-1 gap-6 border-l-2 border-transparent py-4 pl-6 md:grid-cols-2 md:gap-16 md:pl-8">
 								<div>
 									<h3 class="text-2xl font-medium text-[#f0e6d2]">{job.company}</h3>
@@ -80,12 +81,6 @@ const exp = useTranslation(lang, "experience")
 								</div>
 							</div>
 						</div>
-						<div
-							class="experience-back absolute inset-0 flex items-center justify-center rounded-xl border border-[#3a7a4d]/30 bg-[#0a0e0a] p-8"
-							style="backface-visibility: hidden; transform: rotateY(180deg);"
-						>
-							<span class="experience-back-text text-center font-mono text-sm text-[#3a7a4d]"></span>
-						</div>
 					</div>
 				))
 			}
@@ -94,7 +89,13 @@ const exp = useTranslation(lang, "experience")
 </section>
 
 <style>
+	.experience-card-wrapper {
+		perspective: 1200px;
+		overflow: visible;
+	}
+
 	.experience-entry {
+		transform-style: preserve-3d;
 		will-change: transform;
 		padding: 0;
 		border-radius: 0.75rem;
@@ -102,19 +103,10 @@ const exp = useTranslation(lang, "experience")
 		backdrop-filter: blur(8px);
 		border: 1px solid rgba(240, 230, 210, 0.06);
 		transition: box-shadow 0.3s ease;
-		transform-style: preserve-3d;
 	}
 
 	.experience-entry:hover {
 		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-	}
-
-	.experience-entry.is-flipped {
-		box-shadow: 0 10px 60px rgba(58, 122, 77, 0.25);
-	}
-
-	.experience-back {
-		backface-visibility: hidden;
 	}
 
 	.experience-subtitle { opacity: 0 }
@@ -136,35 +128,31 @@ const exp = useTranslation(lang, "experience")
 
 	let ctx: gsap.Context | null = null
 	let currentSplit: SplitText | null = null
-	let activeFlip: HTMLElement | null = null
 	let tiltCleanups: (() => void)[] = []
-
-	const easterEggs = [
-		"🐛 This bug was a feature all along.",
-		"☕ Powered by coffee and spite since 2019.",
-		"🦾 I once fixed a prod incident from my phone at a wedding.",
-		"👾 It's not a bug — it's an undocumented surprise.",
-		"😺 My cat has contributed more LoC than most juniors.",
-		"💾 Real devs test in production. (Please don't.)",
-	]
 
 	function initPerCardTilt(card: HTMLElement): () => void {
 		card.style.transformStyle = "preserve-3d"
 
-		const xSet = gsap.quickSetter(card, "rotationX", "deg")
-		const ySet = gsap.quickSetter(card, "rotationY", "deg")
+		const xTo = gsap.quickTo(card, "rotationX", { duration: 0.6, ease: "power2.out" })
+		const yTo = gsap.quickTo(card, "rotationY", { duration: 0.6, ease: "power2.out" })
+		const glow = card.querySelector<HTMLElement>(".experience-glow")
 
-		const onEnter = () => {}
 		const onMove = (e: MouseEvent) => {
 			const rect = card.getBoundingClientRect()
-			const x = (e.clientX - rect.left) / rect.width - 0.5
-			const y = (e.clientY - rect.top) / rect.height - 0.5
-			ySet(x * 20)
-			xSet(y * -20)
+			const rx = (e.clientX - rect.left) / rect.width - 0.5
+			const ry = (e.clientY - rect.top) / rect.height - 0.5
+			yTo(rx * 20)
+			xTo(ry * -20)
+			if (glow) {
+				glow.style.setProperty("--gx", `${e.clientX - rect.left}px`)
+				glow.style.setProperty("--gy", `${e.clientY - rect.top}px`)
+				glow.style.opacity = "1"
+			}
 		}
 		const onLeave = () => {
-			ySet(0)
-			xSet(0)
+			xTo(0)
+			yTo(0)
+			if (glow) glow.style.opacity = "0"
 		}
 
 		card.addEventListener("mousemove", onMove)
@@ -173,8 +161,8 @@ const exp = useTranslation(lang, "experience")
 		return () => {
 			card.removeEventListener("mousemove", onMove)
 			card.removeEventListener("mouseleave", onLeave)
-			xSet(0)
-			ySet(0)
+			xTo(0)
+			yTo(0)
 		}
 	}
 
@@ -190,7 +178,10 @@ const exp = useTranslation(lang, "experience")
 		ctx = gsap.context(() => {
 			const heading = section.querySelector<HTMLElement>(".section-heading")
 			if (heading) {
-				currentSplit = new SplitText(heading, { type: "lines", linesClass: "split-line overflow-hidden" })
+				currentSplit = new SplitText(heading, {
+					type: "lines",
+					linesClass: "split-line overflow-hidden",
+				})
 				gsap.from(currentSplit.lines, {
 					yPercent: 100, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power3.out",
 					scrollTrigger: { trigger: heading, start: "top 85%" },
@@ -213,7 +204,6 @@ const exp = useTranslation(lang, "experience")
 				})
 			})
 
-			// SVG background draw — scrubbed to scroll
 			const shapes = section.querySelectorAll<HTMLElement>(
 				".experience-shape circle, .experience-shape line"
 			)
@@ -231,33 +221,9 @@ const exp = useTranslation(lang, "experience")
 			})
 		}, "#experience")
 
-		// Per-card 3D tilt (INDEPENDENT — each card tilts on its own hover)
 		const entries = section.querySelectorAll<HTMLElement>(".experience-entry")
 		entries.forEach((card) => {
-			// Tilt
 			tiltCleanups.push(initPerCardTilt(card))
-
-			// Easter egg text
-			const i = parseInt(card.dataset.index || "0", 10)
-			const backText = card.querySelector(".experience-back-text")
-			if (backText) backText.textContent = easterEggs[i % easterEggs.length]
-
-			// Click-to-flip
-			card.addEventListener("click", () => {
-				if (activeFlip === card) {
-					gsap.to(card, { rotationY: 0, duration: 0.6, ease: "power2.inOut" })
-					card.classList.remove("is-flipped")
-					activeFlip = null
-				} else {
-					if (activeFlip) {
-						gsap.to(activeFlip, { rotationY: 0, duration: 0.4, ease: "power2.in" })
-						activeFlip.classList.remove("is-flipped")
-					}
-					gsap.to(card, { rotationY: 180, duration: 0.6, ease: "power2.inOut" })
-					card.classList.add("is-flipped")
-					activeFlip = card
-				}
-			})
 		})
 	}
 

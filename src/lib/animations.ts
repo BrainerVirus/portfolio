@@ -220,66 +220,6 @@ export function animateNavUnderline(
 		width,
 		duration,
 		ease: editorialEase,
-		overwrite: "auto",
+	overwrite: "auto",
 	})
-}
-
-/**
- * 3D card tilt effect — cards follow cursor with rotation on both axes.
- * Uses gsap.quickSetter piped to all cards, driven by gsap.ticker (60fps).
- * Mouse position smoothed with inertia for organic feel.
- *
- * Reference: https://codepen.io/ryan_labar/pen/xxRBYYM
- */
-export function initCardTilt(
-	container: Element,
-	options: {
-		maxTilt?: number
-		cardSelector?: string
-		speed?: number
-	} = {}
-): () => void {
-	if (!container) return () => {}
-
-	const { maxTilt = 30, cardSelector = ".experience-entry", speed = 0.1 } = options
-	const cards = container.querySelectorAll(cardSelector) as NodeListOf<HTMLElement>
-	if (cards.length === 0) return () => {}
-
-	// Enable 3D rendering on all cards
-	cards.forEach((card) => {
-		card.style.transformStyle = "preserve-3d"
-	})
-
-	// One quickSetter piped to all cards — more efficient than per-card setters
-	const xSet = gsap.utils.pipe(gsap.quickSetter(cards, "rotationY", "deg") as any)
-	const ySet = gsap.utils.pipe(gsap.quickSetter(cards, "rotationX", "deg") as any)
-
-	// Mouse tracking with smoothed inertia
-	const wW = window.innerWidth
-	const wH = window.innerHeight
-	const mouse = { x: wW / 2, y: wH / 2 }
-	const pos = { x: mouse.x, y: mouse.y }
-
-	const onMouseMove = (e: MouseEvent) => {
-		mouse.x = e.clientX
-		mouse.y = e.clientY
-	}
-
-	const tilt = () => {
-		const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio())
-		pos.x += (mouse.x - pos.x) * dt
-		pos.y += (mouse.y - pos.y) * dt
-		xSet((gsap.utils.normalize(0, wW, pos.x) - 0.5) * maxTilt)
-		ySet((gsap.utils.normalize(0, wH, pos.y) - 0.5) * -maxTilt)
-	}
-
-	window.addEventListener("mousemove", onMouseMove)
-	gsap.ticker.add(tilt)
-
-	return () => {
-		window.removeEventListener("mousemove", onMouseMove)
-		gsap.ticker.remove(tilt)
-		// Reset cards to neutral
-		gsap.set(cards, { rotationX: 0, rotationY: 0 })
-	}
 }
