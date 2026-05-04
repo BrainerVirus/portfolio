@@ -14,7 +14,7 @@ const targetPath = `/${otherLang}${segments.length ? "/" + segments.join("/") : 
 
 <button
 	id="lang-switch"
-	class="font-mono relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-white/5 text-xs font-bold text-gray-300 transition-all hover:bg-white/10 hover:border-white/20 hover:text-white"
+	class="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-[#f0e6d2]/10 bg-[#f0e6d2]/5 font-mono text-xs font-bold text-[#a89a84] transition-all hover:border-[#3a7a4d]/40 hover:bg-[#3a7a4d]/10 hover:text-[#f0e6d2]"
 	data-target-lang={otherLang}
 	data-target-path={targetPath}
 	aria-label={lang === "en" ? "Switch to Spanish" : "Cambiar a Inglés"}
@@ -37,8 +37,7 @@ const targetPath = `/${otherLang}${segments.length ? "/" + segments.join("/") : 
 
 			document.cookie = `lang=${targetLang}; path=/; max-age=31536000; SameSite=Lax`
 
-			const currentText = textEl.textContent || ""
-			const targetText = (targetLang || "en").toUpperCase()
+		const targetText = (targetLang || "en").toUpperCase()
 			const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*"
 			let iterations = 0
 			const maxIterations = 8
@@ -49,7 +48,7 @@ const targetPath = `/${otherLang}${segments.length ? "/" + segments.join("/") : 
 					if (iterations < maxIterations) {
 						const scrambled = targetText
 							.split("")
-							.map((char, i) => {
+							.map((_char, i) => {
 								if (i <= iterations) return targetText[i]
 								return chars[Math.floor(Math.random() * chars.length)]
 							})

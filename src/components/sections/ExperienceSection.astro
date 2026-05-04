@@ -3,99 +3,89 @@ import { getLangFromUrl, useTranslation } from "@/i18n/utils"
 
 const lang = getLangFromUrl(Astro.url)
 const exp = useTranslation(lang, "experience")
-
-interface Experience {
-	title: string
-	company: string
-	description: string
-	tags: string[]
-	period: string
-	isFirst?: boolean
-}
-
-// Ahora usamos las tags que vienen directamente de la traducción
-const experiences: Experience[] = exp.jobs.map((job, index) => ({
-	...job,
-	tags: [...job.tags],
-	isFirst: index === 0,
-}))
 ---
 
-<section class="relative mx-auto max-w-5xl scroll-mt-24 px-6 py-12" id="experience">
-	<div class="mb-16 flex flex-col items-center text-center">
-		<div
-			class="animate-float border-primary/30 bg-primary/10 mb-4 inline-flex items-center justify-center rounded-full border p-3"
-		>
-			<span class="material-symbols-outlined text-primary">history_edu</span>
+<section
+	class="relative mx-auto flex min-h-screen max-w-5xl items-center scroll-mt-24 overflow-hidden bg-[#0a0e0a] px-6"
+	id="experience"
+>
+	<div class="w-full py-24">
+		{/* Background geometric shapes */}
+		<div class="experience-bg pointer-events-none absolute inset-0 overflow-hidden">
+			<svg
+				class="experience-shape absolute -left-32 top-20 h-[500px] w-[500px] opacity-[0.04]"
+				viewBox="0 0 500 500"
+				fill="none"
+			>
+				<circle cx="250" cy="250" r="248" stroke="#f0e6d2" stroke-width="1"></circle>
+			</svg>
+			<svg
+				class="experience-shape absolute -right-40 top-[40%] h-[600px] w-[600px] opacity-[0.03]"
+				viewBox="0 0 600 600"
+				fill="none"
+			>
+				<circle cx="300" cy="300" r="298" stroke="#f0e6d2" stroke-width="1"></circle>
+				<circle cx="300" cy="300" r="200" stroke="#f0e6d2" stroke-width="0.5"></circle>
+			</svg>
+			<svg
+				class="experience-shape absolute -left-20 bottom-32 h-[400px] w-[400px] opacity-[0.03]"
+				viewBox="0 0 400 400"
+				fill="none"
+			>
+				<line
+					x1="0"
+					y1="200"
+					x2="400"
+					y2="200"
+					stroke="#f0e6d2"
+					stroke-width="0.5"></line>
+				<line
+					x1="200"
+					y1="0"
+					x2="200"
+					y2="400"
+					stroke="#f0e6d2"
+					stroke-width="0.5"></line>
+			</svg>
 		</div>
-		<h2
-			class="bg-linear-to-r from-white to-gray-400 bg-clip-text pb-2 text-4xl font-bold text-transparent md:text-5xl"
-		>
-			{exp.title}
-		</h2>
-		<p class="mt-2 max-w-lg text-gray-400">
-			{exp.subtitle}
-		</p>
-	</div>
-	<div class="relative">
-		<div class="timeline-line absolute top-0 bottom-0 left-4 z-0 -ml-px w-0.5 md:left-1/2"></div>
-		<div class="space-y-16">
+
+		<div class="relative z-10 mb-20">
+			<h2
+				class="section-heading text-4xl font-medium tracking-tight text-[#f0e6d2] md:text-5xl"
+			>
+				{exp.title}
+			</h2>
+			<p class="experience-subtitle mt-4 max-w-xl text-lg text-[#a89a84]">
+				{exp.subtitle}
+			</p>
+		</div>
+
+		<div class="experience-entries relative z-10 space-y-12">
 			{
-				experiences.map((exp, index) => (
-					<div class="group relative grid gap-8 md:grid-cols-2 md:gap-16">
-						{index % 2 === 0 ? (
-							<>
-								<div class="relative order-2 pl-12 md:order-1 md:pl-0 md:text-right">
-									<div class="experience-card glass-card hover:border-primary/60 rounded-xl p-6 transition-[border-color,box-shadow,translate] duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(131,59,145,0.25)]">
-										<h3 class="mb-1 text-xl font-bold text-white">{exp.title}</h3>
-										<div class="text-primary mb-3 font-medium">{exp.company}</div>
-										<p class="font-body text-sm leading-relaxed text-gray-400">{exp.description}</p>
-										<div class="mt-4 flex flex-wrap gap-2 md:justify-end">
-											{exp.tags.map((tag) => (
-												<span class="rounded border border-white/10 bg-white/5 px-2 py-1 text-xs text-gray-300">
-													{tag}
-												</span>
-											))}
-										</div>
-									</div>
-								</div>
-								<div
-									class={`border-background-dark absolute top-6 left-4 z-10 -ml-2 h-4 w-4 rounded-full border-2 md:top-1/2 md:left-1/2 md:-mt-2 ${
-										exp.isFirst
-											? "bg-primary shadow-[0_0_15px_#833b91]"
-											: "bg-primary/70 group-hover:bg-primary shadow-[0_0_10px_#833b91] transition-[background-color,box-shadow] duration-150 group-hover:shadow-[0_0_20px_#833b91]"
-									}`}
-								/>
-								<div class="order-1 flex items-center pl-12 md:order-2 md:justify-start md:pl-0">
-									<span class="font-display group-hover:text-primary/40 text-2xl font-bold text-white/20 transition-colors md:text-4xl">
-										{exp.period}
+				exp.jobs.map((job, index) => (
+					<div
+						class="experience-entry group grid grid-cols-1 gap-6 border-l-2 border-transparent py-4 pl-6 md:grid-cols-2 md:gap-16 md:pl-8"
+						data-index={index}
+					>
+						<div>
+							<h3 class="text-2xl font-medium text-[#f0e6d2]">{job.company}</h3>
+							<div class="mt-1 text-lg text-[#a89a84]">{job.title}</div>
+						</div>
+						<div>
+							<div class="font-mono text-xs tracking-widest text-[#6b6055]">
+								{job.period}
+							</div>
+							<p class="mt-3 text-base leading-relaxed text-[#a89a84]">
+								{job.description}
+							</p>
+							<div class="mt-4 flex flex-wrap gap-2">
+								{job.tags.map((tag) => (
+									<span class="border border-[#a89a84]/20 px-2 py-1 font-mono text-[10px] tracking-wider text-[#6b6055] uppercase">
+										{tag}
 									</span>
-								</div>
-							</>
-						) : (
-							<>
-								<div class="order-1 flex items-center pl-12 md:justify-end md:pl-0 md:text-right">
-									<span class="font-display group-hover:text-primary/40 text-2xl font-bold text-white/20 transition-colors md:text-4xl">
-										{exp.period}
-									</span>
-								</div>
-								<div class="border-background-dark bg-primary/70 group-hover:bg-primary absolute top-6 left-4 z-10 -ml-2 h-4 w-4 rounded-full border-2 shadow-[0_0_10px_#833b91] transition-[background-color,box-shadow] duration-150 group-hover:shadow-[0_0_20px_#833b91] md:top-1/2 md:left-1/2 md:-mt-2" />
-								<div class="relative order-2 pl-12 md:pl-0">
-									<div class="experience-card glass-card hover:border-primary/60 rounded-xl p-6 transition-[border-color,box-shadow,translate] duration-300 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(131,59,145,0.25)]">
-										<h3 class="mb-1 text-xl font-bold text-white">{exp.title}</h3>
-										<div class="text-primary mb-3 font-medium">{exp.company}</div>
-										<p class="font-body text-sm leading-relaxed text-gray-400">{exp.description}</p>
-										<div class="mt-4 flex flex-wrap gap-2">
-											{exp.tags.map((tag) => (
-												<span class="rounded border border-white/10 bg-white/5 px-2 py-1 text-xs text-gray-300">
-													{tag}
-												</span>
-											))}
-										</div>
-									</div>
-								</div>
-							</>
-						)}
+								))}
+							</div>
+						</div>
 					</div>
 				))
 			}
@@ -103,141 +93,114 @@ const experiences: Experience[] = exp.jobs.map((job, index) => ({
 	</div>
 </section>
 
+<style>
+	.experience-entry {
+		will-change: transform;
+		padding: 1.5rem;
+		border-radius: 0.75rem;
+		background: rgba(20, 26, 20, 0.3);
+	}
+
+	.experience-subtitle { opacity: 0 }
+</style>
+
 <script>
 	import gsap from "gsap"
 	import { ScrollTrigger } from "gsap/ScrollTrigger"
-	import { staggerFadeIn } from "@/lib/animations"
-	gsap.registerPlugin(ScrollTrigger)
+	import { SplitText } from "gsap/SplitText"
+	import { initCardTilt } from "@/lib/animations"
 
-	// Track global listeners across re-inits
-	let expTouchOutsideHandler: ((e: TouchEvent) => void) | null = null
-	let expScrollHandler: (() => void) | null = null
+	gsap.registerPlugin(ScrollTrigger, SplitText)
 
-	function initExperienceCards() {
-		// Clean up previous global listeners
-		if (expTouchOutsideHandler) {
-			document.removeEventListener("touchstart", expTouchOutsideHandler)
-			expTouchOutsideHandler = null
-		}
-		if (expScrollHandler) {
-			window.removeEventListener("scroll", expScrollHandler)
-			expScrollHandler = null
-		}
-
-		const cards = document.querySelectorAll(".experience-card")
-		let activeCard: Element | null = null
-
-		// Only apply touch behavior on touch devices
-		const isTouchDevice = "ontouchstart" in window || navigator.maxTouchPoints > 0
-
-		if (!isTouchDevice) return
-
-		cards.forEach((card) => {
-			card.addEventListener("touchstart", () => {
-				// If tapping the same card, toggle off
-				if (activeCard === card) {
-					card.classList.remove("touch-active")
-					activeCard = null
-				} else {
-					// Remove active state from previous card
-					if (activeCard) {
-						activeCard.classList.remove("touch-active")
-					}
-					// Activate this card
-					card.classList.add("touch-active")
-					activeCard = card
-				}
-			})
-		})
-
-		// Remove active state when tapping outside cards or scrolling
-		expTouchOutsideHandler = (e: TouchEvent) => {
-			const target = e.target as Element
-			if (activeCard && !target.closest(".experience-card")) {
-				activeCard.classList.remove("touch-active")
-				activeCard = null
-			}
-		}
-		document.addEventListener("touchstart", expTouchOutsideHandler)
-
-		// Remove active state on scroll (debounced)
-		let scrollTimeout: ReturnType<typeof setTimeout>
-		expScrollHandler = () => {
-			if (activeCard) {
-				clearTimeout(scrollTimeout)
-				scrollTimeout = setTimeout(() => {
-					if (activeCard) {
-						activeCard.classList.remove("touch-active")
-						activeCard = null
-					}
-				}, 100)
-			}
-		}
-		window.addEventListener("scroll", expScrollHandler, { passive: true })
-	}
+	let ctx: gsap.Context | null = null
+	let currentSplit: SplitText | null = null
+	let tiltCleanup: (() => void) | null = null
 
 	function initExperienceAnimations() {
-		// Kill existing ScrollTriggers to prevent accumulation
-		ScrollTrigger.killAll()
+		if (currentSplit) {
+			currentSplit.revert()
+			currentSplit = null
+		}
+		if (tiltCleanup) {
+			tiltCleanup()
+			tiltCleanup = null
+		}
+		if (ctx) {
+			ctx.revert()
+		}
 
-		const cards = document.querySelectorAll("#experience .experience-card")
-		const periods = document.querySelectorAll("#experience .font-display")
+		ctx = gsap.context(() => {
+			const heading = document.querySelector("#experience .section-heading")
+			if (heading) {
+				currentSplit = new SplitText(heading, {
+					type: "lines",
+					linesClass: "split-line overflow-hidden",
+				})
+				gsap.from(currentSplit.lines, {
+					yPercent: 100,
+					opacity: 0,
+					duration: 0.8,
+					stagger: 0.1,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: heading,
+						start: "top 85%",
+					},
+				})
+			}
 
-		// Staggered card slide-in from alternating directions
-		cards.forEach((card, i) => {
-			const isLeft = i % 2 === 0
-			gsap.fromTo(
-				card,
-				{ opacity: 0, x: isLeft ? -50 : 50 },
-				{
-					opacity: 1,
-					x: 0,
+			const subtitle = document.querySelector("#experience .experience-subtitle")
+			if (subtitle) {
+				gsap.from(subtitle, {
+					opacity: 0,
+					y: 20,
 					duration: 0.7,
-					delay: i * 0.15,
+					delay: 0.2,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: heading || subtitle,
+						start: "top 85%",
+					},
+				})
+			}
+
+			const cards = gsap.utils.toArray<HTMLElement>(".experience-entry")
+			cards.forEach((card, i) => {
+				gsap.from(card, {
+					y: 60,
+					opacity: 0,
+					duration: 0.7,
+					delay: i * 0.1,
 					ease: "power3.out",
 					scrollTrigger: {
 						trigger: card,
-						start: "top 85%",
-						toggleActions: "play none none none",
+						start: "top 88%",
 					},
-				}
-			)
-		})
+				})
+			})
 
-		// Period text scale in
-		periods.forEach((period, i) => {
-			gsap.fromTo(
-				period,
-				{ opacity: 0, scale: 0.8 },
-				{
-					opacity: 1,
-					scale: 1,
-					duration: 0.5,
-					delay: i * 0.15 + 0.3,
-					ease: "back.out(1.5)",
+			const bg = document.querySelector(".experience-bg")
+			if (bg) {
+				gsap.from(bg, {
+					opacity: 0,
+					duration: 1,
 					scrollTrigger: {
-						trigger: period,
-						start: "top 85%",
-						toggleActions: "play none none none",
+						trigger: "#experience",
+						start: "top 80%",
 					},
-				}
-			)
-		})
+				})
+			}
+		}, "#experience")
 
-		// Section heading fade-in
-		const heading = document.querySelector("#experience .mb-16")
-		if (heading) {
-			staggerFadeIn(heading, "> *", 0.15)
+		// 3D tilt effect
+		const section = document.querySelector("#experience")
+		if (section) {
+			tiltCleanup = initCardTilt(section, { maxTilt: 12, perspective: 1000 })
 		}
 	}
 
-	// Initialize on page load
-	initExperienceCards()
 	initExperienceAnimations()
-
-	// Re-initialize after Astro view transitions
 	document.addEventListener("astro:after-swap", () => {
-		initExperienceCards()
-		setTimeout(initExperienceAnimations, 100)
+		initExperienceAnimations()
 	})
 </script>

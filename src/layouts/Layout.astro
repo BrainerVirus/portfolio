@@ -15,7 +15,7 @@ const { currentLocale } = Astro
 ---
 
 <!doctype html>
-<html transition:animate="slide" lang={currentLocale || "en"} dir="ltr">
+<html lang={currentLocale || "en"} dir="ltr">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Cristhofer Pincetti - Software Engineer Portfolio" />
@@ -44,7 +44,6 @@ const { currentLocale } = Astro
 				initTerminalSecret,
 				cleanupEasterEggs,
 			} from "@/lib/easter-eggs"
-			import { cleanupScrollTriggers } from "@/lib/animations"
 
 			// Initialize on page load
 			initKonamiCode()
@@ -54,8 +53,7 @@ const { currentLocale } = Astro
 			// Re-initialize after view transitions
 			document.addEventListener("astro:after-swap", () => {
 				cleanupEasterEggs()
-				cleanupScrollTriggers()
-				// THEN re-initialize
+				// No cleanupScrollTriggers — each component self-cleans via gsap.context()
 				initKonamiCode()
 				initCoffeeCupEasterEgg()
 				initTerminalSecret()

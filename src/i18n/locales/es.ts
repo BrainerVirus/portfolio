@@ -1,8 +1,8 @@
 export const nav = {
 	home: "Inicio",
-	about: "Bitácora",
-	experience: "Misiones",
-	skills: "Arsenal",
+	about: "Sobre mí",
+	experience: "Trabajo",
+	skills: "Habilidades",
 	contact: "Contacto",
 } as const
 
@@ -14,54 +14,53 @@ export const common = {
 } as const
 
 export const about = {
-	title: "Bitácora del Piloto",
-	subtitle: "Decodificando los bio-datos de la entidad detrás del teclado.",
+	title: "",
+	subtitle: "",
 	identity: "Identidad",
 	name: "Cristhofer Pincetti",
 	class: "Clase",
 	role: "Ingeniero Full Stack",
 	location: "Ubicación",
-	locationValue: "Órbita Geo-Estacionaria (Coquimbo, CL)",
+	locationValue: "Coquimbo, Chile",
 	status: "Estado",
-	statusValue:
-		"Actualmente construyendo sistemas escalables y bebiendo cantidades excesivas de café.",
+	statusValue: "Construyendo sistemas escalables y tomando café.",
 	quote:
-		"// Apasionado por el código limpio, las micro-interacciones de UI y explorar las fronteras de la tecnología web. Cuando no estoy programando, probablemente estoy refactorizando mi configuración de vida o debuggeando la realidad.",
+		"Apasionado por el código limpio, el craft de UI y explorar las fronteras de la tecnología web. Cuando no estoy programando, probablemente estoy refactorizando mi vida o debuggeando la realidad.",
 } as const
 
 export const experience = {
-	title: "Registro de Misiones",
-	subtitle: "Trayectoria técnica detallada a través del ciclo de vida completo del software.",
+	title: "Trabajo",
+	subtitle: "Lugares donde he construido cosas.",
 	jobs: [
 		{
 			title: "Software Engineer",
 			company: "Sixbell",
 			description:
-				"Participo en la implementación de Microfrontends (MFE), liderando el diseño y desarrollo de nuevos módulos para productos web de gran escala. Impulsé el 'UI Kit Sixbell Telco' (NPM) y la modernización del stack técnico hacia patrones de diseño modulares. Actúo como motor de innovación, identificando y ejecutando mejoras transversales en la arquitectura del producto para elevar los estándares de UX, calidad y escalabilidad.",
+				"Liderando arquitectura de Microfrontends (MFE) y diseñando nuevos módulos para productos web a gran escala. Impulsé el 'UI Kit Sixbell Telco' (NPM) y modernicé el stack hacia patrones modulares. Ejecutando mejoras transversales en la arquitectura del producto para UX, calidad y escalabilidad.",
 			period: "Nov 2023 - Presente",
 			tags: ["Angular", "MFE", "UI Kit", "UI/UX", "Docker", "NPM"],
 		},
 		{
-			title: "Lead Developer (Magic Key)",
-			company: "Proyecto de Innovación",
+			title: "Lead Developer",
+			company: "Magic Key",
 			description:
-				"Desarrollé una herramienta multiplataforma con Electron que permite usar el celular como un panel de control remoto para el PC (estilo Stream Deck). Implementé la comunicación en tiempo real con Socket.io para lograr una respuesta rápida y gestioné todo el flujo: desde el diseño de la identidad y el panel de administración web, hasta el despliegue del servidor.",
+				"Construí una herramienta multiplataforma con Electron que convierte tu celular en un panel de control remoto para PC (estilo Stream Deck). Implementé comunicación en tiempo real con Socket.io. Gestioné todo desde el diseño de marca hasta el despliegue del servidor.",
 			period: "Ene 2024 - Mar 2024",
 			tags: ["Electron", "Socket.io", "Node.js", "React", "Real-time"],
 		},
 		{
-			title: "Lead Developer (Soltec Water)",
-			company: "Universidad de La Serena",
+			title: "Lead Developer",
+			company: "Soltec Water — Universidad de La Serena",
 			description:
-				"Diseñé y construí un sistema de gestión hídrica para el monitoreo de recursos en tiempo real. Implementé modelos de datos para telemetría de campo y logística de rutas, desarrollando dashboards analíticos para la optimización de procesos críticos y el seguimiento de parámetros como pH y caudal.",
+				"Diseñé un sistema de gestión hídrica para monitoreo de recursos en tiempo real. Construí modelos de datos para telemetría de campo y logística de rutas, creando dashboards analíticos para optimizar procesos y monitorear pH, caudal y otros parámetros.",
 			period: "Sep 2023 - Mar 2024",
 			tags: ["Next.js", "Prisma", "AWS", "PostgreSQL", "Tailwind"],
 		},
 		{
-			title: "Software Engineer (ERP Adhara)",
-			company: "Hospital San Juan de Dios",
+			title: "Software Engineer",
+			company: "Hospital San Juan de Dios — ERP Adhara",
 			description:
-				"Desarrollador clave en los módulos de Farmacia y Finanzas del ERP Adhara. Integré hardware periférico y lógica personalizada en JavaScript para la trazabilidad de insumos médicos, optimizando la eficiencia operativa y el seguimiento de flujos de recetas en un entorno hospitalario real.",
+				"Desarrollador clave en los módulos de Farmacia y Finanzas del ERP. Integré hardware periférico y lógica JavaScript personalizada para trazabilidad de insumos médicos. Optimicé la eficiencia operativa y flujos de recetas en un entorno hospitalario real.",
 			period: "Oct 2022 - Sep 2023",
 			tags: ["Genexus", "JavaScript", "ERP", "Logística", "SQL"],
 		},
@@ -69,9 +68,9 @@ export const experience = {
 } as const
 
 export const skills = {
-	title: "Arsenal Técnico",
-	subtitle: "Sistemas centrales y tecnologías satélite orbitando la fuente de combustible central.",
-	core: "Núcleo de Cafeína",
+	title: "Habilidades",
+	subtitle: "Con qué trabajo.",
+	core: "Core",
 	mastery: "Dominio",
 	core_skills: {
 		typescript: "TypeScript",
@@ -80,7 +79,7 @@ export const skills = {
 		tailwindcss: "Tailwind CSS",
 	},
 	secondary_skills: {
-		figma: "Figma (Experto UX)",
+		figma: "Figma (UX)",
 		nodejs: "Node.js / Express",
 		prisma: "Prisma / SQL",
 		zustand: "Zustand / Signals",
@@ -100,45 +99,45 @@ export const skills = {
 } as const
 
 export const contact = {
-	title: "Establecer Enlace Comm",
-	subtitle: "Iniciar transmisión sub-espacial a la estación de relevo principal.",
+	title: "Contacto",
+	subtitle: "Hablemos.",
 	form: {
-		senderId: "ID del Remitente",
-		senderIdPlaceholder: "Protocolo: Nombre",
-		frequency: "Frecuencia",
-		frequencyPlaceholder: "Identificador: email@nebula.com",
-		transmission: "Transmisión",
-		transmissionPlaceholder: "Carga de datos: Escribe tu mensaje aquí...",
-		submit: "Enviar Ráfaga de Datos",
+		name: "Nombre",
+		namePlaceholder: "Tu nombre",
+		email: "Email",
+		emailPlaceholder: "tu@ejemplo.com",
+		message: "Mensaje",
+		messagePlaceholder: "¿En qué puedo ayudarte?",
+		submit: "Enviar mensaje",
 	},
 	error: {
-		nameRequired: "Se requiere ID del remitente",
-		nameMinLength: "El ID del remitente debe tener al menos 2 caracteres",
-		nameMaxLength: "El ID del remitente no debe exceder 100 caracteres",
-		emailRequired: "Se requiere frecuencia",
-		emailInvalid: "Formato de frecuencia inválido",
-		messageRequired: "Se requiere carga de transmisión",
-		messageMinLength: "La transmisión debe tener al menos 10 caracteres",
-		messageMaxLength: "La transmisión no debe exceder 5000 caracteres",
+		nameRequired: "El nombre es requerido",
+		nameMinLength: "El nombre debe tener al menos 2 caracteres",
+		nameMaxLength: "El nombre no debe exceder 100 caracteres",
+		emailRequired: "El email es requerido",
+		emailInvalid: "Formato de email inválido",
+		messageRequired: "El mensaje es requerido",
+		messageMinLength: "El mensaje debe tener al menos 10 caracteres",
+		messageMaxLength: "El mensaje no debe exceder 5000 caracteres",
 	},
 	messages: {
-		success: "¡Transmisión exitosa! Mensaje recibido.",
-		transmitted: "¡Transmitido!",
-		failed: "Transmisión fallida. Por favor, intenta de nuevo.",
+		success: "¡Mensaje enviado exitosamente!",
+		transmitted: "¡Enviado!",
+		failed: "Error al enviar. Por favor, intenta de nuevo.",
 		connectionLost: "Conexión perdida. Por favor, intenta de nuevo.",
-		transmitting: "Transmitiendo...",
-		sendDataBurst: "Enviar Ráfaga de Datos",
+		transmitting: "Enviando...",
+		sendMessage: "Enviar mensaje",
 	},
 } as const
 
 export const footer = {
-	tagline: "Navegando el cosmos digital.",
-	backToTop: "Volver al Cénit",
+	tagline: "Hecho con craft.",
+	backToTop: "Volver arriba",
 } as const
 
 export const meta = {
 	home: {
-		title: "Cristhofer Pincetti - Ingeniero de Software",
+		title: "Cristhofer Pincetti — Ingeniero de Software",
 		description:
 			"Ingeniero de Software especializado en desarrollo web, aplicaciones móviles y soluciones full-stack. Experto en React, Next.js, Node.js y tecnologías web modernas.",
 	},

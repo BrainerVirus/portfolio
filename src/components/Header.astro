@@ -1,79 +1,207 @@
 ---
 import { getLangFromUrl, getTranslations } from "@/i18n/utils"
-import LanguageSwitch from "./LanguageSwitch.astro"
 
 const lang = getLangFromUrl(Astro.url)
 const t = getTranslations(lang)
+
+// Determine if the user has an explicit language cookie (vs. system/browser auto-detect)
+const cookieLang = Astro.cookies.get("lang")?.value
+const activePreference = cookieLang === "en" || cookieLang === "es" ? cookieLang : "system"
+
+const pathname = Astro.url.pathname
+const segments = pathname.split("/").filter(Boolean)
+if (segments[0] === "en" || segments[0] === "es") {
+	segments.shift()
+}
+const basePath = segments.length ? "/" + segments.join("/") : "/"
 ---
 
-<header class="glass-card fixed top-0 left-0 z-50 w-full">
-	<div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6">
+<header
+	id="site-header"
+	class="fixed top-0 left-0 z-50 w-full border-b border-transparent bg-[#0a0e0a] backdrop-blur-[8px] transition-colors"
+>
+	<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
 		<div class="flex items-center gap-4">
 			<div class="relative flex h-10 w-10 items-center justify-center">
-				<div class="logo-ring absolute inset-0 animate-pulse rounded-full"></div>
-				<div class="cup-glow relative flex items-center justify-center">
-					<span
-						class="material-symbols-outlined scale-x-[-1] text-xl"
-						style="color: #0f0514; -webkit-text-stroke: 1.5px oklch(49.6% 0.272 303.89)"
-						>local_cafe</span
-					>
-				</div>
+				<span
+					class="material-symbols-outlined scale-x-[-1] text-xl"
+					style="color: #0a0e0a; -webkit-text-stroke: 1.5px #3a7a4d"
+				>
+					local_cafe
+				</span>
 			</div>
 			<div class="hidden flex-col items-start leading-none sm:flex">
 				<h1
-					class="font-display bg-linear-to-r from-white to-gray-400 bg-clip-text text-xl font-bold tracking-widest text-transparent uppercase"
+					class="font-display bg-linear-to-r from-[#f0e6d2] to-[#a89a84] bg-clip-text text-xl font-bold tracking-widest text-transparent uppercase"
 				>
 					Cristhofer Pincetti
 				</h1>
-				<span class="text-primary/80 mt-1 font-mono text-[10px] tracking-[0.3em] uppercase"
-					>Software Engineer</span
-				>
+				<span class="mt-1 font-mono text-[10px] tracking-[0.3em] text-[#a89a84] uppercase">
+					Software Engineer
+				</span>
 			</div>
 		</div>
-		<nav class="hidden items-center gap-8 md:flex">
-			<a class="text-sm font-medium text-gray-300 hover:text-white" href="#about">
-				{t("nav.about")}
-			</a>
-			<a class="text-sm font-medium text-gray-300 hover:text-white" href="#experience">
-				{t("nav.experience")}
-			</a>
-			<a class="text-sm font-medium text-gray-300 hover:text-white" href="#skills">
-				{t("nav.skills")}
-			</a>
-			<a class="text-sm font-medium text-gray-300 transition-colors hover:text-white" href="#contact">
-				{t("nav.contact")}
-			</a>
-			<LanguageSwitch />
-		</nav>
-		<div class="flex items-center gap-4 md:hidden">
-			<LanguageSwitch />
-			<button id="mobile-menu-btn" class="text-white" aria-label="Open menu">
-				<span class="material-symbols-outlined">menu</span>
-			</button>
-		</div>
-	</div>
-	<!-- Mobile menu -->
-	<div
-		id="mobile-menu"
-		class="bg-background-dark/95 hidden border-t border-white/10 backdrop-blur-lg md:hidden"
-	>
-		<nav class="flex flex-col gap-4 px-6 py-4">
-			<a class="text-sm font-medium text-gray-300 transition-colors hover:text-white" href="#about">
+
+		<nav id="desktop-nav" class="relative hidden items-center gap-8 md:flex">
+			<a
+				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+				href="#about"
+			>
 				{t("nav.about")}
 			</a>
 			<a
-				class="text-sm font-medium text-gray-300 transition-colors hover:text-white"
+				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#experience"
 			>
 				{t("nav.experience")}
 			</a>
 			<a
-				class="text-sm font-medium text-gray-300 transition-colors hover:text-white"
+				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#skills"
 			>
 				{t("nav.skills")}
 			</a>
-			<a class="text-sm font-medium text-gray-300 transition-colors hover:text-white" href="#contact">
+			<a
+				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+				href="#contact"
+			>
+				{t("nav.contact")}
+			</a>
+
+			<div class="relative">
+				<button
+					id="lang-btn-desktop"
+					class="flex cursor-pointer items-center gap-1.5 px-2 py-1 font-mono text-xs font-bold text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+					data-lang={lang}
+					data-preference={activePreference}
+					aria-label={lang === "en" ? "Switch language" : "Cambiar idioma"}
+				>
+					{lang.toUpperCase()}
+					<span class="inline-block h-1.5 w-1.5 rounded-full bg-[#3a7a4d]"></span>
+				</button>
+				<div
+					id="lang-dropdown-desktop"
+					class="absolute right-0 top-full mt-1 hidden min-w-[7rem] flex-col overflow-hidden rounded border border-white/10 bg-[#0a0e0a]"
+				>
+					<button
+						class="lang-option flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left font-mono text-xs text-[#a89a84] transition-colors hover:bg-[#f0e6d2]/5 hover:text-[#f0e6d2]"
+						data-lang="system"
+						data-active={activePreference === "system" ? "true" : "false"}
+					>
+						System
+						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
+					</button>
+					<button
+						class="lang-option flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left font-mono text-xs text-[#a89a84] transition-colors hover:bg-[#f0e6d2]/5 hover:text-[#f0e6d2]"
+						data-lang="en"
+						data-path={`/en${basePath}`}
+						data-active={activePreference === "en" ? "true" : "false"}
+					>
+						English
+						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
+					</button>
+					<button
+						class="lang-option flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left font-mono text-xs text-[#a89a84] transition-colors hover:bg-[#f0e6d2]/5 hover:text-[#f0e6d2]"
+						data-lang="es"
+						data-path={`/es${basePath}`}
+						data-active={activePreference === "es" ? "true" : "false"}
+					>
+						Espa&ntilde;ol
+						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
+					</button>
+				</div>
+			</div>
+
+			<div
+				id="nav-underline"
+				class="pointer-events-none absolute bottom-0 left-0 h-0.5 w-0 rounded-full bg-[#3a7a4d]"
+			>
+			</div>
+		</nav>
+
+		<div class="flex items-center gap-4 md:hidden">
+			<div class="relative">
+				<button
+					id="lang-btn-mobile"
+					class="flex cursor-pointer items-center gap-1.5 px-2 py-1 font-mono text-xs font-bold text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+					data-lang={lang}
+					data-preference={activePreference}
+					aria-label={lang === "en" ? "Switch language" : "Cambiar idioma"}
+				>
+					{lang.toUpperCase()}
+					<span class="inline-block h-1.5 w-1.5 rounded-full bg-[#3a7a4d]"></span>
+				</button>
+				<div
+					id="lang-dropdown-mobile"
+					class="absolute right-0 top-full mt-1 hidden min-w-[7rem] flex-col overflow-hidden rounded border border-white/10 bg-[#0a0e0a]"
+				>
+					<button
+						class="lang-option flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left font-mono text-xs text-[#a89a84] transition-colors hover:bg-[#f0e6d2]/5 hover:text-[#f0e6d2]"
+						data-lang="system"
+						data-active={activePreference === "system" ? "true" : "false"}
+					>
+						System
+						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
+					</button>
+					<button
+						class="lang-option flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left font-mono text-xs text-[#a89a84] transition-colors hover:bg-[#f0e6d2]/5 hover:text-[#f0e6d2]"
+						data-lang="en"
+						data-path={`/en${basePath}`}
+						data-active={activePreference === "en" ? "true" : "false"}
+					>
+						English
+						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
+					</button>
+					<button
+						class="lang-option flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left font-mono text-xs text-[#a89a84] transition-colors hover:bg-[#f0e6d2]/5 hover:text-[#f0e6d2]"
+						data-lang="es"
+						data-path={`/es${basePath}`}
+						data-active={activePreference === "es" ? "true" : "false"}
+					>
+						Espa&ntilde;ol
+						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
+					</button>
+				</div>
+			</div>
+
+			<button
+				id="mobile-menu-btn"
+				class="text-[#f0e6d2]"
+				aria-label="Open menu"
+				aria-expanded="false"
+			>
+				<span class="material-symbols-outlined">menu</span>
+			</button>
+		</div>
+	</div>
+
+	<div
+		id="mobile-menu"
+		class="absolute left-0 top-full w-full border-t border-white/10 bg-[#0a0e0a] opacity-0 backdrop-blur-[12px] md:hidden"
+	>
+		<nav class="flex flex-col gap-4 px-6 py-4">
+			<a
+				class="mobile-nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+				href="#about"
+			>
+				{t("nav.about")}
+			</a>
+			<a
+				class="mobile-nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+				href="#experience"
+			>
+				{t("nav.experience")}
+			</a>
+			<a
+				class="mobile-nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+				href="#skills"
+			>
+				{t("nav.skills")}
+			</a>
+			<a
+				class="mobile-nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+				href="#contact"
+			>
 				{t("nav.contact")}
 			</a>
 		</nav>
@@ -82,44 +210,95 @@ const t = getTranslations(lang)
 
 <script>
 	import gsap from "gsap"
-	import { ScrollTrigger } from "gsap/ScrollTrigger"
-	gsap.registerPlugin(ScrollTrigger)
+	import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin"
+	import { navigate } from "astro:transitions/client"
 
-	// Mobile menu toggle
+	gsap.registerPlugin(ScrambleTextPlugin)
+
+	function initHeaderScroll() {
+		const header = document.getElementById("site-header")
+		if (!header) return
+
+		const onScroll = () => {
+			if (window.scrollY > 50) {
+				header.classList.add("border-white/5", "backdrop-blur-[12px]")
+				header.classList.remove("border-transparent", "backdrop-blur-[8px]")
+			} else {
+				header.classList.add("border-transparent", "backdrop-blur-[8px]")
+				header.classList.remove("border-white/5", "backdrop-blur-[12px]")
+			}
+		}
+
+		window.addEventListener("scroll", onScroll, { passive: true })
+		onScroll()
+	}
+
 	function initMobileMenu() {
 		const menuBtn = document.getElementById("mobile-menu-btn")
 		const mobileMenu = document.getElementById("mobile-menu")
 		const menuIcon = menuBtn?.querySelector(".material-symbols-outlined")
+		const mobileLinks = mobileMenu?.querySelectorAll(".mobile-nav-link")
 
-		if (!menuBtn || !mobileMenu || !menuIcon) return
+		if (!menuBtn || !mobileMenu || !menuIcon || !mobileLinks) return
 
-		const toggleMenu = () => {
-			const isHidden = mobileMenu.classList.contains("hidden")
-			if (isHidden) {
-				mobileMenu.classList.remove("hidden")
-				menuBtn.setAttribute("aria-expanded", "true")
-				menuIcon.textContent = "close"
-			} else {
-				mobileMenu.classList.add("hidden")
-				menuBtn.setAttribute("aria-expanded", "false")
-				menuIcon.textContent = "menu"
-			}
+		gsap.set(mobileMenu, { opacity: 0, y: -20, pointerEvents: "none" })
+		gsap.set(mobileLinks, { opacity: 0, x: -20 })
+
+		const tl = gsap.timeline({ paused: true })
+		tl.to(mobileMenu, {
+			opacity: 1,
+			y: 0,
+			duration: 0.3,
+			ease: "power2.out",
+			pointerEvents: "auto",
+		})
+		tl.to(
+			mobileLinks,
+			{
+				opacity: 1,
+				x: 0,
+				duration: 0.3,
+				stagger: 0.05,
+				ease: "power2.out",
+			},
+			"-=0.2"
+		)
+
+		const openMenu = () => {
+			menuBtn.setAttribute("aria-expanded", "true")
+			menuIcon.textContent = "close"
+			tl.play()
 		}
 
-		menuBtn.addEventListener("click", toggleMenu)
+		const closeMenu = () => {
+			menuBtn.setAttribute("aria-expanded", "false")
+			menuIcon.textContent = "menu"
+			tl.reverse()
+		}
 
-		// Close menu when clicking nav links
-		const mobileLinks = mobileMenu.querySelectorAll("a")
+		menuBtn.addEventListener("click", () => {
+			const isOpen = menuBtn.getAttribute("aria-expanded") === "true"
+			if (isOpen) {
+				closeMenu()
+			} else {
+				openMenu()
+			}
+		})
+
 		mobileLinks.forEach((link) => {
-			link.addEventListener("click", () => {
-				mobileMenu.classList.add("hidden")
-				menuBtn.setAttribute("aria-expanded", "false")
-				menuIcon.textContent = "menu"
+			link.addEventListener("click", (e) => {
+				e.preventDefault()
+				closeMenu()
+				const targetId = link.getAttribute("href")
+				if (!targetId) return
+				const target = document.querySelector(targetId)
+				if (target) {
+					target.scrollIntoView({ behavior: "smooth" })
+				}
 			})
 		})
 	}
 
-	// Scroll-spy with elastic morphing underline
 	let scrollObserver: IntersectionObserver | null = null
 
 	function initNavScrollSpy() {
@@ -128,91 +307,205 @@ const t = getTranslations(lang)
 			scrollObserver = null
 		}
 
-		const nav = document.querySelector("header nav") as HTMLElement | null
-		const navLinks = document.querySelectorAll("header nav a")
+		const nav = document.getElementById("desktop-nav")
+		const navLinks = document.querySelectorAll("#desktop-nav .nav-link")
 		const sections = ["about", "experience", "skills", "contact"]
 			.map((id) => document.getElementById(id))
 			.filter(Boolean)
 
 		if (!navLinks.length || !sections.length || !nav) return
 
-		// Create underline element if not exists
-		let underline = document.querySelector("#nav-underline") as HTMLElement | null
-		if (!underline) {
-			underline = document.createElement("div")
-			underline.id = "nav-underline"
-			underline.className = "absolute bottom-0 h-0.5 rounded-full bg-primary"
-			underline.style.transition = "none"
-			underline.style.pointerEvents = "none"
-			nav.style.position = "relative"
-			nav.appendChild(underline)
-		}
-
-		// Remove old active states
-		navLinks.forEach((link) => {
-			link.classList.add("text-gray-300")
-			link.classList.remove("text-white")
-		})
+		const navEl = nav
+		const underline = document.getElementById("nav-underline")
+		if (!underline) return
 
 		function moveToLink(link: Element) {
 			const linkRect = link.getBoundingClientRect()
-			const navRect = nav!.getBoundingClientRect()
+			const navRect = navEl.getBoundingClientRect()
 			const left = linkRect.left - navRect.left
 			const width = linkRect.width
 
 			gsap.to(underline, {
 				left,
 				width,
-				duration: 0.7,
-				ease: "elastic.out(1, 0.65)",
+				duration: 0.4,
+				ease: "power2.out",
 				overwrite: "auto",
 			})
 
-			// Highlight active link
 			navLinks.forEach((l) => {
-				l.classList.add("text-gray-300")
-				l.classList.remove("text-white")
+				l.classList.add("text-[#a89a84]")
+				l.classList.remove("text-[#f0e6d2]")
 			})
-			link.classList.add("text-white")
-			link.classList.remove("text-gray-300")
+			link.classList.add("text-[#f0e6d2]")
+			link.classList.remove("text-[#a89a84]")
 		}
 
 		scrollObserver = new IntersectionObserver(
 			(entries) => {
-				// Find the entry with highest intersection ratio
-				const visible = entries
-					.filter((e) => e.isIntersecting)
-					.sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0]
-
-				if (visible) {
-					const link = document.querySelector(`header nav a[href="#${visible.target.id}"]`)
-					if (link) moveToLink(link)
+				for (const entry of entries) {
+					if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+						const link = document.querySelector(
+							`#desktop-nav a[href="#${entry.target.id}"]`
+						)
+						if (link) moveToLink(link)
+					}
 				}
 			},
-			{ rootMargin: "-30% 0px -70% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+			{ threshold: [0.5, 0.75] }
 		)
 
 		sections.forEach((section) => {
 			if (section) scrollObserver!.observe(section)
 		})
 
-		// Set initial active based on hash
 		const hash = window.location.hash.replace("#", "")
 		if (hash) {
-			const link = document.querySelector(`header nav a[href="#${hash}"]`)
+			const link = document.querySelector(`#desktop-nav a[href="#${hash}"]`)
 			if (link) moveToLink(link)
 		}
 
-		// Click handlers
 		navLinks.forEach((link) => {
-			link.addEventListener("click", () => moveToLink(link))
+			link.addEventListener("click", (e) => {
+				e.preventDefault()
+				const targetId = link.getAttribute("href")
+				if (!targetId) return
+				const target = document.querySelector(targetId)
+				if (target) {
+					target.scrollIntoView({ behavior: "smooth" })
+				}
+			})
 		})
 	}
 
-	initMobileMenu()
-	initNavScrollSpy()
-	document.addEventListener("astro:after-swap", () => {
+	function initLangDropdown(btnId: string, dropdownId: string) {
+		const btn = document.getElementById(btnId)
+		const dropdown = document.getElementById(dropdownId)
+		if (!btn || !dropdown) return
+
+		gsap.set(dropdown, { opacity: 0, y: -10, pointerEvents: "none" })
+
+		// Initially hide/show checkmarks based on active preference
+		function refreshActiveState() {
+			const activePref = btn!.getAttribute("data-preference")
+			const options = dropdown!.querySelectorAll(".lang-option")
+			options.forEach((opt) => {
+				const checkmark = opt.querySelector(".lang-check") as HTMLElement
+				if (checkmark) {
+					checkmark.style.display =
+						opt.getAttribute("data-lang") === activePref ? "inline" : "none"
+				}
+			})
+		}
+		refreshActiveState()
+
+		let isOpen = false
+		let anim: ReturnType<typeof gsap.to> | null = null
+
+		const open = () => {
+			isOpen = true
+			dropdown.classList.remove("hidden")
+			if (anim) anim.kill()
+			anim = gsap.to(dropdown, {
+				opacity: 1,
+				y: 0,
+				duration: 0.2,
+				ease: "power2.out",
+				pointerEvents: "auto",
+			})
+		}
+
+		const close = () => {
+			isOpen = false
+			if (anim) anim.kill()
+			anim = gsap.to(dropdown, {
+				opacity: 0,
+				y: -10,
+				duration: 0.2,
+				ease: "power2.in",
+				pointerEvents: "none",
+				onComplete: () => {
+					dropdown.classList.add("hidden")
+				},
+			})
+		}
+
+		btn.addEventListener("click", (e) => {
+			e.stopPropagation()
+			if (isOpen) {
+				close()
+			} else {
+				open()
+			}
+		})
+
+		document.addEventListener("click", (e) => {
+			if (
+				isOpen &&
+				!dropdown.contains(e.target as Node) &&
+				!btn.contains(e.target as Node)
+			) {
+				close()
+			}
+		})
+
+		const options = dropdown.querySelectorAll(".lang-option")
+		options.forEach((option) => {
+			option.addEventListener("click", () => {
+				const targetLang = option.getAttribute("data-lang")
+				const targetPath = option.getAttribute("data-path")
+				const currentLang = btn.getAttribute("data-lang")
+
+				close()
+
+				if (!targetLang) return
+
+				// No-op if same language is clicked (not "system")
+				if (targetLang !== "system" && targetLang === currentLang) return
+
+				// No-op if "system" is already active and "system" is clicked
+				if (targetLang === "system" && btn.getAttribute("data-preference") === "system") return
+
+				// Scramble effect on visible headings/nav text before navigating
+				const scrambleTargets =
+					"h1, h2, h3, .nav-link, .mobile-nav-link, .about-subtitle, .about-name"
+
+				if (targetLang === "system") {
+					document.cookie = `lang=; path=/; max-age=0; SameSite=Lax`
+					// Navigate to root — middleware will redirect to browser-detected lang
+					gsap.to(scrambleTargets, {
+						duration: 0.35,
+						// @ts-ignore scrambleText:true is valid GSAP runtime shorthand
+						scrambleText: true,
+						chars: "▪░▒▓█",
+						onComplete: () => {
+							navigate("/")
+						},
+					})
+				} else {
+					document.cookie = `lang=${targetLang}; path=/; max-age=31536000; SameSite=Lax`
+					gsap.to(scrambleTargets, {
+						duration: 0.35,
+						// @ts-ignore scrambleText:true is valid GSAP runtime shorthand
+						scrambleText: true,
+						chars: "▪░▒▓█",
+						onComplete: () => {
+							navigate(targetPath || "/")
+						},
+					})
+				}
+			})
+		})
+	}
+
+	function initAll() {
+		initHeaderScroll()
 		initMobileMenu()
 		initNavScrollSpy()
-	})
+		initLangDropdown("lang-btn-desktop", "lang-dropdown-desktop")
+		initLangDropdown("lang-btn-mobile", "lang-dropdown-mobile")
+	}
+
+	initAll()
+	document.addEventListener("astro:after-swap", initAll)
 </script>

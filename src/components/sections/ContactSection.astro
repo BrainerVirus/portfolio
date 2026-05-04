@@ -7,15 +7,14 @@ const t = getTranslations(lang)
 const locale = lang as "en" | "es"
 
 const translations = {
-	senderId: t("contact.form.senderId"),
-	senderIdPlaceholder: t("contact.form.senderIdPlaceholder"),
-	frequency: t("contact.form.frequency"),
-	frequencyPlaceholder: t("contact.form.frequencyPlaceholder"),
-	transmission: t("contact.form.transmission"),
-	transmissionPlaceholder: t("contact.form.transmissionPlaceholder"),
+	name: t("contact.form.name"),
+	namePlaceholder: t("contact.form.namePlaceholder"),
+	email: t("contact.form.email"),
+	emailPlaceholder: t("contact.form.emailPlaceholder"),
+	message: t("contact.form.message"),
+	messagePlaceholder: t("contact.form.messagePlaceholder"),
 	submit: t("contact.form.submit"),
 	sending: t("contact.messages.transmitting"),
-	sent: t("contact.messages.transmitted"),
 	error: {
 		nameRequired: getTranslation(locale, "contact.error.nameRequired"),
 		emailRequired: getTranslation(locale, "contact.error.emailRequired"),
@@ -29,77 +28,79 @@ const translations = {
 }
 ---
 
-<section class="relative w-full scroll-mt-24 overflow-hidden pt-32 pb-48" id="contact">
-	<div class="bg-nebula-dense absolute inset-0 -z-10 opacity-40 blur-[120px]"></div>
+<section
+	class="relative flex min-h-screen w-full scroll-mt-24 items-center overflow-hidden"
+	id="contact"
+	style="background: #0a0e0a;"
+>
 	<div class="relative mx-auto max-w-7xl px-6">
-		<div class="mb-20 flex flex-col items-center text-center">
-			<div
-				class="animate-float border-primary/30 bg-primary/10 mb-4 inline-flex items-center justify-center rounded-full border p-3"
-			>
-				<span class="material-symbols-outlined text-primary">sensors</span>
-			</div>
-			<h2
-				class="bg-linear-to-r from-white to-gray-400 bg-clip-text pb-2 text-4xl font-bold text-transparent md:text-5xl"
-			>
-				{t("contact.title")}
-			</h2>
-			<p class="mt-2 max-w-lg text-gray-400">
-				{t("contact.subtitle")}
-			</p>
-		</div>
-		<div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2 lg:gap-24">
-			<div class="order-2 lg:order-1">
-				<ContactForm locale={locale} translations={translations} client:load />
-			</div>
-			<div class="order-1 flex flex-col items-center justify-center lg:order-2">
-				<div class="relative flex aspect-square w-full max-w-100 items-center justify-center">
-					<div class="comm-beam absolute bottom-1/4 left-1/4 h-80 animate-pulse opacity-40"></div>
-					<div class="comm-beam animate-pulse-glow absolute bottom-1/4 left-1/2 h-125 opacity-30">
-					</div>
-					<div
-						class="comm-beam absolute right-1/4 bottom-1/4 h-80 animate-pulse opacity-40"
-						style="animation-delay: 1s"
+		<div class="grid grid-cols-1 items-start gap-16 lg:grid-cols-2 lg:gap-12">
+			<!-- Left -->
+			<div class="contact-left flex flex-col justify-center">
+				<h2
+					class="text-4xl font-light text-[#f0e6d2] md:text-5xl"
+					style="line-height: 1.1; letter-spacing: -0.04em;"
+				>
+					{t("contact.title")}
+				</h2>
+				<p class="mt-4 text-lg text-[#a89a84]">
+					{t("contact.subtitle")}
+				</p>
+
+				<div class="mt-10 flex items-center gap-6">
+					<a
+						href="https://github.com/BrainerVirus"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="group relative flex items-center gap-2 font-mono text-xs tracking-[0.15em] uppercase text-[#6b6055]"
 					>
-					</div>
-					<div class="animate-float absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-						<div class="holo-glow scale-[1.5] opacity-80">
-							<span
-								class="material-symbols-outlined text-primary cursor-default text-[140px] select-none"
-								>local_cafe</span
-							>
-						</div>
-						<div
-							class="animate-orbit border-primary/20 absolute top-1/2 left-1/2 h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full border opacity-50"
+						<svg
+							class="h-4 w-4 fill-current transition-colors group-hover:text-[#f0e6d2]"
+							viewBox="0 0 24 24"
 						>
-						</div>
-						<div
-							class="animate-orbit-reverse border-primary/40 absolute top-1/2 left-1/2 h-40 w-40 -translate-x-1/2 -translate-y-1/2 rounded-full border opacity-30"
-						>
-						</div>
-					</div>
-					<div
-						class="to-background-dark absolute bottom-0 left-1/2 h-20 w-85 -translate-x-1/2 rounded-t-[40px] border-x border-t border-white/10 bg-linear-to-b from-[#2a2430] shadow-[0_-15px_40px_rgba(131,59,145,0.3)]"
-						style="perspective: 800px"
+							<path
+								d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"
+							></path>
+						</svg>
+						<span class="transition-colors group-hover:text-[#f0e6d2]">
+							GitHub
+						</span>
+						<span class="absolute -bottom-1 left-0 h-px w-0 bg-[#f0e6d2] transition-all duration-300 group-hover:w-full"></span>
+					</a>
+					<a
+						href="https://linkedin.com/in/cristhofer-pincetti"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="group relative flex items-center gap-2 font-mono text-xs tracking-[0.15em] uppercase text-[#6b6055]"
 					>
-						<div
-							class="relative flex h-full w-full items-center justify-around overflow-hidden rounded-t-[40px] bg-[#1a1620] px-12"
+						<svg
+							class="h-4 w-4 fill-current transition-colors group-hover:text-[#f0e6d2]"
+							viewBox="0 0 24 24"
 						>
-							<div
-								class="h-3 w-3 animate-pulse rounded-full bg-green-500/60 shadow-[0_0_8px_rgba(34,197,94,0.5)]"
-							>
-							</div>
-							<div class="flex w-20 flex-col gap-1">
-								<div class="h-1 w-full rounded-full bg-white/20"></div>
-								<div class="bg-primary/40 h-1 w-2/3 rounded-full"></div>
-								<div class="h-1 w-full rounded-full bg-white/10"></div>
-							</div>
-							<div class="bg-primary/60 h-3 w-3 rounded-full"></div>
-							<div
-								class="pointer-events-none absolute inset-0 bg-linear-to-r from-transparent via-white/5 to-transparent"
-							>
-							</div>
-						</div>
-					</div>
+							<path
+								d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+							></path>
+						</svg>
+						<span class="transition-colors group-hover:text-[#f0e6d2]">
+							LinkedIn
+						</span>
+						<span class="absolute -bottom-1 left-0 h-px w-0 bg-[#f0e6d2] transition-all duration-300 group-hover:w-full"></span>
+					</a>
+				</div>
+			</div>
+
+			<!-- Right -->
+			<div class="contact-right relative flex items-center justify-center">
+				<div
+					class="gradient-blob absolute -inset-20 -z-10"
+					style="background: radial-gradient(circle at 50% 50%, rgba(58, 122, 77, 0.25), transparent 70%); filter: blur(60px);"
+				></div>
+				<div class="relative w-full">
+					<ContactForm
+						locale={locale}
+						translations={translations}
+						client:load
+					/>
 				</div>
 			</div>
 		</div>
@@ -109,64 +110,82 @@ const translations = {
 <script>
 	import gsap from "gsap"
 	import { ScrollTrigger } from "gsap/ScrollTrigger"
-	import { staggerFadeIn } from "@/lib/animations"
 
 	gsap.registerPlugin(ScrollTrigger)
 
+	let contactCtx: gsap.Context | null = null
+
 	function initContactAnimations() {
-		// Kill existing ScrollTriggers to prevent accumulation
-		ScrollTrigger.killAll()
-
-		// Section heading fade-in
-		const heading = document.querySelector("#contact .mb-20")
-		if (heading) {
-			staggerFadeIn(heading, "> *", 0.15)
+		if (contactCtx) {
+			contactCtx.revert()
 		}
 
-		// Form card slide-in from left
-		const formCard = document.querySelector("#contact-form")
-		if (formCard) {
-			gsap.fromTo(
-				formCard,
-				{ opacity: 0, x: -40 },
-				{
-					opacity: 1,
-					x: 0,
-					duration: 0.8,
-					ease: "power3.out",
-					scrollTrigger: {
-						trigger: "#contact-form",
-						start: "top 80%",
-						toggleActions: "play none none none",
-					},
-				}
-			)
-		}
+		contactCtx = gsap.context(() => {
+			const section = document.querySelector("#contact")
+			if (!section) return
 
-		// Visual elements stagger in
-		const visualEls = document.querySelectorAll(
-			"#contact .comm-beam, #contact .holo-glow, #contact .orbit-ring, #contact .rounded-t-\\[40px\\]"
-		)
-		gsap.fromTo(
-			visualEls,
-			{ opacity: 0, y: 20 },
-			{
-				opacity: 1,
-				y: 0,
-				duration: 0.6,
-				stagger: 0.1,
-				ease: "power2.out",
-				scrollTrigger: {
-					trigger: "#contact .grid",
-					start: "top 80%",
-					toggleActions: "play none none none",
-				},
+			const left = section.querySelector(".contact-left")
+			const right = section.querySelector(".contact-right")
+			const blob = section.querySelector(".gradient-blob")
+
+			if (left) {
+				gsap.fromTo(
+					left,
+					{ opacity: 0, x: -40 },
+					{
+						opacity: 1,
+						x: 0,
+						duration: 0.8,
+						ease: "power3.out",
+						scrollTrigger: {
+							trigger: section,
+							start: "top 80%",
+							toggleActions: "play none none none",
+						},
+					}
+				)
 			}
-		)
+
+			if (right) {
+				gsap.fromTo(
+					right,
+					{ opacity: 0, x: 40 },
+					{
+						opacity: 1,
+						x: 0,
+						duration: 0.8,
+						ease: "power3.out",
+						delay: 0.2,
+						scrollTrigger: {
+							trigger: section,
+							start: "top 80%",
+							toggleActions: "play none none none",
+						},
+					}
+				)
+			}
+
+			if (blob) {
+				gsap.fromTo(
+					blob,
+					{ y: 0 },
+					{
+						y: -80,
+						ease: "none",
+						scrollTrigger: {
+							trigger: section,
+							start: "top bottom",
+							end: "bottom top",
+							scrub: true,
+						},
+					}
+				)
+			}
+		}, "#contact")
 	}
 
 	initContactAnimations()
 	document.addEventListener("astro:after-swap", () => {
-		setTimeout(initContactAnimations, 100)
+		initContactAnimations()
 	})
 </script>

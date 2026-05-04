@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [4.1.0] - 2026-05-04
+
+### Fixed
+
+- **About Section pin & animation** — fixed ScrollTrigger pin not working due to `scroll-behavior: smooth` on `*` selector conflicting with GSAP refresh calculations. Moved smooth-scroll to `html` only.
+- **About Section typewriter** — replaced broken `scrub: 1` + `ScrambleTextPlugin` combo with `toggleActions: "play none none none"` approach. Bio lines decode in parallel using ScrambleTextPlugin with blocky terminal cursor.
+- **Nav scroll spy** — simplified IntersectionObserver to use `threshold: [0.5, 0.75]` instead of complex rootMargin. Sections now use `min-h-screen` so exactly one dominates viewport.
+- **Language dropdown** — added System/English/Español options with current-language checkmark indicator.
+- **Skills section IDs** — changed `#skills-orbital` / `#skills-bento` → `#skills` so nav links resolve correctly.
+- **E2E tests** — removed 4 filler test files, rewrote `home-page.spec.ts` and `navigation.spec.ts` with proper selectors and meaningful assertions.
+
+### Added
+
+- **Unit tests** — `src/lib/animations.test.ts`: 18 tests for all animation utility functions.
+
+### Removed
+
+- `transition:animate="slide"` from `<html>` (was causing slow language transitions).
+- `cleanupScrollTriggers()` call from Layout.astro (each component self-cleans via `gsap.context().revert()`).
+- `e2e/hero.spec.ts`, `e2e/work.spec.ts`, `e2e/skills.spec.ts`, `e2e/contact.spec.ts`.
+
 ## [4.0.0] - 2026-05-02
 
 ### Changed

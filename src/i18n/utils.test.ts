@@ -144,29 +144,29 @@ describe("i18n Translations", () => {
 	describe("Contact form translations", () => {
 		it("should provide contact form labels in English", () => {
 			const t = getTranslations("en")
-			expect(t("contact.form.senderId")).toBe("Sender ID")
-			expect(t("contact.form.frequency")).toBe("Frequency")
-			expect(t("contact.form.transmission")).toBe("Transmission")
+			expect(t("contact.form.name")).toBe("Name")
+			expect(t("contact.form.email")).toBe("Email")
+			expect(t("contact.form.message")).toBe("Message")
 		})
 
 		it("should provide contact form labels in Spanish", () => {
 			const t = getTranslations("es")
-			expect(t("contact.form.senderId")).toBe("ID del Remitente")
-			expect(t("contact.form.frequency")).toBe("Frecuencia")
-			expect(t("contact.form.transmission")).toBe("Transmisión")
+			expect(t("contact.form.name")).toBe("Nombre")
+			expect(t("contact.form.email")).toBe("Email")
+			expect(t("contact.form.message")).toBe("Mensaje")
 		})
 
 		it("should provide contact form validation errors in English", () => {
 			const t = getTranslations("en")
-			expect(t("contact.error.nameRequired")).toBe("Sender ID is required")
-			expect(t("contact.error.emailRequired")).toBe("Frequency is required")
-			expect(t("contact.error.messageRequired")).toBe("Transmission payload required")
+			expect(t("contact.error.nameRequired")).toBe("Name is required")
+			expect(t("contact.error.emailRequired")).toBe("Email is required")
+			expect(t("contact.error.messageRequired")).toBe("Message is required")
 		})
 
 		it("should provide contact form validation errors in Spanish", () => {
 			const t = getTranslations("es")
-			expect(t("contact.error.nameRequired")).toBe("Se requiere ID del remitente")
-			expect(t("contact.error.emailRequired")).toBe("Se requiere frecuencia")
+			expect(t("contact.error.nameRequired")).toBe("El nombre es requerido")
+			expect(t("contact.error.emailRequired")).toBe("El email es requerido")
 			expect(t("contact.error.messageRequired")).toBe("Se requiere carga de transmisión")
 		})
 	})

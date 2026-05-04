@@ -53,13 +53,15 @@ export function initKonamiCode() {
 			duration: 4000,
 		})
 
-		// Rainbow background animation
+		// Subtle forest green hue shift
 		const body = document.body
+		const baseHue = 135
+		const hueShift = 15
 		gsap.to(body, {
 			duration: 2,
 			onUpdate: function () {
-				const hue = (this.progress() * 360) % 360
-				body.style.background = `linear-gradient(135deg, hsl(${hue}, 60%, 10%), hsl(${(hue + 180) % 360}, 60%, 5%))`
+				const hue = baseHue + this.progress() * hueShift
+				body.style.background = `linear-gradient(135deg, hsl(${hue}, 35%, 10%), hsl(${hue + 5}, 35%, 5%))`
 			},
 			onComplete: () => {
 				// Reset after animation
@@ -151,24 +153,19 @@ export function initCoffeeCupEasterEgg() {
 						duration: 3000,
 					})
 
-					// Shake all coffee cups
+					// Restrained scale bounce on all coffee cups
 					const cups = document.querySelectorAll(".material-symbols-outlined")
 					const coffeeCups = Array.from(cups).filter(
 						(c) => (c as HTMLElement).textContent?.trim() === "local_cafe"
 					)
 
-					gsap.fromTo(
-						coffeeCups,
-						{ scale: 1 },
-						{
-							scale: 2,
-							duration: 0.5,
-							ease: "elastic.out(1, 0.3)",
-							onComplete: () => {
-								gsap.to(coffeeCups, { scale: 1, duration: 0.3 })
-							},
-						}
-					)
+					gsap.to(coffeeCups, {
+						scale: 1.1,
+						duration: 0.3,
+						ease: "power2.out",
+						yoyo: true,
+						repeat: 1,
+					})
 
 					cupSecretResetTimer = setTimeout(() => {
 						cupSecretActivated = false
@@ -254,11 +251,11 @@ export function initTerminalSecret() {
 						terminalContent.appendChild(secretLine)
 						terminalContent.appendChild(secretMessage)
 
-						// Animate the reveal
+						// Subtle fade-in reveal
 						gsap.fromTo(
 							[secretLine, secretMessage],
-							{ opacity: 0, y: 10 },
-							{ opacity: 1, y: 0, duration: 0.5, stagger: 0.2, ease: "power2.out" }
+							{ opacity: 0, y: 4 },
+							{ opacity: 1, y: 0, duration: 0.4, stagger: 0.15, ease: "power2.out" }
 						)
 
 						toast("🔓 Terminal secret unlocked!", { duration: 3000 })

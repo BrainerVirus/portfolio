@@ -1,0 +1,285 @@
+---
+import { getLangFromUrl, getTranslations } from "@/i18n/utils"
+import { Icon } from "astro-icon/components"
+
+const lang = getLangFromUrl(Astro.url)
+const t = getTranslations(lang)
+
+interface Skill {
+	translationKey: string
+	mastery: number
+	icon: string
+}
+
+const coreSkills: Skill[] = [
+	{ translationKey: "skills.core_skills.typescript", mastery: 95, icon: "devicon:typescript" },
+	{ translationKey: "skills.core_skills.angular", mastery: 90, icon: "devicon:angular" },
+	{ translationKey: "skills.core_skills.nextjs", mastery: 90, icon: "devicon:nextjs" },
+	{ translationKey: "skills.core_skills.tailwindcss", mastery: 95, icon: "devicon:tailwindcss" },
+]
+
+const secondarySkills: Skill[] = [
+	{ translationKey: "skills.secondary_skills.figma", mastery: 95, icon: "devicon:figma" },
+	{ translationKey: "skills.secondary_skills.nodejs", mastery: 85, icon: "devicon:nodejs" },
+	{ translationKey: "skills.secondary_skills.prisma", mastery: 90, icon: "devicon:prisma" },
+	{ translationKey: "skills.secondary_skills.zustand", mastery: 85, icon: "devicon:javascript" },
+	{ translationKey: "skills.secondary_skills.reactnative", mastery: 80, icon: "devicon:react" },
+	{ translationKey: "skills.secondary_skills.agile", mastery: 95, icon: "mdi:nature-people" },
+]
+
+const additionalSkills: Skill[] = [
+	{ translationKey: "skills.additional_skills.docker", mastery: 85, icon: "devicon:docker" },
+	{ translationKey: "skills.additional_skills.github", mastery: 95, icon: "devicon:github" },
+	{ translationKey: "skills.additional_skills.design_thinking", mastery: 95, icon: "mdi:head-lightbulb" },
+	{ translationKey: "skills.additional_skills.problem_solving", mastery: 95, icon: "mdi:brain" },
+	{ translationKey: "skills.additional_skills.empathy", mastery: 90, icon: "mdi:chat" },
+	{ translationKey: "skills.additional_skills.tenacity", mastery: 95, icon: "mdi:dumbbell" },
+	{ translationKey: "skills.additional_skills.socketio", mastery: 85, icon: "devicon:socketio" },
+	{ translationKey: "skills.additional_skills.python", mastery: 35, icon: "devicon:python" },
+]
+
+const allSkills = [
+	...coreSkills.map((s) => ({ ...s, category: "core" as const })),
+	...secondarySkills.map((s) => ({ ...s, category: "secondary" as const })),
+	...additionalSkills.map((s) => ({ ...s, category: "additional" as const })),
+]
+---
+
+<section
+	class="skills-bento-section relative flex min-h-screen items-center overflow-hidden py-24"
+	id="skills"
+	style="background-color: #0a0e0a;"
+>
+	<div class="forest-blob absolute inset-0 pointer-events-none" aria-hidden="true" />
+
+	<div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="mb-16 text-center">
+			<h2
+				class="skills-bento-heading mb-4 text-4xl font-bold md:text-5xl"
+				style="color: #f0e6d2;"
+			>
+				{t("skills.title")}
+			</h2>
+			<p class="skills-bento-subtitle max-w-lg mx-auto text-base" style="color: #a89a84;">
+				{t("skills.subtitle")}
+			</p>
+		</div>
+
+		<div class="skills-bento-grid grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+			{
+				allSkills.map((skill) => {
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					const skillName = t(skill.translationKey as any)
+					const isCore = skill.category === "core"
+					const colSpan = isCore ? "col-span-2" : "col-span-1"
+					const iconSize = isCore ? "h-10 w-10" : "h-7 w-7"
+					const padding = isCore ? "p-6" : "p-4"
+
+					return (
+						<div
+							class={`skill-bento-card group relative flex flex-col ${colSpan} ${padding} rounded-xl border backdrop-blur-sm transition-colors duration-300`}
+							style="background-color: rgba(20, 26, 20, 0.6); border-color: rgba(240, 230, 210, 0.06);"
+							data-mastery={skill.mastery}
+						>
+							<div class="mb-3 flex items-center gap-3">
+								<div class="skill-bento-icon flex shrink-0 items-center justify-center">
+									<Icon
+										name={skill.icon}
+										class={`${iconSize}`}
+										aria-label={skillName}
+										style="color: #f0e6d2;"
+									/>
+								</div>
+								<div class="flex flex-col">
+									<span
+										class="text-sm font-medium"
+										style="color: #f0e6d2;"
+									>
+										{skillName}
+									</span>
+									<span
+										class="text-xs"
+										style="color: #a89a84;"
+									>
+										{t("skills.mastery")}: {skill.mastery}%
+									</span>
+								</div>
+							</div>
+							<div class="mt-auto w-full">
+								<div
+									class="h-1.5 w-full overflow-hidden rounded-full"
+									style="background-color: rgba(58, 122, 77, 0.15);"
+								>
+									<div
+										class="skill-bento-progress h-full rounded-full"
+										style="width: 0%; background-color: #3a7a4d;"
+										data-mastery={skill.mastery}
+									/>
+								</div>
+							</div>
+						</div>
+					)
+				})
+			}
+		</div>
+	</div>
+</section>
+
+<style>
+	.forest-blob {
+		background:
+			radial-gradient(ellipse 80% 60% at 20% 40%, rgba(58, 122, 77, 0.12) 0%, transparent 70%),
+			radial-gradient(ellipse 60% 80% at 80% 60%, rgba(74, 143, 90, 0.08) 0%, transparent 70%),
+			radial-gradient(ellipse 50% 50% at 50% 50%, rgba(42, 90, 58, 0.06) 0%, transparent 70%);
+		filter: blur(60px);
+		animation: blob-morph 12s ease-in-out infinite alternate;
+	}
+
+	@keyframes blob-morph {
+		0% {
+			transform: scale(1) translate(0, 0);
+			opacity: 0.8;
+		}
+		33% {
+			transform: scale(1.1) translate(3%, -2%);
+			opacity: 1;
+		}
+		66% {
+			transform: scale(0.95) translate(-2%, 3%);
+			opacity: 0.7;
+		}
+		100% {
+			transform: scale(1.05) translate(1%, 1%);
+			opacity: 0.9;
+		}
+	}
+</style>
+
+<script>
+	import gsap from "gsap"
+	import { ScrollTrigger } from "gsap/ScrollTrigger"
+	import { splitTextReveal } from "@/lib/animations"
+
+	gsap.registerPlugin(ScrollTrigger)
+
+	let bentoCtx: gsap.Context | null = null
+
+	function initSkillsBentoAnimations() {
+		if (bentoCtx) {
+			bentoCtx.revert()
+		}
+
+		bentoCtx = gsap.context(() => {
+			const section = document.querySelector("#skills")
+			if (!section) return
+
+			const heading = section.querySelector(".skills-bento-heading")
+			const subtitle = section.querySelector(".skills-bento-subtitle")
+			const cards = section.querySelectorAll(".skill-bento-card")
+			const progressBars = section.querySelectorAll(".skill-bento-progress")
+
+			// Heading SplitText reveal
+			if (heading) {
+				splitTextReveal(heading, { type: "lines", mask: true })
+			}
+
+			// Subtitle fade in after heading
+			if (subtitle) {
+				gsap.fromTo(
+					subtitle,
+					{ opacity: 0, y: 20 },
+					{
+						opacity: 1,
+						y: 0,
+						duration: 0.6,
+						delay: 0.4,
+						ease: "power2.out",
+						scrollTrigger: {
+							trigger: subtitle,
+							start: "top 85%",
+							toggleActions: "play none none none",
+						},
+					}
+				)
+			}
+
+			// GSAP 3D flip entrance for cards
+			gsap.fromTo(
+				cards,
+				{
+					rotationX: 90,
+					opacity: 0,
+					transformPerspective: 1000,
+				},
+				{
+					rotationX: 0,
+					opacity: 1,
+					duration: 0.8,
+					stagger: 0.05,
+					ease: "power3.out",
+					scrollTrigger: {
+						trigger: section.querySelector(".skills-bento-grid"),
+						start: "top 80%",
+						toggleActions: "play none none none",
+					},
+				}
+			)
+
+			// Progress bars animate width from 0% to mastery%
+			progressBars.forEach((bar) => {
+				const mastery = parseInt(bar.getAttribute("data-mastery") || "0", 10)
+
+				gsap.fromTo(
+					bar,
+					{ width: "0%" },
+					{
+						width: `${mastery}%`,
+						duration: 0.8,
+						ease: "power2.out",
+						scrollTrigger: {
+							trigger: bar,
+							start: "top 85%",
+							toggleActions: "play none none none",
+						},
+					}
+				)
+			})
+
+			// Hover effects
+			cards.forEach((card) => {
+				const icon = card.querySelector(".skill-bento-icon")
+
+				const hoverTween = gsap.to(card, {
+					y: -8,
+					borderColor: "rgba(58, 122, 77, 0.4)",
+					boxShadow: "0 12px 40px rgba(58, 122, 77, 0.15)",
+					duration: 0.3,
+					ease: "power2.out",
+					paused: true,
+				})
+
+				const iconTween = gsap.to(icon, {
+					scale: 1.1,
+					duration: 0.3,
+					ease: "power2.out",
+					paused: true,
+				})
+
+				card.addEventListener("mouseenter", () => {
+					hoverTween.play()
+					iconTween.play()
+				})
+
+				card.addEventListener("mouseleave", () => {
+					hoverTween.reverse()
+					iconTween.reverse()
+				})
+			})
+		}, "#skills")
+	}
+
+	initSkillsBentoAnimations()
+	document.addEventListener("astro:after-swap", () => {
+		initSkillsBentoAnimations()
+	})
+</script>

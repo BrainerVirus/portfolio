@@ -1,0 +1,395 @@
+---
+import { getLangFromUrl, getTranslations } from "@/i18n/utils"
+import { Icon } from "astro-icon/components"
+
+const lang = getLangFromUrl(Astro.url)
+const t = getTranslations(lang)
+
+interface Skill {
+	translationKey: string
+	mastery: number
+	icon: string
+}
+
+const coreSkills: Skill[] = [
+	{ translationKey: "skills.core_skills.typescript", mastery: 95, icon: "devicon:typescript" },
+	{ translationKey: "skills.core_skills.angular", mastery: 90, icon: "devicon:angular" },
+	{ translationKey: "skills.core_skills.nextjs", mastery: 90, icon: "devicon:nextjs" },
+	{ translationKey: "skills.core_skills.tailwindcss", mastery: 95, icon: "devicon:tailwindcss" },
+]
+
+const secondarySkills: Skill[] = [
+	{ translationKey: "skills.secondary_skills.figma", mastery: 95, icon: "devicon:figma" },
+	{ translationKey: "skills.secondary_skills.nodejs", mastery: 85, icon: "devicon:nodejs" },
+	{ translationKey: "skills.secondary_skills.prisma", mastery: 90, icon: "devicon:prisma" },
+	{ translationKey: "skills.secondary_skills.zustand", mastery: 85, icon: "devicon:javascript" },
+	{ translationKey: "skills.secondary_skills.reactnative", mastery: 80, icon: "devicon:react" },
+	{ translationKey: "skills.secondary_skills.agile", mastery: 95, icon: "mdi:nature-people" },
+]
+
+const additionalSkills: Skill[] = [
+	{ translationKey: "skills.additional_skills.docker", mastery: 85, icon: "devicon:docker" },
+	{ translationKey: "skills.additional_skills.github", mastery: 95, icon: "devicon:github" },
+	{ translationKey: "skills.additional_skills.design_thinking", mastery: 95, icon: "mdi:head-lightbulb" },
+	{ translationKey: "skills.additional_skills.problem_solving", mastery: 95, icon: "mdi:brain" },
+	{ translationKey: "skills.additional_skills.empathy", mastery: 90, icon: "mdi:chat" },
+	{ translationKey: "skills.additional_skills.tenacity", mastery: 95, icon: "mdi:dumbbell" },
+	{ translationKey: "skills.additional_skills.socketio", mastery: 85, icon: "devicon:socketio" },
+	{ translationKey: "skills.additional_skills.python", mastery: 35, icon: "devicon:python" },
+]
+---
+
+<section
+	class="skills-orbital-section relative flex min-h-screen items-center overflow-hidden py-24"
+	id="skills"
+	style="background-color: #0a0e0a;"
+>
+	<div class="forest-blob absolute inset-0 pointer-events-none" aria-hidden="true" />
+
+	<div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+		<div class="mb-16 text-center">
+			<h2
+				class="skills-orbital-heading mb-4 text-4xl font-bold md:text-5xl"
+				style="color: #f0e6d2;"
+			>
+				{t("skills.title")}
+			</h2>
+			<p class="skills-orbital-subtitle max-w-lg mx-auto text-base" style="color: #a89a84;">
+				{t("skills.subtitle")}
+			</p>
+		</div>
+
+		<div class="skills-orbital-container relative mx-auto flex items-center justify-center" style="height: 640px; max-width: 640px;">
+			{/* Center label */}
+			<div
+				class="skills-orbital-center absolute z-20 flex flex-col items-center justify-center rounded-full border"
+				style="width: 120px; height: 120px; background-color: rgba(20, 26, 20, 0.8); border-color: rgba(58, 122, 77, 0.3);"
+			>
+				<span class="text-xs font-medium" style="color: #a89a84;">{t("skills.mastery")}</span>
+				<span class="text-lg font-bold" style="color: #f0e6d2;">Stack</span>
+			</div>
+
+			{/* Inner ring — Core skills */}
+			<div
+				class="skills-orbital-ring skills-orbital-ring--inner absolute rounded-full border"
+				style="width: 240px; height: 240px; border-color: rgba(58, 122, 77, 0.12);"
+			>
+				{
+					coreSkills.map((skill, index) => {
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						const skillName = t(skill.translationKey as any)
+						const angle = (360 / coreSkills.length) * index
+						const radius = 120
+						const x = Math.cos((angle * Math.PI) / 180) * radius
+						const y = Math.sin((angle * Math.PI) / 180) * radius
+
+						return (
+							<div
+								class="skill-orbital-item absolute flex flex-col items-center justify-center rounded-full border"
+								style={`width: 64px; height: 64px; left: calc(50% + ${x}px - 32px); top: calc(50% + ${y}px - 32px); background-color: rgba(20, 26, 20, 0.9); border-color: rgba(58, 122, 77, 0.25);`}
+								data-skill-name={skillName}
+							>
+								<Icon
+									name={skill.icon}
+									class="h-7 w-7"
+									aria-label={skillName}
+									style="color: #f0e6d2;"
+								/>
+							</div>
+						)
+					})
+				}
+			</div>
+
+			{/* Middle ring — Secondary skills */}
+			<div
+				class="skills-orbital-ring skills-orbital-ring--middle absolute rounded-full border"
+				style="width: 400px; height: 400px; border-color: rgba(58, 122, 77, 0.1);"
+			>
+				{
+					secondarySkills.map((skill, index) => {
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						const skillName = t(skill.translationKey as any)
+						const angle = (360 / secondarySkills.length) * index
+						const radius = 200
+						const x = Math.cos((angle * Math.PI) / 180) * radius
+						const y = Math.sin((angle * Math.PI) / 180) * radius
+
+						return (
+							<div
+								class="skill-orbital-item absolute flex flex-col items-center justify-center rounded-full border"
+								style={`width: 52px; height: 52px; left: calc(50% + ${x}px - 26px); top: calc(50% + ${y}px - 26px); background-color: rgba(20, 26, 20, 0.9); border-color: rgba(58, 122, 77, 0.2);`}
+								data-skill-name={skillName}
+							>
+								<Icon
+									name={skill.icon}
+									class="h-5 w-5"
+									aria-label={skillName}
+									style="color: #f0e6d2;"
+								/>
+							</div>
+						)
+					})
+				}
+			</div>
+
+			{/* Outer ring — Additional skills */}
+			<div
+				class="skills-orbital-ring skills-orbital-ring--outer absolute rounded-full border"
+				style="width: 560px; height: 560px; border-color: rgba(58, 122, 77, 0.08);"
+			>
+				{
+					additionalSkills.map((skill, index) => {
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						const skillName = t(skill.translationKey as any)
+						const angle = (360 / additionalSkills.length) * index
+						const radius = 280
+						const x = Math.cos((angle * Math.PI) / 180) * radius
+						const y = Math.sin((angle * Math.PI) / 180) * radius
+
+						return (
+							<div
+								class="skill-orbital-item absolute flex flex-col items-center justify-center rounded-full border"
+								style={`width: 44px; height: 44px; left: calc(50% + ${x}px - 22px); top: calc(50% + ${y}px - 22px); background-color: rgba(20, 26, 20, 0.9); border-color: rgba(58, 122, 77, 0.15);`}
+								data-skill-name={skillName}
+							>
+								<Icon
+									name={skill.icon}
+									class="h-4 w-4"
+									aria-label={skillName}
+									style="color: #f0e6d2;"
+								/>
+							</div>
+						)
+					})
+				}
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.forest-blob {
+		background:
+			radial-gradient(ellipse 80% 60% at 20% 40%, rgba(58, 122, 77, 0.12) 0%, transparent 70%),
+			radial-gradient(ellipse 60% 80% at 80% 60%, rgba(74, 143, 90, 0.08) 0%, transparent 70%),
+			radial-gradient(ellipse 50% 50% at 50% 50%, rgba(42, 90, 58, 0.06) 0%, transparent 70%);
+		filter: blur(60px);
+		animation: blob-morph 12s ease-in-out infinite alternate;
+	}
+
+	@keyframes blob-morph {
+		0% {
+			transform: scale(1) translate(0, 0);
+			opacity: 0.8;
+		}
+		33% {
+			transform: scale(1.1) translate(3%, -2%);
+			opacity: 1;
+		}
+		66% {
+			transform: scale(0.95) translate(-2%, 3%);
+			opacity: 0.7;
+		}
+		100% {
+			transform: scale(1.05) translate(1%, 1%);
+			opacity: 0.9;
+		}
+	}
+
+	.skills-orbital-ring--inner {
+		animation: orbit-clockwise 60s linear infinite;
+	}
+
+	.skills-orbital-ring--middle {
+		animation: orbit-counterclockwise 80s linear infinite;
+	}
+
+	.skills-orbital-ring--outer {
+		animation: orbit-clockwise 100s linear infinite;
+	}
+
+	.skills-orbital-container:hover .skills-orbital-ring {
+		animation-play-state: paused;
+	}
+
+	.skills-orbital-container:hover .skill-orbital-item {
+		animation-play-state: paused;
+	}
+
+	/* Counter-rotate items so icons stay upright */
+	.skills-orbital-ring--inner .skill-orbital-item {
+		animation: counter-rotate-clockwise 60s linear infinite;
+	}
+
+	.skills-orbital-ring--middle .skill-orbital-item {
+		animation: counter-rotate-counterclockwise 80s linear infinite;
+	}
+
+	.skills-orbital-ring--outer .skill-orbital-item {
+		animation: counter-rotate-clockwise 100s linear infinite;
+	}
+
+	@keyframes orbit-clockwise {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
+	}
+
+	@keyframes orbit-counterclockwise {
+		from { transform: rotate(360deg); }
+		to { transform: rotate(0deg); }
+	}
+
+	@keyframes counter-rotate-clockwise {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(-360deg); }
+	}
+
+	@keyframes counter-rotate-counterclockwise {
+		from { transform: rotate(0deg); }
+		to { transform: rotate(360deg); }
+	}
+
+	/* Tooltip on hover */
+	.skill-orbital-item::after {
+		content: attr(data-skill-name);
+		position: absolute;
+		bottom: calc(100% + 8px);
+		left: 50%;
+		transform: translateX(-50%);
+		padding: 4px 8px;
+		border-radius: 6px;
+		font-size: 11px;
+		font-weight: 500;
+		white-space: nowrap;
+		pointer-events: none;
+		opacity: 0;
+		transition: opacity 0.2s ease;
+		background-color: rgba(20, 26, 20, 0.95);
+		color: #f0e6d2;
+		border: 1px solid rgba(58, 122, 77, 0.3);
+	}
+
+	.skill-orbital-item:hover::after {
+		opacity: 1;
+	}
+
+	.skill-orbital-item:hover {
+		border-color: rgba(58, 122, 77, 0.5);
+		box-shadow: 0 0 20px rgba(58, 122, 77, 0.2);
+		transform: scale(1.15);
+		transition: all 0.3s ease;
+	}
+</style>
+
+<script>
+	import gsap from "gsap"
+	import { ScrollTrigger } from "gsap/ScrollTrigger"
+	import { splitTextReveal } from "@/lib/animations"
+
+	gsap.registerPlugin(ScrollTrigger)
+
+	let orbitalCtx: gsap.Context | null = null
+
+	function initSkillsOrbitalAnimations() {
+		if (orbitalCtx) {
+			orbitalCtx.revert()
+		}
+
+		orbitalCtx = gsap.context(() => {
+			const section = document.querySelector("#skills")
+			if (!section) return
+
+			const heading = section.querySelector(".skills-orbital-heading")
+			const subtitle = section.querySelector(".skills-orbital-subtitle")
+			const rings = section.querySelectorAll(".skills-orbital-ring")
+			const items = section.querySelectorAll(".skill-orbital-item")
+			const center = section.querySelector(".skills-orbital-center")
+
+			// Heading SplitText reveal
+			if (heading) {
+				splitTextReveal(heading, { type: "lines", mask: true })
+			}
+
+			// Subtitle fade in after heading
+			if (subtitle) {
+				gsap.fromTo(
+					subtitle,
+					{ opacity: 0, y: 20 },
+					{
+						opacity: 1,
+						y: 0,
+						duration: 0.6,
+						delay: 0.4,
+						ease: "power2.out",
+						scrollTrigger: {
+							trigger: subtitle,
+							start: "top 85%",
+							toggleActions: "play none none none",
+						},
+					}
+				)
+			}
+
+			// GSAP entrance: rings scale from 0 to 1
+			gsap.fromTo(
+				rings,
+				{ scale: 0, opacity: 0 },
+				{
+					scale: 1,
+					opacity: 1,
+					duration: 1,
+					stagger: 0.2,
+					ease: "back.out(1.2)",
+					scrollTrigger: {
+						trigger: section.querySelector(".skills-orbital-container"),
+						start: "top 80%",
+						toggleActions: "play none none none",
+					},
+				}
+			)
+
+			// Center label entrance
+			if (center) {
+				gsap.fromTo(
+					center,
+					{ scale: 0, opacity: 0 },
+					{
+						scale: 1,
+						opacity: 1,
+						duration: 0.8,
+						ease: "back.out(1.5)",
+						scrollTrigger: {
+							trigger: section.querySelector(".skills-orbital-container"),
+							start: "top 80%",
+							toggleActions: "play none none none",
+						},
+					}
+				)
+			}
+
+			// Items scale from 0 to 1 with back.out
+			gsap.fromTo(
+				items,
+				{ scale: 0, opacity: 0 },
+				{
+					scale: 1,
+					opacity: 1,
+					duration: 0.6,
+					stagger: 0.04,
+					ease: "back.out(1.7)",
+					scrollTrigger: {
+						trigger: section.querySelector(".skills-orbital-container"),
+						start: "top 75%",
+						toggleActions: "play none none none",
+					},
+				}
+			)
+		}, "#skills")
+	}
+
+	initSkillsOrbitalAnimations()
+	document.addEventListener("astro:after-swap", () => {
+		initSkillsOrbitalAnimations()
+	})
+</script>
