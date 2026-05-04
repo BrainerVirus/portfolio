@@ -127,16 +127,6 @@ const exp = useTranslation(lang, "experience")
 	}
 
 	.experience-subtitle { opacity: 0 }
-
-	.experience-modal-content .grid {
-		border-left-color: transparent !important;
-	}
-
-	.experience-shape circle,
-	.experience-shape line {
-		stroke-dasharray: 1;
-		stroke-dashoffset: 1;
-	}
 </style>
 
 <script>
@@ -222,27 +212,29 @@ const exp = useTranslation(lang, "experience")
 				cards.forEach((card, i) => {
 					gsap.from(card, {
 						y: 60, opacity: 0, duration: 0.7, delay: i * 0.1, ease: "power3.out",
-						scrollTrigger: { trigger: card, start: "top 88%", once: true },
-					})
+					scrollTrigger: { trigger: card, start: "top 88%", once: true },
 				})
-
-				const shapes = section.querySelectorAll<HTMLElement>(
-					".experience-shape circle, .experience-shape line"
-				)
-				gsap.to(shapes, {
-					drawSVG: "100%",
-					duration: 1.5,
-					stagger: 0.04,
-					ease: "power2.inOut",
-					scrollTrigger: {
-						trigger: section,
-						start: "top 80%",
-						end: "bottom 20%",
-						scrub: true,
-					},
-				})
-			}, "#experience")
+			})
+		}, "#experience")
 		}
+
+		// Standalone drawSVG — outside context, never flickers on re-init
+		const shapes = section.querySelectorAll<HTMLElement>(
+			".experience-shape circle, .experience-shape line"
+		)
+		gsap.set(shapes, { drawSVG: "0%" })
+		gsap.to(shapes, {
+			drawSVG: "100%",
+			duration: 1.5,
+			stagger: 0.04,
+			ease: "power2.inOut",
+			scrollTrigger: {
+				trigger: section,
+				start: "top 80%",
+				end: "bottom 30%",
+				scrub: true,
+			},
+		})
 
 		const entries = section.querySelectorAll<HTMLElement>(".experience-entry")
 		entries.forEach((card) => {
