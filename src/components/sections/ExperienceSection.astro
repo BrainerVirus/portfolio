@@ -88,6 +88,19 @@ const exp = useTranslation(lang, "experience")
 	</div>
 </section>
 
+<div class="experience-modal pointer-events-none fixed inset-0 z-50 flex items-center justify-center opacity-0" style="background: rgba(10,14,10,0.92); transition: opacity 0.4s ease;">
+	<div class="experience-modal-card relative cursor-default" style="width: 460px; height: 540px; perspective: 3000px; transform-style: preserve-3d;">
+		<div class="experience-modal-front absolute inset-0 rounded-2xl p-8 flex flex-col justify-center" style="background: rgba(20,26,20,0.95); border: 1px solid rgba(58,122,77,0.3); backface-visibility: hidden;">
+			<div class="experience-modal-content"></div>
+		</div>
+		<div class="experience-modal-back absolute inset-0 rounded-2xl p-10 flex items-center justify-center" style="background: #0a0e0a; border: 1px solid rgba(58,122,77,0.5); backface-visibility: hidden; transform: rotateY(180deg);">
+			<span class="text-center font-mono text-lg text-[#3a7a4d]"></span>
+		</div>
+	</div>
+	<button class="experience-modal-close absolute top-6 right-6 text-[#a89a84] text-3xl hover:text-[#f0e6d2] transition-colors cursor-pointer">&times;</button>
+	<button class="experience-modal-flip absolute bottom-8 left-1/2 -translate-x-1/2 border border-[#3a7a4d]/40 rounded-full px-5 py-2.5 font-mono text-xs text-[#3a7a4d] hover:bg-[#3a7a4d]/10 hover:border-[#3a7a4d]/60 transition-colors cursor-pointer">Flip Card</button>
+</div>
+
 <style>
 	.experience-card-wrapper {
 		perspective: 1200px;
@@ -229,4 +242,80 @@ const exp = useTranslation(lang, "experience")
 
 	initExperienceAnimations()
 	document.addEventListener("astro:after-swap", () => { initExperienceAnimations() })
+
+	// --- Modal overlay with flip easter egg ---
+	const easterEggs = [
+		"🐛 This bug was a feature all along.",
+		"☕ Powered by coffee and spite since 2019.",
+		"🦾 I once fixed a prod incident from my phone at a wedding.",
+		"👾 No, the database is not down. You forgot the VPN.",
+		"😺 My cat has contributed more LoC than most juniors.",
+		"💾 Real devs test in production. (Please don't.)",
+	]
+
+	const modal = document.querySelector(".experience-modal") as HTMLElement
+	const modalCard = modal.querySelector(".experience-modal-card") as HTMLElement
+	const modalFront = modal.querySelector(".experience-modal-content") as HTMLElement
+	const modalBack = modal.querySelector(".experience-modal-back span") as HTMLElement
+	const modalClose = modal.querySelector(".experience-modal-close") as HTMLElement
+	const modalFlip = modal.querySelector(".experience-modal-flip") as HTMLElement
+	let modalFlipped = false
+
+	function initModalTilt(): () => void {
+		const xTo = gsap.quickTo(modalCard, "rotationX", { duration: 0.5, ease: "power2.out" })
+		const yTo = gsap.quickTo(modalCard, "rotationY", { duration: 0.5, ease: "power2.out" })
+		const onMove = (e: MouseEvent) => {
+			const rx = (e.clientX / window.innerWidth - 0.5) * 2
+			const ry = (e.clientY / window.innerHeight - 0.5) * 2
+			yTo(rx * 15)
+			xTo(ry * -15)
+		}
+		window.addEventListener("mousemove", onMove)
+		return () => {
+			window.removeEventListener("mousemove", onMove)
+			xTo(0)
+			yTo(0)
+		}
+	}
+	let modalTiltCleanup: (() => void) | null = null
+
+	function openModal(card: HTMLElement) {
+		const i = parseInt(card.dataset.index || "0", 10)
+		modalFront.innerHTML = card.querySelector(".grid")?.outerHTML || ""
+		modalBack.textContent = easterEggs[i % easterEggs.length]
+		modal.style.pointerEvents = "auto"
+		modal.style.opacity = "1"
+		modalFlipped = false
+		gsap.set(modalCard, { rotationY: 0 })
+		modalTiltCleanup = initModalTilt()
+	}
+
+	function closeModal() {
+		modal.style.pointerEvents = "none"
+		modal.style.opacity = "0"
+		if (modalTiltCleanup) { modalTiltCleanup(); modalTiltCleanup = null }
+	}
+
+	modalClose.addEventListener("click", closeModal)
+	modal.addEventListener("click", (e) => {
+		if (e.target === modal) closeModal()
+	})
+	document.addEventListener("keydown", (e) => {
+		if (e.key === "Escape" && modal.style.opacity === "1") closeModal()
+	})
+
+	modalFlip.addEventListener("click", () => {
+		modalFlipped = !modalFlipped
+		gsap.to(modalCard, {
+			rotationY: modalFlipped ? 180 : 0,
+			duration: 0.7,
+			ease: "power2.inOut",
+		})
+	})
+
+	// Wire cards to modal
+	const entries = document.querySelectorAll<HTMLElement>("#experience .experience-entry")
+	entries.forEach((card) => {
+		card.addEventListener("click", () => openModal(card))
+	})
 </script>
