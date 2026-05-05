@@ -12,7 +12,7 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 ### Fixed
 
 - **Vercel production deploys** — Added an explicit root package entry to `pnpm-workspace.yaml` so Vercel's pnpm install works even when the project is built with its older pnpm compatibility path.
-- **GitHub Actions workflow** — Restored the CI workflow to stable action versions and the correct pnpm cache configuration.
+- **GitHub Actions workflow** — Kept the Node 24-ready action versions while restoring the correct pnpm cache configuration.
 - **Package metadata** — Updated the package version to match the latest published release line.
 
 ## [4.1.0] - 2026-05-05
