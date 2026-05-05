@@ -9,6 +9,7 @@ dist/
 
 # dependencies
 node_modules/
+.pnpm-store/
 
 # logs
 npm-debug.log*
@@ -19,6 +20,11 @@ pnpm-debug.log*
 # environment variables
 .env
 .env.production
+.env.local
+
+# local agent/tooling scratch
+.opencode/
+docs/
 
 # packages
 package-lock.json
@@ -31,7 +37,6 @@ yarn.lock
 /playwright/.cache/
 ./tests-examples
 /tests-examples/
-.env.local
 /test-results/
 /playwright-report/
 /blob-report/
