@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import { actions } from "astro:actions"
 import gsap from "gsap"
-import { toast } from "sonner"
 import {
 	getContactFormTranslations,
 	languageChangeEvent,
@@ -284,18 +283,15 @@ export default function ContactForm({ locale, translations }: ContactFormProps) 
 		try {
 			const result = await actions.contact({ name, email, message, locale: currentLocale })
 			if (!result.error) {
-				toast.success(copy.success)
 				setName("")
 				setEmail("")
 				setMessage("")
 				setErrors({})
 				setSubmitStatus("success")
 			} else {
-				toast.error(result.error?.message || copy.failed)
 				setSubmitStatus("error")
 			}
 		} catch {
-			toast.error(copy.connectionLost)
 			setSubmitStatus("error")
 		} finally {
 			setIsSubmitting(false)
