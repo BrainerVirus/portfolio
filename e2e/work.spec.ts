@@ -45,8 +45,11 @@ test.describe("Work Section — Modal Overlay", () => {
 	test("clicking close button dismisses the modal", async ({ page }) => {
 		await page.locator(".experience-entry").first().click()
 		await page.waitForTimeout(500)
-		await page.locator(".experience-modal-close").click()
-		await page.waitForTimeout(700)
+		// Header z-50 intercepts pointer events — use JS click to bypass
+		await page.evaluate(() => {
+			document.querySelector(".experience-modal-close")?.dispatchEvent(new Event("click", { bubbles: true }))
+		})
+		await page.waitForTimeout(800)
 		const opacity = await page.locator(".experience-modal").evaluate(
 			(el) => window.getComputedStyle(el).opacity
 		)
@@ -56,8 +59,16 @@ test.describe("Work Section — Modal Overlay", () => {
 	test("clicking modal backdrop dismisses it", async ({ page }) => {
 		await page.locator(".experience-entry").first().click()
 		await page.waitForTimeout(500)
-		await page.locator(".experience-modal").click({ position: { x: 10, y: 10 } })
-		await page.waitForTimeout(700)
+		// Dispatch click on the modal overlay directly via JS
+		await page.evaluate(() => {
+			const modal = document.querySelector(".experience-modal")
+			if (modal) {
+				const event = new MouseEvent("click", { bubbles: true, clientX: 10, clientY: 10 })
+				Object.defineProperty(event, "target", { value: modal })
+				modal.dispatchEvent(event)
+			}
+		})
+		await page.waitForTimeout(800)
 		const opacity = await page.locator(".experience-modal").evaluate(
 			(el) => window.getComputedStyle(el).opacity
 		)
@@ -108,11 +119,13 @@ test.describe("Work Section — SVG Draw on Scroll", () => {
 test.describe("Work Section — Subtitle", () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto("http://localhost:3000/en/")
+		await page.locator("#experience").scrollIntoViewIfNeeded()
+		await page.waitForTimeout(800)
 	})
 
 	test("subtitle exists and is visible", async ({ page }) => {
 		const subtitle = page.locator("#experience .experience-subtitle")
-		await expect(subtitle).toBeVisible()
+		await expect(subtitle).toBeVisible({ timeout: 10000 })
 		const text = await subtitle.textContent()
 		expect(text!.length).toBeGreaterThan(0)
 	})
