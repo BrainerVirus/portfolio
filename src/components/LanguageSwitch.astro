@@ -4,50 +4,71 @@ import { getLangFromUrl, type Language } from "@/i18n/utils"
 const lang = getLangFromUrl(Astro.url)
 const otherLang: Language = lang === "en" ? "es" : "en"
 
-// Get current path and construct the other language URL
 const pathname = Astro.url.pathname
 const segments = pathname.split("/").filter(Boolean)
-
-// Remove locale prefix if present
 if (segments[0] === "en" || segments[0] === "es") {
 	segments.shift()
 }
-
-// Build new path with other language
-const newPath = `/${otherLang}${segments.length ? "/" + segments.join("/") : "/"}`
+const targetPath = `/${otherLang}${segments.length ? "/" + segments.join("/") : "/"}`
 ---
 
 <button
 	id="lang-switch"
-	class="flex cursor-pointer items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-gray-300"
-	aria-label={lang === "en" ? "Switch to Spanish" : "Cambiar a Inglés"}
+	class="relative flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-[#f0e6d2]/10 bg-[#f0e6d2]/5 font-mono text-xs font-bold text-[#a89a84] transition-all hover:border-[#3a7a4d]/40 hover:bg-[#3a7a4d]/10 hover:text-[#f0e6d2]"
 	data-target-lang={otherLang}
-	data-target-path={newPath}
+	data-target-path={targetPath}
+	aria-label={lang === "en" ? "Switch to Spanish" : "Cambiar a Inglés"}
 >
-	<span class="material-symbols-outlined text-sm">language</span>
-	<span class="uppercase">{otherLang}</span>
+	<span id="lang-text">{lang.toUpperCase()}</span>
 </button>
 
 <script>
-	function initLanguageSwitch() {
-		const buttons = document.querySelectorAll("#lang-switch")
-		buttons.forEach((btn) => {
-			btn.addEventListener("click", () => {
-				const targetLang = btn.getAttribute("data-target-lang")
-				const targetPath = btn.getAttribute("data-target-path")
+	import gsap from "gsap"
+	import { navigate } from "astro:transitions/client"
 
-				// Set cookie to persist language preference (1 year expiry)
-				document.cookie = `lang=${targetLang}; path=/; max-age=${60 * 60 * 24 * 365}; SameSite=Lax`
+	function initLangSwitch() {
+		const btn = document.querySelector("#lang-switch")
+		const textEl = document.querySelector("#lang-text")
+		if (!btn || !textEl) return
 
-				// Navigate to the new language path
-				window.location.href = targetPath || "/"
+		btn.addEventListener("click", () => {
+			const targetPath = btn.getAttribute("data-target-path")
+			const targetLang = btn.getAttribute("data-target-lang")
+
+			document.cookie = `lang=${targetLang}; path=/; max-age=31536000; SameSite=Lax`
+
+		const targetText = (targetLang || "en").toUpperCase()
+			const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%&*"
+			let iterations = 0
+			const maxIterations = 8
+
+			gsap.to(textEl, {
+				duration: 0.4,
+				onUpdate: () => {
+					if (iterations < maxIterations) {
+						const scrambled = targetText
+							.split("")
+							.map((_char, i) => {
+								if (i <= iterations) return targetText[i]
+								return chars[Math.floor(Math.random() * chars.length)]
+							})
+							.join("")
+						textEl.textContent = scrambled
+					}
+				},
+				onComplete: () => {
+					textEl.textContent = targetText
+					navigate(targetPath || "/")
+				},
 			})
+
+			const interval = setInterval(() => {
+				iterations++
+				if (iterations >= maxIterations) clearInterval(interval)
+			}, 50)
 		})
 	}
 
-	// Initialize on page load
-	initLanguageSwitch()
-
-	// Re-initialize after Astro view transitions
-	document.addEventListener("astro:after-swap", initLanguageSwitch)
+	initLangSwitch()
+	document.addEventListener("astro:after-swap", initLangSwitch)
 </script>

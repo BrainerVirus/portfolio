@@ -1,208 +1,217 @@
 ---
 import { getLangFromUrl, getTranslations } from "@/i18n/utils"
-
 const lang = getLangFromUrl(Astro.url)
 const t = getTranslations(lang)
 ---
 
-<section class="relative mx-auto mb-12 max-w-7xl scroll-mt-24 px-6 py-12 md:py-20" id="about">
-	<div class="bg-nebula absolute inset-0 -z-10 opacity-40 blur-3xl"></div>
-	<div class="mb-16 flex flex-col items-center text-center">
-		<div
-			class="animate-float border-primary/30 bg-primary/10 mb-4 inline-flex items-center justify-center rounded-full border p-3"
-		>
-			<span class="material-symbols-outlined text-primary">person_book</span>
-		</div>
-		<h2
-			class="bg-linear-to-r from-white to-gray-400 bg-clip-text pb-2 text-4xl font-bold text-transparent md:text-5xl"
-		>
-			{t("about.title")}
-		</h2>
-		<p class="mt-2 max-w-lg text-gray-400">
-			{t("about.subtitle")}
-		</p>
+<section class="relative flex min-h-screen items-center justify-center overflow-hidden" id="about">
+	<div class="bg-forest-whisper absolute inset-0 -z-10"></div>
+
+	<div class="about-decor pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+		<svg class="about-circle-main absolute h-72 w-72 opacity-15" style="top: 18%; right: 5%;" viewBox="0 0 100 100" fill="none">
+			<circle cx="50" cy="50" r="48" stroke="#3a7a4d" stroke-width="0.5"></circle>
+			<circle cx="50" cy="50" r="38" stroke="#3a7a4d" stroke-width="0.3" stroke-dasharray="4 6"></circle>
+			<circle cx="50" cy="50" r="28" stroke="#4a9a6d" stroke-width="0.4"></circle>
+		</svg>
+		<svg class="about-circle-cross absolute h-48 w-48 opacity-10" style="top: 65%; left: 8%;" viewBox="0 0 100 100" fill="none">
+			<circle cx="50" cy="50" r="48" stroke="#f0e6d2" stroke-width="0.3"></circle>
+			<line x1="50" y1="5" x2="50" y2="95" stroke="#f0e6d2" stroke-width="0.3"></line>
+			<line x1="5" y1="50" x2="95" y2="50" stroke="#f0e6d2" stroke-width="0.3"></line>
+			<circle cx="50" cy="50" r="4" fill="#f0e6d2" opacity="0.6"></circle>
+		</svg>
+		<svg class="about-circle-accent absolute h-32 w-32 opacity-12" style="bottom: 22%; right: 30%;" viewBox="0 0 100 100" fill="none">
+			<circle cx="50" cy="50" r="48" stroke="#4a9a6d" stroke-width="0.6"></circle>
+			<circle cx="35" cy="35" r="6" fill="#3a7a4d" opacity="0.5"></circle>
+			<circle cx="65" cy="65" r="4" fill="#3a7a4d" opacity="0.4"></circle>
+		</svg>
 	</div>
-	<div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2 lg:gap-24">
-		<div class="relative order-2 lg:order-1">
-			<div
-				class="terminal-window transform overflow-hidden rounded-lg transition-transform duration-500 hover:scale-[1.01]"
-			>
-				<div class="flex items-center gap-2 border-b border-white/10 bg-gray-800/50 px-4 py-2">
-					<div class="flex gap-1.5">
-						<div class="h-3 w-3 rounded-full bg-red-500"></div>
-						<div class="h-3 w-3 rounded-full bg-yellow-500"></div>
-						<div class="h-3 w-3 rounded-full bg-green-500"></div>
-					</div>
-					<div class="ml-2 font-mono text-xs text-gray-400">user@dev-ship:~/bio</div>
-				</div>
-				<div class="p-6 font-mono text-sm leading-relaxed text-gray-300 md:text-base">
-					<div class="mb-4">
-						<span class="text-green-400">➜</span>
-						<span class="text-blue-400">~</span>
-						<span class="text-primary-glow">cat</span> bio.txt
-					</div>
-					<div class="space-y-4">
-						<p>
-							&gt; <span class="font-semibold text-white">{t("about.identity")}:</span>
-							{t("about.name")}
-						</p>
-						<p>
-							&gt; <span class="font-semibold text-white">{t("about.class")}:</span>
-							{t("about.role")}
-						</p>
-						<p>
-							&gt; <span class="font-semibold text-white">{t("about.location")}:</span>
-							{t("about.locationValue")}
-						</p>
-						<p>
-							&gt; <span class="font-semibold text-white">{t("about.status")}:</span>
-							{t("about.statusValue")}
-						</p>
-						<p class="text-gray-400 italic">
-							"{t("about.quote")}"
-						</p>
-					</div>
-					<div class="mt-4">
-						<span class="text-green-400">➜</span>
-						<span class="text-blue-400">~</span>
-						<span class="animate-blink ml-1 inline-block h-5 w-2 bg-gray-400 align-middle"></span>
-					</div>
-				</div>
-			</div>
+
+	<div class="relative z-10 mx-auto w-full max-w-6xl px-6 py-20">
+		<div class="flex flex-col items-center text-center">
+			<h1 class="about-name font-light tracking-tighter text-[#f0e6d2]">
+				<span>Cristhofer</span><span>Pincetti</span>
+			</h1>
+			<p class="about-subtitle mt-6 text-xs uppercase tracking-[0.3em] text-[#6b6055]" data-i18n="about.role">
+				{t("about.role")}
+			</p>
 		</div>
-		<div class="relative order-1 flex h-100 items-center justify-center lg:order-2">
-			<div class="group relative flex h-80 w-80 items-center justify-center">
-				<div
-					class="portal-lens relative flex h-full w-full items-center justify-center overflow-hidden rounded-full border-white/10 backdrop-blur-sm"
-				>
-					<div class="nebula-view absolute inset-0 animate-pulse"></div>
-					<div class="absolute inset-0 opacity-40">
-						<div class="absolute top-1/4 left-1/3 h-1 w-1 animate-ping rounded-full bg-white"></div>
-						<div class="bg-primary absolute top-2/3 left-1/2 h-1.5 w-1.5 rounded-full blur-[1px]">
-						</div>
-						<div class="absolute top-1/2 left-3/4 h-1 w-1 rounded-full bg-white"></div>
-					</div>
-					<div class="absolute inset-0 bg-linear-to-tr from-transparent via-white/5 to-transparent">
-					</div>
-				</div>
-				<div
-					class="stylus-float animate-float absolute top-1/2 left-1/2 z-20 -translate-x-1/2 -translate-y-1/2 rotate-12"
-				>
-					<div
-						class="via-primary relative h-48 w-1.5 rounded-full bg-linear-to-b from-gray-200 to-gray-800 shadow-2xl"
-					>
-						<div
-							class="bg-primary absolute -bottom-1 left-1/2 h-2 w-2 -translate-x-1/2 animate-pulse rounded-full blur-xs"
-						>
-						</div>
-						<div class="absolute top-1/4 left-1/2 h-8 w-0.5 -translate-x-1/2 bg-white/20"></div>
-						<div
-							class="absolute top-1/2 left-1/2 h-3 w-3 -translate-x-1/2 rounded-full border border-white/10 bg-gray-900"
-						>
-						</div>
-					</div>
-				</div>
-				<div class="animate-orbit border-primary/20 absolute h-[110%] w-[110%] rounded-full border">
-				</div>
-				<div
-					class="animate-orbit-reverse border-primary/10 absolute h-[120%] w-[120%] rounded-full border"
-				>
+
+		<div class="mx-auto mt-16 max-w-2xl">
+			<div class="code-block relative p-6 font-mono text-sm leading-relaxed" style="border-color: rgba(240,230,210,0.06); color: #a89a84; min-height: 230px; overflow: hidden;">
+				<div class="bio-lines space-y-2" style="min-height: 182px;">
+					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.identity" style="color: #f0e6d2;">{t("about.identity")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.name">{t("about.name")}</span></p>
+					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.class" style="color: #f0e6d2;">{t("about.class")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.role">{t("about.role")}</span></p>
+					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.location" style="color: #f0e6d2;">{t("about.location")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.locationValue">{t("about.locationValue")}</span></p>
+					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.status" style="color: #f0e6d2;">{t("about.status")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.statusValue">{t("about.statusValue")}</span></p>
+					<p class="bio-line pt-2 italic" style="color: #6b6055; min-height: 4.8em; overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.quote">{t("about.quote")}</span></p>
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
 
+<style>
+	.about-name {
+		visibility: hidden;
+		max-width: min(100%, 980px);
+		font-size: clamp(2.85rem, 10vw, 8rem);
+		line-height: 0.92;
+		text-align: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0 0.25em;
+	}
+
+	.about-name > span {
+		white-space: nowrap;
+	}
+
+	.about-name .char {
+		display: inline-block;
+	}
+
+	@keyframes terminal-blink {
+		0%, 49% { opacity: 1; }
+		50%, 100% { opacity: 0; }
+	}
+
+	.bio-cursor {
+		display: inline-block;
+		width: 0.6em;
+		height: 1em;
+		background-color: #3a7a4d;
+		vertical-align: text-bottom;
+		animation: terminal-blink 1s step-end infinite;
+	}
+
+	.bio-line {
+		min-height: 1.55em;
+	}
+
+	.about-decor svg {
+		will-change: transform, opacity;
+	}
+
+	@media (max-width: 640px) {
+		.about-name {
+			font-size: clamp(2.55rem, 13vw, 4.5rem);
+			line-height: 0.98;
+			letter-spacing: -0.035em;
+		}
+	}
+</style>
+
 <script>
 	import gsap from "gsap"
 	import { ScrollTrigger } from "gsap/ScrollTrigger"
+	import { SplitText } from "gsap/SplitText"
+	import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin"
+	import { DrawSVGPlugin } from "gsap/DrawSVGPlugin"
 
-	gsap.registerPlugin(ScrollTrigger)
+	gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin, DrawSVGPlugin)
 
-	function initAboutAnimations() {
-		// Staggered terminal line reveal
-		const terminalSection = document.querySelector("#about .terminal-window")
-		if (terminalSection) {
-			const lines = terminalSection.querySelectorAll(".space-y-4 > p, .mt-4")
-			gsap.fromTo(
-				lines,
-				{ opacity: 0, x: -20 },
-				{
-					opacity: 1,
-					x: 0,
-					duration: 0.5,
-					stagger: 0.2,
-					delay: 1,
-					ease: "power2.out",
-					scrollTrigger: {
-						trigger: terminalSection,
-						start: "top 80%",
-						toggleActions: "play none none none",
-					},
-				}
-			)
+	let ctx: gsap.Context | null = null
+
+	function init() {
+		if (ctx) {
+			ctx.revert()
 		}
 
-		// Portal lens elastic entrance
-		const portal = document.querySelector("#about .portal-lens")
-		if (portal) {
-			gsap.fromTo(
-				portal,
-				{ opacity: 0, scale: 0.7, rotate: -15 },
-				{
-					opacity: 1,
-					scale: 1,
-					rotate: 0,
-					duration: 1.5,
-					ease: "elastic.out(1, 0.5)",
-					scrollTrigger: {
-						trigger: portal.closest(".group"),
-						start: "top 75%",
-						toggleActions: "play none none none",
-					},
-				}
-			)
-		}
+		ctx = gsap.context(() => {
+			const nameSplit = new SplitText(".about-name", { type: "chars", charsClass: "char" })
+			gsap.set(".about-name", { visibility: "visible" })
 
-		// Section heading fade-in
-		const heading = document.querySelector("#about .mb-16")
-		if (heading) {
-			gsap.fromTo(
-				heading.children,
-				{ opacity: 0, y: 30 },
-				{
-					opacity: 1,
-					y: 0,
-					duration: 0.6,
-					stagger: 0.15,
-					ease: "power2.out",
-					scrollTrigger: {
-						trigger: heading,
-						start: "top 85%",
-						toggleActions: "play none none none",
-					},
-				}
-			)
-		}
+			const bioLines = document.querySelectorAll<HTMLElement>(".bio-line")
+			gsap.set(bioLines, { opacity: 0 })
+			gsap.set(".about-subtitle", { opacity: 0, y: 20 })
+			gsap.set(".about-decor svg", { opacity: 0 })
 
-		// Terminal hover glow
-		const terminal = document.querySelector("#about .terminal-window")
-		if (terminal) {
-			const hoverGlow = gsap.to(terminal, {
-				boxShadow: "0 0 30px rgba(131, 59, 145, 0.3), 0 10px 40px -10px rgba(0, 0, 0, 0.5)",
-				borderColor: "rgba(131, 59, 145, 0.5)",
-				duration: 0.4,
-				ease: "power2.out",
+			// Insert blinking cursor at end of last bio line
+			const lastLine = bioLines[bioLines.length - 1]
+			const cursor = document.createElement("span")
+			cursor.className = "bio-cursor"
+			lastLine.appendChild(cursor)
+
+			const tl = gsap.timeline({
+				defaults: { ease: "power3.out" },
 				paused: true,
+				scrollTrigger: {
+					trigger: "#about",
+					start: "top bottom",
+					end: "bottom top",
+					pin: true,
+					onEnter: () => tl.play(),
+				},
 			})
 
-			terminal.addEventListener("mouseenter", () => hoverGlow.play())
-			terminal.addEventListener("mouseleave", () => hoverGlow.reverse())
-		}
+			tl.from(nameSplit.chars, { y: "100%", opacity: 0, stagger: 0.018 })
+
+			tl.from(".about-subtitle", { opacity: 0, y: 20 }, 0.12)
+
+			// Cursor appears alongside the decode
+			tl.from(cursor, { autoAlpha: 0, duration: 0.1 }, 0.15)
+
+			tl.fromTo(
+				".about-circle-main circle",
+				{ drawSVG: "0%" },
+				{ drawSVG: "100%", duration: 0.5, stagger: 0.08 },
+				0.18
+			)
+			tl.fromTo(
+				".about-circle-cross circle, .about-circle-cross line",
+				{ drawSVG: "0%" },
+				{ drawSVG: "100%", duration: 0.4, stagger: 0.06 },
+				0.28
+			)
+			tl.fromTo(
+				".about-circle-accent circle",
+				{ drawSVG: "0%" },
+				{ drawSVG: "100%", duration: 0.3, stagger: 0.05 },
+				0.34
+			)
+			tl.to(".about-decor svg", { opacity: 0, duration: 0.01 }, 0)
+			tl.to(".about-decor svg", { opacity: 1, duration: 0.01 }, 0.16)
+
+			const scrambleChars = "▪░▒▓█"
+			const bioParts = document.querySelectorAll<HTMLElement>("[data-bio-scramble]")
+			const texts = Array.from(bioParts).map((part) => part.textContent || "")
+			const maxLen = Math.max(...texts.map((t) => t.length))
+			const sharedDur = Math.min(Math.max(maxLen * 0.004 + 0.18, 0.34), 0.46)
+
+			bioLines.forEach((line, i) => {
+				tl.to(line, { opacity: 1, duration: 0.01 }, 0.32)
+				const parts = line.querySelectorAll<HTMLElement>("[data-bio-scramble]")
+				parts.forEach((part) => {
+					tl.to(part, {
+						duration: sharedDur,
+						// @ts-ignore
+						scrambleText: {
+							text: part.textContent || "",
+							chars: scrambleChars,
+							revealDelay: 0,
+							speed: 0.7,
+						},
+						ease: "none",
+					}, 0.34 + i * 0.02)
+				})
+			})
+
+			// Blink cursor continuously after entrance
+			gsap.to(cursor, {
+				opacity: 0,
+				duration: 0.53,
+				repeat: -1,
+				yoyo: true,
+				ease: "steps(1)",
+				delay: 0.6,
+			})
+		}, "#about")
 	}
 
-	initAboutAnimations()
+	init()
 	document.addEventListener("astro:after-swap", () => {
-		setTimeout(initAboutAnimations, 100)
+		init()
+		ScrollTrigger.refresh()
 	})
 </script>

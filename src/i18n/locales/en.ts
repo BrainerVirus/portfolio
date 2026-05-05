@@ -1,8 +1,8 @@
 export const nav = {
 	home: "Home",
-	about: "Pilot's Log",
-	experience: "Mission Log",
-	skills: "Arsenal",
+	about: "About",
+	experience: "Work",
+	skills: "Skills",
 	contact: "Contact",
 } as const
 
@@ -13,130 +13,177 @@ export const common = {
 	success: "Success!",
 } as const
 
+export const language = {
+	switch: "Language options",
+	system: "System",
+	english: "English",
+	spanish: "Español",
+	currentSystem: "Using system language",
+} as const
+
 export const about = {
-	title: "The Pilot's Log",
-	subtitle: "Decoding the bio-data of the entity behind the keyboard.",
+	title: "",
+	subtitle: "",
 	identity: "Identity",
 	name: "Cristhofer Pincetti",
 	class: "Class",
-	role: "Full Stack Engineer",
+	role: "Software Engineer",
 	location: "Location",
-	locationValue: "Geo-Stationary Orbit (Coquimbo, CL)",
+	locationValue: "Somewhere between terminal tabs, Chile",
 	status: "Status",
-	statusValue: "Currently building scalable systems and drinking excessive amounts of dark roast.",
+	statusValue: "Building scalable systems and drinking dark roast.",
 	quote:
-		"// Passionate about clean code, UI micro-interactions, and exploring the frontiers of web technology. When not coding, I'm likely refactoring my life configuration or debugging reality.",
+		"Passionate about clean code, UI design, and exploring the frontiers of web technology. When not coding, I'm likely refactoring my life or debugging reality.",
 } as const
 
 export const experience = {
-	title: "Mission Log",
-	subtitle: "Detailed technical trajectory through the full software development lifecycle.",
+	title: "Work",
+	subtitle: "Places I've built things.",
 	jobs: [
 		{
 			title: "Software Engineer",
 			company: "Sixbell",
 			description:
-				"Participating in Microfrontend (MFE) architecture, leading the design and development of new modules for large-scale web products. I spearheaded the 'Sixbell Telco UI Kit' (NPM) and technical stack modernization toward modular design patterns. I act as an innovation driver, identifying and executing cross-cutting improvements across the product architecture to raise UX, quality, and scalability standards.",
+				"Leading Microfrontend (MFE) architecture and designing new modules for large-scale web products. Spearheaded the 'Sixbell Telco UI Kit' (NPM) and modernized the stack toward modular patterns. Driving cross-cutting improvements across product architecture for UX, quality, and scalability.",
 			period: "Nov 2023 - Present",
 			tags: ["Angular", "MFE", "UI Kit", "UI/UX", "Docker", "NPM"],
 		},
 		{
-			title: "Lead Developer (Magic Key)",
-			company: "Innovation Project",
+			title: "Lead Developer",
+			company: "Magic Key",
 			description:
-				"Developed a multi-platform tool built with Electron that lets you use your phone as a remote macro-pad for your PC (Stream Deck style). I implemented real-time communication using Socket.io for fast response and handled the entire project: from brand design and web admin panel to server deployment.",
+				"Built a multi-platform Electron tool turning your phone into a remote macro-pad for PC (Stream Deck style). Implemented real-time communication with Socket.io. Handled everything from brand design to server deployment.",
 			period: "Jan 2024 - Mar 2024",
 			tags: ["Electron", "Socket.io", "Node.js", "React", "Real-time"],
 		},
 		{
-			title: "Lead Developer (Soltec Water)",
-			company: "University of La Serena",
+			title: "Lead Developer",
+			company: "Soltec Water — University of La Serena",
 			description:
-				"Designed and built a water management system for real-time resource monitoring. I implemented data models for field telemetry and route logistics, developing analytical dashboards to optimize critical processes and track parameters like pH and flow.",
+				"Designed a water management system for real-time resource monitoring. Built data models for field telemetry and route logistics, creating analytical dashboards to optimize processes and track pH, flow, and other parameters.",
 			period: "Sep 2023 - Mar 2024",
 			tags: ["Next.js", "Prisma", "AWS", "PostgreSQL", "Tailwind"],
 		},
 		{
-			title: "Software Engineer (Adhara ERP)",
-			company: "Hospital San Juan de Dios",
+			title: "Software Engineer",
+			company: "Hospital San Juan de Dios — Adhara ERP",
 			description:
-				"Key developer for the Pharmacy and Finance modules of the Adhara ERP. I integrated peripheral hardware and custom JavaScript logic for medical supply traceability, optimizing operational efficiency and prescription workflows in a real-world hospital environment.",
+				"Key developer for Pharmacy and Finance ERP modules. Integrated peripheral hardware and custom JavaScript logic for medical supply traceability. Optimized operational efficiency and prescription workflows in a live hospital environment.",
 			period: "Oct 2022 - Sep 2023",
 			tags: ["Genexus", "JavaScript", "ERP", "Logistics", "SQL"],
 		},
 	],
+	arcana: [
+		{
+			name: "The Pager Star",
+			constellation: "Sixbell Major",
+			reward:
+				"You uncovered the support-call comet. It only appears when production behaves for five whole minutes.",
+		},
+		{
+			name: "The Macro Magician",
+			constellation: "Key of Sparks",
+			reward: "A tiny ritual unlocks: every boring shortcut now owes you dramatic entrance music.",
+		},
+		{
+			name: "The Water Oracle",
+			constellation: "Hydra Dashboard",
+			reward: "The graphs whisper: hydrate first, optimize second. Annoyingly wise.",
+		},
+		{
+			name: "The Inventory Moon",
+			constellation: "Adhara Nocturne",
+			reward:
+				"Hidden bonus: one perfectly traced supply chain and a receipt that finally tells the truth.",
+		},
+	],
+	flip: "Reveal arcana",
+	close: "Close",
 } as const
+
 export const skills = {
-	title: "Technical Arsenal",
-	subtitle: "Core systems and satellite technologies orbiting the central fuel source.",
-	core: "Caffeine Core",
+	title: "Skills",
+	subtitle: "What I work with.",
+	core: "Core",
+	systems: "Systems",
+	craft: "Design",
 	mastery: "Mastery",
 	core_skills: {
 		typescript: "TypeScript",
+		javascript: "JavaScript",
 		angular: "Angular",
-		nextjs: "Next.js / React",
+		react: "React",
+		nextjs: "Next.js",
 		tailwindcss: "Tailwind CSS",
 	},
 	secondary_skills: {
-		figma: "Figma (UX Expert)",
-		nodejs: "Node.js / Express",
-		prisma: "Prisma / SQL",
-		zustand: "Zustand / Signals",
-		reactnative: "React Native / Expo",
-		agile: "Scrum / Agile",
+		nodejs: "Node.js",
+		express: "Express",
+		prisma: "Prisma",
+		postgresql: "PostgreSQL / SQL",
+		zustand: "Zustand",
+		signals: "Signals",
+		reactnative: "React Native",
+		expo: "Expo",
+		socketio: "Socket.io",
+		electron: "Electron",
 	},
 	additional_skills: {
-		docker: "Docker / Linux",
-		github: "GitHub / GitLab",
+		docker: "Docker",
+		linux: "Linux",
+		aws: "AWS",
+		github: "GitHub",
+		gitlab: "GitLab",
+		figma: "Figma",
 		design_thinking: "Design Thinking",
 		problem_solving: "Problem Solving",
+		agile: "Scrum / Agile",
 		empathy: "Empathy / Communication",
 		tenacity: "Tenacity",
-		socketio: "Socket.io / Electron",
 		python: "Python",
 	},
 } as const
 
 export const contact = {
-	title: "Establish Comm Link",
-	subtitle: "Initiate sub-space transmission to the main relay station.",
+	title: "Contact",
+	subtitle: "Let's talk.",
 	form: {
-		senderId: "Sender ID",
-		senderIdPlaceholder: "Protocol: Name",
-		frequency: "Frequency",
-		frequencyPlaceholder: "Identifier: email@nebula.com",
-		transmission: "Transmission",
-		transmissionPlaceholder: "Payload: Type your message here...",
-		submit: "Send Data Burst",
+		name: "Name",
+		namePlaceholder: "Your name",
+		email: "Email",
+		emailPlaceholder: "you@example.com",
+		message: "Message",
+		messagePlaceholder: "What's on your mind?",
+		submit: "Send message",
 	},
 	error: {
-		nameRequired: "Sender ID is required",
-		nameMinLength: "Sender ID must be at least 2 characters",
-		nameMaxLength: "Sender ID must not exceed 100 characters",
-		emailRequired: "Frequency is required",
-		emailInvalid: "Invalid frequency format",
-		messageRequired: "Transmission payload required",
-		messageMinLength: "Transmission must be at least 10 characters",
-		messageMaxLength: "Transmission must not exceed 5000 characters",
+		nameRequired: "Name is required",
+		nameMinLength: "Name must be at least 2 characters",
+		nameMaxLength: "Name must not exceed 100 characters",
+		emailRequired: "Email is required",
+		emailInvalid: "Invalid email format",
+		messageRequired: "Message is required",
+		messageMinLength: "Message must be at least 10 characters",
+		messageMaxLength: "Message must not exceed 5000 characters",
 	},
 	messages: {
-		success: "Transmission successful! Message received.",
-		transmitted: "Transmitted!",
-		failed: "Transmission failed. Please try again.",
+		success: "Message sent successfully!",
+		transmitted: "Sent!",
+		failed: "Failed to send. Please try again.",
 		connectionLost: "Connection lost. Please try again.",
-		transmitting: "Transmitting...",
-		sendDataBurst: "Send Data Burst",
+		transmitting: "Sending...",
+		sendMessage: "Send message",
 	},
 } as const
 
 export const footer = {
-	tagline: "Navigating the digital cosmos.",
-	backToTop: "Back to Zenith",
+	tagline: "Built with passion.",
+	backToTop: "Back to top",
 } as const
 
 export const meta = {
 	home: {
-		title: "Cristhofer Pincetti - Software Engineer",
+		title: "Cristhofer Pincetti — Software Engineer",
 		description:
 			"Software Engineer specializing in web development, mobile apps, and full-stack solutions. Expert in React, Next.js, Node.js, and modern web technologies.",
 	},

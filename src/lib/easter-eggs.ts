@@ -15,11 +15,29 @@ const KONAMI_CODE = [
 	"KeyA",
 ]
 
+let cleanupFunctions: Array<() => void> = []
+
+function addCleanup(fn: () => void) {
+	cleanupFunctions.push(fn)
+}
+
+export function cleanupEasterEggs() {
+	cleanupFunctions.forEach((fn) => fn())
+	cleanupFunctions = []
+}
+
 let konamiIndex = 0
 let konamiActivated = false
+let konamiActivationTimer: ReturnType<typeof setTimeout> | null = null
 
 export function initKonamiCode() {
-	if (konamiActivated) return
+	// Reset state
+	konamiIndex = 0
+	konamiActivated = false
+	if (konamiActivationTimer) {
+		clearTimeout(konamiActivationTimer)
+		konamiActivationTimer = null
+	}
 
 	function resetKonami() {
 		konamiIndex = 0
@@ -35,13 +53,15 @@ export function initKonamiCode() {
 			duration: 4000,
 		})
 
-		// Rainbow background animation
+		// Subtle forest green hue shift
 		const body = document.body
+		const baseHue = 135
+		const hueShift = 15
 		gsap.to(body, {
 			duration: 2,
 			onUpdate: function () {
-				const hue = (this.progress() * 360) % 360
-				body.style.background = `linear-gradient(135deg, hsl(${hue}, 60%, 10%), hsl(${(hue + 180) % 360}, 60%, 5%))`
+				const hue = baseHue + this.progress() * hueShift
+				body.style.background = `linear-gradient(135deg, hsl(${hue}, 35%, 10%), hsl(${hue + 5}, 35%, 5%))`
 			},
 			onComplete: () => {
 				// Reset after animation
@@ -64,12 +84,13 @@ export function initKonamiCode() {
 			},
 		})
 
-		setTimeout(() => {
+		konamiActivationTimer = setTimeout(() => {
 			konamiActivated = false
+			konamiActivationTimer = null
 		}, 10000)
 	}
 
-	document.addEventListener("keydown", (e) => {
+	const handler = (e: KeyboardEvent) => {
 		if (e.code === KONAMI_CODE[konamiIndex]) {
 			konamiIndex++
 			if (konamiIndex === KONAMI_CODE.length) {
@@ -79,60 +100,89 @@ export function initKonamiCode() {
 		} else {
 			resetKonami()
 		}
+	}
+
+	document.addEventListener("keydown", handler)
+
+	addCleanup(() => {
+		document.removeEventListener("keydown", handler)
+		if (konamiActivationTimer) {
+			clearTimeout(konamiActivationTimer)
+			konamiActivationTimer = null
+		}
 	})
 }
 
-// Coffee cup click counter
+// Header mark click counter
 let clickCount = 0
 let clickTimer: ReturnType<typeof setTimeout> | null = null
 let cupSecretActivated = false
+let cupSecretResetTimer: ReturnType<typeof setTimeout> | null = null
 
 export function initCoffeeCupEasterEgg() {
-	if (cupSecretActivated) return
+	// Reset state
+	clickCount = 0
+	if (clickTimer) {
+		clearTimeout(clickTimer)
+		clickTimer = null
+	}
+	cupSecretActivated = false
+	if (cupSecretResetTimer) {
+		clearTimeout(cupSecretResetTimer)
+		cupSecretResetTimer = null
+	}
 
-	document.querySelectorAll(".material-symbols-outlined").forEach((icon) => {
-		if (icon.textContent?.trim() === "local_cafe") {
-			icon.addEventListener("click", () => {
-				clickCount++
+	const markElements: Array<{ mark: Element; handler: () => void }> = []
 
-				if (clickTimer) clearTimeout(clickTimer)
-				clickTimer = setTimeout(() => {
-					clickCount = 0
-				}, 2000)
+	document.querySelectorAll("[data-logo-mark]").forEach((mark) => {
+		const handler = () => {
+			clickCount++
 
-				if (clickCount >= 5 && !cupSecretActivated) {
-					cupSecretActivated = true
-					clickCount = 0
+			if (clickTimer) clearTimeout(clickTimer)
+			clickTimer = setTimeout(() => {
+				clickCount = 0
+			}, 2000)
 
-					toast("☕ Caffeine overload!", {
-						description: "The coffee cup demands attention.",
-						duration: 3000,
-					})
+			if (clickCount >= 5 && !cupSecretActivated) {
+				cupSecretActivated = true
+				clickCount = 0
 
-					// Shake all coffee cups
-					const cups = document.querySelectorAll(".material-symbols-outlined")
-					const coffeeCups = Array.from(cups).filter(
-						(c) => (c as HTMLElement).textContent?.trim() === "local_cafe"
-					)
+				toast("Observatory aligned", {
+					description: "The mark hums quietly. Good systems do that.",
+					duration: 3000,
+				})
 
-					gsap.fromTo(
-						coffeeCups,
-						{ scale: 1 },
-						{
-							scale: 2,
-							duration: 0.5,
-							ease: "elastic.out(1, 0.3)",
-							onComplete: () => {
-								gsap.to(coffeeCups, { scale: 1, duration: 0.3 })
-							},
-						}
-					)
+				gsap.to(mark, {
+					scale: 1.1,
+					rotation: 8,
+					duration: 0.3,
+					ease: "power2.out",
+					yoyo: true,
+					repeat: 1,
+					clearProps: "transform",
+				})
 
-					setTimeout(() => {
-						cupSecretActivated = false
-					}, 5000)
-				}
-			})
+				cupSecretResetTimer = setTimeout(() => {
+					cupSecretActivated = false
+					cupSecretResetTimer = null
+				}, 5000)
+			}
+		}
+		mark.addEventListener("click", handler)
+		markElements.push({ mark, handler })
+	})
+
+	addCleanup(() => {
+		markElements.forEach(({ mark, handler }) => {
+			mark.removeEventListener("click", handler)
+		})
+		if (clickTimer) {
+			clearTimeout(clickTimer)
+			clickTimer = null
+		}
+		if (cupSecretResetTimer) {
+			clearTimeout(cupSecretResetTimer)
+			cupSecretResetTimer = null
 		}
 	})
 }
@@ -141,17 +191,34 @@ export function initCoffeeCupEasterEgg() {
 let terminalClickCount = 0
 let terminalTimer: ReturnType<typeof setTimeout> | null = null
 let terminalSecretActivated = false
+let terminalCheckInterval: ReturnType<typeof setInterval> | null = null
+let terminalStopTimeout: ReturnType<typeof setTimeout> | null = null
 
 export function initTerminalSecret() {
-	if (terminalSecretActivated) return
+	// Cleanup previous instance
+	if (terminalCheckInterval) {
+		clearInterval(terminalCheckInterval)
+		terminalCheckInterval = null
+	}
+	if (terminalStopTimeout) {
+		clearTimeout(terminalStopTimeout)
+		terminalStopTimeout = null
+	}
+	terminalClickCount = 0
+	if (terminalTimer) {
+		clearTimeout(terminalTimer)
+		terminalTimer = null
+	}
+	terminalSecretActivated = false
 
 	// Re-check periodically for the cursor element (it may render after GSAP animation)
-	const checkForCursor = setInterval(() => {
+	terminalCheckInterval = setInterval(() => {
 		const cursor = document.querySelector("#about .animate-blink")
 		if (cursor && !terminalSecretActivated) {
-			clearInterval(checkForCursor)
+			if (terminalCheckInterval) clearInterval(terminalCheckInterval)
+			terminalCheckInterval = null
 
-			cursor.addEventListener("click", () => {
+			const clickHandler = () => {
 				terminalClickCount++
 
 				if (terminalTimer) clearTimeout(terminalTimer)
@@ -178,20 +245,47 @@ export function initTerminalSecret() {
 						terminalContent.appendChild(secretLine)
 						terminalContent.appendChild(secretMessage)
 
-						// Animate the reveal
+						// Subtle fade-in reveal
 						gsap.fromTo(
 							[secretLine, secretMessage],
-							{ opacity: 0, y: 10 },
-							{ opacity: 1, y: 0, duration: 0.5, stagger: 0.2, ease: "power2.out" }
+							{ opacity: 0, y: 4 },
+							{ opacity: 1, y: 0, duration: 0.4, stagger: 0.15, ease: "power2.out" }
 						)
 
 						toast("🔓 Terminal secret unlocked!", { duration: 3000 })
 					}
 				}
+			}
+
+			cursor.addEventListener("click", clickHandler)
+
+			// Track cleanup for cursor listener
+			addCleanup(() => {
+				cursor.removeEventListener("click", clickHandler)
 			})
 		}
 	}, 2000)
 
 	// Stop checking after 15 seconds if not found
-	setTimeout(() => clearInterval(checkForCursor), 15000)
+	terminalStopTimeout = setTimeout(() => {
+		if (terminalCheckInterval) {
+			clearInterval(terminalCheckInterval)
+			terminalCheckInterval = null
+		}
+	}, 15000)
+
+	addCleanup(() => {
+		if (terminalCheckInterval) {
+			clearInterval(terminalCheckInterval)
+			terminalCheckInterval = null
+		}
+		if (terminalStopTimeout) {
+			clearTimeout(terminalStopTimeout)
+			terminalStopTimeout = null
+		}
+		if (terminalTimer) {
+			clearTimeout(terminalTimer)
+			terminalTimer = null
+		}
+	})
 }

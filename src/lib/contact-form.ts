@@ -158,7 +158,7 @@ export function initializeContactForm(locale: "en" | "es") {
 
 				// Reset button after 3 seconds
 				setTimeout(() => {
-					btnText.textContent = getTranslation(locale, "contact.messages.sendDataBurst")
+					btnText.textContent = getTranslation(locale, "contact.messages.sendMessage")
 					btnIcon.textContent = "send"
 					submitBtn.disabled = false
 					formMessage.classList.add("hidden")
@@ -172,7 +172,7 @@ export function initializeContactForm(locale: "en" | "es") {
 				formMessage.textContent = errorMessage
 				formMessage.className = "text-center text-sm text-red-400"
 				formMessage.classList.remove("hidden")
-				btnText.textContent = getTranslation(locale, "contact.messages.sendDataBurst")
+				btnText.textContent = getTranslation(locale, "contact.messages.sendMessage")
 				btnIcon.textContent = "send"
 				submitBtn.disabled = false
 			}
@@ -181,7 +181,7 @@ export function initializeContactForm(locale: "en" | "es") {
 			formMessage.textContent = getTranslation(locale, "contact.messages.connectionLost")
 			formMessage.className = "text-center text-sm text-red-400"
 			formMessage.classList.remove("hidden")
-			btnText.textContent = getTranslation(locale, "contact.messages.sendDataBurst")
+			btnText.textContent = getTranslation(locale, "contact.messages.sendMessage")
 			btnIcon.textContent = "send"
 			submitBtn.disabled = false
 		}

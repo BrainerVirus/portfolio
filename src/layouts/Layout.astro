@@ -15,7 +15,7 @@ const { currentLocale } = Astro
 ---
 
 <!doctype html>
-<html transition:animate="slide" lang={currentLocale || "en"} dir="ltr">
+<html lang={currentLocale || "en"} dir="ltr">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="description" content="Cristhofer Pincetti - Software Engineer Portfolio" />
@@ -26,18 +26,25 @@ const { currentLocale } = Astro
 		<meta name="generator" content={Astro.generator} />
 		<Font cssVariable="--font-satoshi" preload />
 		<Font cssVariable="--font-mono" preload />
+		<Font cssVariable="--font-material-symbols" preload />
 		<ClientRouter />
 		<title>{title}</title>
 	</head>
 	<body class="selection:bg-primary selection:text-white">
+		<div class="site-ambient" aria-hidden="true"></div>
 		<Header />
-		<main class="relative w-full pt-24">
+		<main class="relative z-10 w-full">
 			<slot />
 		</main>
 		<Footer />
 		<Toaster client:load />
 		<script>
-			import { initKonamiCode, initCoffeeCupEasterEgg, initTerminalSecret } from "@/lib/easter-eggs"
+			import {
+				initKonamiCode,
+				initCoffeeCupEasterEgg,
+				initTerminalSecret,
+				cleanupEasterEggs,
+			} from "@/lib/easter-eggs"
 
 			// Initialize on page load
 			initKonamiCode()
@@ -46,6 +53,8 @@ const { currentLocale } = Astro
 
 			// Re-initialize after view transitions
 			document.addEventListener("astro:after-swap", () => {
+				cleanupEasterEggs()
+				// No cleanupScrollTriggers — each component self-cleans via gsap.context()
 				initKonamiCode()
 				initCoffeeCupEasterEgg()
 				initTerminalSecret()
