@@ -12,7 +12,7 @@ const exp = useTranslation(lang, "experience")
 	<div class="w-full py-24">
 		<div class="experience-bg pointer-events-none absolute inset-0 overflow-hidden">
 			<svg
-				class="experience-shape absolute -left-32 top-20 h-[500px] w-[500px] opacity-[0.04]"
+				class="experience-shape absolute -left-32 top-0 h-[500px] w-[500px] opacity-[0.04]"
 				viewBox="0 0 500 500"
 				fill="none"
 			>
@@ -58,8 +58,8 @@ const exp = useTranslation(lang, "experience")
 							class="experience-entry group relative cursor-pointer"
 							data-index={index}
 						>
-							<div class="experience-glow pointer-events-none absolute inset-0 rounded-xl" style="opacity: 0; background: radial-gradient(circle 180px at var(--gx, 50%) var(--gy, 50%), rgba(58,122,77,0.12), transparent 70%); transition: opacity 0.3s ease;"></div>
-							<div class="grid grid-cols-1 gap-6 border-l-2 border-transparent p-6 md:grid-cols-2 md:gap-16">
+							<div class="experience-glow pointer-events-none absolute inset-0 rounded-xl" style="opacity: 0; background: radial-gradient(circle 180px at var(--gx, 50%) var(--gy, 50%), rgba(58,122,77,0.12), transparent 70%);"></div>
+							<div class="experience-card-content grid grid-cols-1 gap-6 border-l-2 border-transparent p-6 md:grid-cols-2 md:gap-16">
 								<div>
 									<h3 class="text-2xl font-medium text-[#f0e6d2]">{job.company}</h3>
 									<div class="mt-1 text-lg text-[#a89a84]">{job.title}</div>
@@ -109,11 +109,11 @@ const exp = useTranslation(lang, "experience")
 		perspective: 1200px;
 		overflow: visible;
 		padding: 24px 0;
+		opacity: 0;
 	}
 
 	.experience-entry {
 		transform-style: preserve-3d;
-		will-change: transform;
 		padding: 0;
 		border-radius: 0.75rem;
 		background: rgba(20, 26, 20, 0.4);
@@ -148,6 +148,7 @@ const exp = useTranslation(lang, "experience")
 		const xTo = gsap.quickTo(card, "rotationX", { duration: 0.6, ease: "power2.out" })
 		const yTo = gsap.quickTo(card, "rotationY", { duration: 0.6, ease: "power2.out" })
 		const glow = card.querySelector<HTMLElement>(".experience-glow")
+		const glowOpacityTo = glow ? gsap.quickTo(glow, "opacity", { duration: 0.3, ease: "power2.out" }) : null
 
 		const onMove = (e: MouseEvent) => {
 			const rect = card.getBoundingClientRect()
@@ -158,13 +159,13 @@ const exp = useTranslation(lang, "experience")
 			if (glow) {
 				glow.style.setProperty("--gx", `${e.clientX - rect.left}px`)
 				glow.style.setProperty("--gy", `${e.clientY - rect.top}px`)
-				glow.style.opacity = "1"
+				glowOpacityTo?.(1)
 			}
 		}
 		const onLeave = () => {
 			xTo(0)
 			yTo(0)
-			if (glow) glow.style.opacity = "0"
+			glowOpacityTo?.(0)
 		}
 
 		card.addEventListener("mousemove", onMove)
@@ -175,6 +176,7 @@ const exp = useTranslation(lang, "experience")
 			card.removeEventListener("mouseleave", onLeave)
 			xTo(0)
 			yTo(0)
+			glowOpacityTo?.(0)
 		}
 	}
 
@@ -209,13 +211,36 @@ const exp = useTranslation(lang, "experience")
 					})
 				}
 
-				const cards = gsap.utils.toArray<HTMLElement>(".experience-entry")
-				cards.forEach((card, i) => {
-					gsap.from(card, {
-						y: 60, opacity: 0, duration: 0.7, delay: i * 0.1, ease: "power3.out",
-					scrollTrigger: { trigger: card, start: "top 88%", once: true },
+				const wrappers = gsap.utils.toArray<HTMLElement>(".experience-card-wrapper")
+				gsap.set(wrappers, { autoAlpha: 0, y: 56 })
+				gsap.set(".experience-card-content", { autoAlpha: 0, y: 10 })
+				ScrollTrigger.batch(wrappers, {
+					once: true,
+					start: "top 88%",
+					onEnter: (batch) => {
+						const content = batch
+							.map((wrapper) => wrapper.querySelector<HTMLElement>(".experience-card-content"))
+							.filter((el): el is HTMLElement => Boolean(el))
+
+						gsap.to(batch, {
+							autoAlpha: 1,
+							y: 0,
+							duration: 0.7,
+							ease: "power3.out",
+							stagger: 0.1,
+							overwrite: true,
+						})
+						gsap.to(content, {
+							autoAlpha: 1,
+							y: 0,
+							duration: 0.45,
+							delay: 0.1,
+							ease: "power2.out",
+							stagger: 0.08,
+							overwrite: true,
+						})
+					},
 				})
-			})
 		}, "#experience")
 		}
 
@@ -226,9 +251,9 @@ const exp = useTranslation(lang, "experience")
 				".experience-shape circle, .experience-shape line"
 			)
 			gsap.fromTo(shapes,
-				{ drawSVG: "0%" },
+				{ drawSVG: "0% 0%" },
 				{
-					drawSVG: "100%",
+					drawSVG: "0% 100%",
 					duration: 1.5,
 					ease: "power2.inOut",
 					scrollTrigger: {
