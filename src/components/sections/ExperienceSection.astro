@@ -89,38 +89,213 @@ const exp = useTranslation(lang, "experience")
 	</div>
 </section>
 
-<div class="experience-modal pointer-events-none fixed inset-0 z-50 flex items-center justify-center px-5 opacity-0" style="background: rgba(10,14,10,0.92); transition: opacity 0.4s ease;">
-	<div class="experience-modal-card relative cursor-default" style="width: min(460px, calc(100vw - 40px)); max-height: 80vh; perspective: 3000px; transform-style: preserve-3d;">
+<div class="experience-modal pointer-events-none fixed grid opacity-0" style="z-index: 80; background: rgba(10,14,10,0.92); transition: opacity 0.4s ease;">
+	<button class="experience-modal-close absolute text-[#a89a84] text-3xl hover:text-[#f0e6d2] transition-colors cursor-pointer" data-i18n-aria-label="experience.close" aria-label={exp.close}>&times;</button>
+	<div class="experience-modal-stage">
+	<div class="experience-modal-card relative cursor-default" style="perspective: 3000px; transform-style: preserve-3d;">
 		<div class="experience-modal-inner" style="transform-style: preserve-3d;">
 			<div class="experience-modal-glow pointer-events-none absolute inset-0 rounded-2xl z-10" style="opacity: 0; background: radial-gradient(circle 200px at var(--mgx, 50%) var(--mgy, 50%), rgba(58,122,77,0.10), transparent 70%); transition: opacity 0.3s ease;"></div>
-			<div class="experience-modal-front rounded-2xl p-8" style="background: rgba(20,26,20,0.95); border: 1px solid rgba(58,122,77,0.3); backface-visibility: hidden;">
-				<div class="experience-modal-content"></div>
-			</div>
-			<div class="experience-modal-back absolute inset-0 rounded-2xl p-8 flex flex-col items-center justify-center overflow-hidden" style="background: radial-gradient(circle at 50% 12%, rgba(58,122,77,0.18), #0a0e0a 56%); border: 1px solid rgba(58,122,77,0.5); backface-visibility: hidden; transform: rotateY(180deg);">
-				<svg class="arcana-sky mb-5 h-40 w-40 overflow-visible" viewBox="0 0 160 160" fill="none" aria-hidden="true">
-					<path class="arcana-line" d="M28 112 L48 52 L80 28 L112 58 L132 110 L92 98 L60 126 Z" stroke="#f0e6d2" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"></path>
-					<path class="arcana-line" d="M48 52 L92 98 L112 58 M80 28 L60 126" stroke="#3a7a4d" stroke-width="1" stroke-linecap="round" opacity="0.85"></path>
-					<g class="arcana-stars" fill="#f0e6d2">
-						<circle cx="28" cy="112" r="2.5"></circle>
-						<circle cx="48" cy="52" r="2.5"></circle>
-						<circle cx="80" cy="28" r="3"></circle>
-						<circle cx="112" cy="58" r="2.5"></circle>
-						<circle cx="132" cy="110" r="2.5"></circle>
-						<circle cx="92" cy="98" r="2.5"></circle>
-						<circle cx="60" cy="126" r="2.5"></circle>
-					</g>
-				</svg>
-				<p class="mb-2 font-mono text-[10px] tracking-[0.3em] text-[#6b6055] uppercase" data-arcana-constellation></p>
-				<h3 class="text-center text-2xl font-medium text-[#f0e6d2]" data-arcana-name></h3>
-				<p class="mt-4 text-center font-mono text-sm leading-relaxed text-[#3a7a4d]" data-arcana-reward></p>
+			<div class="experience-modal-flipper">
+				<div class="experience-modal-front rounded-2xl p-8" style="background: rgba(20,26,20,0.98); border: 1px solid rgba(58,122,77,0.3);">
+					<div class="experience-modal-content"></div>
+				</div>
+				<div class="experience-modal-back rounded-2xl p-8 flex flex-col items-center justify-center overflow-hidden" style="background: radial-gradient(circle at 50% 12%, rgba(58,122,77,0.22), #0a0e0a 58%); border: 1px solid rgba(58,122,77,0.5); transform: rotateY(180deg);">
+					<svg class="arcana-sky mb-5 h-40 w-40 overflow-visible" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+						<path class="arcana-line" d="M28 112 L48 52 L80 28 L112 58 L132 110 L92 98 L60 126 Z" stroke="#f0e6d2" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"></path>
+						<path class="arcana-line" d="M48 52 L92 98 L112 58 M80 28 L60 126" stroke="#3a7a4d" stroke-width="1" stroke-linecap="round" opacity="0.85"></path>
+						<g class="arcana-stars" fill="#f0e6d2">
+							<circle cx="28" cy="112" r="2.5"></circle>
+							<circle cx="48" cy="52" r="2.5"></circle>
+							<circle cx="80" cy="28" r="3"></circle>
+							<circle cx="112" cy="58" r="2.5"></circle>
+							<circle cx="132" cy="110" r="2.5"></circle>
+							<circle cx="92" cy="98" r="2.5"></circle>
+							<circle cx="60" cy="126" r="2.5"></circle>
+						</g>
+					</svg>
+					<p class="mb-2 font-mono text-[10px] tracking-[0.3em] text-[#6b6055] uppercase" data-arcana-constellation></p>
+					<h3 class="text-center text-2xl font-medium text-[#f0e6d2]" data-arcana-name></h3>
+					<p class="mt-4 text-center font-mono text-sm leading-relaxed text-[#3a7a4d]" data-arcana-reward></p>
+				</div>
 			</div>
 		</div>
+		</div>
+		<div class="experience-modal-actions flex flex-wrap items-center justify-center gap-3">
+			<button class="experience-modal-flip border border-[#3a7a4d]/40 rounded-full px-5 py-2.5 font-mono text-xs text-[#3a7a4d] hover:bg-[#3a7a4d]/10 hover:border-[#3a7a4d]/60 transition-colors cursor-pointer" data-i18n="experience.flip">{exp.flip}</button>
+		</div>
 	</div>
-	<button class="experience-modal-close absolute top-6 right-6 text-[#a89a84] text-3xl hover:text-[#f0e6d2] transition-colors cursor-pointer" data-i18n-aria-label="experience.close" aria-label={exp.close}>&times;</button>
-	<button class="experience-modal-flip absolute bottom-8 left-1/2 -translate-x-1/2 border border-[#3a7a4d]/40 rounded-full px-5 py-2.5 font-mono text-xs text-[#3a7a4d] hover:bg-[#3a7a4d]/10 hover:border-[#3a7a4d]/60 transition-colors cursor-pointer" data-i18n="experience.flip">{exp.flip}</button>
 </div>
 
 <style>
+	.experience-modal {
+		top: var(--modal-vv-top, 0px);
+		left: var(--modal-vv-left, 0px);
+		width: 100vw;
+		height: 100vh;
+		place-items: center;
+		overflow: hidden;
+		overscroll-behavior: contain;
+		padding:
+			max(72px, env(safe-area-inset-top))
+			20px
+			max(24px, calc(env(safe-area-inset-bottom) + var(--modal-extra-bottom, 0px)))
+			20px;
+		touch-action: none;
+	}
+
+	@supports (height: 100svh) {
+		.experience-modal {
+			height: 100svh;
+		}
+	}
+
+	.experience-modal-stage {
+		display: flex;
+		width: min(640px, calc(100vw - 40px));
+		max-height: calc(100vh - 124px - var(--modal-extra-bottom, 0px));
+		min-height: 0;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+	}
+
+	@supports (height: 100svh) {
+		.experience-modal-stage {
+			max-height: calc(100svh - 124px - var(--modal-extra-bottom, 0px));
+		}
+	}
+
+	.experience-modal-card {
+		width: 100%;
+		height: min(var(--modal-card-height, 520px), calc(100vh - 184px - var(--modal-extra-bottom, 0px)));
+		transform-style: preserve-3d;
+	}
+
+	@supports (height: 100svh) {
+		.experience-modal-card {
+			height: min(var(--modal-card-height, 520px), calc(100svh - 184px - var(--modal-extra-bottom, 0px)));
+		}
+	}
+
+	.experience-modal-inner,
+	.experience-modal-flipper,
+	.experience-modal-front,
+	.experience-modal-back {
+		height: 100%;
+		min-height: 0;
+		transform-style: preserve-3d;
+	}
+
+	.experience-modal-front,
+	.experience-modal-back {
+		position: absolute;
+		inset: 0;
+		display: flex;
+		flex-direction: column;
+		backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
+		transform-style: preserve-3d;
+	}
+
+	.experience-modal-front {
+		justify-content: flex-start;
+		overflow: hidden;
+	}
+
+	.experience-modal-front .experience-modal-content {
+		width: 100%;
+	}
+
+	.experience-modal-back {
+		justify-content: flex-start;
+		overflow: hidden;
+	}
+
+	.experience-modal-close {
+		top: max(1rem, env(safe-area-inset-top));
+		right: 1.25rem;
+	}
+
+	.experience-modal-actions {
+		flex: 0 0 auto;
+	}
+
+	@media (max-width: 520px) {
+		.experience-modal {
+			padding:
+				max(60px, env(safe-area-inset-top))
+				20px
+				max(18px, calc(env(safe-area-inset-bottom) + var(--modal-extra-bottom, 0px)))
+				20px;
+		}
+
+		.experience-modal-stage {
+			gap: 0.75rem;
+			max-height: calc(100vh - 92px - var(--modal-extra-bottom, 0px));
+		}
+
+		@supports (height: 100svh) {
+			.experience-modal-stage {
+				max-height: calc(100svh - 92px - var(--modal-extra-bottom, 0px));
+			}
+		}
+
+		.experience-modal-card {
+			height: min(var(--modal-card-height, 420px), calc(100vh - 128px - var(--modal-extra-bottom, 0px)));
+		}
+
+		@supports (height: 100svh) {
+			.experience-modal-card {
+				height: min(var(--modal-card-height, 420px), calc(100svh - 128px - var(--modal-extra-bottom, 0px)));
+			}
+		}
+
+		.experience-modal-front,
+		.experience-modal-back {
+			padding: 1.25rem !important;
+		}
+
+		.experience-modal-content .experience-card-content {
+			gap: 0.9rem !important;
+		}
+
+		.experience-modal-content h3 {
+			font-size: 1.25rem !important;
+			line-height: 1.18 !important;
+		}
+
+		.experience-modal-content p {
+			margin-top: 0.65rem !important;
+			font-size: 0.9rem !important;
+			line-height: 1.45 !important;
+		}
+
+		.experience-modal-content .mt-4 {
+			margin-top: 0.75rem !important;
+		}
+
+		.experience-modal-back .arcana-sky {
+			width: 7rem !important;
+			height: 7rem !important;
+			margin-bottom: 1rem !important;
+		}
+
+		.experience-modal-back h3 {
+			font-size: 1.45rem !important;
+			line-height: 1.15 !important;
+		}
+
+		.experience-modal-back p {
+			font-size: 0.8rem !important;
+			line-height: 1.55 !important;
+		}
+	}
+
+	.is-work-modal-locked {
+		overflow: hidden;
+	}
+
 	.experience-card-wrapper {
 		perspective: 1200px;
 		overflow: visible;
@@ -346,6 +521,7 @@ const exp = useTranslation(lang, "experience")
 	const modal = document.querySelector(".experience-modal") as HTMLElement
 	const modalCard = modal.querySelector(".experience-modal-card") as HTMLElement
 	const modalInner = modal.querySelector(".experience-modal-inner") as HTMLElement
+	const modalFlipper = modal.querySelector(".experience-modal-flipper") as HTMLElement
 	const modalFront = modal.querySelector(".experience-modal-content") as HTMLElement
 	const modalArcanaName = modal.querySelector<HTMLElement>("[data-arcana-name]")!
 	const modalArcanaConstellation = modal.querySelector<HTMLElement>("[data-arcana-constellation]")!
@@ -356,6 +532,76 @@ const exp = useTranslation(lang, "experience")
 	const arcanaStars = modal.querySelectorAll<SVGCircleElement>(".arcana-stars circle")
 	let modalFlipped = false
 	let activeArcanaIndex = 0
+	let modalOpen = false
+	let motionTiltState: "idle" | "pending" | "enabled" | "unavailable" = "idle"
+	let lockedScrollY = 0
+	let previousBodyPosition = ""
+	let previousBodyTop = ""
+	let previousBodyWidth = ""
+	let previousHtmlOverflow = ""
+	let previousBodyOverflow = ""
+	let previousHeaderZIndex = ""
+	let previousHeaderPointerEvents = ""
+
+	function updateModalViewportVars() {
+		const viewport = window.visualViewport
+		if (!viewport) {
+			modal.style.setProperty("--modal-extra-bottom", "0px")
+			modal.style.setProperty("--modal-vv-top", "0px")
+			modal.style.setProperty("--modal-vv-left", "0px")
+			return
+		}
+
+		const extraBottom = Math.max(
+			0,
+			Math.min(96, window.innerHeight - viewport.height - viewport.offsetTop)
+		)
+		modal.style.setProperty("--modal-extra-bottom", `${extraBottom}px`)
+		modal.style.setProperty("--modal-vv-top", `${Math.max(0, viewport.offsetTop)}px`)
+		modal.style.setProperty("--modal-vv-left", `${Math.max(0, viewport.offsetLeft)}px`)
+	}
+
+	function lockPageScroll() {
+		if (document.documentElement.classList.contains("is-work-modal-locked")) return
+
+		lockedScrollY = window.scrollY
+		const header = document.getElementById("site-header")
+		previousBodyPosition = document.body.style.position
+		previousBodyTop = document.body.style.top
+		previousBodyWidth = document.body.style.width
+		previousHtmlOverflow = document.documentElement.style.overflow
+		previousBodyOverflow = document.body.style.overflow
+		previousHeaderZIndex = header?.style.zIndex || ""
+		previousHeaderPointerEvents = header?.style.pointerEvents || ""
+
+		document.documentElement.classList.add("is-work-modal-locked")
+		document.documentElement.style.overflow = "hidden"
+		document.body.style.overflow = "hidden"
+		document.body.style.position = "fixed"
+		document.body.style.top = `-${lockedScrollY}px`
+		document.body.style.width = "100%"
+		if (header) {
+			header.style.zIndex = "0"
+			header.style.pointerEvents = "none"
+		}
+	}
+
+	function unlockPageScroll() {
+		if (!document.documentElement.classList.contains("is-work-modal-locked")) return
+
+		document.documentElement.classList.remove("is-work-modal-locked")
+		document.documentElement.style.overflow = previousHtmlOverflow
+		document.body.style.overflow = previousBodyOverflow
+		document.body.style.position = previousBodyPosition
+		document.body.style.top = previousBodyTop
+		document.body.style.width = previousBodyWidth
+		const header = document.getElementById("site-header")
+		if (header) {
+			header.style.zIndex = previousHeaderZIndex
+			header.style.pointerEvents = previousHeaderPointerEvents
+		}
+		window.scrollTo(0, lockedScrollY)
+	}
 
 	function initModalTilt(): () => void {
 		// Tilt the INNER wrapper (keeps rotationY free for flip on outer card)
@@ -363,17 +609,24 @@ const exp = useTranslation(lang, "experience")
 		const yTo = gsap.quickTo(modalInner, "rotationY", { duration: 0.5, ease: "power2.out" })
 		const glow = modal.querySelector<HTMLElement>(".experience-modal-glow")
 
-		const onMove = (e: MouseEvent) => {
+		const updateTilt = (clientX: number, clientY: number, strength = 15) => {
 			const rect = modalCard.getBoundingClientRect()
-			const rx = (e.clientX - rect.left) / rect.width - 0.5
-			const ry = (e.clientY - rect.top) / rect.height - 0.5
-			yTo(rx * 15)
-			xTo(ry * -15)
+			const rx = (clientX - rect.left) / rect.width - 0.5
+			const ry = (clientY - rect.top) / rect.height - 0.5
+			yTo(rx * strength)
+			xTo(ry * -strength)
 			if (glow) {
-				glow.style.setProperty("--mgx", `${e.clientX - rect.left}px`)
-				glow.style.setProperty("--mgy", `${e.clientY - rect.top}px`)
+				glow.style.setProperty("--mgx", `${clientX - rect.left}px`)
+				glow.style.setProperty("--mgy", `${clientY - rect.top}px`)
 				glow.style.opacity = "1"
 			}
+		}
+		const onMove = (e: MouseEvent) => {
+			updateTilt(e.clientX, e.clientY)
+		}
+		const onPointerMove = (e: PointerEvent) => {
+			if (e.pointerType === "mouse") return
+			updateTilt(e.clientX, e.clientY, 10)
 		}
 		const onLeave = () => {
 			xTo(0)
@@ -383,15 +636,91 @@ const exp = useTranslation(lang, "experience")
 
 		modalCard.addEventListener("mousemove", onMove)
 		modalCard.addEventListener("mouseleave", onLeave)
+		modalCard.addEventListener("pointermove", onPointerMove)
+		modalCard.addEventListener("pointerup", onLeave)
+		modalCard.addEventListener("pointercancel", onLeave)
 
 		return () => {
 			modalCard.removeEventListener("mousemove", onMove)
 			modalCard.removeEventListener("mouseleave", onLeave)
+			modalCard.removeEventListener("pointermove", onPointerMove)
+			modalCard.removeEventListener("pointerup", onLeave)
+			modalCard.removeEventListener("pointercancel", onLeave)
 			xTo(0)
 			yTo(0)
 		}
 	}
 	let modalTiltCleanup: (() => void) | null = null
+	let motionTiltCleanup: (() => void) | null = null
+
+	function resetMotionTilt() {
+		if (motionTiltCleanup) {
+			motionTiltCleanup()
+			motionTiltCleanup = null
+		}
+		motionTiltState = "idle"
+	}
+
+	function initDeviceMotionTilt(): () => void {
+		if (motionTiltCleanup) motionTiltCleanup()
+
+		const xTo = gsap.quickTo(modalInner, "rotationX", { duration: 0.45, ease: "power2.out" })
+		const yTo = gsap.quickTo(modalInner, "rotationY", { duration: 0.45, ease: "power2.out" })
+		const clampX = gsap.utils.clamp(-8, 8)
+		const clampY = gsap.utils.clamp(-10, 10)
+		let baseBeta: number | null = null
+		let baseGamma: number | null = null
+
+		const onOrientation = (event: DeviceOrientationEvent) => {
+			if (event.beta === null || event.gamma === null) return
+			baseBeta ??= event.beta
+			baseGamma ??= event.gamma
+			xTo(clampX((event.beta - baseBeta) * -0.35))
+			yTo(clampY((event.gamma - baseGamma) * 0.55))
+		}
+
+		window.addEventListener("deviceorientation", onOrientation)
+
+		return () => {
+			window.removeEventListener("deviceorientation", onOrientation)
+			xTo(0)
+			yTo(0)
+		}
+	}
+
+	async function enableMotionTilt() {
+		if (motionTiltState === "pending" || motionTiltState === "enabled") {
+			return
+		}
+
+		motionTiltState = "pending"
+
+		if (!("DeviceOrientationEvent" in window)) {
+			motionTiltState = "unavailable"
+			return
+		}
+
+		type DeviceOrientationEventConstructorWithPermission = typeof DeviceOrientationEvent & {
+			requestPermission?: () => Promise<"granted" | "denied" | "prompt">
+		}
+		const constructor = DeviceOrientationEvent as DeviceOrientationEventConstructorWithPermission
+
+		try {
+			if (typeof constructor.requestPermission === "function") {
+				const permission = await constructor.requestPermission()
+				if (permission !== "granted") {
+					motionTiltState = "unavailable"
+					return
+				}
+			}
+
+			if (!modalOpen) return
+			motionTiltCleanup = initDeviceMotionTilt()
+			motionTiltState = "enabled"
+		} catch {
+			motionTiltState = "unavailable"
+		}
+	}
 
 	function renderArcana(index: number, lang: Language = getCurrentLanguage()) {
 		const arcanaIndex = index % 4
@@ -401,6 +730,41 @@ const exp = useTranslation(lang, "experience")
 			`experience.arcana.${arcanaIndex}.constellation`
 		)
 		modalArcanaReward.textContent = getTranslation(lang, `experience.arcana.${arcanaIndex}.reward`)
+	}
+
+	function getModalFaceHeights() {
+		const frontFace = modal.querySelector<HTMLElement>(".experience-modal-front")
+		const backFace = modal.querySelector<HTMLElement>(".experience-modal-back")
+		const frontContent = modal.querySelector<HTMLElement>(".experience-modal-content")
+		if (!frontFace || !backFace || !frontContent) return null
+
+		const measureChildren = (element: HTMLElement) =>
+			Array.from(element.children).reduce((total, child) => {
+				const childElement = child as HTMLElement
+				const style = window.getComputedStyle(childElement)
+				const rect = childElement.getBoundingClientRect()
+				return total + rect.height + parseFloat(style.marginTop) + parseFloat(style.marginBottom)
+			}, 0)
+
+		const frontStyle = window.getComputedStyle(frontFace)
+		const backStyle = window.getComputedStyle(backFace)
+		const frontPadding =
+			parseFloat(frontStyle.paddingTop) + parseFloat(frontStyle.paddingBottom)
+		const backPadding =
+			parseFloat(backStyle.paddingTop) + parseFloat(backStyle.paddingBottom)
+		const frontHeight = frontContent.scrollHeight + frontPadding
+		const backHeight = measureChildren(backFace) + backPadding
+		return {
+			front: Math.ceil(Math.max(frontHeight, 300)),
+			back: Math.ceil(Math.max(backHeight, 320)),
+		}
+	}
+
+	function syncModalCardHeight() {
+		const heights = getModalFaceHeights()
+		if (!heights) return
+		const desiredHeight = Math.max(heights.front, heights.back)
+		modalCard.style.setProperty("--modal-card-height", `${desiredHeight}px`)
 	}
 
 	function revealArcana() {
@@ -435,6 +799,8 @@ const exp = useTranslation(lang, "experience")
 	function openModal(card: HTMLElement) {
 		const i = parseInt(card.dataset.index || "0", 10)
 		activeArcanaIndex = i
+		updateModalViewportVars()
+		lockPageScroll()
 		const grid = card.querySelector(".grid")
 		if (grid) {
 			const clone = grid.cloneNode(true) as HTMLElement
@@ -446,34 +812,46 @@ const exp = useTranslation(lang, "experience")
 			modalFront.appendChild(clone)
 		}
 		renderArcana(i)
+		window.requestAnimationFrame(syncModalCardHeight)
 		modal.style.pointerEvents = "auto"
 		modal.style.opacity = "1"
+		modalOpen = true
 		modalFlipped = false
-		gsap.set(modalCard, { rotationY: 0 })
+		gsap.set(modalFlipper, { rotationY: 0 })
 		gsap.set(modalInner, { rotationX: 0, rotationY: 0 })
 		gsap.set(arcanaLines, { drawSVG: "0% 0%" })
 		gsap.set(arcanaStars, { scale: 0, autoAlpha: 0, transformOrigin: "50% 50%" })
 		gsap.set([modalArcanaConstellation, modalArcanaName, modalArcanaReward], { autoAlpha: 0 })
+		resetMotionTilt()
+		void enableMotionTilt()
 		modalTiltCleanup = initModalTilt()
 	}
 
 	function closeModal() {
+		modalOpen = false
 		modal.style.pointerEvents = "none"
 		modal.style.opacity = "0"
 		if (modalTiltCleanup) { modalTiltCleanup(); modalTiltCleanup = null }
+		resetMotionTilt()
+		unlockPageScroll()
 	}
 
 	modalClose.addEventListener("click", closeModal)
 	modal.addEventListener("click", (e) => {
 		if (e.target === modal) closeModal()
 	})
+	modal.addEventListener("touchmove", (e) => {
+		const target = e.target as HTMLElement
+		const canScrollInside = target.closest(".experience-modal-front, .experience-modal-back")
+		if (!canScrollInside) e.preventDefault()
+	}, { passive: false })
 	document.addEventListener("keydown", (e) => {
 		if (e.key === "Escape" && modal.style.opacity === "1") closeModal()
 	})
 
 	modalFlip.addEventListener("click", () => {
 		modalFlipped = !modalFlipped
-		gsap.to(modalCard, {
+		gsap.to(modalFlipper, {
 			rotationY: modalFlipped ? 180 : 0,
 			duration: 0.7,
 			ease: "power2.inOut",
@@ -487,6 +865,15 @@ const exp = useTranslation(lang, "experience")
 		const detail = (event as CustomEvent).detail
 		if (!detail) return
 		renderArcana(activeArcanaIndex, detail.language)
+		window.requestAnimationFrame(syncModalCardHeight)
+	})
+
+	updateModalViewportVars()
+	window.visualViewport?.addEventListener("resize", updateModalViewportVars)
+	window.visualViewport?.addEventListener("scroll", updateModalViewportVars)
+	window.addEventListener("resize", () => {
+		updateModalViewportVars()
+		syncModalCardHeight()
 	})
 
 	// Wire cards to modal
