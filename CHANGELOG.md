@@ -5,195 +5,99 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [4.1.0] - 2026-05-04
-
-### Fixed
-
-- **About Section pin & animation** — fixed ScrollTrigger pin not working due to `scroll-behavior: smooth` on `*` selector conflicting with GSAP refresh calculations. Moved smooth-scroll to `html` only.
-- **About Section typewriter** — replaced broken `scrub: 1` + `ScrambleTextPlugin` combo with `toggleActions: "play none none none"` approach. Bio lines decode in parallel using ScrambleTextPlugin with blocky terminal cursor.
-- **Nav scroll spy** — simplified IntersectionObserver to use `threshold: [0.5, 0.75]` instead of complex rootMargin. Sections now use `min-h-screen` so exactly one dominates viewport.
-- **Language dropdown** — added System/English/Español options with current-language checkmark indicator.
-- **Skills section IDs** — changed `#skills-orbital` / `#skills-bento` → `#skills` so nav links resolve correctly.
-- **E2E tests** — removed 4 filler test files, rewrote `home-page.spec.ts` and `navigation.spec.ts` with proper selectors and meaningful assertions.
+## [Unreleased]
 
 ### Added
 
-- **Work Section 3D tilt** — rewritten `initCardTilt` using `gsap.quickSetter` (60fps mousemove tracking) with `preserve-3d` and per-card bounds caching.
-- **Work Section click-to-flip easter egg** — cards flip on click to reveal hidden messages. Only one card flipped at a time. Click again to unflip.
-- **Work Section SVG background draw** — both left and right decorative SVGs now animate with `drawSVG` scrubbed to scroll position.
-- **Unit tests** — `src/lib/animations.test.ts`: 18 tests for all animation utility functions.
-
-### Removed
-
-- `transition:animate="slide"` from `<html>` (was causing slow language transitions).
-- `cleanupScrollTriggers()` call from Layout.astro (each component self-cleans via `gsap.context().revert()`).
-- `e2e/hero.spec.ts`, `e2e/work.spec.ts`, `e2e/skills.spec.ts`, `e2e/contact.spec.ts`.
-
-## [4.0.0] - 2026-05-02
-
-### Changed
-
-- **Tooling Overhaul**
-  - Replaced ESLint + Prettier with oxc (oxlint v1.62 + oxfmt v0.47)
-  - Removed husky, lint-staged, and all ESLint/Prettier plugins (18 packages removed)
-  - Lint now runs in <1s. Format in <50ms.
-
-- **Astro 6 Fonts**
-  - Migrated from Google Fonts to Astro 6 built-in font optimization
-  - Satoshi (display/body) + JetBrains Mono (code) via fontshare + fontsource providers
-  - Zero third-party font requests. Auto-optimized fallback metrics for CLS-free loading
-  - Removed ~200 lines of @font-face declarations and all old .woff2 font files
-
-- **View Transitions**
-  - Added ClientRouter (`astro:transitions`) for smooth language switching
-  - Slide animation between /en/ and /es/ via `transition:animate="slide"`
-  - Replaced full page reload language switch
-
-- **UI Foundation**
-  - Added React 19 + @astrojs/react integration
-  - Initialized shadcn/ui (Nova preset, Neutral base color, CSS variables)
-  - Installed base components (button, card, input, textarea, label, sonner)
-
-- **GSAP Animations (Iteration 2)**
-  - Added GSAP scroll-triggered animations to all sections
-  - About: staggered terminal line reveal, elastic portal entrance
-  - Experience: cards slide in from alternating directions
-  - Skills: orbit rings elastic scale-in, caffeine core pop-in
-  - Hover micro-interactions on orbit icons, terminal, nav links, footer links
-  - Shared animation utilities (`src/lib/animations.ts`)
-
-- **Shadcn Contact Form**
-  - Replaced vanilla JS form with shadcn React component (Input, Textarea, Label, Button)
-  - Sonner toast notifications for success/error feedback
-  - Removed old `initializeContactForm` vanilla logic
-
-- **Easter Eggs**
-  - Konami code (↑↑↓↓←→←→BA): rainbow background + icon spin
-  - Coffee cup click counter (5 clicks): caffeine overload animation + cup shake
-  - Hidden terminal secret: click cursor 3 times to reveal easter egg message
-
-### Removed
-
-- Removed dead dependencies: @midudev/tailwind-animations, tw-animate-css (re-added as shadcn dep)
-- Removed Space Grotesk, Noto Sans, Fira Code font files
-- Removed Google Fonts external requests
-
-## [3.1.0] - 2025-05-01
+- **Tooling Overhaul** — Replaced ESLint + Prettier with oxc (oxlint + oxfmt). Removed husky, lint-staged, and all ESLint/Prettier plugins (18 packages removed). Lint now runs in <1s, format in <50ms.
+- **Astro 6 Fonts** — Migrated from Google Fonts to Astro 6 built-in font optimization. Satoshi (display/body) + JetBrains Mono (code) via fontshare + fontsource providers. Zero third-party font requests.
+- **View Transitions** — Added ClientRouter (`astro:transitions`) for smooth language switching.
+- **React 19 + shadcn/ui** — Integrated React with shadcn/ui (Nova preset, Neutral base color, CSS variables). Base components: button, card, input, textarea, label, sonner.
+- **GSAP Animations** — Scroll-triggered animations for all sections. About: staggered terminal reveal, typewriter decode. Experience: 3D card tilt with `gsap.quickTo`, modal overlay with flip easter egg, SVG draw scrub. Skills: orbit rings elastic scale-in. Hover micro-interactions on icons, terminal, nav links.
+- **Nav scroll-spy** — IntersectionObserver-based active link detection with elastic morphing underline.
+- **Language switching** — Live DOM mutation with text scramble animation (no page reload). System/English/Español dropdown with checkmark indicator.
+- **Contact form** — Animated input fields with focus-tracked cursor, blink animation, and character entry effects. Glass-card styling with shadcn components.
+- **Easter eggs** — Konami code, coffee cup click counter, hidden terminal secret.
+- **Unit tests** — Vitest setup with 18 i18n tests + 18 animation utility tests.
+- **E2E tests** — Playwright across chromium/firefox/webkit: header nav, hero section, experience section, skills section, contact section, language switching, mobile responsiveness, 3D tilt, modal overlay, flip easter egg, SVG draw.
+- **`.env.example`** — Added template for Resend API configuration.
 
 ### Changed
 
-- **Dependency Updates**
-  - Upgraded Astro from 5.16 to 6.2 (SSR with Vite 7, Zod 4, Shiki 4)
-  - Upgraded @astrojs/mdx from 4.3 to 5.0, @astrojs/vercel from 9.0 to 10.0
-  - Upgraded Tailwind CSS from 4.1 to 4.2, @tailwindcss/vite from 4.1 to 4.2
-  - Upgraded TypeScript from 5.9 to 6.0, ESLint from 9.39 to 10.2
-  - Upgraded Vitest from 4.0 to 4.1, Playwright from 1.57 to 1.59
-  - Upgraded prettier from 3.8.0 to 3.8.3, resend from 6.7 to 6.12
-  - All other dev dependencies bumped to latest compatible versions
-
-- **Zod 4 Migration**
-  - Migrated `z.string().email()` to `z.email()` in contact form validation
-  - Updated `z.string().min()` error messages from string to `{ error }` object syntax
-
-- **TypeScript 6 Compatibility**
-  - Added `ignoreDeprecations: "6.0"` for `baseUrl` option in tsconfig.json
-
-- **ESLint Configuration**
-  - Ignored `.agents/` directory (third-party skill files) in ESLint config
-
-- **Documentation**
-  - Rewrote AGENTS.md: condensed from 194 to 62 lines while adding critical architecture notes
-  - Documented SSR mode, i18n routing, middleware behavior, env vars, and import aliases
-
-### Fixed
-
-- Removed stale `@core/` alias reference from AGENTS.md (no `src/core/` directory exists)
-- Fixed ESLint errors caused by unignored `.agents/` skill files
+- **i18n translations** — Renamed skills category "Craft" → "Design" (EN) / "Diseño" (ES). Added missing "Core" → "Núcleo" (ES). Updated about quote "UI craft" → "UI design" / "el diseño de UI". Updated footer tagline "Built with craft." → "Built with passion." / "Hecho con pasión."
+- **Shadcn Contact Form** — Replaced vanilla JS form with React component. Removed old `initializeContactForm` logic.
+- **Animation code** — DRY refactor of animation utilities. Each component self-cleans via `gsap.context().revert()`.
+- **Dependency Updates** — Upgraded Astro 5→6.2, Tailwind 4.1→4.2, TypeScript 5→6, Vitest 4→4.1, Playwright 1.57→1.59, Zod 3→4, ESLint 9→10, resend 6→6.12, and all other deps to latest.
+- **Zod 4 Migration** — Migrated `z.string().email()` to `z.email()`, `z.string().min()` error syntax to `{ error }` objects.
+- **CI/CD Pipeline** — Removed automatic semantic-release, switched to manual GitHub Flow. Tests run on all branches. CI validates: lint → format → test → build.
+- **Documentation** — Rewrote AGENTS.md with critical architecture notes. Added GitHub Flow release process to README.
 
 ### Added
 
-- **Testing Infrastructure**
-  - Set up Vitest for unit testing with happy-dom environment
-  - Added 18 comprehensive unit tests for i18n translations
-  - Added 3 new E2E tests for bilingual skills section support
-  - Added vitest.config.ts with path aliases and coverage configuration
-  - Added npm scripts: `test:unit`, `test:e2e`, and updated `test` to run both
-
-- **Skills Section Enhancements**
-  - Updated SkillsSection to use Icon component from astro-icon
-  - Added bilingual skill translations (English & Spanish)
-  - Organized skills into three categories: core, secondary, and additional
-  - Added 18 skill translations for both languages
-
-- **Localization**
-  - Extended i18n translations with complete skill names and descriptions
-  - Added contact form validation error messages in both languages
-
-- **Documentation**
-  - Added comprehensive AGENTS.md file for agentic coding guidance
-  - Documented all build, lint, and test commands with single test examples
-  - Added detailed code style guidelines for imports, formatting, types, and naming
-  - Included testing patterns for Vitest and Playwright
-  - Added GitHub Flow release process documentation to README.md
-  - Added GitHub issue and pull request templates for better project organization
-
-- **GitHub Flow**
-  - Updated package.json to version 3.0.0
-  - Removed automatic semantic-release integration
-  - Created bug_report.md, feature_request.md, and documentation.md issue templates
-  - Added comprehensive pull_request_template.md with checklist and testing guidance
-
-### Changed
-
-- **CI/CD Pipeline Changes**
-  - Removed automatic semantic-release from GitHub Actions workflow
-  - Changed to manual GitHub Flow for releases
-  - Tests now run on all branches (main, feature/_, bugfix/_, hotfix/\*)
-  - CI validates: lint → format → test (unit + e2e) → build
-
-- **Testing**
-  - Fixed 21 Playwright E2E tests to avoid strict mode violations
-  - Improved test selectors to be more robust and maintainable
-  - Added adaptive viewport handling for responsive tests
-  - Increased tolerance for DOM changes due to scroll-into-view behavior
-
-- **Package Configuration**
-  - Updated package.json test scripts for better testing workflow
-  - Added Vitest and related dependencies
-  - Removed semantic-release and related packages from dependencies
-
-- **README**
-  - Added Testing section with Unit (Vitest) and E2E (Playwright) instructions
-  - Added Versioning section explaining semantic versioning
-  - Added Release Process section with GitHub Flow documentation
-  - Updated Scripts section with all available commands
+- **Tooling Overhaul** — Replaced ESLint + Prettier with oxc (oxlint + oxfmt). Removed husky, lint-staged, and all ESLint/Prettier plugins (18 packages removed).
+- **Astro 6 Fonts** — Migrated from Google Fonts to Astro 6 built-in font optimization. Satoshi + JetBrains Mono via fontshare + fontsource providers.
+- **View Transitions** — Added ClientRouter (`astro:transitions`) for smooth language switching.
+- **React 19 + shadcn/ui** — Integrated React with shadcn/ui (Nova preset, Neutral base). Components: button, card, input, textarea, label, sonner.
+- **GSAP Animations** — Scroll-triggered animations for all sections. About: staggered terminal reveal, typewriter decode. Experience: 3D card tilt with `gsap.quickTo`, modal overlay with flip easter egg, SVG draw scrub. Skills: orbit rings elastic scale-in. Hover micro-interactions on icons, terminal, nav links.
+- **Nav scroll-spy** — IntersectionObserver-based active link detection with elastic morphing underline.
+- **Language switching** — Live DOM mutation with text scramble animation. System/English/Español dropdown with checkmark indicator.
+- **Contact form** — Animated input fields with focus-tracked cursor, blink animation, and character entry effects.
+- **Easter eggs** — Konami code, coffee cup click counter, hidden terminal secret.
+- **Testing Infrastructure** — Vitest for unit testing (18 i18n tests + 18 animation tests). Playwright E2E across chromium/firefox/webkit (header nav, hero, experience, skills, contact, language switching, mobile responsiveness, 3D tilt, modal, flip, SVG draw).
+- **Skills Section** — Icon component from astro-icon, bilingual skill translations (18 skills × 2 languages), three categories: core, secondary, additional.
+- **Localization** — Extended i18n translations with complete skill names, descriptions, and contact form validation messages in both languages.
+- **GitHub Flow** — Issue templates (bug, feature, docs), PR template with checklist. Removed automatic semantic-release.
+- **`.env.example`** — Added template for Resend API configuration.
 
 ### Fixed
 
-- **E2E Tests**
-  - Fixed strict mode violations with multiple element matches
-  - Updated header selector to use more specific class selector (header.glass-card) to avoid Astro dev tool conflicts
-  - Updated language switch selector to use filter().first()
-  - Replaced text-based selectors with element-specific selectors
-  - Fixed footer tests to use h2 selector instead of text matching
-  - Made mobile responsiveness tests adaptive to viewport
-  - Fixed unused variable warnings in test suite
-
-- **Actions**
-  - Fixed environment variable access deferred to runtime in server actions
-
-- **Dependencies**
-  - Added vitest, @vitest/ui, and happy-dom for unit testing setup
+- **Contact form cursor** — Custom caret only appears on focus, blinks with terminal-style animation, positions at start when empty / end when text is present. Placeholder uses 25% opacity.
+- **About section name** — "Cristhofer Pincetti" breaks at word boundaries via flex-wrap instead of mid-word on mobile.
+- **About section pin** — Fixed ScrollTrigger pin conflict with `scroll-behavior: smooth` on `*` selector.
+- **About section typewriter** — Replaced broken `scrub: 1` + ScrambleTextPlugin with `toggleActions` approach.
+- **Work section flicker** — Eliminated bg flicker by creating drawSVG once, using `fromTo` without stagger.
+- **Work section tilt** — Independent per-card tilt, modal card fits content, uniform padding.
+- **Mobile menu** — Corrected reversed toggle logic in `initMobileMenu`.
+- **Memory leaks** — Added cleanup for ScrollTriggers, intervals, and event listeners.
+- **Icons** — Used CSS variable for Material Symbols font-family.
+- **E2E tests** — Fixed strict mode violations, header selectors, language switch selectors, footer selectors, mobile viewport handling.
+- **Actions** — Fixed environment variable access deferred to runtime in server actions.
 
 ### Removed
 
-- **CI/CD**
-  - Removed semantic-release from CI pipeline
-  - Removed automatic changelog generation from CI (now manual)
-  - Removed automatic version bumping from CI
-  - Removed .releaserc.json configuration file
-  - Removed components.json configuration file
-  - Removed unused semantic-release packages from dependencies
+- ESLint, Prettier, husky, lint-staged and all related plugins (18 packages)
+- `transition:animate="slide"` from `<html>` (was causing slow language transitions)
+- `cleanupScrollTriggers()` from Layout.astro (each component self-cleans)
+- Semantic-release, .releaserc.json, components.json, automatic changelog/versioning from CI
+- Dead dependencies: @midudev/tailwind-animations, Space Grotesk/Noto Sans/Fira Code font files, Google Fonts external requests
+
+## [3.0.0] - 2025-01-23
+
+### Added
+
+- **Testing Infrastructure** — Vitest unit testing with happy-dom, 18 i18n unit tests, 3 bilingual E2E tests, vitest.config.ts with path aliases.
+- **Skills Section** — Icon component from astro-icon, bilingual skill translations (18 skills × 2 languages), three categories: core, secondary, additional.
+- **Localization** — Extended i18n translations with complete skill names, descriptions, and contact form validation messages in both languages.
+- **Documentation** — AGENTS.md for agentic coding, GitHub Flow release process in README, GitHub issue/PR templates.
+- **GitHub Flow** — Removed automatic semantic-release, created issue templates, PR template with checklist.
+
+### Changed
+
+- **CI/CD Pipeline** — Removed automatic semantic-release from GitHub Actions. Manual GitHub Flow. Tests run on all branches. CI: lint → format → test → build.
+- **Testing** — Fixed 21 Playwright E2E tests (strict mode violations, selectors, viewport handling).
+- **Package Configuration** — Updated test scripts, added Vitest deps, removed semantic-release deps.
+- **README** — Added Testing, Versioning, and Release Process sections.
+
+### Fixed
+
+- **E2E Tests** — Strict mode violations, header selectors, language switch selectors, footer selectors, mobile viewport handling.
+- **Actions** — Environment variable access deferred to runtime in server actions.
+- **Dependencies** — Added vitest, @vitest/ui, and happy-dom.
+
+### Removed
+
+- Semantic-release from CI pipeline, .releaserc.json, components.json, automatic changelog/versioning from CI.
+- Removed unused semantic-release packages from dependencies.
 
 ## [2.5.0] - 2024-11-XX
 
@@ -298,6 +202,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - About section
 - Project setup and configuration
 
+[Unreleased]: https://github.com/BrainerVirus/portfolio/compare/v3.0.0...HEAD
 [3.0.0]: https://github.com/BrainerVirus/portfolio/compare/v2.5.0...v3.0.0
 [2.5.0]: https://github.com/BrainerVirus/portfolio/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/BrainerVirus/portfolio/compare/v2.3.0...v2.4.0
