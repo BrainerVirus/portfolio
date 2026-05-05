@@ -11,9 +11,9 @@ describe("i18n Translations", () => {
 
 		it("should provide navigation translations", () => {
 			const t = getTranslations("en")
-			expect(t("nav.about")).toBe("Pilot's Log")
-			expect(t("nav.experience")).toBe("Mission Log")
-			expect(t("nav.skills")).toBe("Arsenal")
+			expect(t("nav.about")).toBe("About")
+			expect(t("nav.experience")).toBe("Work")
+			expect(t("nav.skills")).toBe("Skills")
 			expect(t("nav.contact")).toBe("Contact")
 		})
 
@@ -26,7 +26,7 @@ describe("i18n Translations", () => {
 			expect(t("skills.core_skills.tailwindcss")).toBe("Tailwind CSS")
 
 			// Secondary skills
-			expect(t("skills.secondary_skills.figma")).toBe("Figma (UX Expert)")
+			expect(t("skills.secondary_skills.figma")).toBe("Figma (UX)")
 			expect(t("skills.secondary_skills.nodejs")).toBe("Node.js / Express")
 
 			// Additional skills
@@ -36,10 +36,10 @@ describe("i18n Translations", () => {
 
 		it("should provide section titles", () => {
 			const t = getTranslations("en")
-			expect(t("skills.title")).toBe("Technical Arsenal")
-			expect(t("contact.title")).toBe("Establish Comm Link")
-			expect(t("about.title")).toBe("The Pilot's Log")
-			expect(t("experience.title")).toBe("Mission Log")
+			expect(t("skills.title")).toBe("Skills")
+			expect(t("contact.title")).toBe("Contact")
+			expect(t("about.title")).toBe("")
+			expect(t("experience.title")).toBe("Work")
 		})
 
 		it("should provide common translations", () => {
@@ -60,9 +60,9 @@ describe("i18n Translations", () => {
 
 		it("should provide navigation translations in Spanish", () => {
 			const t = getTranslations("es")
-			expect(t("nav.about")).toBe("Bitácora")
-			expect(t("nav.experience")).toBe("Misiones")
-			expect(t("nav.skills")).toBe("Arsenal")
+			expect(t("nav.about")).toBe("Sobre mí")
+			expect(t("nav.experience")).toBe("Trabajo")
+			expect(t("nav.skills")).toBe("Habilidades")
 			expect(t("nav.contact")).toBe("Contacto")
 		})
 
@@ -75,7 +75,7 @@ describe("i18n Translations", () => {
 			expect(t("skills.core_skills.tailwindcss")).toBe("Tailwind CSS")
 
 			// Secondary skills
-			expect(t("skills.secondary_skills.figma")).toBe("Figma (Experto UX)")
+			expect(t("skills.secondary_skills.figma")).toBe("Figma (UX)")
 			expect(t("skills.secondary_skills.nodejs")).toBe("Node.js / Express")
 
 			// Additional skills
@@ -85,10 +85,10 @@ describe("i18n Translations", () => {
 
 		it("should provide section titles in Spanish", () => {
 			const t = getTranslations("es")
-			expect(t("skills.title")).toBe("Arsenal Técnico")
-			expect(t("contact.title")).toBe("Establecer Enlace Comm")
-			expect(t("about.title")).toBe("Bitácora del Piloto")
-			expect(t("experience.title")).toBe("Registro de Misiones")
+			expect(t("skills.title")).toBe("Habilidades")
+			expect(t("contact.title")).toBe("Contacto")
+			expect(t("about.title")).toBe("")
+			expect(t("experience.title")).toBe("Trabajo")
 		})
 	})
 
@@ -167,7 +167,7 @@ describe("i18n Translations", () => {
 			const t = getTranslations("es")
 			expect(t("contact.error.nameRequired")).toBe("El nombre es requerido")
 			expect(t("contact.error.emailRequired")).toBe("El email es requerido")
-			expect(t("contact.error.messageRequired")).toBe("Se requiere carga de transmisión")
+			expect(t("contact.error.messageRequired")).toBe("El mensaje es requerido")
 		})
 	})
 })

@@ -31,8 +31,9 @@ const { currentLocale } = Astro
 		<title>{title}</title>
 	</head>
 	<body class="selection:bg-primary selection:text-white">
+		<div class="site-ambient" aria-hidden="true"></div>
 		<Header />
-		<main class="relative w-full pt-24">
+		<main class="relative z-10 w-full pt-24">
 			<slot />
 		</main>
 		<Footer />

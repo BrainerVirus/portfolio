@@ -187,6 +187,29 @@
 	pointer-events: none;
 }
 
+.site-ambient {
+	position: fixed;
+	inset: 0;
+	z-index: 0;
+	pointer-events: none;
+	background:
+		linear-gradient(180deg, #0a0e0a 0%, #0d140e 34%, #10160f 58%, #0a0e0a 100%),
+		radial-gradient(120% 80% at 48% 36%, rgba(58, 122, 77, 0.12), transparent 72%),
+		linear-gradient(115deg, rgba(240, 230, 210, 0.035), transparent 28%, rgba(58, 122, 77, 0.045));
+}
+
+.site-ambient::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background-image:
+		linear-gradient(rgba(240, 230, 210, 0.018) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(240, 230, 210, 0.012) 1px, transparent 1px);
+	background-size: 120px 120px;
+	mask-image: linear-gradient(180deg, transparent, black 15%, black 85%, transparent);
+	opacity: 0.35;
+}
+
 /* Background gradients */
 @utility bg-forest-whisper {
 	background-image: radial-gradient(ellipse at 50% 0%, rgba(58, 122, 77, 0.04), transparent 60%);

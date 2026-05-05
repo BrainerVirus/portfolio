@@ -220,6 +220,6 @@ export function animateNavUnderline(
 		width,
 		duration,
 		ease: editorialEase,
-	overwrite: "auto",
+		overwrite: "auto",
 	})
 }

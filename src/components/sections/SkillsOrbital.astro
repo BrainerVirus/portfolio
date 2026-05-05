@@ -42,7 +42,6 @@ const additionalSkills: Skill[] = [
 <section
 	class="skills-orbital-section relative flex min-h-screen items-center overflow-hidden py-24"
 	id="skills"
-	style="background-color: #0a0e0a;"
 >
 	<div class="forest-blob absolute inset-0 pointer-events-none" aria-hidden="true" />
 
@@ -51,10 +50,11 @@ const additionalSkills: Skill[] = [
 			<h2
 				class="skills-orbital-heading mb-4 text-4xl font-bold md:text-5xl"
 				style="color: #f0e6d2;"
+				data-i18n="skills.title"
 			>
 				{t("skills.title")}
 			</h2>
-			<p class="skills-orbital-subtitle max-w-lg mx-auto text-base" style="color: #a89a84;">
+			<p class="skills-orbital-subtitle max-w-lg mx-auto text-base" style="color: #a89a84;" data-i18n="skills.subtitle">
 				{t("skills.subtitle")}
 			</p>
 		</div>
@@ -65,7 +65,7 @@ const additionalSkills: Skill[] = [
 				class="skills-orbital-center absolute z-20 flex flex-col items-center justify-center rounded-full border"
 				style="width: 120px; height: 120px; background-color: rgba(20, 26, 20, 0.8); border-color: rgba(58, 122, 77, 0.3);"
 			>
-				<span class="text-xs font-medium" style="color: #a89a84;">{t("skills.mastery")}</span>
+				<span class="text-xs font-medium" style="color: #a89a84;" data-i18n="skills.mastery">{t("skills.mastery")}</span>
 				<span class="text-lg font-bold" style="color: #f0e6d2;">Stack</span>
 			</div>
 
@@ -88,11 +88,13 @@ const additionalSkills: Skill[] = [
 								class="skill-orbital-item absolute flex flex-col items-center justify-center rounded-full border"
 								style={`width: 64px; height: 64px; left: calc(50% + ${x}px - 32px); top: calc(50% + ${y}px - 32px); background-color: rgba(20, 26, 20, 0.9); border-color: rgba(58, 122, 77, 0.25);`}
 								data-skill-name={skillName}
+								data-i18n-data-skill-name={skill.translationKey}
 							>
 								<Icon
 									name={skill.icon}
 									class="h-7 w-7"
 									aria-label={skillName}
+									data-i18n-aria-label={skill.translationKey}
 									style="color: #f0e6d2;"
 								/>
 							</div>
@@ -120,11 +122,13 @@ const additionalSkills: Skill[] = [
 								class="skill-orbital-item absolute flex flex-col items-center justify-center rounded-full border"
 								style={`width: 52px; height: 52px; left: calc(50% + ${x}px - 26px); top: calc(50% + ${y}px - 26px); background-color: rgba(20, 26, 20, 0.9); border-color: rgba(58, 122, 77, 0.2);`}
 								data-skill-name={skillName}
+								data-i18n-data-skill-name={skill.translationKey}
 							>
 								<Icon
 									name={skill.icon}
 									class="h-5 w-5"
 									aria-label={skillName}
+									data-i18n-aria-label={skill.translationKey}
 									style="color: #f0e6d2;"
 								/>
 							</div>
@@ -152,11 +156,13 @@ const additionalSkills: Skill[] = [
 								class="skill-orbital-item absolute flex flex-col items-center justify-center rounded-full border"
 								style={`width: 44px; height: 44px; left: calc(50% + ${x}px - 22px); top: calc(50% + ${y}px - 22px); background-color: rgba(20, 26, 20, 0.9); border-color: rgba(58, 122, 77, 0.15);`}
 								data-skill-name={skillName}
+								data-i18n-data-skill-name={skill.translationKey}
 							>
 								<Icon
 									name={skill.icon}
 									class="h-4 w-4"
 									aria-label={skillName}
+									data-i18n-aria-label={skill.translationKey}
 									style="color: #f0e6d2;"
 								/>
 							</div>
@@ -171,10 +177,10 @@ const additionalSkills: Skill[] = [
 <style>
 	.forest-blob {
 		background:
-			radial-gradient(ellipse 80% 60% at 20% 40%, rgba(58, 122, 77, 0.12) 0%, transparent 70%),
-			radial-gradient(ellipse 60% 80% at 80% 60%, rgba(74, 143, 90, 0.08) 0%, transparent 70%),
-			radial-gradient(ellipse 50% 50% at 50% 50%, rgba(42, 90, 58, 0.06) 0%, transparent 70%);
-		filter: blur(60px);
+			linear-gradient(120deg, rgba(58, 122, 77, 0.08), transparent 42%, rgba(240, 230, 210, 0.035)),
+			radial-gradient(ellipse 110% 80% at 50% 50%, rgba(42, 90, 58, 0.08) 0%, transparent 78%);
+		inset: -18% -12%;
+		filter: blur(72px);
 		animation: blob-morph 12s ease-in-out infinite alternate;
 	}
 

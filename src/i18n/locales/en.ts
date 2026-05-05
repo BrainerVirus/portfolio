@@ -13,6 +13,14 @@ export const common = {
 	success: "Success!",
 } as const
 
+export const language = {
+	switch: "Language options",
+	system: "System",
+	english: "English",
+	spanish: "Español",
+	currentSystem: "Using system language",
+} as const
+
 export const about = {
 	title: "",
 	subtitle: "",
@@ -65,6 +73,32 @@ export const experience = {
 			tags: ["Genexus", "JavaScript", "ERP", "Logistics", "SQL"],
 		},
 	],
+	arcana: [
+		{
+			name: "The Pager Star",
+			constellation: "Sixbell Major",
+			reward:
+				"You uncovered the support-call comet. It only appears when production behaves for five whole minutes.",
+		},
+		{
+			name: "The Macro Magician",
+			constellation: "Key of Sparks",
+			reward: "A tiny ritual unlocks: every boring shortcut now owes you dramatic entrance music.",
+		},
+		{
+			name: "The Water Oracle",
+			constellation: "Hydra Dashboard",
+			reward: "The graphs whisper: hydrate first, optimize second. Annoyingly wise.",
+		},
+		{
+			name: "The Inventory Moon",
+			constellation: "Adhara Nocturne",
+			reward:
+				"Hidden bonus: one perfectly traced supply chain and a receipt that finally tells the truth.",
+		},
+	],
+	flip: "Reveal arcana",
+	close: "Close",
 } as const
 
 export const skills = {

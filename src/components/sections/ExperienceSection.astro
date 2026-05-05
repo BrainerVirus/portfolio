@@ -6,13 +6,13 @@ const exp = useTranslation(lang, "experience")
 ---
 
 <section
-	class="relative mx-auto flex min-h-screen max-w-5xl items-center scroll-mt-24 bg-[#0a0e0a] px-6"
+	class="relative mx-auto flex min-h-screen max-w-5xl items-center scroll-mt-24 px-6"
 	id="experience"
 >
 	<div class="w-full py-24">
-		<div class="experience-bg pointer-events-none absolute inset-0 overflow-hidden">
+		<div class="experience-bg pointer-events-none absolute inset-0 overflow-visible">
 			<svg
-				class="experience-shape absolute -left-32 top-0 h-[500px] w-[500px] opacity-[0.04]"
+				class="experience-shape experience-shape--primary absolute -left-40 -top-40 h-[640px] w-[640px] opacity-[0.055]"
 				viewBox="0 0 500 500"
 				fill="none"
 			>
@@ -42,10 +42,11 @@ const exp = useTranslation(lang, "experience")
 		<div class="relative z-10 mb-16">
 			<h2
 				class="section-heading text-4xl font-medium tracking-tight text-[#f0e6d2] md:text-5xl"
+				data-i18n="experience.title"
 			>
 				{exp.title}
 			</h2>
-			<p class="experience-subtitle mt-4 max-w-xl text-lg text-[#a89a84]">
+			<p class="experience-subtitle mt-4 max-w-xl text-lg text-[#a89a84]" data-i18n="experience.subtitle">
 				{exp.subtitle}
 			</p>
 		</div>
@@ -61,19 +62,19 @@ const exp = useTranslation(lang, "experience")
 							<div class="experience-glow pointer-events-none absolute inset-0 rounded-xl" style="opacity: 0; background: radial-gradient(circle 180px at var(--gx, 50%) var(--gy, 50%), rgba(58,122,77,0.12), transparent 70%);"></div>
 							<div class="experience-card-content grid grid-cols-1 gap-6 border-l-2 border-transparent p-6 md:grid-cols-2 md:gap-16">
 								<div>
-									<h3 class="text-2xl font-medium text-[#f0e6d2]">{job.company}</h3>
-									<div class="mt-1 text-lg text-[#a89a84]">{job.title}</div>
+									<h3 class="text-2xl font-medium text-[#f0e6d2]" data-i18n={`experience.jobs.${index}.company`}>{job.company}</h3>
+									<div class="mt-1 text-lg text-[#a89a84]" data-i18n={`experience.jobs.${index}.title`}>{job.title}</div>
 								</div>
 								<div>
-									<div class="font-mono text-xs tracking-widest text-[#6b6055]">
+									<div class="font-mono text-xs tracking-widest text-[#6b6055]" data-i18n={`experience.jobs.${index}.period`}>
 										{job.period}
 									</div>
-									<p class="mt-3 text-base leading-relaxed text-[#a89a84]">
+									<p class="mt-3 text-base leading-relaxed text-[#a89a84]" data-i18n={`experience.jobs.${index}.description`}>
 										{job.description}
 									</p>
 									<div class="mt-4 flex flex-wrap gap-2">
-										{job.tags.map((tag) => (
-											<span class="border border-[#a89a84]/20 px-2 py-1 font-mono text-[10px] tracking-wider text-[#6b6055] uppercase">
+										{job.tags.map((tag, tagIndex) => (
+											<span class="border border-[#a89a84]/20 px-2 py-1 font-mono text-[10px] tracking-wider text-[#6b6055] uppercase" data-i18n={`experience.jobs.${index}.tags.${tagIndex}`}>
 												{tag}
 											</span>
 										))}
@@ -95,13 +96,28 @@ const exp = useTranslation(lang, "experience")
 			<div class="experience-modal-front rounded-2xl p-8" style="background: rgba(20,26,20,0.95); border: 1px solid rgba(58,122,77,0.3); backface-visibility: hidden;">
 				<div class="experience-modal-content"></div>
 			</div>
-			<div class="experience-modal-back absolute inset-0 rounded-2xl p-10 flex items-center justify-center" style="background: #0a0e0a; border: 1px solid rgba(58,122,77,0.5); backface-visibility: hidden; transform: rotateY(180deg);">
-				<span class="text-center font-mono text-lg text-[#3a7a4d]"></span>
+			<div class="experience-modal-back absolute inset-0 rounded-2xl p-8 flex flex-col items-center justify-center overflow-hidden" style="background: radial-gradient(circle at 50% 12%, rgba(58,122,77,0.18), #0a0e0a 56%); border: 1px solid rgba(58,122,77,0.5); backface-visibility: hidden; transform: rotateY(180deg);">
+				<svg class="arcana-sky mb-5 h-40 w-40 overflow-visible" viewBox="0 0 160 160" fill="none" aria-hidden="true">
+					<path class="arcana-line" d="M28 112 L48 52 L80 28 L112 58 L132 110 L92 98 L60 126 Z" stroke="#f0e6d2" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" opacity="0.65"></path>
+					<path class="arcana-line" d="M48 52 L92 98 L112 58 M80 28 L60 126" stroke="#3a7a4d" stroke-width="1" stroke-linecap="round" opacity="0.85"></path>
+					<g class="arcana-stars" fill="#f0e6d2">
+						<circle cx="28" cy="112" r="2.5"></circle>
+						<circle cx="48" cy="52" r="2.5"></circle>
+						<circle cx="80" cy="28" r="3"></circle>
+						<circle cx="112" cy="58" r="2.5"></circle>
+						<circle cx="132" cy="110" r="2.5"></circle>
+						<circle cx="92" cy="98" r="2.5"></circle>
+						<circle cx="60" cy="126" r="2.5"></circle>
+					</g>
+				</svg>
+				<p class="mb-2 font-mono text-[10px] tracking-[0.3em] text-[#6b6055] uppercase" data-arcana-constellation></p>
+				<h3 class="text-center text-2xl font-medium text-[#f0e6d2]" data-arcana-name></h3>
+				<p class="mt-4 text-center font-mono text-sm leading-relaxed text-[#3a7a4d]" data-arcana-reward></p>
 			</div>
 		</div>
 	</div>
-	<button class="experience-modal-close absolute top-6 right-6 text-[#a89a84] text-3xl hover:text-[#f0e6d2] transition-colors cursor-pointer">&times;</button>
-	<button class="experience-modal-flip absolute bottom-8 left-1/2 -translate-x-1/2 border border-[#3a7a4d]/40 rounded-full px-5 py-2.5 font-mono text-xs text-[#3a7a4d] hover:bg-[#3a7a4d]/10 hover:border-[#3a7a4d]/60 transition-colors cursor-pointer">Flip Card</button>
+	<button class="experience-modal-close absolute top-6 right-6 text-[#a89a84] text-3xl hover:text-[#f0e6d2] transition-colors cursor-pointer" data-i18n-aria-label="experience.close" aria-label={exp.close}>&times;</button>
+	<button class="experience-modal-flip absolute bottom-8 left-1/2 -translate-x-1/2 border border-[#3a7a4d]/40 rounded-full px-5 py-2.5 font-mono text-xs text-[#3a7a4d] hover:bg-[#3a7a4d]/10 hover:border-[#3a7a4d]/60 transition-colors cursor-pointer" data-i18n="experience.flip">{exp.flip}</button>
 </div>
 
 <style>
@@ -134,6 +150,12 @@ const exp = useTranslation(lang, "experience")
 	import { ScrollTrigger } from "gsap/ScrollTrigger"
 	import { SplitText } from "gsap/SplitText"
 	import { DrawSVGPlugin } from "gsap/DrawSVGPlugin"
+	import {
+		getCurrentLanguage,
+		getTranslation,
+		languageChangeEvent,
+		type Language,
+	} from "@/lib/live-language"
 
 	gsap.registerPlugin(ScrollTrigger, SplitText, DrawSVGPlugin)
 
@@ -205,10 +227,17 @@ const exp = useTranslation(lang, "experience")
 
 				const subtitle = section.querySelector<HTMLElement>(".experience-subtitle")
 				if (subtitle) {
-					gsap.from(subtitle, {
-						opacity: 0, y: 20, duration: 0.7, ease: "power3.out",
-						scrollTrigger: { trigger: subtitle, start: "top 90%", once: true },
-					})
+					gsap.fromTo(
+						subtitle,
+						{ autoAlpha: 0, y: 20 },
+						{
+							autoAlpha: 1,
+							y: 0,
+							duration: 0.7,
+							ease: "power3.out",
+							scrollTrigger: { trigger: subtitle, start: "top 90%", once: true },
+						}
+					)
 				}
 
 				const wrappers = gsap.utils.toArray<HTMLElement>(".experience-card-wrapper")
@@ -258,8 +287,8 @@ const exp = useTranslation(lang, "experience")
 					ease: "power2.inOut",
 					scrollTrigger: {
 						trigger: section,
-						start: "top 70%",
-						end: "bottom 30%",
+						start: "top 92%",
+						end: "center 35%",
 						scrub: true,
 					},
 				}
@@ -276,23 +305,19 @@ const exp = useTranslation(lang, "experience")
 	document.addEventListener("astro:after-swap", () => { initExperienceAnimations() })
 
 	// --- Modal overlay with flip easter egg ---
-	const easterEggs = [
-		"🐛 This bug was a feature all along.",
-		"☕ Powered by coffee and spite since 2019.",
-		"🦾 I once fixed a prod incident from my phone at a wedding.",
-		"👾 No, the database is not down. You forgot the VPN.",
-		"😺 My cat has contributed more LoC than most juniors.",
-		"💾 Real devs test in production. (Please don't.)",
-	]
-
 	const modal = document.querySelector(".experience-modal") as HTMLElement
 	const modalCard = modal.querySelector(".experience-modal-card") as HTMLElement
 	const modalInner = modal.querySelector(".experience-modal-inner") as HTMLElement
 	const modalFront = modal.querySelector(".experience-modal-content") as HTMLElement
-	const modalBack = modal.querySelector(".experience-modal-back span") as HTMLElement
+	const modalArcanaName = modal.querySelector<HTMLElement>("[data-arcana-name]")!
+	const modalArcanaConstellation = modal.querySelector<HTMLElement>("[data-arcana-constellation]")!
+	const modalArcanaReward = modal.querySelector<HTMLElement>("[data-arcana-reward]")!
 	const modalClose = modal.querySelector(".experience-modal-close") as HTMLElement
 	const modalFlip = modal.querySelector(".experience-modal-flip") as HTMLElement
+	const arcanaLines = modal.querySelectorAll<SVGPathElement>(".arcana-line")
+	const arcanaStars = modal.querySelectorAll<SVGCircleElement>(".arcana-stars circle")
 	let modalFlipped = false
+	let activeArcanaIndex = 0
 
 	function initModalTilt(): () => void {
 		// Tilt the INNER wrapper (keeps rotationY free for flip on outer card)
@@ -330,8 +355,48 @@ const exp = useTranslation(lang, "experience")
 	}
 	let modalTiltCleanup: (() => void) | null = null
 
+	function renderArcana(index: number, lang: Language = getCurrentLanguage()) {
+		const arcanaIndex = index % 4
+		modalArcanaName.textContent = getTranslation(lang, `experience.arcana.${arcanaIndex}.name`)
+		modalArcanaConstellation.textContent = getTranslation(
+			lang,
+			`experience.arcana.${arcanaIndex}.constellation`
+		)
+		modalArcanaReward.textContent = getTranslation(lang, `experience.arcana.${arcanaIndex}.reward`)
+	}
+
+	function revealArcana() {
+		gsap.fromTo(
+			arcanaLines,
+			{ drawSVG: "0% 0%" },
+			{ drawSVG: "0% 100%", duration: 0.85, stagger: 0.08, ease: "power2.inOut" }
+		)
+		gsap.fromTo(
+			arcanaStars,
+			{ scale: 0, autoAlpha: 0, transformOrigin: "50% 50%" },
+			{ scale: 1, autoAlpha: 1, duration: 0.45, stagger: 0.04, ease: "back.out(2)" }
+		)
+		gsap.fromTo(
+			[modalArcanaConstellation, modalArcanaName, modalArcanaReward],
+			{ y: 12, autoAlpha: 0 },
+			{ y: 0, autoAlpha: 1, duration: 0.45, stagger: 0.08, ease: "power2.out" }
+		)
+		gsap.fromTo(
+			modalCard,
+			{ boxShadow: "0 0 0 rgba(58,122,77,0)" },
+			{
+				boxShadow: "0 0 90px rgba(58,122,77,0.35)",
+				duration: 0.35,
+				yoyo: true,
+				repeat: 1,
+				ease: "power2.out",
+			}
+		)
+	}
+
 	function openModal(card: HTMLElement) {
 		const i = parseInt(card.dataset.index || "0", 10)
+		activeArcanaIndex = i
 		const grid = card.querySelector(".grid")
 		if (grid) {
 			const clone = grid.cloneNode(true) as HTMLElement
@@ -342,12 +407,15 @@ const exp = useTranslation(lang, "experience")
 			modalFront.innerHTML = ""
 			modalFront.appendChild(clone)
 		}
-		modalBack.textContent = easterEggs[i % easterEggs.length]
+		renderArcana(i)
 		modal.style.pointerEvents = "auto"
 		modal.style.opacity = "1"
 		modalFlipped = false
 		gsap.set(modalCard, { rotationY: 0 })
 		gsap.set(modalInner, { rotationX: 0, rotationY: 0 })
+		gsap.set(arcanaLines, { drawSVG: "0% 0%" })
+		gsap.set(arcanaStars, { scale: 0, autoAlpha: 0, transformOrigin: "50% 50%" })
+		gsap.set([modalArcanaConstellation, modalArcanaName, modalArcanaReward], { autoAlpha: 0 })
 		modalTiltCleanup = initModalTilt()
 	}
 
@@ -371,7 +439,16 @@ const exp = useTranslation(lang, "experience")
 			rotationY: modalFlipped ? 180 : 0,
 			duration: 0.7,
 			ease: "power2.inOut",
+			onComplete: () => {
+				if (modalFlipped) revealArcana()
+			},
 		})
+	})
+
+	document.addEventListener(languageChangeEvent, (event) => {
+		const detail = (event as CustomEvent).detail
+		if (!detail) return
+		renderArcana(activeArcanaIndex, detail.language)
 	})
 
 	// Wire cards to modal

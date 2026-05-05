@@ -29,21 +29,21 @@ const translations = {
 ---
 
 <section
-	class="relative flex min-h-screen w-full scroll-mt-24 items-center overflow-hidden"
+	class="relative flex min-h-screen w-full scroll-mt-24 items-center overflow-hidden py-24"
 	id="contact"
-	style="background: #0a0e0a;"
 >
-	<div class="relative mx-auto max-w-7xl px-6">
-		<div class="grid grid-cols-1 items-start gap-16 lg:grid-cols-2 lg:gap-12">
+	<div class="relative mx-auto w-full max-w-7xl px-6">
+		<div class="grid grid-cols-1 items-start gap-16 lg:grid-cols-[0.82fr_1.18fr] lg:gap-16">
 			<!-- Left -->
 			<div class="contact-left flex flex-col justify-center">
 				<h2
 					class="text-4xl font-light text-[#f0e6d2] md:text-5xl"
 					style="line-height: 1.1; letter-spacing: -0.04em;"
+					data-i18n="contact.title"
 				>
 					{t("contact.title")}
 				</h2>
-				<p class="mt-4 text-lg text-[#a89a84]">
+				<p class="mt-4 text-lg text-[#a89a84]" data-i18n="contact.subtitle">
 					{t("contact.subtitle")}
 				</p>
 
@@ -90,12 +90,12 @@ const translations = {
 			</div>
 
 			<!-- Right -->
-			<div class="contact-right relative flex items-center justify-center">
+			<div class="contact-right relative flex items-center justify-stretch">
 				<div
-					class="gradient-blob absolute -inset-20 -z-10"
-					style="background: radial-gradient(circle at 50% 50%, rgba(58, 122, 77, 0.25), transparent 70%); filter: blur(60px);"
+					class="gradient-blob absolute -inset-24 -z-10"
+					style="background: radial-gradient(ellipse at 50% 50%, rgba(58, 122, 77, 0.18), transparent 74%); filter: blur(70px);"
 				></div>
-				<div class="relative w-full">
+				<div class="relative w-full max-w-3xl">
 					<ContactForm
 						locale={locale}
 						translations={translations}

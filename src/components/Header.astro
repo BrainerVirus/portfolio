@@ -7,13 +7,6 @@ const t = getTranslations(lang)
 // Determine if the user has an explicit language cookie (vs. system/browser auto-detect)
 const cookieLang = Astro.cookies.get("lang")?.value
 const activePreference = cookieLang === "en" || cookieLang === "es" ? cookieLang : "system"
-
-const pathname = Astro.url.pathname
-const segments = pathname.split("/").filter(Boolean)
-if (segments[0] === "en" || segments[0] === "es") {
-	segments.shift()
-}
-const basePath = segments.length ? "/" + segments.join("/") : "/"
 ---
 
 <header
@@ -37,7 +30,7 @@ const basePath = segments.length ? "/" + segments.join("/") : "/"
 					Cristhofer Pincetti
 				</h1>
 				<span class="mt-1 font-mono text-[10px] tracking-[0.3em] text-[#a89a84] uppercase">
-					Software Engineer
+					<span data-i18n="about.role">{t("about.role")}</span>
 				</span>
 			</div>
 		</div>
@@ -46,24 +39,28 @@ const basePath = segments.length ? "/" + segments.join("/") : "/"
 			<a
 				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#about"
+				data-i18n="nav.about"
 			>
 				{t("nav.about")}
 			</a>
 			<a
 				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#experience"
+				data-i18n="nav.experience"
 			>
 				{t("nav.experience")}
 			</a>
 			<a
 				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#skills"
+				data-i18n="nav.skills"
 			>
 				{t("nav.skills")}
 			</a>
 			<a
 				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#contact"
+				data-i18n="nav.contact"
 			>
 				{t("nav.contact")}
 			</a>
@@ -74,9 +71,16 @@ const basePath = segments.length ? "/" + segments.join("/") : "/"
 					class="flex cursor-pointer items-center gap-1.5 px-2 py-1 font-mono text-xs font-bold text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 					data-lang={lang}
 					data-preference={activePreference}
-					aria-label={lang === "en" ? "Switch language" : "Cambiar idioma"}
+					data-i18n-aria-label="language.switch"
+					aria-label={t("language.switch")}
 				>
-					{lang.toUpperCase()}
+					<span
+						class="lang-system-icon material-symbols-outlined text-[17px]"
+						aria-hidden="true"
+					>
+						translate
+					</span>
+					<span class="lang-current-label">{activePreference === "system" ? "" : lang.toUpperCase()}</span>
 					<span class="inline-block h-1.5 w-1.5 rounded-full bg-[#3a7a4d]"></span>
 				</button>
 				<div
@@ -88,25 +92,23 @@ const basePath = segments.length ? "/" + segments.join("/") : "/"
 						data-lang="system"
 						data-active={activePreference === "system" ? "true" : "false"}
 					>
-						System
+						<span data-i18n="language.system">{t("language.system")}</span>
 						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
 					</button>
 					<button
 						class="lang-option flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left font-mono text-xs text-[#a89a84] transition-colors hover:bg-[#f0e6d2]/5 hover:text-[#f0e6d2]"
 						data-lang="en"
-						data-path={`/en${basePath}`}
 						data-active={activePreference === "en" ? "true" : "false"}
 					>
-						English
+						<span data-i18n="language.english">{t("language.english")}</span>
 						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
 					</button>
 					<button
 						class="lang-option flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left font-mono text-xs text-[#a89a84] transition-colors hover:bg-[#f0e6d2]/5 hover:text-[#f0e6d2]"
 						data-lang="es"
-						data-path={`/es${basePath}`}
 						data-active={activePreference === "es" ? "true" : "false"}
 					>
-						Espa&ntilde;ol
+						<span data-i18n="language.spanish">{t("language.spanish")}</span>
 						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
 					</button>
 				</div>
@@ -126,9 +128,16 @@ const basePath = segments.length ? "/" + segments.join("/") : "/"
 					class="flex cursor-pointer items-center gap-1.5 px-2 py-1 font-mono text-xs font-bold text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 					data-lang={lang}
 					data-preference={activePreference}
-					aria-label={lang === "en" ? "Switch language" : "Cambiar idioma"}
+					data-i18n-aria-label="language.switch"
+					aria-label={t("language.switch")}
 				>
-					{lang.toUpperCase()}
+					<span
+						class="lang-system-icon material-symbols-outlined text-[17px]"
+						aria-hidden="true"
+					>
+						translate
+					</span>
+					<span class="lang-current-label">{activePreference === "system" ? "" : lang.toUpperCase()}</span>
 					<span class="inline-block h-1.5 w-1.5 rounded-full bg-[#3a7a4d]"></span>
 				</button>
 				<div
@@ -140,25 +149,23 @@ const basePath = segments.length ? "/" + segments.join("/") : "/"
 						data-lang="system"
 						data-active={activePreference === "system" ? "true" : "false"}
 					>
-						System
+						<span data-i18n="language.system">{t("language.system")}</span>
 						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
 					</button>
 					<button
 						class="lang-option flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left font-mono text-xs text-[#a89a84] transition-colors hover:bg-[#f0e6d2]/5 hover:text-[#f0e6d2]"
 						data-lang="en"
-						data-path={`/en${basePath}`}
 						data-active={activePreference === "en" ? "true" : "false"}
 					>
-						English
+						<span data-i18n="language.english">{t("language.english")}</span>
 						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
 					</button>
 					<button
 						class="lang-option flex w-full cursor-pointer items-center justify-between px-3 py-1.5 text-left font-mono text-xs text-[#a89a84] transition-colors hover:bg-[#f0e6d2]/5 hover:text-[#f0e6d2]"
 						data-lang="es"
-						data-path={`/es${basePath}`}
 						data-active={activePreference === "es" ? "true" : "false"}
 					>
-						Espa&ntilde;ol
+						<span data-i18n="language.spanish">{t("language.spanish")}</span>
 						<span class="lang-check text-[#3a7a4d]">&#10003;</span>
 					</button>
 				</div>
@@ -183,24 +190,28 @@ const basePath = segments.length ? "/" + segments.join("/") : "/"
 			<a
 				class="mobile-nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#about"
+				data-i18n="nav.about"
 			>
 				{t("nav.about")}
 			</a>
 			<a
 				class="mobile-nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#experience"
+				data-i18n="nav.experience"
 			>
 				{t("nav.experience")}
 			</a>
 			<a
 				class="mobile-nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#skills"
+				data-i18n="nav.skills"
 			>
 				{t("nav.skills")}
 			</a>
 			<a
 				class="mobile-nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#contact"
+				data-i18n="nav.contact"
 			>
 				{t("nav.contact")}
 			</a>
@@ -210,10 +221,12 @@ const basePath = segments.length ? "/" + segments.join("/") : "/"
 
 <script>
 	import gsap from "gsap"
-	import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin"
-	import { navigate } from "astro:transitions/client"
-
-	gsap.registerPlugin(ScrambleTextPlugin)
+	import {
+		applyLanguagePreference,
+		initLiveLanguage,
+		languageChangeEvent,
+		type LanguagePreference,
+	} from "@/lib/live-language"
 
 	function initHeaderScroll() {
 		const header = document.getElementById("site-header")
@@ -385,7 +398,20 @@ const basePath = segments.length ? "/" + segments.join("/") : "/"
 
 		gsap.set(dropdown, { opacity: 0, y: -10, pointerEvents: "none" })
 
-		// Initially hide/show checkmarks based on active preference
+		function refreshButton(preference: string, lang: string) {
+			btn!.setAttribute("data-preference", preference)
+			btn!.setAttribute("data-lang", lang)
+
+			const label = btn!.querySelector<HTMLElement>(".lang-current-label")
+			const icon = btn!.querySelector<HTMLElement>(".lang-system-icon")
+
+			if (label) label.textContent = preference === "system" ? "" : lang.toUpperCase()
+			if (icon) {
+				icon.textContent = preference === "system" ? "translate" : "language"
+				icon.classList.toggle("text-[#3a7a4d]", preference === "system")
+			}
+		}
+
 		function refreshActiveState() {
 			const activePref = btn!.getAttribute("data-preference")
 			const options = dropdown!.querySelectorAll(".lang-option")
@@ -452,49 +478,25 @@ const basePath = segments.length ? "/" + segments.join("/") : "/"
 		const options = dropdown.querySelectorAll(".lang-option")
 		options.forEach((option) => {
 			option.addEventListener("click", () => {
-				const targetLang = option.getAttribute("data-lang")
-				const targetPath = option.getAttribute("data-path")
-				const currentLang = btn.getAttribute("data-lang")
+				const targetLang = option.getAttribute("data-lang") as LanguagePreference | null
 
 				close()
 
 				if (!targetLang) return
-
-				// No-op if same language is clicked (not "system")
-				if (targetLang !== "system" && targetLang === currentLang) return
-
-				// No-op if "system" is already active and "system" is clicked
 				if (targetLang === "system" && btn.getAttribute("data-preference") === "system") return
+				if (targetLang !== "system" && targetLang === btn.getAttribute("data-preference")) return
 
-				// Scramble effect on visible headings/nav text before navigating
-				const scrambleTargets =
-					"h1, h2, h3, .nav-link, .mobile-nav-link, .about-subtitle, .about-name"
-
-				if (targetLang === "system") {
-					document.cookie = `lang=; path=/; max-age=0; SameSite=Lax`
-					// Navigate to root — middleware will redirect to browser-detected lang
-					gsap.to(scrambleTargets, {
-						duration: 0.35,
-						// @ts-ignore scrambleText:true is valid GSAP runtime shorthand
-						scrambleText: true,
-						chars: "▪░▒▓█",
-						onComplete: () => {
-							navigate("/")
-						},
-					})
-				} else {
-					document.cookie = `lang=${targetLang}; path=/; max-age=31536000; SameSite=Lax`
-					gsap.to(scrambleTargets, {
-						duration: 0.35,
-						// @ts-ignore scrambleText:true is valid GSAP runtime shorthand
-						scrambleText: true,
-						chars: "▪░▒▓█",
-						onComplete: () => {
-							navigate(targetPath || "/")
-						},
-					})
-				}
+				applyLanguagePreference(targetLang, { animate: true })
+				refreshButton(targetLang, document.documentElement.lang)
+				refreshActiveState()
 			})
+		})
+
+		document.addEventListener(languageChangeEvent, (event) => {
+			const detail = (event as CustomEvent).detail
+			if (!detail) return
+			refreshButton(detail.preference, detail.language)
+			refreshActiveState()
 		})
 	}
 
@@ -504,6 +506,7 @@ const basePath = segments.length ? "/" + segments.join("/") : "/"
 		initNavScrollSpy()
 		initLangDropdown("lang-btn-desktop", "lang-dropdown-desktop")
 		initLangDropdown("lang-btn-mobile", "lang-dropdown-mobile")
+		initLiveLanguage()
 	}
 
 	initAll()

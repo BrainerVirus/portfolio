@@ -13,6 +13,14 @@ export const common = {
 	success: "¡Éxito!",
 } as const
 
+export const language = {
+	switch: "Opciones de idioma",
+	system: "Sistema",
+	english: "English",
+	spanish: "Español",
+	currentSystem: "Usando idioma del sistema",
+} as const
+
 export const about = {
 	title: "",
 	subtitle: "",
@@ -65,6 +73,32 @@ export const experience = {
 			tags: ["Genexus", "JavaScript", "ERP", "Logística", "SQL"],
 		},
 	],
+	arcana: [
+		{
+			name: "La Estrella del Pager",
+			constellation: "Sixbell Mayor",
+			reward:
+				"Descubriste el cometa de soporte. Solo aparece cuando producción se porta bien cinco minutos.",
+		},
+		{
+			name: "El Mago Macro",
+			constellation: "Llave de Chispas",
+			reward: "Ritual desbloqueado: cada atajo aburrido ahora te debe música de entrada dramática.",
+		},
+		{
+			name: "El Oráculo del Agua",
+			constellation: "Hydra Dashboard",
+			reward: "Los gráficos susurran: hidrátate primero, optimiza después. Molestamente sabio.",
+		},
+		{
+			name: "La Luna del Inventario",
+			constellation: "Nocturno Adhara",
+			reward:
+				"Bonus oculto: una trazabilidad perfecta y un comprobante que por fin dice la verdad.",
+		},
+	],
+	flip: "Revelar arcano",
+	close: "Cerrar",
 } as const
 
 export const skills = {

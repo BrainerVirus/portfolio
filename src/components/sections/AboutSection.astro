@@ -4,7 +4,7 @@ const lang = getLangFromUrl(Astro.url)
 const t = getTranslations(lang)
 ---
 
-<section class="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#0a0e0a]" id="about">
+<section class="relative flex min-h-screen items-center justify-center overflow-hidden" id="about">
 	<div class="bg-forest-whisper absolute inset-0 -z-10"></div>
 
 	<div class="about-decor pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
@@ -31,7 +31,7 @@ const t = getTranslations(lang)
 			<h1 class="about-name font-light tracking-tighter text-[#f0e6d2]" style="font-size: clamp(2.5rem, 10vw, 8rem);">
 				{t("about.name")}
 			</h1>
-			<p class="about-subtitle mt-6 text-xs uppercase tracking-[0.3em] text-[#6b6055]">
+			<p class="about-subtitle mt-6 text-xs uppercase tracking-[0.3em] text-[#6b6055]" data-i18n="about.role">
 				{t("about.role")}
 			</p>
 		</div>
@@ -39,11 +39,11 @@ const t = getTranslations(lang)
 		<div class="mx-auto mt-16 max-w-2xl">
 			<div class="code-block relative p-6 font-mono text-sm leading-relaxed" style="border-color: rgba(240,230,210,0.06); color: #a89a84; min-height: 200px; overflow: hidden;">
 				<div class="bio-lines space-y-2" style="min-height: 160px;">
-					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span style="color: #f0e6d2;">{t("about.identity")}:</span> <span class="bio-value">{t("about.name")}</span></p>
-					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span style="color: #f0e6d2;">{t("about.class")}:</span> <span class="bio-value">{t("about.role")}</span></p>
-					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span style="color: #f0e6d2;">{t("about.location")}:</span> <span class="bio-value">{t("about.locationValue")}</span></p>
-					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span style="color: #f0e6d2;">{t("about.status")}:</span> <span class="bio-value">{t("about.statusValue")}</span></p>
-					<p class="bio-line pt-2 italic" style="color: #6b6055; overflow-wrap: break-word; word-break: break-word;">{t("about.quote")}</p>
+					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.identity" style="color: #f0e6d2;">{t("about.identity")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.name">{t("about.name")}</span></p>
+					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.class" style="color: #f0e6d2;">{t("about.class")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.role">{t("about.role")}</span></p>
+					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.location" style="color: #f0e6d2;">{t("about.location")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.locationValue">{t("about.locationValue")}</span></p>
+					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.status" style="color: #f0e6d2;">{t("about.status")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.statusValue">{t("about.statusValue")}</span></p>
+					<p class="bio-line pt-2 italic" style="color: #6b6055; overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.quote">{t("about.quote")}</span></p>
 				</div>
 			</div>
 		</div>
@@ -143,23 +143,27 @@ const t = getTranslations(lang)
 			tl.to(".about-decor svg", { opacity: 1, duration: 0.01 }, 0.16)
 
 			const scrambleChars = "▪░▒▓█"
-			const texts = Array.from(bioLines).map((l) => l.textContent || "")
+			const bioParts = document.querySelectorAll<HTMLElement>("[data-bio-scramble]")
+			const texts = Array.from(bioParts).map((part) => part.textContent || "")
 			const maxLen = Math.max(...texts.map((t) => t.length))
 			const sharedDur = Math.max(maxLen * 0.014 + 0.15, 0.45)
 
 			bioLines.forEach((line, i) => {
 				tl.to(line, { opacity: 1, duration: 0.01 }, 0.25)
-				tl.to(line, {
-					duration: sharedDur,
-					// @ts-ignore
-					scrambleText: {
-						text: texts[i],
-						chars: scrambleChars,
-						revealDelay: 0,
-						speed: 0.7,
-					},
-					ease: "none",
-				}, 0.25)
+				const parts = line.querySelectorAll<HTMLElement>("[data-bio-scramble]")
+				parts.forEach((part) => {
+					tl.to(part, {
+						duration: sharedDur,
+						// @ts-ignore
+						scrambleText: {
+							text: part.textContent || "",
+							chars: scrambleChars,
+							revealDelay: 0,
+							speed: 0.7,
+						},
+						ease: "none",
+					}, 0.25 + i * 0.015)
+				})
 			})
 		}, "#about")
 	}
