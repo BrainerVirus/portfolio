@@ -11,18 +11,30 @@ const activePreference = cookieLang === "en" || cookieLang === "es" ? cookieLang
 
 <header
 	id="site-header"
-	class="fixed top-0 left-0 z-50 w-full border-b border-transparent bg-[#0a0e0a] backdrop-blur-[8px] transition-colors"
+	class="fixed top-0 left-0 z-50 w-full border-b border-transparent bg-transparent backdrop-blur-0 transition-colors"
 >
 	<div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
 		<div class="flex items-center gap-4">
-			<div class="relative flex h-10 w-10 items-center justify-center">
-				<span
-					class="material-symbols-outlined scale-x-[-1] text-xl"
-					style="color: #0a0e0a; -webkit-text-stroke: 1.5px #3a7a4d"
+			<button
+				type="button"
+				class="portfolio-mark relative flex h-10 w-10 cursor-pointer items-center justify-center text-[#f0e6d2]"
+				data-logo-mark
+				aria-label="Portfolio mark"
+			>
+				<svg
+					class="h-8 w-8"
+					viewBox="0 0 40 40"
+					fill="none"
+					aria-hidden="true"
 				>
-					local_cafe
-				</span>
-			</div>
+					<circle cx="20" cy="20" r="15.5" stroke="currentColor" stroke-width="1.2" opacity="0.38"></circle>
+					<path d="M11 25H29" stroke="#3a7a4d" stroke-width="1.4" stroke-linecap="round"></path>
+					<path d="M20 8V32" stroke="currentColor" stroke-width="1" stroke-linecap="round" opacity="0.5"></path>
+					<path d="M13.5 21.5L20 13L26.5 21.5" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"></path>
+					<path d="M16 28L20 24L24 28" stroke="#3a7a4d" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"></path>
+					<circle cx="20" cy="13" r="1.8" fill="#3a7a4d"></circle>
+				</svg>
+			</button>
 			<div class="hidden flex-col items-start leading-none sm:flex">
 				<h1
 					class="font-display bg-linear-to-r from-[#f0e6d2] to-[#a89a84] bg-clip-text text-xl font-bold tracking-widest text-transparent uppercase"
@@ -234,11 +246,11 @@ const activePreference = cookieLang === "en" || cookieLang === "es" ? cookieLang
 
 		const onScroll = () => {
 			if (window.scrollY > 50) {
-				header.classList.add("border-white/5", "backdrop-blur-[12px]")
-				header.classList.remove("border-transparent", "backdrop-blur-[8px]")
+				header.classList.add("border-white/5", "bg-[#0a0e0a]/88", "backdrop-blur-[12px]")
+				header.classList.remove("border-transparent", "bg-transparent", "backdrop-blur-0")
 			} else {
-				header.classList.add("border-transparent", "backdrop-blur-[8px]")
-				header.classList.remove("border-white/5", "backdrop-blur-[12px]")
+				header.classList.add("border-transparent", "bg-transparent", "backdrop-blur-0")
+				header.classList.remove("border-white/5", "bg-[#0a0e0a]/88", "backdrop-blur-[12px]")
 			}
 		}
 

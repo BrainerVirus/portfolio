@@ -12,30 +12,40 @@ interface Skill {
 }
 
 const coreSkills: Skill[] = [
-	{ translationKey: "skills.core_skills.typescript", mastery: 95, icon: "devicon:typescript" },
-	{ translationKey: "skills.core_skills.angular", mastery: 90, icon: "devicon:angular" },
-	{ translationKey: "skills.core_skills.nextjs", mastery: 90, icon: "devicon:nextjs" },
-	{ translationKey: "skills.core_skills.tailwindcss", mastery: 95, icon: "devicon:tailwindcss" },
+	{ translationKey: "skills.core_skills.typescript", mastery: 95, icon: "simple-icons:typescript" },
+	{ translationKey: "skills.core_skills.javascript", mastery: 90, icon: "simple-icons:javascript" },
+	{ translationKey: "skills.core_skills.angular", mastery: 90, icon: "simple-icons:angular" },
+	{ translationKey: "skills.core_skills.react", mastery: 90, icon: "simple-icons:react" },
+	{ translationKey: "skills.core_skills.nextjs", mastery: 90, icon: "simple-icons:nextdotjs" },
+	{ translationKey: "skills.core_skills.tailwindcss", mastery: 95, icon: "simple-icons:tailwindcss" },
 ]
 
 const secondarySkills: Skill[] = [
-	{ translationKey: "skills.secondary_skills.figma", mastery: 95, icon: "devicon:figma" },
-	{ translationKey: "skills.secondary_skills.nodejs", mastery: 85, icon: "devicon:nodejs" },
-	{ translationKey: "skills.secondary_skills.prisma", mastery: 90, icon: "devicon:prisma" },
-	{ translationKey: "skills.secondary_skills.zustand", mastery: 85, icon: "devicon:javascript" },
-	{ translationKey: "skills.secondary_skills.reactnative", mastery: 80, icon: "devicon:react" },
-	{ translationKey: "skills.secondary_skills.agile", mastery: 95, icon: "mdi:nature-people" },
+	{ translationKey: "skills.secondary_skills.nodejs", mastery: 85, icon: "simple-icons:nodedotjs" },
+	{ translationKey: "skills.secondary_skills.express", mastery: 85, icon: "simple-icons:express" },
+	{ translationKey: "skills.secondary_skills.prisma", mastery: 90, icon: "simple-icons:prisma" },
+	{ translationKey: "skills.secondary_skills.postgresql", mastery: 88, icon: "simple-icons:postgresql" },
+	{ translationKey: "skills.secondary_skills.zustand", mastery: 85, icon: "mdi:hexagon-multiple-outline" },
+	{ translationKey: "skills.secondary_skills.signals", mastery: 85, icon: "mdi:sine-wave" },
+	{ translationKey: "skills.secondary_skills.reactnative", mastery: 80, icon: "simple-icons:react" },
+	{ translationKey: "skills.secondary_skills.expo", mastery: 80, icon: "simple-icons:expo" },
+	{ translationKey: "skills.secondary_skills.socketio", mastery: 85, icon: "simple-icons:socketdotio" },
+	{ translationKey: "skills.secondary_skills.electron", mastery: 85, icon: "simple-icons:electron" },
 ]
 
 const additionalSkills: Skill[] = [
-	{ translationKey: "skills.additional_skills.docker", mastery: 85, icon: "devicon:docker" },
-	{ translationKey: "skills.additional_skills.github", mastery: 95, icon: "devicon:github" },
-	{ translationKey: "skills.additional_skills.design_thinking", mastery: 95, icon: "mdi:head-lightbulb" },
+	{ translationKey: "skills.additional_skills.docker", mastery: 85, icon: "simple-icons:docker" },
+	{ translationKey: "skills.additional_skills.linux", mastery: 80, icon: "simple-icons:linux" },
+	{ translationKey: "skills.additional_skills.aws", mastery: 78, icon: "simple-icons:amazonaws" },
+	{ translationKey: "skills.additional_skills.github", mastery: 95, icon: "simple-icons:github" },
+	{ translationKey: "skills.additional_skills.gitlab", mastery: 90, icon: "simple-icons:gitlab" },
+	{ translationKey: "skills.additional_skills.figma", mastery: 95, icon: "simple-icons:figma" },
+	{ translationKey: "skills.additional_skills.design_thinking", mastery: 95, icon: "mdi:lightbulb-on-outline" },
 	{ translationKey: "skills.additional_skills.problem_solving", mastery: 95, icon: "mdi:brain" },
-	{ translationKey: "skills.additional_skills.empathy", mastery: 90, icon: "mdi:chat" },
-	{ translationKey: "skills.additional_skills.tenacity", mastery: 95, icon: "mdi:dumbbell" },
-	{ translationKey: "skills.additional_skills.socketio", mastery: 85, icon: "devicon:socketio" },
-	{ translationKey: "skills.additional_skills.python", mastery: 35, icon: "devicon:python" },
+	{ translationKey: "skills.additional_skills.agile", mastery: 95, icon: "mdi:account-group-outline" },
+	{ translationKey: "skills.additional_skills.empathy", mastery: 90, icon: "mdi:heart-outline" },
+	{ translationKey: "skills.additional_skills.tenacity", mastery: 95, icon: "mdi:arm-flex-outline" },
+	{ translationKey: "skills.additional_skills.python", mastery: 35, icon: "simple-icons:python" },
 ]
 ---
 
@@ -43,7 +53,17 @@ const additionalSkills: Skill[] = [
 	class="skills-orbital-section relative flex min-h-screen items-center overflow-hidden py-24"
 	id="skills"
 >
-	<div class="forest-blob absolute inset-0 pointer-events-none" aria-hidden="true" />
+	<div class="skills-decor pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+		<svg class="skills-shape skills-shape--primary absolute -right-40 top-16 h-[680px] w-[680px] opacity-[0.055]" viewBox="0 0 680 680" fill="none">
+			<circle cx="340" cy="340" r="300" stroke="#f0e6d2" stroke-width="0.8"></circle>
+			<circle cx="340" cy="340" r="210" stroke="#3a7a4d" stroke-width="0.6"></circle>
+			<path d="M120 340H560M340 120V560" stroke="#f0e6d2" stroke-width="0.45"></path>
+		</svg>
+		<svg class="skills-shape absolute -left-24 bottom-8 h-[420px] w-[420px] opacity-[0.04]" viewBox="0 0 420 420" fill="none">
+			<circle cx="210" cy="210" r="188" stroke="#f0e6d2" stroke-width="0.7"></circle>
+			<path d="M72 274L150 108L318 132L348 306L182 352Z" stroke="#3a7a4d" stroke-width="0.7" stroke-linejoin="round"></path>
+		</svg>
+	</div>
 
 	<div class="relative z-10 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 		<div class="mb-16 text-center">
@@ -86,13 +106,13 @@ const additionalSkills: Skill[] = [
 						return (
 							<div
 								class="skill-orbital-item absolute flex flex-col items-center justify-center rounded-full border"
-								style={`width: 64px; height: 64px; left: calc(50% + ${x}px - 32px); top: calc(50% + ${y}px - 32px); background-color: rgba(20, 26, 20, 0.9); border-color: rgba(58, 122, 77, 0.25);`}
+								style={`width: 58px; height: 58px; left: calc(50% + ${x}px - 29px); top: calc(50% + ${y}px - 29px); background-color: rgba(20, 26, 20, 0.9); border-color: rgba(58, 122, 77, 0.25);`}
 								data-skill-name={skillName}
 								data-i18n-data-skill-name={skill.translationKey}
 							>
 								<Icon
 									name={skill.icon}
-									class="h-7 w-7"
+									class="h-6 w-6"
 									aria-label={skillName}
 									data-i18n-aria-label={skill.translationKey}
 									style="color: #f0e6d2;"
@@ -170,39 +190,21 @@ const additionalSkills: Skill[] = [
 					})
 				}
 			</div>
+
+			<div class="skills-ring-label skills-ring-label--core" data-i18n="skills.core">
+				{t("skills.core")}
+			</div>
+			<div class="skills-ring-label skills-ring-label--systems" data-i18n="skills.systems">
+				{t("skills.systems")}
+			</div>
+			<div class="skills-ring-label skills-ring-label--craft" data-i18n="skills.craft">
+				{t("skills.craft")}
+			</div>
 		</div>
 	</div>
 </section>
 
 <style>
-	.forest-blob {
-		background:
-			linear-gradient(120deg, rgba(58, 122, 77, 0.08), transparent 42%, rgba(240, 230, 210, 0.035)),
-			radial-gradient(ellipse 110% 80% at 50% 50%, rgba(42, 90, 58, 0.08) 0%, transparent 78%);
-		inset: -18% -12%;
-		filter: blur(72px);
-		animation: blob-morph 12s ease-in-out infinite alternate;
-	}
-
-	@keyframes blob-morph {
-		0% {
-			transform: scale(1) translate(0, 0);
-			opacity: 0.8;
-		}
-		33% {
-			transform: scale(1.1) translate(3%, -2%);
-			opacity: 1;
-		}
-		66% {
-			transform: scale(0.95) translate(-2%, 3%);
-			opacity: 0.7;
-		}
-		100% {
-			transform: scale(1.05) translate(1%, 1%);
-			opacity: 0.9;
-		}
-	}
-
 	.skills-orbital-ring--inner {
 		animation: orbit-clockwise 60s linear infinite;
 	}
@@ -221,6 +223,33 @@ const additionalSkills: Skill[] = [
 
 	.skills-orbital-container:hover .skill-orbital-item {
 		animation-play-state: paused;
+	}
+
+	.skills-ring-label {
+		position: absolute;
+		z-index: 18;
+		pointer-events: none;
+		font-family: var(--font-mono);
+		font-size: 9px;
+		letter-spacing: 0.22em;
+		text-transform: uppercase;
+		color: #6b6055;
+	}
+
+	.skills-ring-label--core {
+		top: calc(50% - 154px);
+		left: 50%;
+		transform: translateX(-50%);
+	}
+
+	.skills-ring-label--systems {
+		top: calc(50% + 218px);
+		left: calc(50% - 150px);
+	}
+
+	.skills-ring-label--craft {
+		top: calc(50% - 300px);
+		right: calc(50% - 280px);
 	}
 
 	/* Counter-rotate items so icons stay upright */
@@ -286,16 +315,22 @@ const additionalSkills: Skill[] = [
 		transform: scale(1.15);
 		transition: all 0.3s ease;
 	}
+
+	.skill-orbital-item svg {
+		color: #f0e6d2;
+	}
 </style>
 
 <script>
 	import gsap from "gsap"
 	import { ScrollTrigger } from "gsap/ScrollTrigger"
+	import { DrawSVGPlugin } from "gsap/DrawSVGPlugin"
 	import { splitTextReveal } from "@/lib/animations"
 
-	gsap.registerPlugin(ScrollTrigger)
+	gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin)
 
 	let orbitalCtx: gsap.Context | null = null
+	let decorDrawn = false
 
 	function initSkillsOrbitalAnimations() {
 		if (orbitalCtx) {
@@ -311,6 +346,7 @@ const additionalSkills: Skill[] = [
 			const rings = section.querySelectorAll(".skills-orbital-ring")
 			const items = section.querySelectorAll(".skill-orbital-item")
 			const center = section.querySelector(".skills-orbital-center")
+			const shapes = section.querySelectorAll(".skills-shape circle, .skills-shape path")
 
 			// Heading SplitText reveal
 			if (heading) {
@@ -391,6 +427,26 @@ const additionalSkills: Skill[] = [
 					},
 				}
 			)
+
+			if (!decorDrawn && shapes.length) {
+				decorDrawn = true
+				gsap.fromTo(
+					shapes,
+					{ drawSVG: "0% 0%" },
+					{
+						drawSVG: "0% 100%",
+						duration: 1.1,
+						stagger: 0.08,
+						ease: "power2.out",
+						scrollTrigger: {
+							trigger: section,
+							start: "top 82%",
+							toggleActions: "play none none none",
+							once: true,
+						},
+					}
+				)
+			}
 		}, "#skills")
 	}
 

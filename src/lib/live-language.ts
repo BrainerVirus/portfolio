@@ -169,7 +169,7 @@ function mutateDom(language: Language, animate: boolean) {
 
 	document
 		.querySelectorAll<HTMLElement>(
-			"[data-i18n-aria-label], [data-i18n-placeholder], [data-i18n-title], [data-i18n-data-skill-name]"
+			"[data-i18n-aria-label], [data-i18n-placeholder], [data-i18n-title], [data-i18n-data-skill-name], [data-i18n-data-ring-label]"
 		)
 		.forEach((element) => {
 			Object.entries(element.dataset).forEach(([datasetKey, key]) => {

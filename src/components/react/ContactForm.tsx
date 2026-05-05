@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, type ReactNode } from "react"
 import { actions } from "astro:actions"
 import gsap from "gsap"
 import { toast } from "sonner"
@@ -32,6 +32,91 @@ interface ContactFormProps {
 		failed: string
 		connectionLost: string
 	}
+}
+
+interface AnimatedFieldProps {
+	id: string
+	label: string
+	value: string
+	placeholder: string
+	error?: string
+	children: (inputClassName: string) => ReactNode
+	multiline?: boolean
+}
+
+function AnimatedField({
+	id,
+	label,
+	value,
+	placeholder,
+	error,
+	children,
+	multiline = false,
+}: AnimatedFieldProps) {
+	const lastCharRef = useRef<HTMLSpanElement>(null)
+	const caretRef = useRef<HTMLSpanElement>(null)
+	const previousValue = useRef(value)
+	const displayValue = value || placeholder
+	const isPlaceholder = !value
+
+	useEffect(() => {
+		const lastChar = lastCharRef.current
+		const caret = caretRef.current
+		if (!lastChar || !caret || previousValue.current === value) return
+
+		const isAdding = value.length > previousValue.current.length
+		previousValue.current = value
+
+		if (!isAdding) return
+
+		gsap.fromTo(
+			lastChar,
+			{ autoAlpha: 0, y: 6 },
+			{ autoAlpha: 1, y: 0, duration: 0.18, ease: "power2.out" }
+		)
+		gsap.fromTo(
+			caret,
+			{ scaleY: 0.35, boxShadow: "0 0 0 rgba(58,122,77,0)" },
+			{
+				scaleY: 1,
+				boxShadow: "0 0 18px rgba(58,122,77,0.55)",
+				duration: 0.22,
+				ease: "power2.out",
+			}
+		)
+	}, [value])
+
+	const inputClassName = `relative z-10 w-full border-0 border-b border-[#f0e6d2]/12 bg-transparent py-3 text-transparent caret-[#3a7a4d] placeholder:text-transparent focus:border-[#3a7a4d] focus:outline-none focus:ring-0 transition-colors ${error ? "border-red-500 focus:border-red-500" : ""}`
+	const textClass = multiline
+		? "whitespace-pre-wrap break-words leading-normal"
+		: "truncate whitespace-pre leading-normal"
+
+	return (
+		<div className="space-y-2" data-animated-field>
+			<label htmlFor={id} className="font-mono text-xs tracking-widest text-[#a89a84] uppercase">
+				{label}
+			</label>
+			<div className="relative">
+				<div
+					className={`pointer-events-none absolute inset-x-0 top-0 z-0 py-3 text-[#f0e6d2] ${textClass} ${isPlaceholder ? "text-[#6b6055]" : ""}`}
+					data-animated-field-mirror
+					aria-hidden="true"
+				>
+					<span>{displayValue.slice(0, -1)}</span>
+					<span ref={lastCharRef}>{displayValue.slice(-1)}</span>
+					{value && (
+						<span
+							ref={caretRef}
+							className="ml-0.5 inline-block h-[1.15em] w-px origin-center translate-y-0.5 bg-[#3a7a4d]"
+							data-animated-field-caret
+						/>
+					)}
+				</div>
+				{children(inputClassName)}
+			</div>
+			{error && <p className="text-xs text-red-500">{error}</p>}
+		</div>
+	)
 }
 
 export default function ContactForm({ locale, translations }: ContactFormProps) {
@@ -206,83 +291,87 @@ export default function ContactForm({ locale, translations }: ContactFormProps) 
 
 	return (
 		<form id="contact-form" onSubmit={handleSubmit} className="space-y-8" noValidate>
-			<div className="space-y-2">
-				<label
-					htmlFor="name"
-					className="font-mono text-xs tracking-widest text-[#a89a84] uppercase"
-				>
-					{copy.name}
-				</label>
-				<input
-					id="name"
-					name="name"
-					type="text"
-					value={name}
-					onChange={(e) => {
-						setName(e.target.value)
-						setErrors((prev) => {
-							const next = { ...prev }
-							delete next.name
-							return next
-						})
-					}}
-					placeholder={copy.namePlaceholder}
-					className={`w-full border-0 border-b border-[#f0e6d2]/12 bg-transparent py-3 text-[#f0e6d2] placeholder:text-[#6b6055] focus:border-[#3a7a4d] focus:outline-none focus:ring-0 transition-colors ${errors.name ? "border-red-500 focus:border-red-500" : ""}`}
-				/>
-				{errors.name && <p className="text-xs text-red-500">{errors.name}</p>}
-			</div>
+			<AnimatedField
+				id="name"
+				label={copy.name}
+				value={name}
+				placeholder={copy.namePlaceholder}
+				error={errors.name}
+			>
+				{(inputClassName) => (
+					<input
+						id="name"
+						name="name"
+						type="text"
+						value={name}
+						onChange={(e) => {
+							setName(e.target.value)
+							setErrors((prev) => {
+								const next = { ...prev }
+								delete next.name
+								return next
+							})
+						}}
+						placeholder={copy.namePlaceholder}
+						className={inputClassName}
+					/>
+				)}
+			</AnimatedField>
 
-			<div className="space-y-2">
-				<label
-					htmlFor="email"
-					className="font-mono text-xs tracking-widest text-[#a89a84] uppercase"
-				>
-					{copy.email}
-				</label>
-				<input
-					id="email"
-					name="email"
-					type="email"
-					value={email}
-					onChange={(e) => {
-						setEmail(e.target.value)
-						setErrors((prev) => {
-							const next = { ...prev }
-							delete next.email
-							return next
-						})
-					}}
-					placeholder={copy.emailPlaceholder}
-					className={`w-full border-0 border-b border-[#f0e6d2]/12 bg-transparent py-3 text-[#f0e6d2] placeholder:text-[#6b6055] focus:border-[#3a7a4d] focus:outline-none focus:ring-0 transition-colors ${errors.email ? "border-red-500 focus:border-red-500" : ""}`}
-				/>
-				{errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
-			</div>
+			<AnimatedField
+				id="email"
+				label={copy.email}
+				value={email}
+				placeholder={copy.emailPlaceholder}
+				error={errors.email}
+			>
+				{(inputClassName) => (
+					<input
+						id="email"
+						name="email"
+						type="email"
+						value={email}
+						onChange={(e) => {
+							setEmail(e.target.value)
+							setErrors((prev) => {
+								const next = { ...prev }
+								delete next.email
+								return next
+							})
+						}}
+						placeholder={copy.emailPlaceholder}
+						className={inputClassName}
+					/>
+				)}
+			</AnimatedField>
 
-			<div className="space-y-2">
-				<label
-					htmlFor="message"
-					className="font-mono text-xs tracking-widest text-[#a89a84] uppercase"
-				>
-					{copy.message}
-				</label>
-				<textarea
-					id="message"
-					name="message"
-					value={message}
-					onChange={(e) => {
-						setMessage(e.target.value)
-						setErrors((prev) => {
-							const next = { ...prev }
-							delete next.message
-							return next
-						})
-					}}
-					placeholder={copy.messagePlaceholder}
-					rows={4}
-					className={`w-full resize-none border-0 border-b border-[#f0e6d2]/12 bg-transparent py-3 text-[#f0e6d2] placeholder:text-[#6b6055] focus:border-[#3a7a4d] focus:outline-none focus:ring-0 transition-colors ${errors.message ? "border-red-500 focus:border-red-500" : ""}`}
-				/>
-				{errors.message && <p className="text-xs text-red-500">{errors.message}</p>}
-			</div>
+			<AnimatedField
+				id="message"
+				label={copy.message}
+				value={message}
+				placeholder={copy.messagePlaceholder}
+				error={errors.message}
+				multiline
+			>
+				{(inputClassName) => (
+					<textarea
+						id="message"
+						name="message"
+						value={message}
+						onChange={(e) => {
+							setMessage(e.target.value)
+							setErrors((prev) => {
+								const next = { ...prev }
+								delete next.message
+								return next
+							})
+						}}
+						placeholder={copy.messagePlaceholder}
+						rows={4}
+						className={`${inputClassName} resize-none`}
+					/>
+				)}
+			</AnimatedField>
 
 			<button
 				ref={buttonRef}

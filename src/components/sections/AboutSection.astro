@@ -28,7 +28,7 @@ const t = getTranslations(lang)
 
 	<div class="relative z-10 mx-auto w-full max-w-6xl px-6 py-20">
 		<div class="flex flex-col items-center text-center">
-			<h1 class="about-name font-light tracking-tighter text-[#f0e6d2]" style="font-size: clamp(2.5rem, 10vw, 8rem);">
+			<h1 class="about-name font-light tracking-tighter text-[#f0e6d2]">
 				{t("about.name")}
 			</h1>
 			<p class="about-subtitle mt-6 text-xs uppercase tracking-[0.3em] text-[#6b6055]" data-i18n="about.role">
@@ -37,13 +37,13 @@ const t = getTranslations(lang)
 		</div>
 
 		<div class="mx-auto mt-16 max-w-2xl">
-			<div class="code-block relative p-6 font-mono text-sm leading-relaxed" style="border-color: rgba(240,230,210,0.06); color: #a89a84; min-height: 200px; overflow: hidden;">
-				<div class="bio-lines space-y-2" style="min-height: 160px;">
+			<div class="code-block relative p-6 font-mono text-sm leading-relaxed" style="border-color: rgba(240,230,210,0.06); color: #a89a84; min-height: 230px; overflow: hidden;">
+				<div class="bio-lines space-y-2" style="min-height: 182px;">
 					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.identity" style="color: #f0e6d2;">{t("about.identity")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.name">{t("about.name")}</span></p>
 					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.class" style="color: #f0e6d2;">{t("about.class")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.role">{t("about.role")}</span></p>
 					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.location" style="color: #f0e6d2;">{t("about.location")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.locationValue">{t("about.locationValue")}</span></p>
 					<p class="bio-line" style="overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.status" style="color: #f0e6d2;">{t("about.status")}</span><span style="color: #f0e6d2;">:</span> <span class="bio-value" data-bio-scramble data-i18n="about.statusValue">{t("about.statusValue")}</span></p>
-					<p class="bio-line pt-2 italic" style="color: #6b6055; overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.quote">{t("about.quote")}</span></p>
+					<p class="bio-line pt-2 italic" style="color: #6b6055; min-height: 4.8em; overflow-wrap: break-word; word-break: break-word;"><span data-bio-scramble data-i18n="about.quote">{t("about.quote")}</span></p>
 				</div>
 			</div>
 		</div>
@@ -51,7 +51,18 @@ const t = getTranslations(lang)
 </section>
 
 <style>
-	.about-name { visibility: hidden }
+	.about-name {
+		visibility: hidden;
+		max-width: min(100%, 980px);
+		font-size: clamp(2.85rem, 10vw, 8rem);
+		line-height: 0.92;
+		text-align: center;
+		text-wrap: balance;
+	}
+
+	.about-name .char {
+		display: inline-block;
+	}
 
 	@keyframes terminal-blink {
 		0%, 49% { opacity: 1; }
@@ -66,8 +77,21 @@ const t = getTranslations(lang)
 		vertical-align: text-bottom;
 		animation: terminal-blink 1s step-end infinite;
 	}
+
+	.bio-line {
+		min-height: 1.55em;
+	}
+
 	.about-decor svg {
 		will-change: transform, opacity;
+	}
+
+	@media (max-width: 640px) {
+		.about-name {
+			font-size: clamp(2.55rem, 13vw, 4.5rem);
+			line-height: 0.98;
+			letter-spacing: -0.035em;
+		}
 	}
 </style>
 
@@ -88,7 +112,7 @@ const t = getTranslations(lang)
 		}
 
 		ctx = gsap.context(() => {
-			const nameSplit = new SplitText(".about-name", { type: "chars" })
+			const nameSplit = new SplitText(".about-name", { type: "chars", charsClass: "char" })
 			gsap.set(".about-name", { visibility: "visible" })
 
 			const bioLines = document.querySelectorAll<HTMLElement>(".bio-line")
@@ -146,10 +170,10 @@ const t = getTranslations(lang)
 			const bioParts = document.querySelectorAll<HTMLElement>("[data-bio-scramble]")
 			const texts = Array.from(bioParts).map((part) => part.textContent || "")
 			const maxLen = Math.max(...texts.map((t) => t.length))
-			const sharedDur = Math.max(maxLen * 0.014 + 0.15, 0.45)
+			const sharedDur = Math.min(Math.max(maxLen * 0.004 + 0.18, 0.34), 0.46)
 
 			bioLines.forEach((line, i) => {
-				tl.to(line, { opacity: 1, duration: 0.01 }, 0.25)
+				tl.to(line, { opacity: 1, duration: 0.01 }, 0.32)
 				const parts = line.querySelectorAll<HTMLElement>("[data-bio-scramble]")
 				parts.forEach((part) => {
 					tl.to(part, {
@@ -162,7 +186,7 @@ const t = getTranslations(lang)
 							speed: 0.7,
 						},
 						ease: "none",
-					}, 0.25 + i * 0.015)
+					}, 0.34 + i * 0.02)
 				})
 			})
 		}, "#about")

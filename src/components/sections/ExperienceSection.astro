@@ -89,8 +89,8 @@ const exp = useTranslation(lang, "experience")
 	</div>
 </section>
 
-<div class="experience-modal pointer-events-none fixed inset-0 z-50 flex items-center justify-center opacity-0" style="background: rgba(10,14,10,0.92); transition: opacity 0.4s ease;">
-	<div class="experience-modal-card relative cursor-default" style="width: 460px; max-height: 80vh; perspective: 3000px; transform-style: preserve-3d;">
+<div class="experience-modal pointer-events-none fixed inset-0 z-50 flex items-center justify-center px-5 opacity-0" style="background: rgba(10,14,10,0.92); transition: opacity 0.4s ease;">
+	<div class="experience-modal-card relative cursor-default" style="width: min(460px, calc(100vw - 40px)); max-height: 80vh; perspective: 3000px; transform-style: preserve-3d;">
 		<div class="experience-modal-inner" style="transform-style: preserve-3d;">
 			<div class="experience-modal-glow pointer-events-none absolute inset-0 rounded-2xl z-10" style="opacity: 0; background: radial-gradient(circle 200px at var(--mgx, 50%) var(--mgy, 50%), rgba(58,122,77,0.10), transparent 70%); transition: opacity 0.3s ease;"></div>
 			<div class="experience-modal-front rounded-2xl p-8" style="background: rgba(20,26,20,0.95); border: 1px solid rgba(58,122,77,0.3); backface-visibility: hidden;">
@@ -171,31 +171,68 @@ const exp = useTranslation(lang, "experience")
 		const yTo = gsap.quickTo(card, "rotationY", { duration: 0.6, ease: "power2.out" })
 		const glow = card.querySelector<HTMLElement>(".experience-glow")
 		const glowOpacityTo = glow ? gsap.quickTo(glow, "opacity", { duration: 0.3, ease: "power2.out" }) : null
+		let touchActive = false
+		let startX = 0
+		let startY = 0
 
-		const onMove = (e: MouseEvent) => {
+		const updateTilt = (clientX: number, clientY: number, strength = 20) => {
 			const rect = card.getBoundingClientRect()
-			const rx = (e.clientX - rect.left) / rect.width - 0.5
-			const ry = (e.clientY - rect.top) / rect.height - 0.5
-			yTo(rx * 20)
-			xTo(ry * -20)
+			const rx = (clientX - rect.left) / rect.width - 0.5
+			const ry = (clientY - rect.top) / rect.height - 0.5
+			yTo(rx * strength)
+			xTo(ry * -strength)
 			if (glow) {
-				glow.style.setProperty("--gx", `${e.clientX - rect.left}px`)
-				glow.style.setProperty("--gy", `${e.clientY - rect.top}px`)
+				glow.style.setProperty("--gx", `${clientX - rect.left}px`)
+				glow.style.setProperty("--gy", `${clientY - rect.top}px`)
 				glowOpacityTo?.(1)
 			}
+		}
+
+		const onMove = (e: MouseEvent) => {
+			updateTilt(e.clientX, e.clientY)
 		}
 		const onLeave = () => {
 			xTo(0)
 			yTo(0)
 			glowOpacityTo?.(0)
 		}
+		const onPointerDown = (e: PointerEvent) => {
+			if (e.pointerType !== "touch") return
+			touchActive = true
+			startX = e.clientX
+			startY = e.clientY
+			card.setPointerCapture?.(e.pointerId)
+			updateTilt(e.clientX, e.clientY, 12)
+		}
+		const onPointerMove = (e: PointerEvent) => {
+			if (!touchActive || e.pointerType !== "touch") return
+			const distance = Math.hypot(e.clientX - startX, e.clientY - startY)
+			if (distance > 6) card.dataset.tiltGesture = "true"
+			updateTilt(e.clientX, e.clientY, 12)
+		}
+		const onPointerUp = (e: PointerEvent) => {
+			if (e.pointerType !== "touch") return
+			touchActive = false
+			onLeave()
+			window.setTimeout(() => {
+				delete card.dataset.tiltGesture
+			}, 140)
+		}
 
 		card.addEventListener("mousemove", onMove)
 		card.addEventListener("mouseleave", onLeave)
+		card.addEventListener("pointerdown", onPointerDown)
+		card.addEventListener("pointermove", onPointerMove)
+		card.addEventListener("pointerup", onPointerUp)
+		card.addEventListener("pointercancel", onPointerUp)
 
 		return () => {
 			card.removeEventListener("mousemove", onMove)
 			card.removeEventListener("mouseleave", onLeave)
+			card.removeEventListener("pointerdown", onPointerDown)
+			card.removeEventListener("pointermove", onPointerMove)
+			card.removeEventListener("pointerup", onPointerUp)
+			card.removeEventListener("pointercancel", onPointerUp)
 			xTo(0)
 			yTo(0)
 			glowOpacityTo?.(0)
@@ -283,13 +320,14 @@ const exp = useTranslation(lang, "experience")
 				{ drawSVG: "0% 0%" },
 				{
 					drawSVG: "0% 100%",
-					duration: 1.5,
-					ease: "power2.inOut",
+					duration: 1.25,
+					stagger: 0.08,
+					ease: "power2.out",
 					scrollTrigger: {
 						trigger: section,
 						start: "top 92%",
-						end: "center 35%",
-						scrub: true,
+						toggleActions: "play none none none",
+						once: true,
 					},
 				}
 			)
@@ -454,6 +492,9 @@ const exp = useTranslation(lang, "experience")
 	// Wire cards to modal
 	const entries = document.querySelectorAll<HTMLElement>("#experience .experience-entry")
 	entries.forEach((card) => {
-		card.addEventListener("click", () => openModal(card))
+		card.addEventListener("click", () => {
+			if (card.dataset.tiltGesture === "true") return
+			openModal(card)
+		})
 	})
 </script>

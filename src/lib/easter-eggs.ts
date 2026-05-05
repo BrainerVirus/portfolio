@@ -113,7 +113,7 @@ export function initKonamiCode() {
 	})
 }
 
-// Coffee cup click counter
+// Header mark click counter
 let clickCount = 0
 let clickTimer: ReturnType<typeof setTimeout> | null = null
 let cupSecretActivated = false
@@ -132,55 +132,49 @@ export function initCoffeeCupEasterEgg() {
 		cupSecretResetTimer = null
 	}
 
-	const cupElements: Array<{ icon: Element; handler: () => void }> = []
+	const markElements: Array<{ mark: Element; handler: () => void }> = []
 
-	document.querySelectorAll(".material-symbols-outlined").forEach((icon) => {
-		if (icon.textContent?.trim() === "local_cafe") {
-			const handler = () => {
-				clickCount++
+	document.querySelectorAll("[data-logo-mark]").forEach((mark) => {
+		const handler = () => {
+			clickCount++
 
-				if (clickTimer) clearTimeout(clickTimer)
-				clickTimer = setTimeout(() => {
-					clickCount = 0
-				}, 2000)
+			if (clickTimer) clearTimeout(clickTimer)
+			clickTimer = setTimeout(() => {
+				clickCount = 0
+			}, 2000)
 
-				if (clickCount >= 5 && !cupSecretActivated) {
-					cupSecretActivated = true
-					clickCount = 0
+			if (clickCount >= 5 && !cupSecretActivated) {
+				cupSecretActivated = true
+				clickCount = 0
 
-					toast("☕ Caffeine overload!", {
-						description: "The coffee cup demands attention.",
-						duration: 3000,
-					})
+				toast("Observatory aligned", {
+					description: "The mark hums quietly. Good systems do that.",
+					duration: 3000,
+				})
 
-					// Restrained scale bounce on all coffee cups
-					const cups = document.querySelectorAll(".material-symbols-outlined")
-					const coffeeCups = Array.from(cups).filter(
-						(c) => (c as HTMLElement).textContent?.trim() === "local_cafe"
-					)
+				gsap.to(mark, {
+					scale: 1.1,
+					rotation: 8,
+					duration: 0.3,
+					ease: "power2.out",
+					yoyo: true,
+					repeat: 1,
+					clearProps: "transform",
+				})
 
-					gsap.to(coffeeCups, {
-						scale: 1.1,
-						duration: 0.3,
-						ease: "power2.out",
-						yoyo: true,
-						repeat: 1,
-					})
-
-					cupSecretResetTimer = setTimeout(() => {
-						cupSecretActivated = false
-						cupSecretResetTimer = null
-					}, 5000)
-				}
+				cupSecretResetTimer = setTimeout(() => {
+					cupSecretActivated = false
+					cupSecretResetTimer = null
+				}, 5000)
 			}
-			icon.addEventListener("click", handler)
-			cupElements.push({ icon, handler })
 		}
+		mark.addEventListener("click", handler)
+		markElements.push({ mark, handler })
 	})
 
 	addCleanup(() => {
-		cupElements.forEach(({ icon, handler }) => {
-			icon.removeEventListener("click", handler)
+		markElements.forEach(({ mark, handler }) => {
+			mark.removeEventListener("click", handler)
 		})
 		if (clickTimer) {
 			clearTimeout(clickTimer)

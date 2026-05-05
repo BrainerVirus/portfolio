@@ -21,17 +21,21 @@ describe("i18n Translations", () => {
 			const t = getTranslations("en")
 			// Core skills
 			expect(t("skills.core_skills.typescript")).toBe("TypeScript")
+			expect(t("skills.core_skills.javascript")).toBe("JavaScript")
 			expect(t("skills.core_skills.angular")).toBe("Angular")
-			expect(t("skills.core_skills.nextjs")).toBe("Next.js / React")
+			expect(t("skills.core_skills.react")).toBe("React")
+			expect(t("skills.core_skills.nextjs")).toBe("Next.js")
 			expect(t("skills.core_skills.tailwindcss")).toBe("Tailwind CSS")
 
 			// Secondary skills
-			expect(t("skills.secondary_skills.figma")).toBe("Figma (UX)")
-			expect(t("skills.secondary_skills.nodejs")).toBe("Node.js / Express")
+			expect(t("skills.secondary_skills.nodejs")).toBe("Node.js")
+			expect(t("skills.secondary_skills.express")).toBe("Express")
 
 			// Additional skills
-			expect(t("skills.additional_skills.docker")).toBe("Docker / Linux")
-			expect(t("skills.additional_skills.github")).toBe("GitHub / GitLab")
+			expect(t("skills.additional_skills.docker")).toBe("Docker")
+			expect(t("skills.additional_skills.linux")).toBe("Linux")
+			expect(t("skills.additional_skills.github")).toBe("GitHub")
+			expect(t("skills.additional_skills.gitlab")).toBe("GitLab")
 		})
 
 		it("should provide section titles", () => {
@@ -70,17 +74,21 @@ describe("i18n Translations", () => {
 			const t = getTranslations("es")
 			// Core skills
 			expect(t("skills.core_skills.typescript")).toBe("TypeScript")
+			expect(t("skills.core_skills.javascript")).toBe("JavaScript")
 			expect(t("skills.core_skills.angular")).toBe("Angular")
-			expect(t("skills.core_skills.nextjs")).toBe("Next.js / React")
+			expect(t("skills.core_skills.react")).toBe("React")
+			expect(t("skills.core_skills.nextjs")).toBe("Next.js")
 			expect(t("skills.core_skills.tailwindcss")).toBe("Tailwind CSS")
 
 			// Secondary skills
-			expect(t("skills.secondary_skills.figma")).toBe("Figma (UX)")
-			expect(t("skills.secondary_skills.nodejs")).toBe("Node.js / Express")
+			expect(t("skills.secondary_skills.nodejs")).toBe("Node.js")
+			expect(t("skills.secondary_skills.express")).toBe("Express")
 
 			// Additional skills
-			expect(t("skills.additional_skills.docker")).toBe("Docker / Linux")
-			expect(t("skills.additional_skills.github")).toBe("GitHub / GitLab")
+			expect(t("skills.additional_skills.docker")).toBe("Docker")
+			expect(t("skills.additional_skills.linux")).toBe("Linux")
+			expect(t("skills.additional_skills.github")).toBe("GitHub")
+			expect(t("skills.additional_skills.gitlab")).toBe("GitLab")
 		})
 
 		it("should provide section titles in Spanish", () => {
@@ -107,7 +115,9 @@ describe("i18n Translations", () => {
 
 			// Core skills should exist in both languages
 			expect(enT("skills.core_skills.typescript")).toBe(esT("skills.core_skills.typescript"))
+			expect(enT("skills.core_skills.javascript")).toBe(esT("skills.core_skills.javascript"))
 			expect(enT("skills.core_skills.angular")).toBe(esT("skills.core_skills.angular"))
+			expect(enT("skills.core_skills.react")).toBe(esT("skills.core_skills.react"))
 			expect(enT("skills.core_skills.nextjs")).toBe(esT("skills.core_skills.nextjs"))
 			expect(enT("skills.core_skills.tailwindcss")).toBe(esT("skills.core_skills.tailwindcss"))
 		})
@@ -129,14 +139,14 @@ describe("i18n Translations", () => {
 		it("should provide about section content in English", () => {
 			const t = getTranslations("en")
 			expect(t("about.name")).toBe("Cristhofer Pincetti")
-			expect(t("about.role")).toBe("Full Stack Engineer")
+			expect(t("about.role")).toBe("Software Engineer")
 			expect(t("about.identity")).toBe("Identity")
 		})
 
 		it("should provide about section content in Spanish", () => {
 			const t = getTranslations("es")
 			expect(t("about.name")).toBe("Cristhofer Pincetti")
-			expect(t("about.role")).toBe("Ingeniero Full Stack")
+			expect(t("about.role")).toBe("Ingeniero de Software")
 			expect(t("about.identity")).toBe("Identidad")
 		})
 	})
