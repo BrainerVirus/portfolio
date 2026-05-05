@@ -1,208 +1,154 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to this portfolio are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [4.1.0] - 2026-05-05
+
 ### Added
 
-- **Tooling Overhaul** — Replaced ESLint + Prettier with oxc (oxlint + oxfmt). Removed husky, lint-staged, and all ESLint/Prettier plugins (18 packages removed). Lint now runs in <1s, format in <50ms.
-- **Astro 6 Fonts** — Migrated from Google Fonts to Astro 6 built-in font optimization. Satoshi (display/body) + JetBrains Mono (code) via fontshare + fontsource providers. Zero third-party font requests.
-- **View Transitions** — Added ClientRouter (`astro:transitions`) for smooth language switching.
-- **React 19 + shadcn/ui** — Integrated React with shadcn/ui (Nova preset, Neutral base color, CSS variables). Base components: button, card, input, textarea, label, sonner.
-- **GSAP Animations** — Scroll-triggered animations for all sections. About: staggered terminal reveal, typewriter decode. Experience: 3D card tilt with `gsap.quickTo`, modal overlay with flip easter egg, SVG draw scrub. Skills: orbit rings elastic scale-in. Hover micro-interactions on icons, terminal, nav links.
-- **Nav scroll-spy** — IntersectionObserver-based active link detection with elastic morphing underline.
-- **Language switching** — Live DOM mutation with text scramble animation (no page reload). System/English/Español dropdown with checkmark indicator.
-- **Contact form** — Animated input fields with focus-tracked cursor, blink animation, and character entry effects. Glass-card styling with shadcn components.
-- **Easter eggs** — Konami code, coffee cup click counter, hidden terminal secret.
-- **Unit tests** — Vitest setup with 18 i18n tests + 18 animation utility tests.
-- **E2E tests** — Playwright across chromium/firefox/webkit: header nav, hero section, experience section, skills section, contact section, language switching, mobile responsiveness, 3D tilt, modal overlay, flip easter egg, SVG draw.
-- **`.env.example`** — Added template for Resend API configuration.
+- **Stable mobile Work dialog** — Work cards now open in a browser-chrome-safe modal that stays visible on mobile browsers with bottom URL bars.
+- **Motion-reactive card tilt** — The Work dialog attempts phone-inclination tilt automatically when a card opens, with pointer/touch tilt as fallback.
+- **Constellation tarot reward** — The Work card easter egg now flips into a solid tarot-style constellation reward card.
+- **Navbar-matched favicon** — Browser, Apple touch, Android, and manifest icons now use the same observatory mark as the navbar logo.
 
 ### Changed
 
-- **i18n translations** — Renamed skills category "Craft" → "Design" (EN) / "Diseño" (ES). Added missing "Core" → "Núcleo" (ES). Updated about quote "UI craft" → "UI design" / "el diseño de UI". Updated footer tagline "Built with craft." → "Built with passion." / "Hecho con pasión."
-- **Shadcn Contact Form** — Replaced vanilla JS form with React component. Removed old `initializeContactForm` logic.
-- **Animation code** — DRY refactor of animation utilities. Each component self-cleans via `gsap.context().revert()`.
-- **Dependency Updates** — Upgraded Astro 5→6.2, Tailwind 4.1→4.2, TypeScript 5→6, Vitest 4→4.1, Playwright 1.57→1.59, Zod 3→4, ESLint 9→10, resend 6→6.12, and all other deps to latest.
-- **Zod 4 Migration** — Migrated `z.string().email()` to `z.email()`, `z.string().min()` error syntax to `{ error }` objects.
-- **CI/CD Pipeline** — Removed automatic semantic-release, switched to manual GitHub Flow. Tests run on all branches. CI validates: lint → format → test → build.
-- **Documentation** — Rewrote AGENTS.md with critical architecture notes. Added GitHub Flow release process to README.
-
-### Added
-
-- **Tooling Overhaul** — Replaced ESLint + Prettier with oxc (oxlint + oxfmt). Removed husky, lint-staged, and all ESLint/Prettier plugins (18 packages removed).
-- **Astro 6 Fonts** — Migrated from Google Fonts to Astro 6 built-in font optimization. Satoshi + JetBrains Mono via fontshare + fontsource providers.
-- **View Transitions** — Added ClientRouter (`astro:transitions`) for smooth language switching.
-- **React 19 + shadcn/ui** — Integrated React with shadcn/ui (Nova preset, Neutral base). Components: button, card, input, textarea, label, sonner.
-- **GSAP Animations** — Scroll-triggered animations for all sections. About: staggered terminal reveal, typewriter decode. Experience: 3D card tilt with `gsap.quickTo`, modal overlay with flip easter egg, SVG draw scrub. Skills: orbit rings elastic scale-in. Hover micro-interactions on icons, terminal, nav links.
-- **Nav scroll-spy** — IntersectionObserver-based active link detection with elastic morphing underline.
-- **Language switching** — Live DOM mutation with text scramble animation. System/English/Español dropdown with checkmark indicator.
-- **Contact form** — Animated input fields with focus-tracked cursor, blink animation, and character entry effects.
-- **Easter eggs** — Konami code, coffee cup click counter, hidden terminal secret.
-- **Testing Infrastructure** — Vitest for unit testing (18 i18n tests + 18 animation tests). Playwright E2E across chromium/firefox/webkit (header nav, hero, experience, skills, contact, language switching, mobile responsiveness, 3D tilt, modal, flip, SVG draw).
-- **Skills Section** — Icon component from astro-icon, bilingual skill translations (18 skills × 2 languages), three categories: core, secondary, additional.
-- **Localization** — Extended i18n translations with complete skill names, descriptions, and contact form validation messages in both languages.
-- **GitHub Flow** — Issue templates (bug, feature, docs), PR template with checklist. Removed automatic semantic-release.
-- **`.env.example`** — Added template for Resend API configuration.
+- **Work card flip** — Front and back faces now share the larger required height, preventing layout shifts during the flip.
+- **Firefox flip rendering** — Split modal tilt and card flip onto separate 3D layers so Firefox hides the inactive face correctly.
+- **Mobile dialog layout** — The dialog uses stable `svh` sizing, safe-area padding, and locked background scroll.
+- **Contact links** — GitHub and LinkedIn now live in the footer only, keeping the Contact section focused on the form.
+- **Release pipeline** — GitHub Actions were updated to the current action versions and Node 24 setup.
 
 ### Fixed
 
-- **Contact form cursor** — Custom caret only appears on focus, blinks with terminal-style animation, positions at start when empty / end when text is present. Placeholder uses 25% opacity.
-- **About section name** — "Cristhofer Pincetti" breaks at word boundaries via flex-wrap instead of mid-word on mobile.
-- **About section pin** — Fixed ScrollTrigger pin conflict with `scroll-behavior: smooth` on `*` selector.
-- **About section typewriter** — Replaced broken `scrub: 1` + ScrambleTextPlugin with `toggleActions` approach.
-- **Work section flicker** — Eliminated bg flicker by creating drawSVG once, using `fromTo` without stagger.
-- **Work section tilt** — Independent per-card tilt, modal card fits content, uniform padding.
-- **Mobile menu** — Corrected reversed toggle logic in `initMobileMenu`.
-- **Memory leaks** — Added cleanup for ScrollTriggers, intervals, and event listeners.
-- **Icons** — Used CSS variable for Material Symbols font-family.
-- **E2E tests** — Fixed strict mode violations, header selectors, language switch selectors, footer selectors, mobile viewport handling.
-- **Actions** — Fixed environment variable access deferred to runtime in server actions.
+- **Firefox card bleed** — The original Work card content no longer shows behind the flipped tarot card.
+- **Unwanted modal scrollbars** — The first Work card no longer shows an internal scrollbar when the content fits.
+- **Mobile browser jumps** — The flip button and close control remain visible when mobile browser controls appear or hide.
+- **Header overlap** — The mobile header can no longer intercept modal close taps.
 
-### Removed
-
-- ESLint, Prettier, husky, lint-staged and all related plugins (18 packages)
-- `transition:animate="slide"` from `<html>` (was causing slow language transitions)
-- `cleanupScrollTriggers()` from Layout.astro (each component self-cleans)
-- Semantic-release, .releaserc.json, components.json, automatic changelog/versioning from CI
-- Dead dependencies: @midudev/tailwind-animations, Space Grotesk/Noto Sans/Fira Code font files, Google Fonts external requests
-
-## [3.0.0] - 2025-01-23
+## [4.0.0] - 2026-05-04
 
 ### Added
 
-- **Testing Infrastructure** — Vitest unit testing with happy-dom, 18 i18n unit tests, 3 bilingual E2E tests, vitest.config.ts with path aliases.
-- **Skills Section** — Icon component from astro-icon, bilingual skill translations (18 skills × 2 languages), three categories: core, secondary, additional.
-- **Localization** — Extended i18n translations with complete skill names, descriptions, and contact form validation messages in both languages.
-- **Documentation** — AGENTS.md for agentic coding, GitHub Flow release process in README, GitHub issue/PR templates.
-- **GitHub Flow** — Removed automatic semantic-release, created issue templates, PR template with checklist.
+- **Live language switching** — Switching English/Spanish now mutates visible text in place and preserves scroll, form state, and animations.
+- **Polished motion system** — GSAP powers section reveals, text decoding, icon motion, Work card entrances, and animated decorative SVG shapes.
+- **Interactive Work cards** — Cards include hover/touch tilt, a glassy surface, modal details, and a constellation tarot easter egg.
+- **Skills orbit** — Skills are grouped into semantic Core, Systems, and Design rings with monochrome icons.
+- **Morphing contact form** — Contact fields animate typed text and the submit button moves through idle, sending, success, and error states.
+- **Astro 6 optimized fonts** — Satoshi and JetBrains Mono are served through Astro font optimization.
+- **React 19 + shadcn/ui** — Contact form and UI primitives use React/shadcn where interaction benefits from islands.
 
 ### Changed
 
-- **CI/CD Pipeline** — Removed automatic semantic-release from GitHub Actions. Manual GitHub Flow. Tests run on all branches. CI: lint → format → test → build.
-- **Testing** — Fixed 21 Playwright E2E tests (strict mode violations, selectors, viewport handling).
-- **Package Configuration** — Updated test scripts, added Vitest deps, removed semantic-release deps.
-- **README** — Added Testing, Versioning, and Release Process sections.
+- **Visual direction** — The site moved into a cohesive botanical-observatory look with shared ambient background, monoline shapes, sand text, and green accents.
+- **Header identity** — The old coffee mark was replaced with the observatory/compass logo.
+- **About section** — Bio copy, decode timing, and mobile name alignment were refined.
+- **Contact section** — The form now uses the same width rhythm as the other sections.
+- **Tooling** — ESLint/Prettier were replaced by oxlint/oxfmt, and the release flow moved to manual GitHub releases.
 
 ### Fixed
 
-- **E2E Tests** — Strict mode violations, header selectors, language switch selectors, footer selectors, mobile viewport handling.
-- **Actions** — Environment variable access deferred to runtime in server actions.
-- **Dependencies** — Added vitest, @vitest/ui, and happy-dom.
+- **Work card flicker** — Card entrance animation no longer animates the glass surface itself, preventing colorful flicker while cards enter.
+- **Animation cleanup** — GSAP setup avoids duplicate DrawSVG/timeline initialization after route/view transitions.
+- **Section boundaries** — Skills, Work, and Contact backgrounds now blend into one page ambience.
+- **Mobile Work cards** — Touch tilt and modal spacing were improved so the card remains visible.
 
-### Removed
-
-- Semantic-release from CI pipeline, .releaserc.json, components.json, automatic changelog/versioning from CI.
-- Removed unused semantic-release packages from dependencies.
-
-## [2.5.0] - 2024-11-XX
+## [3.0.0] - 2026-01-23
 
 ### Added
 
-- **Internationalization**
-  - Added complete English and Spanish translation system
-  - Added localized form submission and UI messages
-  - Added contact form with field-level validation
-
-- **Contact Section**
-  - Implemented contact API using Astro Actions
-  - Added email templates for contact submissions
-  - Integrated Resend for email delivery
-  - Added field-level form validation
-
-- **Features**
-  - Added language switching capability
-  - Added form validation error display
-  - Added localized error messages for form validation
+- **Testing foundation** — Added Vitest unit tests and Playwright end-to-end coverage across Chromium, Firefox, and WebKit.
+- **Agent-ready docs** — Added `AGENTS.md` with architecture, command, and code-style guidance.
+- **GitHub Flow** — Added issue templates, a PR template, and manual release guidance.
+- **Bilingual skills content** — Expanded skills translations and categorized the skill set.
 
 ### Changed
 
-- **Refactoring**
-  - Removed legacy API routes in favor of Astro Actions
-  - Cleaned up contact action implementation
+- **Release process** — Removed automatic semantic-release so releases can be curated with clearer notes.
+- **CI validation** — The pipeline now validates lint, format, tests, and build before release.
+
+### Fixed
+
+- **E2E reliability** — Tightened selectors and viewport handling for more stable browser tests.
+- **Server actions** — Deferred environment variable reads to runtime so deployment builds are safer.
+
+## [2.5.0] - 2024-10-22
+
+### Added
+
+- **Localized contact experience** — Contact form validation and user messages were localized.
+- **Astro Actions contact flow** — Contact submissions moved to Astro Actions with Resend email delivery.
+
+### Changed
+
+- **Contact architecture** — Legacy API routes were replaced with a cleaner action-based flow.
 
 ## [2.4.0] - 2024-09-25
 
 ### Added
 
-- **Internationalization**
-  - Added Spanish and English text translations
-  - Implemented language switching in UI
-  - Added default language redirect
+- **Bilingual UI** — Added English and Spanish text across the interface.
+- **Locale routing** — Visitors are redirected into a localized route by default.
 
-### Features
+### Changed
 
-- i18n translations for UI elements
-- Navbar translation support
-- Language redirect on homepage
+- **Navbar language support** — Navigation labels now respond to the selected language.
 
 ## [2.3.0] - 2024-09-24
 
 ### Added
 
-- Automatic English and Spanish translation support
+- **Automatic language support** — Added the first English/Spanish translation pass.
 
 ## [2.2.0] - 2024-09-22
 
 ### Added
 
-- GitHub link integration
-- Responsive section ordering based on device screen size
+- **GitHub profile link** — Added a direct link to the project owner’s GitHub profile.
+- **Responsive section ordering** — Adjusted section order for different device sizes.
 
 ## [2.1.0] - 2024-08-31
 
 ### Added
 
-- Alert component for work-in-progress notification
-- Section scroll persistence between page reloads
-- Threshold logic for wheel navigation
+- **Work-in-progress notice** — Added an alert to set expectations while the site was evolving.
+- **Scroll persistence** — Section scroll position persists between reloads.
+- **Wheel thresholding** — Wheel navigation became less accidental and easier to control.
 
 ## [2.0.0] - 2024-08-24
 
 ### Added
 
-- Experience section with timeline layout
-- Vercel Analytics integration
-- Vercel Insights integration
-- Navigation slider component with wheel scrolling
-- URL hash detection and management
-- Tailwind animations
-- DOM selector utilities
-- Asset optimization
+- **Full portfolio experience** — Added the Work/Experience section, navigation slider, hash-aware navigation, and analytics.
+- **Performance setup** — Added Vercel Analytics, Vercel Insights, and asset optimization.
 
 ### Changed
 
-- Major home page redesign and refactor
-- Updated typography component usage
-- Changed font from Source Sans Pro to Source Sans 3
-- Updated color palette
-- Refactored dependencies
+- **Major redesign** — Reworked the home page structure, typography, palette, dependencies, and responsive behavior.
 
 ### Fixed
 
-- Mobile device scrolling issues
-- Z-index ordering problems
+- **Mobile scrolling** — Improved scrolling behavior on mobile devices.
+- **Layering** — Fixed z-index issues that could place UI in the wrong order.
 
 ### Breaking Changes
 
-- Typography component API changes
-- Astro dependencies updates
-- Font family changes
-- Skill list updates
+- Typography component usage, font family, color palette, and dependency versions changed substantially.
 
 ## [1.0.0] - 2023-09-23
 
 ### Added
 
-- Initial portfolio release
-- About section
-- Project setup and configuration
+- **Initial portfolio** — Launched the first portfolio with project setup and About section.
 
-[Unreleased]: https://github.com/BrainerVirus/portfolio/compare/v3.0.0...HEAD
+[Unreleased]: https://github.com/BrainerVirus/portfolio/compare/v4.1.0...HEAD
+[4.1.0]: https://github.com/BrainerVirus/portfolio/compare/v4.0.0...v4.1.0
+[4.0.0]: https://github.com/BrainerVirus/portfolio/compare/v3.0.0...v4.0.0
 [3.0.0]: https://github.com/BrainerVirus/portfolio/compare/v2.5.0...v3.0.0
 [2.5.0]: https://github.com/BrainerVirus/portfolio/compare/v2.4.0...v2.5.0
 [2.4.0]: https://github.com/BrainerVirus/portfolio/compare/v2.3.0...v2.4.0
