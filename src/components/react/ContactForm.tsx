@@ -56,6 +56,7 @@ function AnimatedField({
 	const lastCharRef = useRef<HTMLSpanElement>(null)
 	const caretRef = useRef<HTMLSpanElement>(null)
 	const previousValue = useRef(value)
+	const [isFocused, setIsFocused] = useState(false)
 	const displayValue = value || placeholder
 	const isPlaceholder = !value
 
@@ -86,7 +87,19 @@ function AnimatedField({
 		)
 	}, [value])
 
-	const inputClassName = `relative z-10 w-full border-0 border-b border-[#f0e6d2]/12 bg-transparent py-3 text-transparent caret-[#3a7a4d] placeholder:text-transparent focus:border-[#3a7a4d] focus:outline-none focus:ring-0 transition-colors ${error ? "border-red-500 focus:border-red-500" : ""}`
+	const showCaret = isFocused && !!value
+
+	function handleFocus(e: React.FocusEvent) {
+		if (e.target === e.currentTarget) return
+		setIsFocused(true)
+	}
+
+	function handleBlur(e: React.FocusEvent) {
+		if (e.relatedTarget && e.currentTarget.contains(e.relatedTarget)) return
+		setIsFocused(false)
+	}
+
+	const inputClassName = `relative z-10 w-full border-0 border-b border-[#f0e6d2]/12 bg-transparent py-3 text-transparent caret-transparent placeholder:text-transparent focus:border-[#3a7a4d] focus:outline-none focus:ring-0 transition-colors ${error ? "border-red-500 focus:border-red-500" : ""}`
 	const textClass = multiline
 		? "whitespace-pre-wrap break-words leading-normal"
 		: "truncate whitespace-pre leading-normal"
@@ -96,15 +109,15 @@ function AnimatedField({
 			<label htmlFor={id} className="font-mono text-xs tracking-widest text-[#a89a84] uppercase">
 				{label}
 			</label>
-			<div className="relative">
+			<div className="relative" onFocus={handleFocus} onBlur={handleBlur}>
 				<div
-					className={`pointer-events-none absolute inset-x-0 top-0 z-0 py-3 text-[#f0e6d2] ${textClass} ${isPlaceholder ? "text-[#6b6055]" : ""}`}
+					className={`pointer-events-none absolute inset-x-0 top-0 z-0 py-3 text-[#f0e6d2] ${textClass} ${isPlaceholder ? "text-[#f0e6d2]/25" : ""}`}
 					data-animated-field-mirror
 					aria-hidden="true"
 				>
 					<span>{displayValue.slice(0, -1)}</span>
 					<span ref={lastCharRef}>{displayValue.slice(-1)}</span>
-					{value && (
+					{showCaret && (
 						<span
 							ref={caretRef}
 							className="ml-0.5 inline-block h-[1.15em] w-px origin-center translate-y-0.5 bg-[#3a7a4d]"

@@ -115,6 +115,11 @@
 	background: #3a7a4d;
 }
 
+/* Contact form caret blink */
+[data-animated-field-caret] {
+	animation: blink 1s step-end infinite;
+}
+
 /* Custom utility classes */
 @utility glass-card {
 	background: rgba(20, 26, 20, 0.6);

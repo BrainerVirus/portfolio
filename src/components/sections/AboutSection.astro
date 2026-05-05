@@ -29,7 +29,7 @@ const t = getTranslations(lang)
 	<div class="relative z-10 mx-auto w-full max-w-6xl px-6 py-20">
 		<div class="flex flex-col items-center text-center">
 			<h1 class="about-name font-light tracking-tighter text-[#f0e6d2]">
-				{t("about.name")}
+				<span>Cristhofer</span><span>Pincetti</span>
 			</h1>
 			<p class="about-subtitle mt-6 text-xs uppercase tracking-[0.3em] text-[#6b6055]" data-i18n="about.role">
 				{t("about.role")}
@@ -57,7 +57,14 @@ const t = getTranslations(lang)
 		font-size: clamp(2.85rem, 10vw, 8rem);
 		line-height: 0.92;
 		text-align: center;
-		text-wrap: balance;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0 0.25em;
+	}
+
+	.about-name > span {
+		white-space: nowrap;
 	}
 
 	.about-name .char {
@@ -188,6 +195,16 @@ const t = getTranslations(lang)
 						ease: "none",
 					}, 0.34 + i * 0.02)
 				})
+			})
+
+			// Blink cursor continuously after entrance
+			gsap.to(cursor, {
+				opacity: 0,
+				duration: 0.53,
+				repeat: -1,
+				yoyo: true,
+				ease: "steps(1)",
+				delay: 0.6,
 			})
 		}, "#about")
 	}

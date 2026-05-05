@@ -33,7 +33,7 @@ export const about = {
 	status: "Estado",
 	statusValue: "Construyendo sistemas escalables y tomando café.",
 	quote:
-		"Apasionado por el código limpio, el craft de UI y explorar las fronteras de la tecnología web. Cuando no estoy programando, probablemente estoy refactorizando mi vida o debuggeando la realidad.",
+		"Apasionado por el código limpio, el diseño de UI y explorar las fronteras de la tecnología web. Cuando no estoy programando, probablemente estoy refactorizando mi vida o debuggeando la realidad.",
 } as const
 
 export const experience = {
@@ -104,9 +104,9 @@ export const experience = {
 export const skills = {
 	title: "Habilidades",
 	subtitle: "Con qué trabajo.",
-	core: "Core",
+	core: "Núcleo",
 	systems: "Sistemas",
-	craft: "Craft",
+	craft: "Diseño",
 	mastery: "Dominio",
 	core_skills: {
 		typescript: "TypeScript",
@@ -177,7 +177,7 @@ export const contact = {
 } as const
 
 export const footer = {
-	tagline: "Hecho con craft.",
+	tagline: "Hecho con pasión.",
 	backToTop: "Volver arriba",
 } as const
 
