@@ -71,8 +71,8 @@ function AnimatedField({
 
 		gsap.fromTo(
 			lastChar,
-			{ autoAlpha: 0, y: 6 },
-			{ autoAlpha: 1, y: 0, duration: 0.18, ease: "power2.out" }
+			{ autoAlpha: 0, x: -6 },
+			{ autoAlpha: 1, x: 0, duration: 0.18, ease: "power2.out" }
 		)
 		gsap.fromTo(
 			caret,
@@ -86,7 +86,7 @@ function AnimatedField({
 		)
 	}, [value])
 
-	const showCaret = isFocused && !!value
+	const showCaret = isFocused
 
 	function handleFocus(e: React.FocusEvent) {
 		if (e.target === e.currentTarget) return
@@ -114,9 +114,16 @@ function AnimatedField({
 					data-animated-field-mirror
 					aria-hidden="true"
 				>
+					{showCaret && !value && (
+						<span
+							ref={caretRef}
+							className="absolute left-0 top-1/2 -translate-y-1/2 h-[1.15em] w-px bg-[#3a7a4d]"
+							data-animated-field-caret
+						/>
+					)}
 					<span>{displayValue.slice(0, -1)}</span>
 					<span ref={lastCharRef}>{displayValue.slice(-1)}</span>
-					{showCaret && (
+					{showCaret && !!value && (
 						<span
 							ref={caretRef}
 							className="ml-0.5 inline-block h-[1.15em] w-px origin-center translate-y-0.5 bg-[#3a7a4d]"
