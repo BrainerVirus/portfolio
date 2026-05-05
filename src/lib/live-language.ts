@@ -1,5 +1,5 @@
 import gsap from "gsap"
-import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin"
+import ScrambleTextPlugin from "gsap/ScrambleTextPlugin"
 import { defaultLang, translations, type Language } from "@/i18n/translations"
 
 gsap.registerPlugin(ScrambleTextPlugin)

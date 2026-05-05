@@ -1,9 +1,9 @@
 import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-import { SplitText } from "gsap/SplitText"
-import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin"
-import { DrawSVGPlugin } from "gsap/DrawSVGPlugin"
-import { CustomEase } from "gsap/CustomEase"
+import ScrollTrigger from "gsap/ScrollTrigger"
+import SplitText from "gsap/SplitText"
+import ScrambleTextPlugin from "gsap/ScrambleTextPlugin"
+import DrawSVGPlugin from "gsap/DrawSVGPlugin"
+import CustomEase from "gsap/CustomEase"
 
 gsap.registerPlugin(ScrollTrigger, SplitText, ScrambleTextPlugin, DrawSVGPlugin, CustomEase)
 
