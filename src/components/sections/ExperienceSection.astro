@@ -132,6 +132,7 @@ const exp = useTranslation(lang, "experience")
 		left: var(--modal-vv-left, 0px);
 		width: 100vw;
 		height: 100vh;
+		visibility: hidden;
 		place-items: center;
 		overflow: hidden;
 		overscroll-behavior: contain;
@@ -141,6 +142,10 @@ const exp = useTranslation(lang, "experience")
 			max(24px, calc(env(safe-area-inset-bottom) + var(--modal-extra-bottom, 0px)))
 			20px;
 		touch-action: none;
+	}
+
+	.experience-modal.is-open {
+		visibility: visible;
 	}
 
 	@supports (height: 100svh) {
@@ -292,8 +297,14 @@ const exp = useTranslation(lang, "experience")
 		}
 	}
 
-	.is-work-modal-locked {
+	:global(.is-work-modal-locked) {
 		overflow: hidden;
+		scrollbar-gutter: stable;
+	}
+
+	:global(.is-work-modal-locked body) {
+		overflow: hidden;
+		width: calc(100% - var(--modal-scrollbar-width, 0px));
 	}
 
 	.experience-card-wrapper {
@@ -534,12 +545,11 @@ const exp = useTranslation(lang, "experience")
 	let activeArcanaIndex = 0
 	let modalOpen = false
 	let motionTiltState: "idle" | "pending" | "enabled" | "unavailable" = "idle"
-	let lockedScrollY = 0
-	let previousBodyPosition = ""
-	let previousBodyTop = ""
-	let previousBodyWidth = ""
 	let previousHtmlOverflow = ""
 	let previousBodyOverflow = ""
+	let previousHtmlPaddingRight = ""
+	let previousBodyPaddingRight = ""
+	let previousBodyWidth = ""
 	let previousHeaderZIndex = ""
 	let previousHeaderPointerEvents = ""
 
@@ -564,22 +574,26 @@ const exp = useTranslation(lang, "experience")
 	function lockPageScroll() {
 		if (document.documentElement.classList.contains("is-work-modal-locked")) return
 
-		lockedScrollY = window.scrollY
 		const header = document.getElementById("site-header")
-		previousBodyPosition = document.body.style.position
-		previousBodyTop = document.body.style.top
-		previousBodyWidth = document.body.style.width
 		previousHtmlOverflow = document.documentElement.style.overflow
 		previousBodyOverflow = document.body.style.overflow
+		previousHtmlPaddingRight = document.documentElement.style.paddingRight
+		previousBodyPaddingRight = document.body.style.paddingRight
+		previousBodyWidth = document.body.style.width
 		previousHeaderZIndex = header?.style.zIndex || ""
 		previousHeaderPointerEvents = header?.style.pointerEvents || ""
+
+		const hasStableScrollbarGutter = CSS.supports?.("scrollbar-gutter: stable") ?? false
+		const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+		document.documentElement.style.setProperty("--modal-scrollbar-width", `${scrollbarWidth}px`)
+		if (!hasStableScrollbarGutter && scrollbarWidth > 0) {
+			document.documentElement.style.paddingRight = `${scrollbarWidth}px`
+			document.body.style.paddingRight = `${scrollbarWidth}px`
+		}
 
 		document.documentElement.classList.add("is-work-modal-locked")
 		document.documentElement.style.overflow = "hidden"
 		document.body.style.overflow = "hidden"
-		document.body.style.position = "fixed"
-		document.body.style.top = `-${lockedScrollY}px`
-		document.body.style.width = "100%"
 		if (header) {
 			header.style.zIndex = "0"
 			header.style.pointerEvents = "none"
@@ -592,15 +606,15 @@ const exp = useTranslation(lang, "experience")
 		document.documentElement.classList.remove("is-work-modal-locked")
 		document.documentElement.style.overflow = previousHtmlOverflow
 		document.body.style.overflow = previousBodyOverflow
-		document.body.style.position = previousBodyPosition
-		document.body.style.top = previousBodyTop
+		document.documentElement.style.paddingRight = previousHtmlPaddingRight
+		document.body.style.paddingRight = previousBodyPaddingRight
 		document.body.style.width = previousBodyWidth
+		document.documentElement.style.removeProperty("--modal-scrollbar-width")
 		const header = document.getElementById("site-header")
 		if (header) {
 			header.style.zIndex = previousHeaderZIndex
 			header.style.pointerEvents = previousHeaderPointerEvents
 		}
-		window.scrollTo(0, lockedScrollY)
 	}
 
 	function initModalTilt(): () => void {
@@ -813,6 +827,7 @@ const exp = useTranslation(lang, "experience")
 		}
 		renderArcana(i)
 		window.requestAnimationFrame(syncModalCardHeight)
+		modal.classList.add("is-open")
 		modal.style.pointerEvents = "auto"
 		modal.style.opacity = "1"
 		modalOpen = true
@@ -829,6 +844,7 @@ const exp = useTranslation(lang, "experience")
 
 	function closeModal() {
 		modalOpen = false
+		modal.classList.remove("is-open")
 		modal.style.pointerEvents = "none"
 		modal.style.opacity = "0"
 		if (modalTiltCleanup) { modalTiltCleanup(); modalTiltCleanup = null }

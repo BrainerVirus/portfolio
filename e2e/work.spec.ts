@@ -42,6 +42,51 @@ test.describe("Work Section — Modal Overlay", () => {
 		await expect(page.locator(".experience-modal")).toBeVisible()
 	})
 
+	test("modal locks without layout shift and restores scroll naturally", async ({ page }) => {
+		await page.locator("#experience").scrollIntoViewIfNeeded()
+		await page.locator(".experience-entry").first().scrollIntoViewIfNeeded()
+		await page.waitForTimeout(300)
+
+		const before = await page.evaluate(() => ({
+			sectionLeft: document.querySelector("#experience")!.getBoundingClientRect().left,
+			sectionRight: document.querySelector("#experience")!.getBoundingClientRect().right,
+			sectionWidth: document.querySelector("#experience")!.getBoundingClientRect().width,
+			scrollY: window.scrollY,
+		}))
+
+		await page.evaluate(() => {
+			document.querySelector<HTMLElement>(".experience-entry")?.click()
+		})
+		await expect(page.locator(".experience-modal")).toBeVisible()
+
+		const opened = await page.evaluate(() => ({
+			sectionLeft: document.querySelector("#experience")!.getBoundingClientRect().left,
+			sectionRight: document.querySelector("#experience")!.getBoundingClientRect().right,
+			sectionWidth: document.querySelector("#experience")!.getBoundingClientRect().width,
+			scrollY: window.scrollY,
+		}))
+		expect(Math.abs(opened.sectionLeft - before.sectionLeft)).toBeLessThanOrEqual(1)
+		expect(Math.abs(opened.sectionRight - before.sectionRight)).toBeLessThanOrEqual(1)
+		expect(Math.abs(opened.sectionWidth - before.sectionWidth)).toBeLessThanOrEqual(1)
+		expect(Math.abs(opened.scrollY - before.scrollY)).toBeLessThanOrEqual(1)
+
+		await page.evaluate(() => {
+			document.querySelector(".experience-modal-close")?.dispatchEvent(new Event("click", { bubbles: true }))
+		})
+		await expect(page.locator(".experience-modal")).toHaveCSS("opacity", "0")
+
+		const closed = await page.evaluate(() => ({
+			sectionLeft: document.querySelector("#experience")!.getBoundingClientRect().left,
+			sectionRight: document.querySelector("#experience")!.getBoundingClientRect().right,
+			sectionWidth: document.querySelector("#experience")!.getBoundingClientRect().width,
+			scrollY: window.scrollY,
+		}))
+		expect(Math.abs(closed.sectionLeft - before.sectionLeft)).toBeLessThanOrEqual(1)
+		expect(Math.abs(closed.sectionRight - before.sectionRight)).toBeLessThanOrEqual(1)
+		expect(Math.abs(closed.sectionWidth - before.sectionWidth)).toBeLessThanOrEqual(1)
+		expect(Math.abs(closed.scrollY - before.scrollY)).toBeLessThanOrEqual(2)
+	})
+
 	test("clicking close button dismisses the modal", async ({ page }) => {
 		await page.locator(".experience-entry").first().click()
 		await page.waitForTimeout(500)

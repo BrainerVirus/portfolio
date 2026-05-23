@@ -25,6 +25,11 @@ pnpm-debug.log*
 # local agent/tooling scratch
 .opencode/
 docs/
+!docs/
+docs/*
+!docs/agent-rules/
+!docs/agent-rules/**
+!docs/contributing.md
 
 # packages
 package-lock.json

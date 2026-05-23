@@ -136,6 +136,83 @@ test.describe("Skills Section", () => {
 		expect(count).toBeGreaterThan(0)
 	})
 
+	test("should show skill labels for every orbital ring", async ({ page }) => {
+		const rings = [
+			".skills-orbital-ring--inner",
+			".skills-orbital-ring--middle",
+			".skills-orbital-ring--outer",
+		]
+
+		for (const ring of rings) {
+			const skill = page.locator(`${ring} .skill-orbital-item`).first()
+			const skillName = await skill.getAttribute("data-skill-name")
+			expect(skillName).toBeTruthy()
+
+			await skill.focus()
+			const tooltip = skill.locator(".skill-orbital-tooltip")
+			await expect(tooltip).toBeVisible()
+			await expect(tooltip).toHaveText(skillName!)
+		}
+	})
+
+	test("should expose inner and middle skill labels through pointer hover", async ({ page }) => {
+		const rings = [".skills-orbital-ring--inner", ".skills-orbital-ring--middle"]
+
+		for (const ring of rings) {
+			const skill = page.locator(`${ring} .skill-orbital-item`).first()
+			const skillName = await skill.getAttribute("data-skill-name")
+			expect(skillName).toBeTruthy()
+
+			const hitTest = await skill.evaluate((element) => {
+				const rect = element.getBoundingClientRect()
+				const x = rect.left + rect.width / 2
+				const y = rect.top + rect.height / 2
+				const hit = document.elementFromPoint(x, y)
+				return {
+					x,
+					y,
+					hitSkillName: hit?.closest<HTMLElement>(".skill-orbital-item")?.dataset.skillName,
+				}
+			})
+
+			expect(hitTest.hitSkillName).toBe(skillName)
+			await page.mouse.move(hitTest.x, hitTest.y)
+			await expect(skill.locator(".skill-orbital-tooltip")).toBeVisible()
+		}
+	})
+
+	test("should show skill labels on mobile touch", async ({ browser, browserName }) => {
+		const context = await browser.newContext({
+			hasTouch: true,
+			isMobile: browserName !== "firefox",
+			viewport: { width: 390, height: 844 },
+		})
+		const page = await context.newPage()
+		await page.setViewportSize({ width: 390, height: 844 })
+		await page.goto("http://localhost:3000/en/")
+		await page.locator("#skills").scrollIntoViewIfNeeded()
+		await page.waitForTimeout(500)
+
+		const rings = [
+			".skills-orbital-ring--inner",
+			".skills-orbital-ring--middle",
+			".skills-orbital-ring--outer",
+		]
+
+		for (const ring of rings) {
+			const skill = page.locator(`${ring} .skill-orbital-item`).first()
+			const skillName = await skill.getAttribute("data-skill-name")
+			expect(skillName).toBeTruthy()
+
+			const box = await skill.boundingBox()
+			expect(box).toBeTruthy()
+			await page.touchscreen.tap(box!.x + box!.width / 2, box!.y + box!.height / 2)
+			await expect(skill.locator(".skill-orbital-tooltip")).toBeVisible()
+		}
+
+		await context.close()
+	})
+
 	test("skills nav link resolves to #skills section", async ({ page }) => {
 		await page.locator('#desktop-nav a[href="#skills"]').click()
 		await page.waitForTimeout(500)
@@ -167,9 +244,8 @@ test.describe("Contact Section", () => {
 		await expect(form.locator('button[type="submit"]')).toBeVisible({ timeout: 5000 })
 	})
 
-	test("should display social links", async ({ page }) => {
-		await expect(page.locator("#contact a").filter({ hasText: /github/i })).toBeVisible()
-		await expect(page.locator("#contact a").filter({ hasText: /linkedin/i })).toBeVisible()
+	test("should display contact form as the primary contact action", async ({ page }) => {
+		await expect(page.locator("#contact-form")).toBeVisible({ timeout: 10000 })
 	})
 })
 

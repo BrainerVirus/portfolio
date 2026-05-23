@@ -109,14 +109,19 @@ const additionalSkills: Skill[] = [
 								style={`width: 58px; height: 58px; left: calc(50% + ${x}px - 29px); top: calc(50% + ${y}px - 29px); background-color: rgba(20, 26, 20, 0.9); border-color: rgba(58, 122, 77, 0.25);`}
 								data-skill-name={skillName}
 								data-i18n-data-skill-name={skill.translationKey}
+								tabindex="0"
+								aria-label={skillName}
+								data-i18n-aria-label={skill.translationKey}
 							>
-								<Icon
-									name={skill.icon}
-									class="h-6 w-6"
-									aria-label={skillName}
-									data-i18n-aria-label={skill.translationKey}
-									style="color: #f0e6d2;"
-								/>
+								<span class="skill-orbital-shell flex h-full w-full items-center justify-center rounded-full">
+									<Icon
+										name={skill.icon}
+										class="h-6 w-6"
+										aria-hidden="true"
+										style="color: #f0e6d2;"
+									/>
+								</span>
+								<span class="skill-orbital-tooltip" data-i18n={skill.translationKey}>{skillName}</span>
 							</div>
 						)
 					})
@@ -143,14 +148,19 @@ const additionalSkills: Skill[] = [
 								style={`width: 52px; height: 52px; left: calc(50% + ${x}px - 26px); top: calc(50% + ${y}px - 26px); background-color: rgba(20, 26, 20, 0.9); border-color: rgba(58, 122, 77, 0.2);`}
 								data-skill-name={skillName}
 								data-i18n-data-skill-name={skill.translationKey}
+								tabindex="0"
+								aria-label={skillName}
+								data-i18n-aria-label={skill.translationKey}
 							>
-								<Icon
-									name={skill.icon}
-									class="h-5 w-5"
-									aria-label={skillName}
-									data-i18n-aria-label={skill.translationKey}
-									style="color: #f0e6d2;"
-								/>
+								<span class="skill-orbital-shell flex h-full w-full items-center justify-center rounded-full">
+									<Icon
+										name={skill.icon}
+										class="h-5 w-5"
+										aria-hidden="true"
+										style="color: #f0e6d2;"
+									/>
+								</span>
+								<span class="skill-orbital-tooltip" data-i18n={skill.translationKey}>{skillName}</span>
 							</div>
 						)
 					})
@@ -177,14 +187,19 @@ const additionalSkills: Skill[] = [
 								style={`width: 44px; height: 44px; left: calc(50% + ${x}px - 22px); top: calc(50% + ${y}px - 22px); background-color: rgba(20, 26, 20, 0.9); border-color: rgba(58, 122, 77, 0.15);`}
 								data-skill-name={skillName}
 								data-i18n-data-skill-name={skill.translationKey}
+								tabindex="0"
+								aria-label={skillName}
+								data-i18n-aria-label={skill.translationKey}
 							>
-								<Icon
-									name={skill.icon}
-									class="h-4 w-4"
-									aria-label={skillName}
-									data-i18n-aria-label={skill.translationKey}
-									style="color: #f0e6d2;"
-								/>
+								<span class="skill-orbital-shell flex h-full w-full items-center justify-center rounded-full">
+									<Icon
+										name={skill.icon}
+										class="h-4 w-4"
+										aria-hidden="true"
+										style="color: #f0e6d2;"
+									/>
+								</span>
+								<span class="skill-orbital-tooltip" data-i18n={skill.translationKey}>{skillName}</span>
 							</div>
 						)
 					})
@@ -223,6 +238,10 @@ const additionalSkills: Skill[] = [
 
 	.skills-orbital-container:hover .skill-orbital-item {
 		animation-play-state: paused;
+	}
+
+	.skills-orbital-ring {
+		pointer-events: none;
 	}
 
 	.skills-ring-label {
@@ -285,10 +304,18 @@ const additionalSkills: Skill[] = [
 		to { transform: rotate(360deg); }
 	}
 
-	/* Tooltip on hover */
-	.skill-orbital-item::after {
-		content: attr(data-skill-name);
+	.skill-orbital-item {
+		pointer-events: auto;
+		transition: border-color 0.3s ease, box-shadow 0.3s ease;
+	}
+
+	.skill-orbital-shell {
+		transition: transform 0.3s ease;
+	}
+
+	.skill-orbital-tooltip {
 		position: absolute;
+		z-index: 30;
 		bottom: calc(100% + 8px);
 		left: 50%;
 		transform: translateX(-50%);
@@ -299,21 +326,31 @@ const additionalSkills: Skill[] = [
 		white-space: nowrap;
 		pointer-events: none;
 		opacity: 0;
-		transition: opacity 0.2s ease;
+		transition: opacity 0.2s ease, transform 0.2s ease;
 		background-color: rgba(20, 26, 20, 0.95);
 		color: #f0e6d2;
 		border: 1px solid rgba(58, 122, 77, 0.3);
 	}
 
-	.skill-orbital-item:hover::after {
+	.skill-orbital-item:hover .skill-orbital-tooltip,
+	.skill-orbital-item:focus-visible .skill-orbital-tooltip,
+	.skill-orbital-item.is-active .skill-orbital-tooltip {
 		opacity: 1;
+		transform: translateX(-50%) translateY(-2px);
 	}
 
-	.skill-orbital-item:hover {
+	.skill-orbital-item:hover,
+	.skill-orbital-item:focus-visible,
+	.skill-orbital-item.is-active {
 		border-color: rgba(58, 122, 77, 0.5);
 		box-shadow: 0 0 20px rgba(58, 122, 77, 0.2);
+		outline: none;
+	}
+
+	.skill-orbital-item:hover .skill-orbital-shell,
+	.skill-orbital-item:focus-visible .skill-orbital-shell,
+	.skill-orbital-item.is-active .skill-orbital-shell {
 		transform: scale(1.15);
-		transition: all 0.3s ease;
 	}
 
 	.skill-orbital-item svg {
@@ -331,6 +368,7 @@ const additionalSkills: Skill[] = [
 
 	let orbitalCtx: gsap.Context | null = null
 	let decorDrawn = false
+	let activeSkillCleanup: (() => void) | null = null
 
 	function initSkillsOrbitalAnimations() {
 		if (orbitalCtx) {
@@ -453,5 +491,56 @@ const additionalSkills: Skill[] = [
 	initSkillsOrbitalAnimations()
 	document.addEventListener("astro:after-swap", () => {
 		initSkillsOrbitalAnimations()
+	})
+
+	function initSkillTooltipActivation() {
+		activeSkillCleanup?.()
+
+		const skills = Array.from(document.querySelectorAll<HTMLElement>("#skills .skill-orbital-item"))
+		const clearActive = (except?: HTMLElement) => {
+			skills.forEach((skill) => {
+				if (skill !== except) skill.classList.remove("is-active")
+			})
+		}
+		const onSkillPointerDown = (event: PointerEvent) => {
+			const skill = event.currentTarget as HTMLElement
+			if (event.pointerType !== "mouse") {
+				clearActive(skill)
+				skill.classList.add("is-active")
+			}
+		}
+		const onDocumentPointerDown = (event: PointerEvent) => {
+			if ((event.target as HTMLElement).closest("#skills .skill-orbital-item")) return
+			clearActive()
+		}
+		const onEscape = (event: KeyboardEvent) => {
+			if (event.key === "Escape") clearActive()
+		}
+		const onSkillBlur = (event: FocusEvent) => {
+			const skill = event.currentTarget as HTMLElement
+			skill.classList.remove("is-active")
+		}
+
+		skills.forEach((skill) => {
+			skill.addEventListener("pointerdown", onSkillPointerDown)
+			skill.addEventListener("blur", onSkillBlur)
+		})
+		document.addEventListener("pointerdown", onDocumentPointerDown)
+		document.addEventListener("keydown", onEscape)
+
+		activeSkillCleanup = () => {
+			skills.forEach((skill) => {
+				skill.removeEventListener("pointerdown", onSkillPointerDown)
+				skill.removeEventListener("blur", onSkillBlur)
+				skill.classList.remove("is-active")
+			})
+			document.removeEventListener("pointerdown", onDocumentPointerDown)
+			document.removeEventListener("keydown", onEscape)
+		}
+	}
+
+	initSkillTooltipActivation()
+	document.addEventListener("astro:after-swap", () => {
+		initSkillTooltipActivation()
 	})
 </script>
