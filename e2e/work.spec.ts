@@ -42,6 +42,96 @@ test.describe("Work Section — Modal Overlay", () => {
 		await expect(page.locator(".experience-modal")).toBeVisible()
 	})
 
+	test("opening a card does not create transition ghost elements", async ({ page }) => {
+		await page.locator(".experience-entry").first().click()
+		await page.waitForTimeout(100)
+		await expect(page.locator(".experience-lift-ghost")).toHaveCount(0)
+		await expect(page.locator(".experience-modal")).toBeVisible()
+	})
+
+	test("modal does not demote the site header under page content", async ({ page }) => {
+		await page.locator(".experience-entry").first().click()
+		await expect(page.locator(".experience-modal")).toBeVisible()
+
+		const headerState = await page.locator("#site-header").evaluate((element) => {
+			const style = window.getComputedStyle(element)
+			return {
+				inlinePointerEvents: (element as HTMLElement).style.pointerEvents,
+				inlineZIndex: (element as HTMLElement).style.zIndex,
+				pointerEvents: style.pointerEvents,
+				zIndex: style.zIndex,
+			}
+		})
+
+		expect(headerState.inlineZIndex).toBe("")
+		expect(headerState.inlinePointerEvents).toBe("")
+		expect(headerState.zIndex).toBe("50")
+		expect(headerState.pointerEvents).not.toBe("none")
+	})
+
+	test("modal overlay sits above the site header while open", async ({ page }) => {
+		await page.locator(".experience-entry").first().click()
+		await expect(page.locator(".experience-modal")).toBeVisible()
+
+		const topLayer = await page.evaluate(() => {
+			const header = document.querySelector("#site-header")
+			if (!header) return null
+
+			const rect = header.getBoundingClientRect()
+			const element = document.elementFromPoint(rect.left + rect.width / 2, rect.top + rect.height / 2)
+			return {
+				isModalLayer: Boolean(element?.closest(".experience-modal")),
+				tagName: element?.tagName ?? null,
+			}
+		})
+
+		expect(topLayer?.isModalLayer).toBe(true)
+	})
+
+	test("first and second modal openings use the same settled card height", async ({ page }) => {
+		const openAndMeasure = async () => {
+			await page.locator(".experience-entry").first().scrollIntoViewIfNeeded()
+			await page.locator(".experience-entry").first().click()
+			await expect(page.locator(".experience-modal")).toBeVisible()
+			const height = await page.locator(".experience-modal-card").evaluate((element) =>
+				Math.round(element.getBoundingClientRect().height)
+			)
+			await page.evaluate(() => {
+				document.querySelector(".experience-modal-close")?.dispatchEvent(new Event("click", { bubbles: true }))
+			})
+			await expect(page.locator(".experience-modal")).toHaveCSS("opacity", "0")
+			return height
+		}
+
+		const firstHeight = await openAndMeasure()
+		const secondHeight = await openAndMeasure()
+
+		expect(Math.abs(firstHeight - secondHeight)).toBeLessThanOrEqual(2)
+	})
+
+	test("mobile first and second modal openings keep stable card height", async ({ page }) => {
+		await page.setViewportSize({ width: 390, height: 844 })
+
+		const openAndMeasure = async () => {
+			await page.locator(".experience-entry").first().scrollIntoViewIfNeeded()
+			await page.locator(".experience-entry").first().click()
+			await expect(page.locator(".experience-modal")).toBeVisible()
+			const height = await page.locator(".experience-modal-card").evaluate((element) =>
+				Math.round(element.getBoundingClientRect().height)
+			)
+			await page.evaluate(() => {
+				document.querySelector(".experience-modal-close")?.dispatchEvent(new Event("click", { bubbles: true }))
+			})
+			await expect(page.locator(".experience-modal")).toHaveCSS("opacity", "0")
+			return height
+		}
+
+		const firstHeight = await openAndMeasure()
+		const secondHeight = await openAndMeasure()
+
+		expect(Math.abs(firstHeight - secondHeight)).toBeLessThanOrEqual(2)
+	})
+
 	test("modal locks without layout shift and restores scroll naturally", async ({ page }) => {
 		await page.locator("#experience").scrollIntoViewIfNeeded()
 		await page.locator(".experience-entry").first().scrollIntoViewIfNeeded()

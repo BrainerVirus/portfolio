@@ -306,6 +306,16 @@ test.describe("Language Switching", () => {
 		await expect(page.locator("#about")).toBeVisible()
 		await expect(page.locator("#site-header")).toBeVisible()
 	})
+
+	test("language text transition uses a readable motion duration", async ({ page }) => {
+		await page.goto("http://localhost:3000/en/")
+
+		const duration = await page.evaluate(() =>
+			document.documentElement.style.getPropertyValue("--language-text-transition-ms")
+		)
+
+		expect(parseInt(duration, 10)).toBeGreaterThanOrEqual(700)
+	})
 })
 
 test.describe("Footer", () => {

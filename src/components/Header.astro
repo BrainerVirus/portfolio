@@ -49,28 +49,28 @@ const activePreference = cookieLang === "en" || cookieLang === "es" ? cookieLang
 
 		<nav id="desktop-nav" class="relative hidden items-center gap-8 md:flex">
 			<a
-				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+				class="nav-link cursor-pointer text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#about"
 				data-i18n="nav.about"
 			>
 				{t("nav.about")}
 			</a>
 			<a
-				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+				class="nav-link cursor-pointer text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#experience"
 				data-i18n="nav.experience"
 			>
 				{t("nav.experience")}
 			</a>
 			<a
-				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+				class="nav-link cursor-pointer text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#skills"
 				data-i18n="nav.skills"
 			>
 				{t("nav.skills")}
 			</a>
 			<a
-				class="nav-link text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
+				class="nav-link cursor-pointer text-sm font-medium text-[#a89a84] transition-colors hover:text-[#f0e6d2]"
 				href="#contact"
 				data-i18n="nav.contact"
 			>
@@ -93,7 +93,6 @@ const activePreference = cookieLang === "en" || cookieLang === "es" ? cookieLang
 						translate
 					</span>
 					<span class="lang-current-label">{activePreference === "system" ? "" : lang.toUpperCase()}</span>
-					<span class="inline-block h-1.5 w-1.5 rounded-full bg-[#3a7a4d]"></span>
 				</button>
 				<div
 					id="lang-dropdown-desktop"
@@ -150,7 +149,6 @@ const activePreference = cookieLang === "en" || cookieLang === "es" ? cookieLang
 						translate
 					</span>
 					<span class="lang-current-label">{activePreference === "system" ? "" : lang.toUpperCase()}</span>
-					<span class="inline-block h-1.5 w-1.5 rounded-full bg-[#3a7a4d]"></span>
 				</button>
 				<div
 					id="lang-dropdown-mobile"
@@ -185,18 +183,29 @@ const activePreference = cookieLang === "en" || cookieLang === "es" ? cookieLang
 
 			<button
 				id="mobile-menu-btn"
-				class="text-[#f0e6d2]"
+				class="relative h-8 w-8 cursor-pointer text-[#f0e6d2]"
 				aria-label="Open menu"
 				aria-expanded="false"
 			>
-				<span class="material-symbols-outlined">menu</span>
+				<span
+					class="hamburger-line hamburger-line-top absolute left-1 top-1/2 h-px w-6 bg-current"
+					aria-hidden="true"
+				></span>
+				<span
+					class="hamburger-line hamburger-line-middle absolute left-1 top-1/2 h-px w-6 bg-current"
+					aria-hidden="true"
+				></span>
+				<span
+					class="hamburger-line hamburger-line-bottom absolute left-1 top-1/2 h-px w-6 bg-current"
+					aria-hidden="true"
+				></span>
 			</button>
 		</div>
 	</div>
 
 	<div
 		id="mobile-menu"
-		class="absolute left-0 top-full w-full border-t border-white/10 bg-[#0a0e0a] opacity-0 backdrop-blur-[12px] md:hidden"
+		class="absolute left-0 top-full z-60 w-full border-t border-white/10 bg-[#0a0e0a] opacity-0 backdrop-blur-[12px] md:hidden"
 	>
 		<nav class="flex flex-col gap-4 px-6 py-4">
 			<a
@@ -240,6 +249,12 @@ const activePreference = cookieLang === "en" || cookieLang === "es" ? cookieLang
 		type LanguagePreference,
 	} from "@/lib/live-language"
 
+	type Cleanup = () => void
+
+	interface MobileMenuButton extends HTMLButtonElement {
+		portfolioMenuCleanup?: Cleanup
+	}
+
 	function initHeaderScroll() {
 		const header = document.getElementById("site-header")
 		if (!header) return
@@ -259,59 +274,112 @@ const activePreference = cookieLang === "en" || cookieLang === "es" ? cookieLang
 	}
 
 	function initMobileMenu() {
-		const menuBtn = document.getElementById("mobile-menu-btn")
+		const menuBtn = document.getElementById("mobile-menu-btn") as MobileMenuButton | null
 		const mobileMenu = document.getElementById("mobile-menu")
-		const menuIcon = menuBtn?.querySelector(".material-symbols-outlined")
+		const topLine = menuBtn?.querySelector<HTMLElement>(".hamburger-line-top")
+		const middleLine = menuBtn?.querySelector<HTMLElement>(".hamburger-line-middle")
+		const bottomLine = menuBtn?.querySelector<HTMLElement>(".hamburger-line-bottom")
 		const mobileLinks = mobileMenu?.querySelectorAll(".mobile-nav-link")
 
-		if (!menuBtn || !mobileMenu || !menuIcon || !mobileLinks) return
+		if (!menuBtn || !mobileMenu || !topLine || !middleLine || !bottomLine || !mobileLinks) return
+		if (menuBtn.dataset.menuReady === "true") return
 
-		gsap.set(mobileMenu, { opacity: 0, y: -20, pointerEvents: "none" })
-		gsap.set(mobileLinks, { opacity: 0, x: -20 })
+		menuBtn.portfolioMenuCleanup?.()
+		menuBtn.portfolioMenuCleanup = undefined
+		menuBtn.dataset.menuReady = "false"
+
+		gsap.set(mobileMenu, {
+			clipPath: "inset(0 0 100% 0)",
+			opacity: 0,
+			pointerEvents: "none",
+			scaleY: 0.92,
+			transformOrigin: "top center",
+			y: -14,
+		})
+		gsap.set(mobileLinks, { opacity: 0, x: -18, y: -4 })
+		gsap.set(topLine, { transformOrigin: "50% 50%", y: -6 })
+		gsap.set(middleLine, { transformOrigin: "50% 50%", x: 0, y: 0, opacity: 1 })
+		gsap.set(bottomLine, { transformOrigin: "50% 50%", y: 6 })
 
 		const tl = gsap.timeline({ paused: true })
 		tl.to(mobileMenu, {
+			clipPath: "inset(0 0 0% 0)",
 			opacity: 1,
-			y: 0,
-			duration: 0.3,
-			ease: "power2.out",
 			pointerEvents: "auto",
+			scaleY: 1,
+			y: 0,
+			duration: 0.28,
+			ease: "power3.out",
 		})
 		tl.to(
 			mobileLinks,
 			{
 				opacity: 1,
 				x: 0,
-				duration: 0.3,
-				stagger: 0.05,
-				ease: "power2.out",
+				y: 0,
+				duration: 0.24,
+				stagger: 0.045,
+				ease: "power3.out",
 			},
-			"-=0.2"
+			"-=0.18"
 		)
+		tl.eventCallback("onReverseComplete", () => {
+			gsap.set(mobileMenu, {
+				clipPath: "inset(0 0 100% 0)",
+				opacity: 0,
+				pointerEvents: "none",
+				scaleY: 0.92,
+				y: -14,
+			})
+			gsap.set(mobileLinks, { opacity: 0, x: -18, y: -4 })
+		})
+
+		const animateMenuButton = (isOpen: boolean) => {
+			gsap.to(topLine, {
+				rotate: isOpen ? 45 : 0,
+				y: isOpen ? 0 : -6,
+				duration: 0.28,
+				ease: "power3.out",
+			})
+			gsap.to(middleLine, {
+				opacity: isOpen ? 0 : 1,
+				x: isOpen ? 14 : 0,
+				duration: 0.2,
+				ease: "power2.out",
+			})
+			gsap.to(bottomLine, {
+				rotate: isOpen ? -45 : 0,
+				y: isOpen ? 0 : 6,
+				duration: 0.28,
+				ease: "power3.out",
+			})
+		}
 
 		const openMenu = () => {
 			menuBtn.setAttribute("aria-expanded", "true")
-			menuIcon.textContent = "close"
+			animateMenuButton(true)
 			tl.play()
 		}
 
 		const closeMenu = () => {
 			menuBtn.setAttribute("aria-expanded", "false")
-			menuIcon.textContent = "menu"
+			animateMenuButton(false)
 			tl.reverse()
 		}
 
-		menuBtn.addEventListener("click", () => {
+		const onMenuClick = () => {
 			const isOpen = menuBtn.getAttribute("aria-expanded") === "true"
 			if (isOpen) {
 				closeMenu()
 			} else {
 				openMenu()
 			}
-		})
+		}
+		menuBtn.addEventListener("click", onMenuClick)
 
+		const linkCleanups: Cleanup[] = []
 		mobileLinks.forEach((link) => {
-			link.addEventListener("click", (e) => {
+			const onLinkClick = (e: Event) => {
 				e.preventDefault()
 				closeMenu()
 				const targetId = link.getAttribute("href")
@@ -320,8 +388,17 @@ const activePreference = cookieLang === "en" || cookieLang === "es" ? cookieLang
 				if (target) {
 					target.scrollIntoView({ behavior: "smooth" })
 				}
-			})
+			}
+			link.addEventListener("click", onLinkClick)
+			linkCleanups.push(() => link.removeEventListener("click", onLinkClick))
 		})
+
+		menuBtn.dataset.menuReady = "true"
+		menuBtn.portfolioMenuCleanup = () => {
+			tl.kill()
+			menuBtn.removeEventListener("click", onMenuClick)
+			linkCleanups.forEach((cleanup) => cleanup())
+		}
 	}
 
 	let scrollObserver: IntersectionObserver | null = null

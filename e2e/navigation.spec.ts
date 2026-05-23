@@ -19,6 +19,14 @@ test.describe("Navigation", () => {
 		await expect(page.locator("#contact")).toBeInViewport()
 	})
 
+	test("desktop nav links show pointer cursor affordance", async ({ page }) => {
+		const cursors = await page.locator("#desktop-nav .nav-link").evaluateAll((links) =>
+			links.map((link) => window.getComputedStyle(link).cursor)
+		)
+
+		expect(cursors).toEqual(["pointer", "pointer", "pointer", "pointer"])
+	})
+
 	test("active state updates on scroll to each section", async ({ page }) => {
 		const sections = ["about", "experience", "skills", "contact"]
 
@@ -93,6 +101,66 @@ test.describe("Navigation", () => {
 		)
 		expect(parseFloat(closeOpacity)).toBe(0)
 	})
+
+	test("mobile menu button icon animates while toggling", async ({ page }) => {
+		await page.setViewportSize({ width: 375, height: 667 })
+
+		const menuBtn = page.locator("#mobile-menu-btn")
+		const topLine = menuBtn.locator(".hamburger-line-top")
+		const middleLine = menuBtn.locator(".hamburger-line-middle")
+		const bottomLine = menuBtn.locator(".hamburger-line-bottom")
+
+		await expect(menuBtn).not.toHaveClass(/rounded-full/)
+		await expect(menuBtn).not.toHaveClass(/border/)
+		await expect(topLine).toBeVisible()
+		await expect(middleLine).toBeVisible()
+		await expect(bottomLine).toBeVisible()
+
+		await menuBtn.click()
+		await page.waitForTimeout(80)
+
+		const openingState = await Promise.all(
+			[topLine, middleLine, bottomLine].map(async (line) =>
+				line.evaluate((element) => {
+					const style = window.getComputedStyle(element)
+					return { opacity: style.opacity, transform: style.transform }
+				})
+			)
+		)
+		expect(openingState[0].transform).not.toBe("none")
+		expect(openingState[1].transform).not.toBe("none")
+		expect(parseFloat(openingState[1].opacity)).toBeLessThan(1)
+		expect(openingState[2].transform).not.toBe("none")
+
+		await page.waitForTimeout(500)
+		await menuBtn.click()
+		await page.waitForTimeout(80)
+
+		const closingTransform = await topLine.evaluate((element) =>
+			window.getComputedStyle(element).transform
+		)
+		expect(closingTransform).not.toBe("none")
+	})
+
+	test("mobile menu is ready on the first mobile interaction", async ({ page }) => {
+		await page.setViewportSize({ width: 390, height: 844 })
+		await page.goto("http://localhost:3000/en/")
+
+		const menuBtn = page.locator("#mobile-menu-btn")
+		const mobileMenu = page.locator("#mobile-menu")
+
+		await expect(menuBtn).toHaveAttribute("data-menu-ready", "true")
+
+		await menuBtn.click()
+		await expect(menuBtn).toHaveAttribute("aria-expanded", "true")
+		await expect(mobileMenu).toHaveCSS("pointer-events", "auto")
+
+		await expect
+			.poll(() =>
+				mobileMenu.evaluate((el) => parseFloat(window.getComputedStyle(el).opacity))
+			)
+			.toBeGreaterThan(0.5)
+	})
 })
 
 test.describe("Language Dropdown", () => {
@@ -104,6 +172,10 @@ test.describe("Language Dropdown", () => {
 		const langBtn = page.locator("#lang-btn-desktop")
 		await expect(langBtn).toBeVisible()
 		await expect(langBtn).toHaveAttribute("data-lang", "en")
+		await expect(langBtn.locator(".lang-status-dot")).toHaveCount(0)
+		await expect(page.locator("#lang-btn-mobile .lang-status-dot")).toHaveCount(0)
+		await expect(langBtn.locator(":scope > span")).toHaveCount(2)
+		await expect(page.locator("#lang-btn-mobile > span")).toHaveCount(2)
 
 		// Open dropdown
 		await langBtn.click()

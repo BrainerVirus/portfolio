@@ -19,6 +19,7 @@ export const languageChangeEvent = "portfolio:language-change"
 const preferenceKey = "portfolio:language-preference"
 const supportedLanguages = Object.keys(translations) as Language[]
 const scrambleChars = "01<>/{}[]"
+const languageTextTransitionMs = 780
 
 function isLanguage(value: string | null | undefined): value is Language {
 	return Boolean(value && supportedLanguages.includes(value as Language))
@@ -133,14 +134,14 @@ function mutateText(element: HTMLElement, text: string, animate: boolean) {
 	}
 
 	gsap.to(element, {
-		duration: Math.min(0.55, Math.max(0.25, text.length * 0.012)),
+		duration: Math.min(1.15, Math.max(languageTextTransitionMs / 1000, text.length * 0.018)),
 		scrambleText: {
 			text,
 			chars: scrambleChars,
-			revealDelay: 0,
-			speed: 0.75,
+			revealDelay: 0.08,
+			speed: 0.45,
 		},
-		ease: "none",
+		ease: "power2.out",
 		overwrite: true,
 	})
 }
@@ -149,6 +150,10 @@ function mutateDom(language: Language, animate: boolean) {
 	const title = getTranslation(language, "meta.home.title")
 	document.title = title
 	document.documentElement.lang = language
+	document.documentElement.style.setProperty(
+		"--language-text-transition-ms",
+		`${languageTextTransitionMs}`
+	)
 
 	document.querySelectorAll<HTMLElement>("[data-i18n]").forEach((element) => {
 		const key = element.dataset.i18n
