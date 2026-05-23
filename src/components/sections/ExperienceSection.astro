@@ -541,6 +541,11 @@ const exp = useTranslation(lang, "experience")
 	const modalFlip = modal.querySelector(".experience-modal-flip") as HTMLElement
 	const arcanaLines = modal.querySelectorAll<SVGPathElement>(".arcana-line")
 	const arcanaStars = modal.querySelectorAll<SVGCircleElement>(".arcana-stars circle")
+
+	if (modal.parentElement !== document.body) {
+		document.body.appendChild(modal)
+	}
+
 	let modalFlipped = false
 	let activeArcanaIndex = 0
 	let modalOpen = false
@@ -550,8 +555,6 @@ const exp = useTranslation(lang, "experience")
 	let previousHtmlPaddingRight = ""
 	let previousBodyPaddingRight = ""
 	let previousBodyWidth = ""
-	let previousHeaderZIndex = ""
-	let previousHeaderPointerEvents = ""
 
 	function updateModalViewportVars() {
 		const viewport = window.visualViewport
@@ -574,14 +577,11 @@ const exp = useTranslation(lang, "experience")
 	function lockPageScroll() {
 		if (document.documentElement.classList.contains("is-work-modal-locked")) return
 
-		const header = document.getElementById("site-header")
 		previousHtmlOverflow = document.documentElement.style.overflow
 		previousBodyOverflow = document.body.style.overflow
 		previousHtmlPaddingRight = document.documentElement.style.paddingRight
 		previousBodyPaddingRight = document.body.style.paddingRight
 		previousBodyWidth = document.body.style.width
-		previousHeaderZIndex = header?.style.zIndex || ""
-		previousHeaderPointerEvents = header?.style.pointerEvents || ""
 
 		const hasStableScrollbarGutter = CSS.supports?.("scrollbar-gutter: stable") ?? false
 		const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
@@ -594,10 +594,6 @@ const exp = useTranslation(lang, "experience")
 		document.documentElement.classList.add("is-work-modal-locked")
 		document.documentElement.style.overflow = "hidden"
 		document.body.style.overflow = "hidden"
-		if (header) {
-			header.style.zIndex = "0"
-			header.style.pointerEvents = "none"
-		}
 	}
 
 	function unlockPageScroll() {
@@ -610,11 +606,6 @@ const exp = useTranslation(lang, "experience")
 		document.body.style.paddingRight = previousBodyPaddingRight
 		document.body.style.width = previousBodyWidth
 		document.documentElement.style.removeProperty("--modal-scrollbar-width")
-		const header = document.getElementById("site-header")
-		if (header) {
-			header.style.zIndex = previousHeaderZIndex
-			header.style.pointerEvents = previousHeaderPointerEvents
-		}
 	}
 
 	function initModalTilt(): () => void {
@@ -810,7 +801,7 @@ const exp = useTranslation(lang, "experience")
 		)
 	}
 
-	function openModal(card: HTMLElement) {
+	function applyOpenModalState(card: HTMLElement) {
 		const i = parseInt(card.dataset.index || "0", 10)
 		activeArcanaIndex = i
 		updateModalViewportVars()
@@ -826,6 +817,7 @@ const exp = useTranslation(lang, "experience")
 			modalFront.appendChild(clone)
 		}
 		renderArcana(i)
+		syncModalCardHeight()
 		window.requestAnimationFrame(syncModalCardHeight)
 		modal.classList.add("is-open")
 		modal.style.pointerEvents = "auto"
@@ -842,7 +834,11 @@ const exp = useTranslation(lang, "experience")
 		modalTiltCleanup = initModalTilt()
 	}
 
-	function closeModal() {
+	function openModal(card: HTMLElement) {
+		applyOpenModalState(card)
+	}
+
+	function applyCloseModalState() {
 		modalOpen = false
 		modal.classList.remove("is-open")
 		modal.style.pointerEvents = "none"
@@ -850,6 +846,10 @@ const exp = useTranslation(lang, "experience")
 		if (modalTiltCleanup) { modalTiltCleanup(); modalTiltCleanup = null }
 		resetMotionTilt()
 		unlockPageScroll()
+	}
+
+	function closeModal() {
+		applyCloseModalState()
 	}
 
 	modalClose.addEventListener("click", closeModal)
