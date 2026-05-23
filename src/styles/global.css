@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+html {
+	scrollbar-gutter: stable;
+}
+
 .material-symbols-outlined {
 	font-family: var(--font-material-symbols), sans-serif;
 	font-weight: 400;

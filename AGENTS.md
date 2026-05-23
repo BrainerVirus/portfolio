@@ -59,12 +59,35 @@ pnpm commit           # Commitizen interactive commit
 - **CI pipeline** (`.github/workflows/github-ci.yml`): sequential `lint → format:check → test → build`. Build can be skipped with `[skip ci]` in commit message.
 - **Pre-commit hook**: None (removed husky + lint-staged). Run `pnpm lint && pnpm format:check` before committing.
 
+## Shared Agent Rules
+
+These rules are mirrored for Cursor and other agent tools. Treat the Markdown files under `docs/agent-rules/` as the source of truth.
+
+- Commit messages: follow `docs/agent-rules/commit-messages.md` for every agent-generated git commit.
+- Design system: before UI, frontend, CSS, Tailwind, component, or accessibility work, follow `docs/agent-rules/design-system.md`.
+
+## GitHub Flow
+
+This repository uses GitHub Flow. Agents and contributors must keep `main` deployable and do all work on short-lived branches created from `main`.
+
+- Use branch names that describe the work: `feature/*`, `fix/*`, `chore/*`, or `docs/*`.
+- Open pull requests into `main`; do not push directly to `main`.
+- Follow `.github/PULL_REQUEST_TEMPLATE.md` when preparing PR descriptions.
+- Run the required validation commands locally before opening a PR whenever feasible:
+  - `pnpm lint`
+  - `pnpm format:check`
+  - `pnpm check`
+  - `pnpm test`
+- `pnpm build`
+- Treat required GitHub checks as merge blockers. Fix failures on the branch before merging.
+- Stable releases are tags from `main` using `vMAJOR.MINOR.PATCH`; do not create long-lived release branches unless this workflow is explicitly changed.
+
 ## Key Dependencies
 
-- **Astro 6.2** with `@astrojs/vercel` adapter (SSR on Vercel)
+- **Astro 6** with `@astrojs/vercel` adapter (SSR on Vercel)
 - **Tailwind CSS v4** (loaded via `@tailwindcss/vite` plugin, not PostCSS config)
 - **React 19 + shadcn/ui** (nova preset, neutral base, CSS variables)
 - **Linting/formatting**: oxlint + oxfmt (replaced ESLint + Prettier). See `.oxlintrc.json` and `.oxfmtrc.json`.
 - **Icons**: `astro-icon` with `@iconify-json/*` icon sets (devicon, mdi, etc.)
 - **Fonts**: Satoshi + JetBrains Mono via Astro 6 Font optimization
-- **Node**: 22.x, **Package manager**: pnpm
+- **Node**: 24.x, **Package manager**: pnpm 11.x
