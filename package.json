@@ -62,7 +62,7 @@
     "oxlint": "^1.66.0",
     "oxlint-tailwindcss": "^0.8.0",
     "tailwind-merge": "3.6.0",
-    "vitest": "4.1.7"
+    "vitest": "4.1.11"
   },
   "config": {
     "commitizen": {
